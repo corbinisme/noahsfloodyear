@@ -17,7 +17,7 @@
 # custom module, theme, etc., are not ignored unless you purposely do so.
 /vendor/
 
-
+/Content/
 /backups/
 /libraries/generator/
 
