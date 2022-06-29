@@ -1,0 +1,5 @@
+name: D7 Article Import
+description: Custom migration module to import data from D7 site
+package: Migration
+type: module
+core_version_requirement: ^9

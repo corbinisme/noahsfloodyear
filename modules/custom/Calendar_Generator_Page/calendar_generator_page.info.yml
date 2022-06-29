@@ -1,0 +1,5 @@
+name: Calendar Generator Page
+description: The base page for the calendar generator with routing
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9

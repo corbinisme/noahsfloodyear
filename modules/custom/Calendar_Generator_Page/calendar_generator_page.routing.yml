@@ -1,0 +1,20 @@
+calendar_generator_page.calendar:
+  path: '/calendar/{era_type}/{year}'
+  defaults:
+    _controller: 'Drupal\calendar_generator_page\Controller\CalendarController::calendar_page'
+    _title: 'Calendar Generator'
+    era_type: "am"
+    year: "1"
+  requirements: 
+    _permission: 'access content'
+
+
+calendar_generator_page.calendarajax:
+  path: '/calendarajax'
+  defaults:
+    _controller: 'Drupal\calendar_generator_page\Controller\CalendarController::getCal'
+    _title: 'Calendar Generator'
+    era_type: "am"
+    year: "1"
+  requirements: 
+    _permission: 'access content'

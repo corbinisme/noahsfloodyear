@@ -1,0 +1,4 @@
+calendar:
+  js:
+      js/calendar.js: {}
+      /libraries/generator/generator.js: {}

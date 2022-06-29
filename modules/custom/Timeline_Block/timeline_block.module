@@ -1,0 +1,26 @@
+<?php 
+/**
+ * Implements hook_theme().
+ */
+function timeline_block_theme($existing, $type, $theme, $path) {
+
+  $items = 
+  [
+    [
+      "title" => "Item 1",
+      "description" => "A description."
+    ],
+    [
+      "title" => "Item 2",
+      "description" => "Something."
+    ]
+    ];
+   
+  return array(
+    'custom-list' => array(
+      'variables' => array('items' => $items),
+    
+    ),
+  );
+ 
+}

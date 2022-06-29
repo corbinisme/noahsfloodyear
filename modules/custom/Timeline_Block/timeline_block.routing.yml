@@ -1,0 +1,7 @@
+timeline_block.page:
+  path: '/timeline/page'
+  defaults:
+    _controller: 'Drupal\timeline_block\Controller\TimelineBlockController::content'
+    _title: 'Timeline Page'
+  requirements: 
+    _permission: 'access content'

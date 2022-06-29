@@ -1,0 +1,9 @@
+calendar_generator_nav.calendarnav:
+  path: '/calendar/{era_type}/{year}'
+  defaults:
+    _controller: 'Drupal\calendar_generator_nav\Controller\CalendarNavController::calendar_nav'
+    _title: 'Calendar Generator'
+    era_type: "am"
+    year: "1"
+  requirements: 
+    _permission: 'access content'

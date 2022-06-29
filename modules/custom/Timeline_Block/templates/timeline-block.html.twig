@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Default theme implementation for timeline_block.
+ *
+ * Available variables:
+ *   - items
+ *
+ * @see template_preprocess_timeline_block()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% macro customize_item(item) %}
+  
+  <li>{{ item.title }} : {{ item.description }}</li>
+
+{% endmacro %}
+
+
+<ul class="timeline_block">
+  {% for item in items %}
+    {{ _self.customize_item(item) }}
+  {% endfor %}
+</ul>

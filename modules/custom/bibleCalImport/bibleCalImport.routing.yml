@@ -1,0 +1,7 @@
+bibleCalImport.load:
+  path: 'bibleCalImport/import'
+  defaults:
+    _controller: '\Drupal\bibleCalImport\Controller\BibleCalImportController::import'
+    _title: 'Content Import'
+  requirements:
+    _permission:  'access content'
