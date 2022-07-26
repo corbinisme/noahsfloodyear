@@ -4,6 +4,6 @@ calendar_generator_nav.calendarnav:
     _controller: 'Drupal\calendar_generator_nav\Controller\CalendarNavController::calendar_nav'
     _title: 'Calendar Generator'
     era_type: "am"
-    year: "1"
+    year: "0"
   requirements: 
     _permission: 'access content'
