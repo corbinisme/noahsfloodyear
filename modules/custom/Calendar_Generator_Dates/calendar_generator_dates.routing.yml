@@ -1,0 +1,18 @@
+calendar_generator_dates.calendar:
+  path: '/calendarjson/{era_type}/{year}'
+  defaults:
+    _controller: 'Drupal\calendar_generator_dates\Controller\CalendarController::calendar_json'
+    _title: 'Calendar Generator'
+    era_type: "am"
+    year: "1"
+  requirements: 
+    _permission: 'access content'
+
+calendar_generator_dates.calendarlegend:
+  path: '/calendarlegendjson/{era_type}/{year}'
+  defaults:
+    _controller: 'Drupal\calendar_generator_dates\Controller\CalendarController::calendar_legend_json'
+    _title: 'Calendar Generator Legend'
+
+  requirements: 
+    _permission: 'access content'

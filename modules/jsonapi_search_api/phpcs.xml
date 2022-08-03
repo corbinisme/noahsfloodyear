@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="jsonapi_search_api">
+  <description>Default PHP CodeSniffer configuration for JSON:API Search API.</description>
+  <file>.</file>
+  <arg name="extensions" value="php,module,inc,install,test,profile,theme"/>
+  <config name="drupal_core_version" value="8"/>
+  <exclude-pattern>*/.git/*</exclude-pattern>
+  <exclude-pattern>*.md</exclude-pattern>
+
+  <rule ref="Drupal">
+    <!-- The following rules are intentionally disabled. -->
+    <exclude name="Drupal.WhiteSpace.OpenTagNewline.BlankLine"/>
+    <exclude name="Drupal.Commenting.ClassComment.Missing"/>
+  </rule>
+
+</ruleset>

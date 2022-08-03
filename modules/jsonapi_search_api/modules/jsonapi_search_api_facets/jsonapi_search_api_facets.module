@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Contains jsonapi_search_api_facets.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\facets\FacetInterface;
+use Drupal\facets\FacetSourceInterface;
+use Drupal\jsonapi\Query\Filter;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function jsonapi_search_api_facets_form_facet_source_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['filter_key']['#disabled'] = TRUE;
+  $form['breadcrumb']['#access'] = FALSE;
+  foreach ($form['url_processor']['#options'] as $plugin_id => $plugin_name) {
+    if ($plugin_id !== 'json_api') {
+      unset($form['url_processor']['#options'][$plugin_id]);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function jsonapi_search_api_facets_form_facets_facet_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  foreach ($form['widget']['#options'] as $plugin_id => $plugin_name) {
+    if (strpos($plugin_id, 'jsonapi_') !== 0) {
+      unset($form['widget']['#options'][$plugin_id]);
+    }
+  }
+  // Empty behaviors have no effect over JSON:API.
+  $form['facet_settings']['empty_behavior']['#access'] = FALSE;
+  $form['facet_settings']['empty_behavior_container']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * @todo use hook_ENTITY_TYPE_create() after https://www.drupal.org/project/facets/issues/3171382
+ */
+function jsonapi_search_api_facets_facet_source_presave(FacetSourceInterface $entity) {
+  if (strpos($entity->getName(), 'jsonapi_search_api_facets:') === 0) {
+    $entity->setFilterKey(Filter::KEY_NAME);
+    $entity->setUrlProcessor('json_api');
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function jsonapi_search_api_facets_facets_facet_presave(FacetInterface $entity) {
+  if (strpos($entity->getFacetSourceId(), 'jsonapi_search_api_facets') === 0) {
+    if (empty($entity->getWidget())) {
+      $entity->setWidget('jsonapi_search_api');
+    }
+  }
+}

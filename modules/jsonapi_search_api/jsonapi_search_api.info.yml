@@ -1,0 +1,14 @@
+name: 'JSON:API Search API'
+description: "Exposes Search API indexes over JSON:API Resources."
+core: 8.x
+core_version_requirement: ^8 || ^9
+type: module
+dependencies:
+  - drupal:jsonapi
+  - jsonapi_resources:jsonapi_resources
+  - search_api:search_api
+
+# Information added by Drupal.org packaging script on 2020-11-11
+version: '8.x-1.0-rc2'
+project: 'jsonapi_search_api'
+datestamp: 1605116433

@@ -1,0 +1,20 @@
+{
+    "name": "drupal/jsonapi_search_api",
+    "type": "drupal-module",
+    "description": "Exposes Search API indexes over JSON:API Resources.",
+    "keywords": ["Drupal"],
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/jsonapi_search_api",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/jsonapi_search_api",
+        "source": "https://git.drupalcode.org/project/jsonapi_search_api"
+    },
+    "require": {
+        "drupal/jsonapi_resources": "^1.0@beta",
+        "drupal/search_api": "^1.0"
+    },
+    "require-dev": {
+        "drupal/facets": "^1.0"
+    }
+}

@@ -1,0 +1,70 @@
+<?php
+
+function getDayOfWeek($firstSabath=7, $day=""){
+    // eventually return from DB?
+    // and calculate the LGD
+     $list = [
+      "passover"=>"Sat",
+      "unleavenedbread"=> "Sun",
+      "pentecost"=> "Sun",
+      "feastoftrumpets" =>  "Tues",
+      "dayofatonement"=> "Thurs",
+      "feastoftabernacles"=>  "Tues",
+      "lastgreatday"=> "Tues"
+     ];
+
+      switch($firstSabath){
+          case 1: 
+              $list['passover'] = "Fri"; 
+              $list['unleavenedbread'] = "Sun";
+              $list['pentecost'] = "Sun";
+              $list['feastoftrumpets'] = "Tues";
+              $list['dayofatonement'] = "Thurs";
+              $list['feastoftabernacles'] = "Tues";
+              $list['lastgreatday'] = "Tues";
+          break;
+          case 3: 
+              $list['passover'] = "Wed"; 
+              $list['unleavenedbread'] = "Thurs";
+              $list['pentecost'] = "Sun";
+              $list['feastoftrumpets'] = "Sat";
+              $list['dayofatonement'] = "Mon";
+              $list['feastoftabernacles'] = "Sat";
+              $list['lastgreatday'] = "Sat";
+          break;
+          case 5: 
+              $list['passover'] = "Mon"; 
+              $list['unleavenedbread'] = "Tues";
+              $list['pentecost'] = "Sun";
+              $list['feastoftrumpets'] = "Thurs";
+              $list['dayofatonement'] = "Sat";
+              $list['feastoftabernacles'] = "Thurs";
+              $list['lastgreatday'] = "Thurs";
+          break;
+          case 7: 
+              $list['passover'] = "Sat"; 
+              $list['unleavenedbread'] = "Sun";
+              $list['pentecost'] = "Sun";
+              $list['feastoftrumpets'] = "Tues";
+              $list['dayofatonement'] = "Thurs";
+              $list['feastoftabernacles'] = "Tues";
+              $list['lastgreatday'] = "Tues";
+
+          break;
+          default: 
+              $list['passover'] = "Sat"; 
+              $list['unleavenedbread'] = "Sun";
+              $list['pentecost'] = "Sun";
+              $list['feastoftrumpets'] = "Tues";
+              $list['dayofatonement'] = "Thurs";
+              $list['feastoftabernacles'] = "Tues";
+              $list['lastgreatday'] = "Tues";
+
+          break;
+      }
+
+  
+    return $list[$day];
+
+}
+

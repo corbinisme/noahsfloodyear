@@ -33,6 +33,8 @@ sites/*/private
 sites/simpletest
 node_modules/
 
+/solr/
+
 
 /.well-known
 /cgi-bin/

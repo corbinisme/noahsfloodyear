@@ -1,0 +1,11 @@
+services:
+  jsonapi_search_api_facets.add_search_meta_subscriber:
+    class: Drupal\jsonapi_search_api_facets\EventSubscriber\AddSearchMetaEventSubscriber
+    arguments: ['@facets.manager', '@entity_type.manager']
+    tags:
+      - {name: event_subscriber}
+  jsonapi_search_api_facets.query_pre_execute:
+    class: Drupal\jsonapi_search_api_facets\EventSubscriber\SearchApiQueryPreExecute
+    arguments: ['@facets.manager']
+    tags:
+      - {name: event_subscriber}
