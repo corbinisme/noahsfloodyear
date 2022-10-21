@@ -3,6 +3,7 @@
 namespace Drupal\file_download_link_media\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
@@ -10,7 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\media\Entity\MediaType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Extension\ModuleHandler;
 
 /**
  * Plugin implementation of the 'file_download_link_media' formatter.
@@ -35,7 +35,7 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
   /**
    * Token entity mapper service.
    *
-   * @var \Drupal\token\TokenEntityMapper|null
+   * @var \Drupal\token\TokenEntityMapperInterface|null
    */
   protected $tokenEntityMapper;
 
@@ -56,12 +56,12 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param \Drupal\Core\Extension\ModuleHandler $module_handler
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   Module handler service.
-   * @param \Drupal\token\TokenEntityMapper|null $token_entity_mapper
+   * @param \Drupal\token\TokenEntityMapperInterface|null $token_entity_mapper
    *   Token entity mapper if token module is installed. Otherwise NULL.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, ModuleHandler $module_handler, $token_entity_mapper) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, ModuleHandlerInterface $module_handler, $token_entity_mapper) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->moduleHandler = $module_handler;
     $this->tokenEntityMapper = $token_entity_mapper;

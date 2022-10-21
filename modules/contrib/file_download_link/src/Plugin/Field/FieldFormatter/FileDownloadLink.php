@@ -2,17 +2,17 @@
 
 namespace Drupal\file_download_link\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Utility\Token;
 use Drupal\file\Plugin\Field\FieldFormatter\FileFormatterBase;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\Html;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Extension\ModuleHandler;
 
 /**
  * Plugin implementation of the 'file_download_link' formatter.
@@ -38,14 +38,14 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
   /**
    * Module handler service.
    *
-   * @var \Drupal\Core\Extension\ModuleHandler
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
    */
   protected $moduleHandler;
 
   /**
    * Token entity mapper service.
    *
-   * @var \Drupal\token\TokenEntityMapper|null
+   * @var \Drupal\token\TokenEntityMapperInterface|null
    */
   protected $tokenEntityMapper;
 
@@ -75,14 +75,14 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
    *   Any third party settings.
    * @param \Drupal\Core\Utility\Token $token
    *   Token service.
-   * @param \Drupal\Core\Extension\ModuleHandler $module_handler
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   Module handler service.
-   * @param \Drupal\token\TokenEntityMapper|null $token_entity_mapper
+   * @param \Drupal\token\TokenEntityMapperInterface|null $token_entity_mapper
    *   Token entity mapper if token module is installed. Otherwise NULL.
    * @param \Drupal\Core\File\FileUrlGeneratorInterface $file_url_generator
    *   FileUrlGenerator service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, Token $token, ModuleHandler $module_handler, $token_entity_mapper, FileUrlGeneratorInterface $file_url_generator) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, Token $token, ModuleHandlerInterface $module_handler, $token_entity_mapper, FileUrlGeneratorInterface $file_url_generator) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->token = $token;
     $this->moduleHandler = $module_handler;
