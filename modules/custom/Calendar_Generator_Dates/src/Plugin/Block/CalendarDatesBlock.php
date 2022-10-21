@@ -146,6 +146,7 @@ class CalendarDatesBlock extends BlockBase {
 
 	$markup = "";
 
+
 	
 	$thisURL = $_SERVER['REQUEST_URI'];
 	$splits = explode("/",$thisURL);
@@ -176,6 +177,8 @@ class CalendarDatesBlock extends BlockBase {
 	
 	$query = $con->query($sql);
 	$result = $query->fetchAll();
+
+	$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
 	$markup .= "<h2 class='text-center'>" . $result[0]->GC_Year . " " . $result[0]->GC_Era . "</h2>";
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
 	
@@ -238,6 +241,16 @@ class CalendarDatesBlock extends BlockBase {
 	
 	$markup .= "</div>";
 
+
+	$fileName = $result[0]->GC_Era . $result[0]->GC_Year . ".html";
+	// load the html?
+	$path = $_SERVER["DOCUMENT_ROOT"] . "/Content/download/generator/output/" . $fileName;
+	$out = file_get_contents($path);
+	$out = html_entity_decode($out);
+    $out = str_replace("&amp;nbsp;", "&nbsp;", $out);
+
+	$shorten  = substr($out, strpos($out, "NewCalendarContainer")+22);
+	$markup .= "<div class='loadhtmlwrapper'>" . $shorten . "</div>";
 	return $markup;
 
   }
