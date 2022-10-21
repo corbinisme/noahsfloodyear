@@ -1,0 +1,15 @@
+name: 'Entity Save And Add Another'
+type: module
+description: 'Create a button on entity form that allows to create a entity content and continue to create another entity content of that type.'
+package: Other
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:menu_link_content
+  - drupal:block
+
+# Information added by Drupal.org packaging script on 2020-07-10
+version: '1.0.0'
+project: 'entity_save_and_addanother'
+datestamp: 1594392524

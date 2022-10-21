@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @file
+ * Adding Save and Continue button for entites.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * @file
+ * Create a button on entity form page.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_save_and_addanother_form_node_form_alter(array &$form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  if (strpos($current_path, '/node/add/') !== FALSE) {
+    $form_state->setValue('entity_save_and_addanother_node', $current_path);
+    $form['#submit'][] = 'entity_save_and_addanother_node_submit_handler';
+    $form['actions']['entity_save_and_addanother_node'] = $form['actions']['submit'];
+    $form['actions']['entity_save_and_addanother_node']['#value'] = t('Save and Add Another');
+    \Drupal::request()->query->remove('destination');
+    $form['actions']['entity_save_and_addanother_node']['#submit'][] = 'entity_save_and_addanother_node_submit_handler';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_save_and_addanother_form_taxonomy_term_form_alter(array &$form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $taxonomyPath = '/admin/structure/taxonomy/manage/' . $form['vid']['#value'] . '/add';
+  if (strpos($current_path, $taxonomyPath) !== FALSE) {
+    $form_state->setValue('entity_save_and_addanother_term', $current_path);
+    $form['#submit'][] = 'entity_save_and_addanother_term_submit_handler';
+    $form['actions']['entity_save_and_addanother_term'] = $form['actions']['submit'];
+    $form['actions']['entity_save_and_addanother_term']['#value'] = t('Save and Add Another');
+    \Drupal::request()->query->remove('destination');
+    $form['actions']['entity_save_and_addanother_term']['#submit'][] = 'entity_save_and_addanother_term_submit_handler';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_save_and_addanother_form_menu_link_content_form_alter(array &$form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $menuPath = '/admin/structure/menu/manage/' . rtrim($form['menu_parent']['#default_value'], ':') . '/add';
+  if (strpos($current_path, $menuPath) !== FALSE) {
+    $form_state->setValue('entity_save_and_addanother_menu', $current_path);
+    $form['#submit'][] = 'entity_save_and_addanother_menu_submit_handler';
+    $form['actions']['entity_save_and_addanother_menu'] = $form['actions']['submit'];
+    $form['actions']['entity_save_and_addanother_menu']['#value'] = t('Save and Add Another');
+    \Drupal::request()->query->remove('destination');
+    $form['actions']['entity_save_and_addanother_menu']['#submit'][] = 'entity_save_and_addanother_menu_submit_handler';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_save_and_addanother_form_block_content_form_alter(array &$form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  if (strpos($current_path, '/block/add') !== FALSE) {
+    $form_state->setValue('entity_save_and_addanother_block', $current_path);
+    $form['#submit'][] = 'entity_save_and_addanother_block_submit_handler';
+    $form['actions']['entity_save_and_addanother_block'] = $form['actions']['submit'];
+    $form['actions']['entity_save_and_addanother_block']['#value'] = t('Save and Add Another');
+    \Drupal::request()->query->remove('destination');
+    $form['actions']['entity_save_and_addanother_block']['#submit'][] = 'entity_save_and_addanother_block_submit_handler';
+  }
+}
+
+/**
+ * Submit callback to set the redirect for node.
+ */
+function entity_save_and_addanother_node_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-node') {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $form_state->setRedirectUrl(Url::fromUserInput($current_path));
+  }
+}
+
+/**
+ * Submit callback to set the redirect for taxonomy.
+ */
+function entity_save_and_addanother_term_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-term') {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $form_state->setRedirectUrl(Url::fromUserInput($current_path));
+  }
+}
+
+/**
+ * Submit callback to set the redirect for menu.
+ */
+function entity_save_and_addanother_menu_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-menu') {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $form_state->setRedirectUrl(Url::fromUserInput($current_path));
+  }
+}
+
+/**
+ * Submit callback to set the redirect for block.
+ */
+function entity_save_and_addanother_block_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-block') {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $form_state->setRedirectUrl(Url::fromUserInput($current_path));
+  }
+}
