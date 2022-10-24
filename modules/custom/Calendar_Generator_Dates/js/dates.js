@@ -25,6 +25,9 @@ var dates = {
         })
     }
 }
-window.onload = function(){
+
+
+window.addEventListener('load',
+  function() {
     dates.init();
-}
+  }, false);
