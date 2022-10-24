@@ -138,7 +138,7 @@ class CalendarDatesBlock extends BlockBase {
 		</div>
 		</div>';
 
-	return $mar;
+	return "";
   }
 
 
@@ -178,7 +178,7 @@ class CalendarDatesBlock extends BlockBase {
 	$query = $con->query($sql);
 	$result = $query->fetchAll();
 
-	$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
+	//$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
 	$markup .= "<h2 class='text-center'>" . $result[0]->GC_Year . " " . $result[0]->GC_Era . "</h2>";
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
 	
@@ -249,8 +249,9 @@ class CalendarDatesBlock extends BlockBase {
 	$out = html_entity_decode($out);
     $out = str_replace("&amp;nbsp;", "&nbsp;", $out);
 
-	$shorten  = substr($out, strpos($out, "NewCalendarContainer")+22);
-	$markup .= "<div class='loadhtmlwrapper'>" . $shorten . "</div>";
+	$shorten  = substr($out, strpos($out, "id=\"AMYear")-7);
+	// newcalendar +22
+	$markup .= "<div class='loadhtmlwrapper calendarWrapper'><div class='calendarMarkup'>" . $shorten . "</div></div>";
 	return $markup;
 
   }
