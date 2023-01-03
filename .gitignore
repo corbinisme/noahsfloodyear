@@ -35,6 +35,7 @@ node_modules/
 
 /solr/
 
+/tcog/
 
 /.well-known
 /cgi-bin/
