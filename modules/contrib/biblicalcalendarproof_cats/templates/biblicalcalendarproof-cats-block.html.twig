@@ -1,0 +1,46 @@
+
+<div class="views view-spj-bios">
+{% for key,value in data %}
+<div class="role-type">
+
+  <h2>{{key}}</h2>
+  <div class="content-wrap">
+  
+    
+    <div class="views-content">
+    {% for bio in value.entities %}
+
+
+    
+
+
+      
+
+      {% if bio.field_video_source %}
+        <div class="views-row video-timeline">
+          <span class="badge bg-info">{{bio.title}}</span><br />
+          <video controls class="homepage-videos">
+            <source src="{{bio.field_video_source}}" />
+          </video>
+          <br />
+          {{bio.body | raw}}
+        </div>
+      {% else %}
+        <div class="views-row regular">
+          
+            <a href="{{bio.url}}" class="btn btn-block btn-primary">{{bio.title}}</a>
+          
+        </div>
+      {% endif %}
+      
+      
+   
+   
+
+    {% endfor%}
+    </div>
+
+  </div>
+  </div>
+{% endfor%}
+</div>
