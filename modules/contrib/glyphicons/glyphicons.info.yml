@@ -1,0 +1,14 @@
+name: CKEditor Bootstrap Glyphicon
+type: module
+description: Adds the Bootstrap Glyphicons plugin to CKEditor.
+package: CKEditor
+core_version_requirement: ^8 || ^9
+
+dependencies:
+  - drupal:ckeditor
+  - colordialog:colordialog
+
+# Information added by Drupal.org packaging script on 2020-09-21
+version: '8.x-1.4'
+project: 'glyphicons'
+datestamp: 1600716336

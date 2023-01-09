@@ -32,6 +32,7 @@
         "drupal/entity_save_and_addanother": "1.0",
         "drupal/file_download_link": "^2.0",
         "drupal/fontawesome": "2.23",
+        "drupal/glyphicons": "^1.4",
         "drupal/migrate_plus": "^5.2",
         "drupal/migrate_tools": "^5.1",
         "drupal/module_filter": "^3.2",

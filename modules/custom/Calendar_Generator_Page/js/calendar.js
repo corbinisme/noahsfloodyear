@@ -93,33 +93,24 @@ var calendar = {
     },
     loadedMain: false,
     expandContent: function(){
-        if(!calendar.loadedMain){
-            let textarea = document.querySelector(".calendarMarkup textarea");
-            if(textarea!=null){
-                calendar.loadedMain = true;
-                //console.log("textarea", textarea, textarea.length)
-                let content = textarea.value;
-                let parent = document.querySelector("#loadCal");
-                let node = document.createElement("div");
-                node.innerHTML = content;
-                let newcontent = node.querySelector("#NewCalendarContainer");
-                parent.innerHTML = newcontent.innerHTML;
-                parent.querySelectorAll(".Cell.Month").forEach(function(ce){
-                    let val = ce.innerHTML;
-                    
-                    if(val == "&amp;nbsp;"){
-                        ce.innerHTML = "&nbsp;";
-                    }
-                    calendar.findPassover();
-                });
+        
+        calendar.loadedMain = true;
 
-                calendar.setHCmonthNums();
-            } else {
-                window.setTimeout(function(){
-                    calendar.expandContent()
-                }, 200)
+        console.log("expand calendar")
+        let parent = document.querySelector(".loadhtmlwrapper");
+        parent.innerHTML = newcontent.innerHTML;
+        parent.querySelectorAll(".Cell.Month").forEach(function(ce){
+            let val = ce.innerHTML;
+            
+            if(val == "&amp;nbsp;"){
+                ce.innerHTML = "&nbsp;";
             }
-        }
+            calendar.findPassover();
+        });
+
+        calendar.setHCmonthNums();
+            
+        
     },
     findFirstOfNisan: function() {
         var a = document.getElementById("Nisan1");

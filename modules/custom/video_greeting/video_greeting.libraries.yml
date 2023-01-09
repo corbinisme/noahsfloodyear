@@ -1,0 +1,5 @@
+welcome:
+  js:
+    //unpkg.com/seethru@4.0.0/dist/seeThru.min.js: {type: external, minified: true}
+    js/calendar_welcome.js: {}
+      

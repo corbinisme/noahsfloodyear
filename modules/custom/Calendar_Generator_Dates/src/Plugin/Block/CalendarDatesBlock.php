@@ -132,7 +132,9 @@ class CalendarDatesBlock extends BlockBase {
 		</div>
 		<div class="calendarWrapper">
 		<div class="actions">
-			<div class="caption">THE BELOW DATES REPRESENT THE SABBATHS OF EACH MONTH</div>
+			<div class="caption">
+			<h3 class="disclaimer_heading">THE BELOW DATES REPRESENT THE SABBATHS OF EACH MONTH</h3>
+			</div>
 			<div class="yearToggle prev"><a href="#">Previous Year</a></div>
 			<div class="yearToggle next"><a href="#">Next Year</a></div>
 		</div>
@@ -194,7 +196,7 @@ class CalendarDatesBlock extends BlockBase {
 	$markup .= "</tr>";
 	$markup .= "</table>";
 
-	$markup .= "<h3 class='text-center'>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</h3>";
+	$markup .= "<h3 class='text-center disclaimer_heading'>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</h3>";
 	
 
 	$amYear = $result[0]->AM;
@@ -208,7 +210,7 @@ class CalendarDatesBlock extends BlockBase {
 	
 	$markup .= "<input type='hidden' id='AMYear' value='" . $result[0]->AM . "' />";
 	// add the other one
-	$markup .= "<div class='calendarWrapper'><div class='calendarMarkup'>";
+	$markup .= "<div class='calendarWrapper hidden'><div class='calendarMarkup'>";
 
 	$markup .= "<div class='calendarMetrics' style='background: rgba(0,0,0,0.4); border-radius: 10px; padding: 2em;'><div class='row'>
 		<div class='col-sm-4'>How many 247 Year Cycles: " . ceil($cycles) . " </div>

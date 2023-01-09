@@ -1,0 +1,6 @@
+video:
+  path: /video/greeting 
+  defaults:
+    _controller: Drupal\video_greeting\Controller\VideoGreetingController::index
+  requirements:
+    _permission: 'access content'

@@ -25,7 +25,7 @@ var timeline = {
 		buttonEl.classList.add("btn");
 		buttonEl.classList.add("btn-default");
 		buttonEl.onclick = timeline.rotateTimeline;
-		node.prepend(buttonEl)
+		//node.prepend(buttonEl)
 
 	},
 	extractClassFromRow: function(classes){
@@ -109,14 +109,14 @@ var timeline = {
 						timeline.loadedData[am] = data[idx];
 					});
 					
-					timeline.buildModal(timeline.loadedData[nid]);
+					timeline.setModal(timeline.loadedData[nid]);
 				});
 
 				
 			  } else {
 				
 					
-				timeline.buildModal(timeline.loadedData[nid]);
+				timeline.setModal(timeline.loadedData[nid]);
 			  }
 
 
@@ -125,11 +125,72 @@ var timeline = {
 		})
 		
 	},
-	buildModal: function(id){
+	buildModal: function(){
+	
+		
+		let template = `<div id="timelineModal" class="modal fade" role="dialog">
+			<div class="modal-dialog modal-lg">
+		
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close modalClose" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Timeline Detail</h4>
+				</div>
+				<div class="modal-body" style="max-height: 60vh; overflow: auto;">
+				<p>Some text in the modal.</p>
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default modalClose" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		
+			</div>
+		</div>`;
+		let templateNode = document.createElement("div");
+		templateNode.innerHTML = template;
+		document.querySelector("body").append(templateNode);
+
+		document.querySelectorAll("#timelineModal .modalClose").forEach(function(el){
+			el.addEventListener("click", function(e){
+				let mod = document.getElementById("timelineModal");
+				mod.classList.remove("in")
+				mod.classList.remove("show")
+			})
+		})
+
+	
+	},
+	sizeModal: function(){
+		let modal  = document.getElementById("timelineModal");
+		var height = modal.getBoundingClientRect().height;
+		var winHeight = window.outerHeight;
+		var diff = winHeight-height;
+		console.log(height, winHeight, diff);
+
+		modal.style.top = (diff/2) + "px";
+
+	},
+	setModal: function(id){
+
 		console.log("building", id);
 		let title = id['title'][0].value;
 		let body = id['body'][0].processed;
 		console.log("title",title, body);
+		if(document.getElementById("timelineModal")==null){
+			timeline.buildModal();
+		}
+
+		let modal  = document.getElementById("timelineModal");
+		let bodyNode = modal.querySelector(".modal-body");
+		bodyNode.innerHTML = body;
+
+
+		modal.classList.add("in")
+		modal.classList.add("show")
+		modal.style.top = "0px";
+		console.log("modal");
+		timeline.sizeModal();
 
 	},
 	analyzeRows: function(){
@@ -226,9 +287,9 @@ var timeline = {
 			let top = timeline.getElemPosition(amNode);
 			let bot = timeline.getElemPosition(relatedNode);
 			let height = bot-top;
-			let offset = 590;
+			let offset = 515;
 			if(document.getElementById("toolbar-administration")){
-				offset += 130;
+				offset += 190;
 			}
 
 			temp.setAttribute("data-am", am);

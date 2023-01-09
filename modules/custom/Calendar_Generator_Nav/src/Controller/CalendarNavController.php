@@ -11,7 +11,7 @@ class CalendarNavController extends ControllerBase {
     	
         return [
             '#type' => 'markup',
-            '#markup' => $this->t('<h1>@era YEAR @name</h1>', [
+            '#markup' => $this->t('<h1 class="page-title">YEAR @name @era</h1>', [
 		        '@name' => $year,
 		        '@era' => $era_type
 		      ]),
