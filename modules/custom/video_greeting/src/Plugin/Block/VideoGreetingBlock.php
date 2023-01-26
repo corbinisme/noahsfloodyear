@@ -26,11 +26,11 @@ use Drupal\Component\Render\FormattableMarkup;
   
     
       $markup = 
-      '
+      '<div class="video-section hidden">
         <a href="javascript:void(0)" style="z-index:99999999" id="placeholderImg" onclick="playVid()">
       <img alt="" src="/Content/files/videoStandby.png">
       </a>
-     <div class="gsVideo gsHome" id="gsVideo">
+     <div class="gsVideo gsHome hidden" id="gsVideo">
         <video id="movingAlphaDemo" style="display: none;">
           <source src="/Content/video/bcpNew.webm" type="video/webm">
           <source src="/Content/video/test.mp4" type="video/mp4">
@@ -38,8 +38,8 @@ use Drupal\Component\Render\FormattableMarkup;
         </video><canvas width="448" height="649" class="seeThru-display"></canvas><canvas width="448" height="1298" class="seeThru-buffer" style="display: none;"></canvas>
         <canvas width="448" height="649" class="seeThru-display"></canvas>
         <canvas width="448" height="1298" class="seeThru-buffer" style="display: none;"></canvas>
-        <div class="CloseVideoButton" onclick="removeVideo()">Click to Close Video</div>
-      </div>
+        <div class="CloseVideoButton" onclick="removeVideo()">Click to Close</div>
+      </div></div>
         ';
       
       return [

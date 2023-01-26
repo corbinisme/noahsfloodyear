@@ -13,6 +13,7 @@ function removeVideo(){
 function playVid(){
     //alert("play");
     document.getElementById('placeholderImg').remove();
+    document.getElementById("block-videogreeting").classList.add("playing")
     video._video.play();
 }
 
@@ -24,16 +25,22 @@ function playVid(){
     $(document).ready(function ($) {
   
   
-      var cookie = getCookie("visitgreen")
-      if (cookie == "1" && false) {
+      var cookie = getCookie("visitgreen");
+      console.log("cookie", cookie)
+      if (cookie == "1") {
+          /*
           $('#gsVideo').remove(); //remove video wrapper
           $('#placeholderImg').remove();
+          */
+          //$('.video-section').removeClass("hidden")
       } else {
           setCookie("visitgreen", "1", 30);
+          
           var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth; //looking to find window size to prevent video on tablet and mobile
           console.log(width);
-          if (width > 1000 || true) { //the width value to check
+          if (width > 1000) { //the width value to check
   
+            $('.video-section').removeClass("hidden")
               video = seeThru.create('#movingAlphaDemo', {
                 start: 'external',
                 width: 448,
