@@ -1,5 +1,6 @@
+Feeds
+=====
 ## CONTENTS OF THIS FILE
-------------------------
 
   * Introduction
   * Requirements
@@ -7,9 +8,7 @@
   * Configuration
   * Maintainers
 
-
 ## INTRODUCTION
----------------
 
 Feeds is the module for importing or aggregating data into nodes, users,
 taxonomy terms and other content entities. Data can be imported from various
@@ -45,30 +44,27 @@ Extensible Parsers".
 ### Resources
 
  * For a full description of the module, visit the project page:
-   https://www.drupal.org/project/feeds
+   <https://www.drupal.org/project/feeds>
 
  * To submit bug reports and feature suggestions, or track changes:
-   https://www.drupal.org/project/issues/feeds
+   <https://www.drupal.org/project/issues/feeds>
 
  * For complete usage and developer documentation:
-   https://www.drupal.org/docs/8/modules/feeds
+   <https://www.drupal.org/docs/8/modules/feeds>
 
 
 ## REQUIREMENTS
----------------
 
 This module requires no modules outside of Drupal core.
 
 
 ## INSTALLATION
----------------
 
  * Install as you would normally install a contributed Drupal module. Visit
-   https://www.drupal.org/node/1897420 for further information.
+   <https://www.drupal.org/node/1897420> for further information.
 
 
 ## CONFIGURATION
-----------------
 
 After installation, creating a new import feed in Drupal 8 requires three steps:
 
@@ -83,11 +79,10 @@ After installation, creating a new import feed in Drupal 8 requires three steps:
    (file or url), and import actual data.
 
 For a complete walkthrough of configuration options and process, visit:
-https://drupal.org/docs/8/modules/feeds/creating-and-editing-import-feeds
+<https://drupal.org/docs/8/modules/feeds/creating-and-editing-import-feeds>
 
 
 ## MAINTAINERS
---------------
 
 ### Current maintainers:
 

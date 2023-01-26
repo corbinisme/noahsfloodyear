@@ -38,6 +38,13 @@ final class IndexResource extends EntityResourceBase implements ContainerInjecti
   private $parseModeManager;
 
   /**
+   * The event dispatcher.
+   *
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+   */
+  private $eventDispatcher;
+
+  /**
    * Constructs a new IndexResource object.
    *
    * @param \Drupal\search_api\ParseMode\ParseModePluginManager $parse_mode_manager
@@ -128,7 +135,7 @@ final class IndexResource extends EntityResourceBase implements ContainerInjecti
 
     // Dispatch an event to allow other modules to modify the meta.
     $event = new AddSearchMetaEvent($query, $results, $meta);
-    $meta = $this->eventDispatcher->dispatch(Events::ADD_SEARCH_META, $event)->getMeta();
+    $meta = $this->eventDispatcher->dispatch($event, Events::ADD_SEARCH_META)->getMeta();
     $response = $this->createJsonapiResponse($primary_data, $request, 200, [], $pager_links, $meta);
     $response->addCacheableDependency($cacheability);
     return $response;
@@ -151,7 +158,7 @@ final class IndexResource extends EntityResourceBase implements ContainerInjecti
     assert($parse_mode instanceof ParseModeInterface);
     $query->setParseMode($parse_mode);
 
-    $filter = $request->query->get(Filter::KEY_NAME);
+    $filter = $request->query->all(Filter::KEY_NAME);
     if (isset($filter['fulltext'])) {
       $query->keys($filter['fulltext']);
       unset($filter['fulltext']);
@@ -178,8 +185,8 @@ final class IndexResource extends EntityResourceBase implements ContainerInjecti
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   protected function applySortingToQuery(Request $request, QueryInterface $query, CacheableMetadata $cacheability): void {
-    $sort_params = $request->query->get('sort');
-    $sort = Sort::createFromQueryParameter($sort_params);
+    $params = $request->query->all();
+    $sort = Sort::createFromQueryParameter($params['sort']);
 
     foreach ($sort->fields() as $field) {
       $query->sort($field['path'], $field['direction']);
@@ -197,7 +204,7 @@ final class IndexResource extends EntityResourceBase implements ContainerInjecti
    */
   private function getPagination(Request $request): OffsetPage {
     return $request->query->has('page')
-      ? OffsetPage::createFromQueryParameter($request->query->get('page'))
+      ? OffsetPage::createFromQueryParameter($request->query->all('page'))
       : new OffsetPage(OffsetPage::DEFAULT_OFFSET, OffsetPage::SIZE_MAX);
   }
 

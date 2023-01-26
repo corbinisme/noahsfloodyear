@@ -13,6 +13,7 @@ use Drupal\Tests\devel_generate\Traits\DevelGenerateSetupTrait;
 use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 use Drupal\user\Entity\User;
 use Drush\TestTraits\DrushTestTrait;
+use Drupal\media\Entity\Media;
 
 /**
  * Test class for the Devel Generate drush commands.
@@ -37,6 +38,7 @@ class DevelGenerateCommandsTest extends BrowserTestBase {
     'content_translation',
     'devel',
     'devel_generate',
+    'devel_generate_fields',
     'language',
     'media',
     'menu_ui',
@@ -151,11 +153,12 @@ class DevelGenerateCommandsTest extends BrowserTestBase {
     $messages = $this->getErrorOutput();
     $this->assertStringContainsStringIgnoringCase('Finished 55 elements created successfully.', $messages, 'devel-generate-content batch ending message not found');
 
-    // Generate content with specified language.
-    $this->drush('devel-generate-content', [10], ['kill' => NULL, 'languages' => 'fr']);
+    // Generate specified language. Verify base field is populated.
+    $this->drush('devel-generate-content', [10], ['kill' => NULL, 'languages' => 'fr', 'base-fields' => 'phish']);
     $nodes = \Drupal::entityQuery('node')->accessCheck(FALSE)->execute();
     $node = Node::load(end($nodes));
     $this->assertEquals('fr', $node->language()->getId());
+    $this->assertNotEmpty($node->get('phish')->getString());
 
     // Generate content with translations.
     $this->drush('devel-generate-content', [18], [
@@ -213,10 +216,14 @@ class DevelGenerateCommandsTest extends BrowserTestBase {
     $media_type1 = $this->createMediaType('image');
     $media_type2 = $this->createMediaType('audio_file');
     // Make sure media items gets created with batch process.
-    $this->drush('devel-generate-media', [53], ['kill' => NULL]);
+    $this->drush('devel-generate-media', [53], ['kill' => NULL, 'base-fields' => 'phish']);
     $this->assertCount(53, \Drupal::entityQuery('media')->accessCheck(FALSE)->execute());
     $messages = $this->getErrorOutput();
     $this->assertStringContainsStringIgnoringCase('Finished 53 elements created successfully.', $messages, 'devel-generate-media batch ending message not found');
+    $medias = \Drupal::entityQuery('media')->accessCheck(FALSE)->execute();
+    $media = Media::load(end($medias));
+    // Verify that base field populates.
+    $this->assertNotEmpty($media->get('phish')->getString());
 
     // Test also with a non-batch process. We're testing also --kill here.
     $this->drush('devel-generate-media', [7], [

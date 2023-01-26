@@ -31,6 +31,21 @@ function entity_save_and_addanother_form_node_form_alter(array &$form, FormState
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function entity_save_and_addanother_form_media_form_alter(array &$form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  if (strpos($current_path, '/media/add/') !== FALSE) {
+    $form_state->setValue('entity_save_and_addanother_media', $current_path);
+    $form['#submit'][] = 'entity_save_and_addanother_media_submit_handler';
+    $form['actions']['entity_save_and_addanother_media'] = $form['actions']['submit'];
+    $form['actions']['entity_save_and_addanother_media']['#value'] = t('Save and Add Another');
+    \Drupal::request()->query->remove('destination');
+    $form['actions']['entity_save_and_addanother_media']['#submit'][] = 'entity_save_and_addanother_media_submit_handler';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function entity_save_and_addanother_form_taxonomy_term_form_alter(array &$form, FormStateInterface $form_state) {
   $current_path = \Drupal::service('path.current')->getPath();
   $taxonomyPath = '/admin/structure/taxonomy/manage/' . $form['vid']['#value'] . '/add';
@@ -81,6 +96,17 @@ function entity_save_and_addanother_form_block_content_form_alter(array &$form, 
 function entity_save_and_addanother_node_submit_handler(array &$form, FormStateInterface $form_state) {
   $trigger = $form_state->getTriggeringElement();
   if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-node') {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $form_state->setRedirectUrl(Url::fromUserInput($current_path));
+  }
+}
+
+/**
+ * Submit callback to set the redirect for media.
+ */
+function entity_save_and_addanother_media_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-media') {
     $current_path = \Drupal::service('path.current')->getPath();
     $form_state->setRedirectUrl(Url::fromUserInput($current_path));
   }

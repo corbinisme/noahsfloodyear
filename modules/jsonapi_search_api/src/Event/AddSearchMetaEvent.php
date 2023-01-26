@@ -2,9 +2,9 @@
 
 namespace Drupal\jsonapi_search_api\Event;
 
+use Drupal\Component\EventDispatcher\Event;
 use Drupal\search_api\Query\QueryInterface;
 use Drupal\search_api\Query\ResultSetInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Allows for other sources to modify the meta portion of the search.

@@ -38,7 +38,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     "max_comments" = 0,
  *     "title_length" = 4,
  *     "add_type_label" = FALSE
- *   }
+ *   },
+ *   dependencies = {
+ *     "node",
+ *   },
  * )
  */
 class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactoryPluginInterface {
@@ -317,7 +320,13 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     $form['skip_fields'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Fields to leave empty'),
-      '#description' => $this->t('Enter the field names as a comma-separated list. These will be skipped and have no value in the generated content.'),
+      '#description' => $this->t('Enter the field names as a comma-separated list. These will be skipped and have a default value in the generated content.'),
+      '#default_value' => NULL,
+    ];
+    $form['base_fields'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Base fields to populate'),
+      '#description' => $this->t('Enter the field names as a comma-separated list. These will be populated.'),
       '#default_value' => NULL,
     ];
     $form['add_type_label'] = [
@@ -386,7 +395,9 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
       $form_state->setErrorByName('node_types', $this->t('Please select at least one content type'));
     }
     $skip_fields = is_null($form_state->getValue('skip_fields')) ? [] : StringUtils::csvToArray($form_state->getValue('skip_fields'));
+    $base_fields = is_null($form_state->getValue('base_fields')) ? [] : StringUtils::csvToArray($form_state->getValue('base_fields'));
     $form_state->setValue('skip_fields', $skip_fields);
+    $form_state->setValue('base_fields', $base_fields);
   }
 
   /**
@@ -539,6 +550,7 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     $values['kill'] = $options['kill'];
     $values['feedback'] = $options['feedback'];
     $values['skip_fields'] = is_null($options['skip-fields']) ? [] : StringUtils::csvToArray($options['skip-fields']);
+    $values['base_fields'] = is_null($options['base-fields']) ? [] : StringUtils::csvToArray($options['base-fields']);
     $values['title_length'] = 6;
     $values['num'] = array_shift($args);
     $values['max_comments'] = array_shift($args);
@@ -665,8 +677,8 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
     // generated node.
     $node->devel_generate = $results;
 
-    // Populate all fields with sample values.
-    $this->populateFields($node);
+    // Populate non-skipped fields with sample values.
+    $this->populateFields($node, $results['skip_fields'], $results['base_fields']);
 
     // Remove the fields which are intended to have no value.
     foreach ($results['skip_fields'] as $field) {

@@ -30,7 +30,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     "minimum_depth" = 1,
  *     "maximum_depth" = 4,
  *     "kill" = FALSE,
- *   }
+ *   },
+ *   dependencies = {
+ *     "taxonomy",
+ *   },
  * )
  */
 class TermDevelGenerate extends DevelGenerateBase implements ContainerFactoryPluginInterface {

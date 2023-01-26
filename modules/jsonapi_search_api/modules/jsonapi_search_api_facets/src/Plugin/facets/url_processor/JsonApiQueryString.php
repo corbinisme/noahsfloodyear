@@ -2,7 +2,6 @@
 
 namespace Drupal\jsonapi_search_api_facets\Plugin\facets\url_processor;
 
-use Drupal\Core\Url;
 use Drupal\facets\FacetInterface;
 use Drupal\facets\Plugin\facets\url_processor\QueryString;
 use Drupal\jsonapi\Query\Filter;
@@ -44,11 +43,13 @@ class JsonApiQueryString extends QueryString {
 
     // Get the active facet parameters.
     // @todo can we leverage \Drupal\jsonapi_search_api\Query\Filter
-    $active_params = $url_parameters->get($this->filterKey, []);
+    if ($url_parameters->has($this->filterKey)) {
+      $active_params = $url_parameters->all($this->filterKey);
+    }
     $facet_source_id = $this->configuration['facet']->getFacetSourceId();
 
     // When an invalid parameter is passed in the url, we can't do anything.
-    if (!is_array($active_params)) {
+    if (empty($active_params)) {
       return;
     }
     foreach ($active_params as $param_identifier => $param_value) {

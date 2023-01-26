@@ -58,9 +58,11 @@ class DevelToolbarTest extends DevelBrowserTestBase {
       'administer site configuration',
       'access devel information',
       'access toolbar',
+      'switch users',
     ]);
     $this->toolbarUser = $this->drupalCreateUser([
       'access toolbar',
+      'switch users',
     ]);
   }
 

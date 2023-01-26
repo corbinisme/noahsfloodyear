@@ -203,6 +203,19 @@ class MediaDevelGenerate extends DevelGenerateBase implements ContainerFactoryPl
       '#max' => 255,
     ];
 
+    $form['skip_fields'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Fields to leave empty'),
+      '#description' => $this->t('Enter the field names as a comma-separated list. These will be skipped and have a default value in the generated content.'),
+      '#default_value' => NULL,
+    ];
+    $form['base_fields'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Base fields to populate'),
+      '#description' => $this->t('Enter the field names as a comma-separated list. These will be populated.'),
+      '#default_value' => NULL,
+    ];
+
     $options = [];
     // We always need a language.
     $languages = $this->languageManager->getLanguages(LanguageInterface::STATE_ALL);
@@ -237,6 +250,11 @@ class MediaDevelGenerate extends DevelGenerateBase implements ContainerFactoryPl
     }
     // Store the normalized value back, in form state.
     $form_state->setValue('media_types', array_combine($media_types, $media_types));
+
+    $skip_fields = is_null($form_state->getValue('skip_fields')) ? [] : StringUtils::csvToArray($form_state->getValue('skip_fields'));
+    $base_fields = is_null($form_state->getValue('base_fields')) ? [] : StringUtils::csvToArray($form_state->getValue('base_fields'));
+    $form_state->setValue('skip_fields', $skip_fields);
+    $form_state->setValue('base_fields', $base_fields);
   }
 
   /**
@@ -373,6 +391,9 @@ class MediaDevelGenerate extends DevelGenerateBase implements ContainerFactoryPl
     else {
       $this->createMediaItem($context['results']);
     }
+    if (!isset($context['results']['num'])) {
+      $context['results']['num'] = 0;
+    }
     $context['results']['num']++;
   }
 
@@ -411,6 +432,9 @@ class MediaDevelGenerate extends DevelGenerateBase implements ContainerFactoryPl
     $values['feedback'] = $options['feedback'];
     $values['name_length'] = 6;
     $values['num'] = array_shift($args);
+
+    $values['skip_fields'] = is_null($options['skip-fields']) ? [] : StringUtils::csvToArray($options['skip-fields']);
+    $values['base_fields'] = is_null($options['base-fields']) ? [] : StringUtils::csvToArray($options['base-fields']);
 
     $all_media_types = array_values($this->mediaTypeStorage->getQuery()->accessCheck(FALSE)->execute());
     $requested_media_types = StringUtils::csvToArray($options['media-types'] ?: $all_media_types);
@@ -509,8 +533,13 @@ class MediaDevelGenerate extends DevelGenerateBase implements ContainerFactoryPl
     // A flag to let hook implementations know that this is a generated item.
     $media->devel_generate = $results;
 
-    // Populate all fields with sample values.
-    $this->populateFields($media);
+    // Populate all non-skipped fields with sample values.
+    $this->populateFields($media, $results['skip_fields'], $results['base_fields']);
+
+    // Remove the fields which are intended to have no value.
+    foreach ($results['skip_fields'] as $field) {
+      unset($media->$field);
+    }
 
     $media->save();
   }

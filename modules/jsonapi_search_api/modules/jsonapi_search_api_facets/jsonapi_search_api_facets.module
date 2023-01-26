@@ -27,14 +27,25 @@ function jsonapi_search_api_facets_form_facet_source_edit_form_alter(&$form, For
  * Implements hook_form_FORM_ID_alter().
  */
 function jsonapi_search_api_facets_form_facets_facet_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  foreach ($form['widget']['#options'] as $plugin_id => $plugin_name) {
-    if (strpos($plugin_id, 'jsonapi_') !== 0) {
-      unset($form['widget']['#options'][$plugin_id]);
+  $entity = $form_state->getformObject()->getEntity();
+  $facet_source = $entity->getFacetSourceId();
+  if (strpos($facet_source, 'jsonapi_search_api_facets') === 0) {
+    foreach ($form['widget']['#options'] as $plugin_id => $plugin_name) {
+      if (strpos($plugin_id, 'jsonapi_') !== 0) {
+        unset($form['widget']['#options'][$plugin_id]);
+      }
+    }
+    // Empty behaviors have no effect over JSON:API.
+    $form['facet_settings']['empty_behavior']['#access'] = FALSE;
+    $form['facet_settings']['empty_behavior_container']['#access'] = FALSE;
+  }
+  else {
+    foreach ($form['widget']['#options'] as $plugin_id => $plugin_name) {
+      if (strpos($plugin_id, 'jsonapi_') === 0) {
+        unset($form['widget']['#options'][$plugin_id]);
+      }
     }
   }
-  // Empty behaviors have no effect over JSON:API.
-  $form['facet_settings']['empty_behavior']['#access'] = FALSE;
-  $form['facet_settings']['empty_behavior_container']['#access'] = FALSE;
 }
 
 /**

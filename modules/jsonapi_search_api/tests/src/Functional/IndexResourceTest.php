@@ -41,7 +41,12 @@ final class IndexResourceTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() : void {
     parent::setUp();
 
     // Set up example structure and content and populate the test index with
@@ -92,9 +97,13 @@ final class IndexResourceTest extends BrowserTestBase {
     $this->assertSame(200, $response->getStatusCode(), var_export(Json::decode((string) $response->getBody()), TRUE));
     $response_document = Json::decode((string) $response->getBody());
     $this->assertCount($expected_count, $response_document['data'], var_export($response_document, TRUE));
-    $this->assertSame($expected_ids, array_map(static function (array $data) {
+    $ids = array_map(static function (array $data) {
       return $data['attributes']['drupal_internal__id'];
-    }, $response_document['data']));
+    }, $response_document['data']);
+    if (!isset($query['sort'])) {
+      sort($ids);
+    }
+    $this->assertEquals($expected_ids, $ids);
     foreach ($expected_links_keys as $links_key) {
       $this->assertArrayHasKey($links_key, $response_document['links'], var_export($response_document['links'], TRUE));
     }

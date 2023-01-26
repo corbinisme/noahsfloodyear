@@ -25,7 +25,7 @@ class EntityProcessorBaseTest extends FeedsKernelTestBase {
   /**
    * The processor under test.
    *
-   * @var \Drupal\feeds\Feeds\Fetcher\EntityProcessorBase
+   * @var \Drupal\feeds\Feeds\Processor\EntityProcessorBase
    */
   protected $processor;
 
@@ -55,7 +55,7 @@ class EntityProcessorBaseTest extends FeedsKernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $this->feedType = $this->createMock(FeedTypeInterface::class);
@@ -91,6 +91,11 @@ class EntityProcessorBaseTest extends FeedsKernelTestBase {
       \Drupal::service('entity_type.manager'),
       \Drupal::service('entity_type.bundle.info'),
       \Drupal::service('language_manager'),
+      \Drupal::service('datetime.time'),
+      \Drupal::service('plugin.manager.action'),
+      \Drupal::service('renderer'),
+      \Drupal::service('logger.factory')->get('feeds'),
+      \Drupal::service('database'),
     ]);
 
     $this->feed = $this->createMock(FeedInterface::class);
@@ -143,13 +148,13 @@ class EntityProcessorBaseTest extends FeedsKernelTestBase {
     $node = $this->createNodeWithFeedsItem($this->feed);
 
     // Get hash of node.
-    $hash = $node->feeds_item->hash;
+    $hash = $node->get('feeds_item')->getItemByFeed($this->feed)->hash;
 
     // Clean.
     $this->processor->clean($this->feed, $node, new CleanState($this->feed->id()));
 
     // Assert that the hash did not change.
-    $this->assertEquals($hash, $node->feeds_item->hash);
+    $this->assertEquals($hash, $node->get('feeds_item')->getItemByFeed($this->feed)->hash);
   }
 
   /**
@@ -178,7 +183,7 @@ class EntityProcessorBaseTest extends FeedsKernelTestBase {
     // Assert that the node is unpublished now.
     $this->assertFalse($node->isPublished());
     // Assert that the hash is now 'entity:unpublish_action:node'.
-    $this->assertEquals('entity:unpublish_action:node', $node->feeds_item->hash);
+    $this->assertEquals('entity:unpublish_action:node', $node->get('feeds_item')->getItemByFeed($this->feed)->hash);
   }
 
   /**

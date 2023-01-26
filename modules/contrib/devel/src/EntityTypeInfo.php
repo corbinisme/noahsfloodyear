@@ -56,13 +56,13 @@ class EntityTypeInfo implements ContainerInjectionInterface {
    * @see hook_entity_type_alter()
    */
   public function entityTypeAlter(array &$entity_types) {
-
     foreach ($entity_types as $entity_type_id => $entity_type) {
       if (($entity_type->getFormClass('default') || $entity_type->getFormClass('edit')) && $entity_type->hasLinkTemplate('edit-form')) {
         // We use edit-form template to extract and set additional parameters
         // dynamically.
         $entity_link = $entity_type->getLinkTemplate('edit-form');
         $this->setEntityTypeLinkTemplate($entity_type, $entity_link, 'devel-load', "/devel/$entity_type_id", $entity_link);
+        $this->setEntityTypeLinkTemplate($entity_type, $entity_link, 'devel-load-with-references', "/devel/load-with-references/$entity_type_id", $entity_link);
       }
       if ($entity_type->hasViewBuilderClass() && $entity_type->hasLinkTemplate('canonical')) {
         // We use canonical template to extract and set additional parameters

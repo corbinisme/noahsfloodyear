@@ -2,7 +2,7 @@
 
 namespace Drupal\jsonapi_search_api_facets\EventSubscriber;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\facets\FacetManager\DefaultFacetManager;
 use Drupal\jsonapi_search_api\Event\AddSearchMetaEvent;
 use Drupal\jsonapi_search_api\Event\Events;
@@ -28,14 +28,14 @@ class AddSearchMetaEventSubscriber implements EventSubscriberInterface {
   protected $facetStorage;
 
   /**
-   * Constructs a new event subscriber.
+   * Constructs a new AddSearchMetaEventSubscriber object.
    *
-   * @param Drupal\facets\FacetManager\DefaultFacetManager $facet_manager
+   * @param \Drupal\facets\FacetManager\DefaultFacetManager $facet_manager
    *   The facet manager.
-   * @param Drupal\Core\Entity\EntityTypeManager $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(DefaultFacetManager $facet_manager, EntityTypeManager $entity_type_manager) {
+  public function __construct(DefaultFacetManager $facet_manager, EntityTypeManagerInterface $entity_type_manager) {
     $this->facetManager = $facet_manager;
     $this->facetStorage = $entity_type_manager->getStorage('facets_facet');
   }

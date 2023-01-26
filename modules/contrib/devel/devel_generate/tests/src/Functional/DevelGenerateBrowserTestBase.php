@@ -24,6 +24,7 @@ abstract class DevelGenerateBrowserTestBase extends BrowserTestBase {
     'content_translation',
     'devel',
     'devel_generate',
+    'devel_generate_fields',
     'language',
     'menu_ui',
     'node',

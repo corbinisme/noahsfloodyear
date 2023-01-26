@@ -5,6 +5,7 @@ namespace Drupal\Tests\devel_generate\Functional;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
+use Drupal\media\Entity\Media;
 
 /**
  * Tests the logic to generate data.
@@ -348,13 +349,17 @@ class DevelGenerateBrowserTest extends DevelGenerateBrowserTestBase {
       'name_length' => 12,
       "media_types[{$media_type1->id()}]" => 1,
       "media_types[{$media_type2->id()}]" => 1,
+      'base_fields' => 'phish',
       'kill' => 1,
     ];
     $this->drupalGet('admin/config/development/generate/media');
     $this->submitForm($edit, 'Generate');
     $this->assertSession()->pageTextContains('Finished creating 5 media items.');
     $this->assertSession()->pageTextContains('Generate process complete.');
-    $this->assertCount(5, \Drupal::entityQuery('media')->accessCheck(FALSE)->execute());
+    $medias = \Drupal::entityQuery('media')->accessCheck(FALSE)->execute();
+    $this->assertCount(5, $medias);
+    $media = Media::load(end($medias));
+    $this->assertNotEmpty($media->get('phish')->getString());
 
     // Creating media items (batch mode).
     $edit = [
@@ -362,6 +367,7 @@ class DevelGenerateBrowserTest extends DevelGenerateBrowserTestBase {
       'name_length' => 6,
       "media_types[{$media_type1->id()}]" => 1,
       "media_types[{$media_type2->id()}]" => 1,
+      'base_fields' => 'phish',
       'kill' => 1,
     ];
     $this->drupalGet('admin/config/development/generate/media');

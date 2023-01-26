@@ -6,7 +6,6 @@ use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Consolidation\SiteAlias\SiteAliasManagerAwareTrait;
 use Consolidation\SiteProcess\Util\Escape;
 use Drupal\Component\Uuid\Php;
-use Drupal\Core\DependencyInjection\Container;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Utility\Token;
 use Drush\Commands\DrushCommands;
@@ -17,6 +16,7 @@ use Drush\Utils\StringUtils;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class DevelCommands.
@@ -34,7 +34,7 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
 
   protected Token $token;
 
-  protected Container $container;
+  protected ContainerInterface $container;
 
   protected EventDispatcherInterface $eventDispatcher;
 
@@ -131,7 +131,7 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
     include_once './core/includes/install.inc';
     drupal_load_updates();
     $info = $this->codeLocate($implementation . "_$hook");
-    $exec = self::getEditor();
+    $exec = self::getEditor('');
     $cmd = sprintf($exec, Escape::shellArg($info['file']));
     $process = $this->processManager()->shell($cmd);
     $process->setTty(TRUE);
@@ -144,8 +144,14 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
    * @hook interact hook
    */
   public function hookInteract(Input $input, Output $output) {
+    $hook_implementations = [];
     if (!$input->getArgument('implementation')) {
-      if ($hook_implementations = $this->getModuleHandler()->getImplementations($input->getArgument('hook'))) {
+      foreach ($this->getModuleHandler()->getModuleList() as $key => $extension) {
+        if ($this->getModuleHandler()->hasImplementations($input->getArgument('hook'), [$key])) {
+          $hook_implementations[] = $key;
+        }
+      }
+      if ($hook_implementations) {
         if (!$choice = $this->io()->choice('Enter the number of the hook implementation you wish to view.', array_combine($hook_implementations, $hook_implementations))) {
           throw new UserAbortException();
         }
@@ -176,7 +182,7 @@ class DevelCommands extends DrushCommands implements SiteAliasManagerAwareInterf
    */
   public function event($event, $implementation) {
     $info = $this->codeLocate($implementation);
-    $exec = self::getEditor();
+    $exec = self::getEditor('');
     $cmd = sprintf($exec, Escape::shellArg($info['file']));
     $process = $this->processManager()->shell($cmd);
     $process->setTty(TRUE);

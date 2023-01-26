@@ -18,6 +18,8 @@ class MappingFormTest extends FeedsBrowserTestBase {
     'node',
     'user',
     'feeds_test_plugin',
+    'language',
+    'content_translation',
   ];
 
   /**
@@ -34,7 +36,8 @@ class MappingFormTest extends FeedsBrowserTestBase {
     $edit = [
       'add_target' => 'status',
     ];
-    $this->drupalPostForm('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping', $edit, 'Save');
+    $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
+    $this->submitForm($edit, 'Save');
 
     // Now try to map to a new source called 'title'. This shouldn't be allowed
     // because that source name already exists on the feed type.
@@ -43,7 +46,7 @@ class MappingFormTest extends FeedsBrowserTestBase {
       'mappings[2][map][value][custom__csv][value]' => 'title',
       'mappings[2][map][value][custom__csv][machine_name]' => 'title',
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Assert that the double source name is detected.
     $this->assertSession()->pageTextContains('The machine-readable name is already in use. It must be unique.');
@@ -213,7 +216,8 @@ class MappingFormTest extends FeedsBrowserTestBase {
       'dummy' => 'dummyValue',
     ];
 
-    $this->drupalPostForm('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping', $edit, 'Save');
+    $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
+    $this->submitForm($edit, 'Save');
 
     // Assert that the dummy value was saved for the parser.
     $feed_type = $this->reloadEntity($feed_type);
@@ -235,7 +239,8 @@ class MappingFormTest extends FeedsBrowserTestBase {
       'dummy' => 'invalid',
     ];
 
-    $this->drupalPostForm('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping', $edit, 'Save');
+    $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
+    $this->submitForm($edit, 'Save');
     $this->assertSession()->responseContains('Invalid value.');
 
     // Assert that the dummy value was *not* saved for the parser.
@@ -257,13 +262,14 @@ class MappingFormTest extends FeedsBrowserTestBase {
     $edit = [
       'add_target' => 'nid',
     ];
-    $this->drupalPostForm('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping', $edit, 'Save');
+    $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
+    $this->submitForm($edit, 'Save');
 
     // Now untick "unique".
     $edit = [
       'mappings[2][unique][value]' => 0,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Assert that a message is being displayed.
     $this->assertSession()->pageTextContains('When mapping to the entity ID (ID), it is recommended to set it as unique.');
@@ -296,7 +302,7 @@ class MappingFormTest extends FeedsBrowserTestBase {
     $edit = [
       'remove_mappings[2]' => 1,
     ];
-    $this->drupalPostForm(NULL, $edit, 'Save');
+    $this->submitForm($edit, 'Save');
 
     // Reload the page to clear any warnings.
     $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
@@ -308,6 +314,139 @@ class MappingFormTest extends FeedsBrowserTestBase {
     // Assert that the particular mapping no longer exists on the feed type.
     $feed_type = $this->reloadEntity($feed_type);
     $this->assertEquals($this->getDefaultMappings(), $feed_type->getMappings());
+  }
+
+  /**
+   * Tests duplicate mappings warning on mapping page.
+   *
+   * Tests that a warning is displayed on the mapping page when two mappings are
+   * configured the same.
+   */
+  public function testDuplicateMappingsWarning() {
+    // Add languages.
+    foreach (['es', 'nl'] as $langcode) {
+      $language = $this->container->get('entity_type.manager')->getStorage('configurable_language')->create([
+        'id' => $langcode,
+      ]);
+      $language->save();
+    }
+
+    // Set article bundle to be translatable.
+    $this->container->get('content_translation.manager')->setEnabled('node', 'article', TRUE);
+
+    // Create three text fields, all allowing exactly 2 values.
+    $this->createFieldWithStorage('field_alpha', [
+      'label' => 'Alpha',
+      'storage' => [
+        'cardinality' => 2,
+      ],
+    ]);
+    $this->createFieldWithStorage('field_beta', [
+      'label' => 'Beta',
+      'storage' => [
+        'cardinality' => 2,
+      ],
+    ]);
+    $this->createFieldWithStorage('field_delta', [
+      'label' => 'Delta',
+      'storage' => [
+        'cardinality' => 2,
+      ],
+    ]);
+
+    // Create a feed type with the followings mappings:
+    // - two equal configured mappings for target 'field_alpha';
+    // - two mappings for target 'field_beta', using a different source;
+    // - two mappings for target 'field_delta', using the same source, but a
+    //   different configured language.
+    $feed_type = $this->createFeedType([
+      'mappings' => [
+        [
+          'target' => 'field_alpha',
+          'map' => ['value' => 'author_name'],
+        ],
+        [
+          'target' => 'field_beta',
+          'map' => ['value' => 'content'],
+        ],
+        [
+          'target' => 'field_delta',
+          'map' => ['value' => 'title'],
+          'settings' => [
+            'language' => 'es',
+          ],
+        ],
+        [
+          'target' => 'field_alpha',
+          'map' => ['value' => 'author_name'],
+        ],
+        [
+          'target' => 'field_beta',
+          'map' => ['value' => 'description'],
+        ],
+        [
+          'target' => 'field_delta',
+          'map' => ['value' => 'title'],
+          'settings' => [
+            'language' => 'nl',
+          ],
+        ],
+      ],
+    ]);
+
+    // Go to the mappings page.
+    $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
+    $this->assertSession()->pageTextContains('The target Alpha (field_alpha) pairs more than once with the same source and the same settings.');
+    $this->assertSession()->pageTextNotContains('The target Beta (field_beta) pairs more than once with the same source and the same settings.');
+    $this->assertSession()->pageTextNotContains('The target Delta (field_delta) pairs more than once with the same source and the same settings.');
+  }
+
+  /**
+   * Tests duplicate mappings warning on mapping page after saving mappings.
+   *
+   * Tests that a warning gets displayed on the mapping page after adding
+   * mapping with the same configuration.
+   */
+  public function testDuplicateMappingsWarningAfterSaving() {
+    // Create a text field.
+    $this->createFieldWithStorage('field_alpha', [
+      'label' => 'Alpha',
+      'storage' => [
+        'cardinality' => 2,
+      ],
+    ]);
+
+    // Create a feed type.
+    $feed_type = $this->createFeedType();
+
+    // Go to the mappings page.
+    $this->drupalGet('/admin/structure/feeds/manage/' . $feed_type->id() . '/mapping');
+
+    // Add mapping to field 'field_alpha'.
+    $edit = [
+      'add_target' => 'field_alpha',
+    ];
+    $this->submitForm($edit, 'Save');
+    $edit = [
+      'mappings[2][map][value][select]' => 'content',
+    ];
+    $this->submitForm($edit, 'Save');
+
+    // Assert that no warning is shown yet.
+    $this->assertSession()->pageTextNotContains('pairs more than once');
+
+    // Now add mapping to field_alpha again.
+    $edit = [
+      'add_target' => 'field_alpha',
+    ];
+    $this->submitForm($edit, 'Save');
+    $edit = [
+      'mappings[3][map][value][select]' => 'content',
+    ];
+    $this->submitForm($edit, 'Save');
+
+    // And assert that a warning is now shown.
+    $this->assertSession()->pageTextContains('The target Alpha (field_alpha) pairs more than once with the same source and the same settings.');
   }
 
 }
