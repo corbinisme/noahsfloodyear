@@ -30,7 +30,7 @@ use Drupal\Component\Render\FormattableMarkup;
         <a href="javascript:void(0)" style="z-index:99999999" id="placeholderImg" onclick="playVid()">
       <img alt="" src="/Content/files/videoStandby.png">
       </a>
-     <div class="gsVideo gsHome hidden" id="gsVideo">
+     <div class="gsVideo gsHome" id="gsVideo">
         <video id="movingAlphaDemo" style="display: none;">
           <source src="/Content/video/bcpNew.webm" type="video/webm">
           <source src="/Content/video/test.mp4" type="video/mp4">
