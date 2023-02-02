@@ -181,7 +181,13 @@ class CalendarDatesBlock extends BlockBase {
 	$result = $query->fetchAll();
 
 	//$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
-	$markup .= "<h2 class='text-center'>" . $result[0]->GC_Year . " " . $result[0]->GC_Era . "</h2>";
+
+	//if the filter date is AM, show GC
+	if($era=="AM"||$era=="am"){
+		$markup .= "<h2 class='subtitle text-center'>" . $result[0]->GC_Year . " " . $result[0]->GC_Era . "</h2>";
+	} else {
+		$markup .= "<h3 class='subtitle text-center'>" . $result[0]->AM . " AM (After Man)</h2>";
+	}
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
 	
 	$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
