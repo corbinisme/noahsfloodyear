@@ -13,8 +13,10 @@ var calendarnav = {
         return era;
     },
     updateYear: function(dir){
+        
         let year = calendarnav.getCurrentYear();
         let era = calendarnav.getCurrentEra();
+        //console.log("move", dir, era, year)
         if(dir =="prev"){
             if(era !="bc"){
                 year--;
@@ -32,7 +34,7 @@ var calendarnav = {
             } else {
                 //bc moves other way
                 year++;
-                if(year>=0){
+                if(year<=0){
                     year = 1;
                     era="ad";
                 }
@@ -56,12 +58,16 @@ var calendarnav = {
                 year--;
                 if(year>4046){
                     year = 4046;
-                    
+                }
+                if(year==0){
+                    year = 1;
+                    era="ad";
                 }
             }
         }
 
         let newurl = "/calendar/" + era + "/" + year;
+        
         window.location.href = newurl;
         
     },
@@ -71,13 +77,13 @@ var calendarnav = {
     generateBtn:function(e){
         let year = calendarnav.getCurrentYear();
             let era = calendarnav.getCurrentEra();
-            console.log("generate", year, era);
+            //console.log("generate", year, era);
             let newurl = "/calendar/" + era + "/" + year;
             window.location.href = newurl;
     },
     binding: function(){
         //functionality of the nav
-        console.log("binding nav for calendar page");
+        //console.log("binding nav for calendar page");
 
         document.querySelector(".calendar_nav .generateBtn").addEventListener("click", function(e){
             e.preventDefault();

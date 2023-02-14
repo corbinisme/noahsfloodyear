@@ -70,9 +70,9 @@ class CalendarNavBlock extends BlockBase {
 
     $content = "<div class='col-sm-4'>" .
     "<div class='input-group'>" . 
-    "<a class='input-group-addon yearToggle prev' data-dir='prev' onClick='calendarnav.updateYear(\"prev\")'>Prev</a>" .  
+    "<a class='input-group-addon yearToggle prev' data-dir='prev'>Prev</a>" .  
     "<input class='form-control currentyear' type='number' value='" . $year . "' />" . 
-    "<a class='input-group-addon yearToggle next' data-dir='next' onClick='calendarnav.updateYear(\"next\")'>Next</a>" .  
+    "<a class='input-group-addon yearToggle next' data-dir='next'>Next</a>" .  
     "</div>" . 
     "</div>";
 
