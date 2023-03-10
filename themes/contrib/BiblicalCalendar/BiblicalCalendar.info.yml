@@ -1,0 +1,30 @@
+name: BiblicalCalendar
+type: theme
+description: 'Child Theme with Bootstrap 5 css library'
+core_version_requirement: ^9.4 || ^10
+base theme: bootstrap5
+
+
+libraries:
+  - BiblicalCalendar/framework
+
+
+regions:
+  topbar: 'Top Bar'
+  navigation: 'Navigation'
+  header: 'Header'
+  nav_branding: 'Navigation branding region'
+  nav_main: 'Main navigation region'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  nav_additional: 'Additional navigation region (eg search form, social icons, etc)'
+  breadcrumb: Breadcrumbs
+  highlighted: 'Highlighted'
+  content: 'Main content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: Footer
+  help: 'Help'
+  home_box: 'Home Box'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+

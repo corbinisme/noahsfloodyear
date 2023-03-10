@@ -1,0 +1,12 @@
+#navbar .navbar {
+    background-image: url(../images/headerBG.png);
+    background-position: bottom center;
+    background-size: cover;
+    background-color: #336688;
+}
+
+
+.region-topbar {
+    display: flex;
+    background: #333;
+}
