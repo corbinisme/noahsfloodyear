@@ -10,3 +10,6 @@
     display: flex;
     background: #333;
 }
+.site-title {
+    display: none;
+}

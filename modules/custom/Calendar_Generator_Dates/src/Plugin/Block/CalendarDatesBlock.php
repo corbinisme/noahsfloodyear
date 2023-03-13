@@ -63,7 +63,7 @@ class CalendarDatesBlock extends BlockBase {
 
 		switch($firstSabath){
 			case 1: 
-				$list['passover'] = "Fri"; 
+				$list['passover'] = "Sat"; 
 				$list['unleavenedbread'] = "Sun";
 				$list['pentecost'] = "Sun";
 				$list['feastoftrumpets'] = "Tues";
@@ -189,7 +189,7 @@ class CalendarDatesBlock extends BlockBase {
 		$markup .= "<h3 class='subtitle text-center'>" . $result[0]->AM . " AM (After Man)</h2>";
 	}
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
-	
+
 	$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
 	$markup .= "<tr>";
 	$markup .= "<tr><td>Passover</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "passover") . ", " . $result[0]->passover_start . "</td><td></td></tr>";
