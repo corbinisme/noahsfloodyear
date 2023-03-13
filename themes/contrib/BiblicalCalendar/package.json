@@ -1,0 +1,20 @@
+{
+  "name": "biblecal",
+  "version": "1.0.0",
+  "description": "node build tools for the drupal 9 theme",
+  "main": "index.js",
+  "scripts": {
+    "sass-dev": "sass --watch --update --style=expanded src/scss:css",
+    "sass-prod": "sass --no-source-map --style=compressed src/scss:css"
+  },
+  "author": "Corbin Rose",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-uglify": "^3.0.2",
+    "sass": "^1.49.8"
+  }
+}

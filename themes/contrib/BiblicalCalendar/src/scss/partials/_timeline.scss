@@ -1,0 +1,155 @@
+/* timeline */
+.view-timeline {
+	.timeline-line {
+		transition: all ease 0.3s;
+		border-left: 2px solid $timelineBorderLine;
+		position: absolute;
+		width: 1px;
+		left: 0;
+		
+		&::before {
+			content: "";
+			border-top:2px solid $timelineBorderLine;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 50vw;
+		}
+		&::after {
+			content: "";
+			border-top:2px solid $timelineBorderLine;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 50vw;
+		}
+		&.hover{
+			border-color: orange;
+
+			&::before {
+				border-color: orange;
+			}
+			&::after {
+				border-color: orange;
+			}
+		}
+	}
+	.view-content {
+		position: relative;
+		z-index: 300;
+	}
+	.views-row {
+		font-size: 1.3em;
+		margin: 1em 0;
+		display: flex;
+		transition: all ease 0.3s;
+		border-top: 1px solid transparent;
+		border-bottom: 1px solid transparent;
+		background: #28599b;
+		.views-field-title {
+			transition: all ease 0.3s;
+		}
+		&.hover {
+			border: 1px solid orange;
+			.views-field-title {
+				text-indent: 2px;
+			}
+			
+		}
+		&.duplicate {
+			.views-field-field-gc-era, .views-field-field-gc-year {
+				visibility: hidden;
+			}
+		}
+		&.connected {
+			border-left: 3px solid pink;
+		}
+		>* {
+			flex: 1 auto;
+			padding: 0.4em;
+
+			&.views-field-field-gc-year {
+				order: 1;
+				background: #333;
+				color: #fff;
+				padding-right: 0;
+			}
+			&.views-field-field-gc-era {
+				order: 2;
+				background: #333;
+				color: #fff;
+
+			}
+			&.views-field-title {
+				order: 3;
+				flex: 1 99%;
+			}
+			&.views-field-field-am-year {
+				position: absolute;
+				right: 0;
+				white-space: nowrap;
+				display: flex;
+				.field-content {
+					margin-left: 5px;
+				}
+			}
+			&.views-field-field-related {
+				position: absolute;
+				right: 50px;
+				display: none;
+			}
+		}
+		
+	}
+	&.horiz {
+		overflow: auto;
+		height: 350px;
+		.view-content {
+			position: static;
+			margin-left: 0!important;
+			top: 0;
+			left: 0;
+			height: 350px;
+			overflow: auto;
+			display: flex;
+			.views-row {
+				flex: 1 auto;
+				min-width: 300px;
+				display: block;
+				position: relative;
+				*{
+					&.views-field-field-am-year {
+						position: static;
+						right: 0;
+						clear: both;
+						width: 100%;
+						float: none;
+						display: flex;
+					}
+					&.views-field-field-related {
+						position: static;
+						right: 50px;
+					}
+					&.views-field-field-gc-era {
+						float: left;
+						position: absolute;
+						top: 0;
+						left: 0;
+
+
+					}
+					&.views-field-title {
+						margin-top: 50px;
+					}
+					&.views-field-field-gc-year{
+						float: left;
+						position: absolute;
+						top: 0;
+						left: 38px;
+						
+					}
+				}
+			}
+		}
+	}
+}
