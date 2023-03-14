@@ -63,8 +63,8 @@ class CalendarDatesBlock extends BlockBase {
 
 		switch($firstSabath){
 			case 1: 
-				$list['passover'] = "Sat"; 
-				$list['unleavenedbread'] = "Sun";
+				$list['passover'] = "Fri"; 
+				$list['unleavenedbread'] = "Sat";
 				$list['pentecost'] = "Sun";
 				$list['feastoftrumpets'] = "Tues";
 				$list['dayofatonement'] = "Thurs";
