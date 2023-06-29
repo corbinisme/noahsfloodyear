@@ -191,8 +191,18 @@ class CalendarDatesBlock extends BlockBase {
 	}
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
 
-	if($result[0]->AM=="1" || $result[0]->GC_Year=="4046" && $era=="BC"){
+	if($result[0]->AM=="1" || ($result[0]->GC_Year=="4046" && $era=="BC")){
 
+		$markup .= '<table class="table"><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></tr></thead>' .
+		'<tbody>' .
+		'<tr><td>Passover</td><td>April 2</td><td></td></tr>' .
+		'<tr><td>Unleavened Bread</td><td>April 3</td><td>April 10</td></tr>'.
+		'<tr><td>Pentecost</td><td>May 22</td><td></td></tr>'.
+		'<tr><td>Trumpets</td><td>Sep 13</td><td></td></tr>'.
+		'<tr><td>Atonement</td><td>Sep 22</td><td></td></tr>'.
+		'<tr><td>Tabernacles</td><td>Sep 27</td><td>Oct 3</td></tr>'.
+		'<tr><td>Last Great Day (8th Day)</td><td>Oct 4</td><td></td>'.
+		'</tr></tbody></table>';
 	} else {
 
 	$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
