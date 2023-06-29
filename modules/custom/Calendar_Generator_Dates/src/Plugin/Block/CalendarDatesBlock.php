@@ -180,7 +180,8 @@ class CalendarDatesBlock extends BlockBase {
 	$query = $con->query($sql);
 	$result = $query->fetchAll();
 
-	//$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
+	//$markup .= "<pre>" . 
+	print_r($result[0], true) . "</pre>";
 
 	//if the filter date is AM, show GC
 	if($era=="AM"||$era=="am"){
@@ -189,6 +190,10 @@ class CalendarDatesBlock extends BlockBase {
 		$markup .= "<h3 class='subtitle text-center'>" . $result[0]->AM . " AM (After Man)</h2>";
 	}
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
+
+	if($result[0]->AM=="1" || $result[0]->GC_Year=="4046" && $era=="BC"){
+
+	} else {
 
 	$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
 	$markup .= "<tr>";
@@ -201,6 +206,7 @@ class CalendarDatesBlock extends BlockBase {
 	$markup .= "<tr><td>Last Great Day (8th Day)</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "lastgreatday") . ", " . $result[0]->last_great_day_start . "</td><td></td></tr>";
 	$markup .= "</tr>";
 	$markup .= "</table>";
+	}
 
 	$markup .= "<h3 class='text-center disclaimer_heading'>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</h3>";
 	
