@@ -4,10 +4,17 @@ var timeline = {
 	pairs: [],
 	assocList: [],
 	spacer: 3,
+	container: null,
+	containerOffset: 0,
 	layout: "vert",
 	loadedData: null,
 	init: function(){
 		let test = document.querySelectorAll(".view-id-timeline");
+		timeline.container = test[0].querySelector(".view-content");
+		
+		let elmTop = timeline.container.getBoundingClientRect().top + window.scrollY;
+		timeline.containerOffset = elmTop;
+
 		if(test.length){
 			timeline.analyzeRows();
 			timeline.bindings();
@@ -173,9 +180,8 @@ var timeline = {
 	},
 	setModal: function(id){
 
-		console.log("building", id);
 		let title = id['title'][0].value;
-		let body = id['body'][0].processed;
+		let body = (id['body'][0]?id['body'][0].processed:"");
 		console.log("title",title, body);
 		if(document.getElementById("timelineModal")==null){
 			timeline.buildModal();
@@ -287,10 +293,13 @@ var timeline = {
 			let top = timeline.getElemPosition(amNode);
 			let bot = timeline.getElemPosition(relatedNode);
 			let height = bot-top;
-			let offset = 515;
+			let offset = timeline.containerOffset;
+			offset -= 20;
+			/*
 			if(document.getElementById("toolbar-administration")){
 				offset += 190;
 			}
+			*/
 
 			temp.setAttribute("data-am", am);
 			temp.classList.add("timeline-line");
