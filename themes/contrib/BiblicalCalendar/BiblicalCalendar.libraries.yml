@@ -4,3 +4,4 @@ framework:
       css/style.css: {}
   js:
     js/theme.js: {}
+    js/utils.js: {}

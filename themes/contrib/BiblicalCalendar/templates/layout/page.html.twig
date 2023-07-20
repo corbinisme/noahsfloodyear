@@ -71,8 +71,8 @@ set footer_classes = ' ' ~
       </button>
 
       <div class="collapse navbar-collapse justify-content-md-end flex-wrap" id="navbarSupportedContent">
-        {{ page.nav_main }}
-        {{ page.nav_additional }}
+        {{ page.navigation_collapsible }}
+        
       </div>
     </div>
   </nav>
@@ -80,7 +80,16 @@ set footer_classes = ' ' ~
 
 </header>
 
+<aside class="hero">
+ {{ page.hero }}
+</aside>
+
 <main role="main">
+
+
+  <section class="highlight">
+   {{ page.highlighted }}
+  </section>
   <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
   {%

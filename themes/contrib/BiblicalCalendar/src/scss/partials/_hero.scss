@@ -1,0 +1,66 @@
+.front-page-wrapper {
+
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+    height: 365px;
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.3); 
+
+    .scroller_wrapper {
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            animation: banner linear 100s infinite;
+            position: relative; 
+            top: 0px;
+              
+            li {
+                flex: 1 auto; 
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                height: 365px;
+                width: 342px;
+                min-width: 342px;
+                background-repeat: no-repeat;
+                background-size: cover;
+                &.slide1{
+                    background-image: url(../images/bannerImage_01.jpg);
+                }
+                &.slide2{
+                    background-image: url(../images/bannerImage_02.jpg);
+                }
+                &.slide3{
+                    background-image: url(../images/bannerImage_03.jpg);
+                }
+                &.slide4{
+                    background-image: url(../images/bannerImage_04.jpg);
+                }
+                &.slide5{
+                    background-image: url(../images/bannerImage_05.jpg);
+                }
+                &.slide6{
+                    background-image: url(../images/bannerImage_06.jpg);
+                }
+                &.slide7{
+                    background-image: url(../images/bannerImage_07.jpg);
+                }
+            }
+        }
+    }
+}
+
+
+
+@keyframes banner {
+	0% {
+	  transform: translateX(0);
+	}
+	100% {
+	  transform: translateX(-100%);
+	}
+  }

@@ -18,6 +18,7 @@ regions:
   navigation_collapsible: 'Navigation (Collapsible)'
   nav_additional: 'Additional navigation region (eg search form, social icons, etc)'
   breadcrumb: Breadcrumbs
+  hero: 'Hero'
   highlighted: 'Highlighted'
   content: 'Main content'
   sidebar_first: 'Sidebar first'
