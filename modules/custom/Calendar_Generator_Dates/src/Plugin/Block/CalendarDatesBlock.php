@@ -195,13 +195,13 @@ class CalendarDatesBlock extends BlockBase {
 
 		$markup .= '<table class="table"><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></tr></thead>' .
 		'<tbody>' .
-		'<tr><td>Passover</td><td>April 2</td><td></td></tr>' .
-		'<tr><td>Unleavened Bread</td><td>April 3</td><td>April 10</td></tr>'.
-		'<tr><td>Pentecost</td><td>May 22</td><td></td></tr>'.
-		'<tr><td>Trumpets</td><td>Sep 13</td><td></td></tr>'.
-		'<tr><td>Atonement</td><td>Sep 22</td><td></td></tr>'.
-		'<tr><td>Tabernacles</td><td>Sep 27</td><td>Oct 3</td></tr>'.
-		'<tr><td>Last Great Day (8th Day)</td><td>Oct 4</td><td></td>'.
+		'<tr><td>Passover</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "passover") . ', April 2</td><td></td></tr>' .
+		'<tr><td>Unleavened Bread</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "unleavenedbread") . ', April 3</td><td> April 10</td></tr>'.
+		'<tr><td>Pentecost</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "pentecost") . ', May 22</td><td></td></tr>'.
+		'<tr><td>Trumpets</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "feastoftrumpets") . ', Sep 13</td><td></td></tr>'.
+		'<tr><td>Atonement</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "dayofatonement") . ',Sep 22</td><td></td></tr>'.
+		'<tr><td>Tabernacles</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "feastoftabernacles") . ',Sep 27</td><td>Oct 3</td></tr>'.
+		'<tr><td>Last Great Day (8th Day)</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "lastgreatday") . ', Oct 4</td><td></td>'.
 		'</tr></tbody></table>';
 	} else {
 
