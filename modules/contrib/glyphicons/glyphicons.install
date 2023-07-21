@@ -11,7 +11,8 @@
 function glyphicons_requirements($phase) {
   $requirements = [];
 
-  $path = \Drupal::service('library.libraries_directory_file_finder')->find('glyphicons/plugin.js');
+  $path = \Drupal::service('extension.list.module')
+      ->getPath('glyphicons') . '/libraries/plugin.js';
 
   if (!file_exists($path)) {
     $requirements['glyphicons'] = [

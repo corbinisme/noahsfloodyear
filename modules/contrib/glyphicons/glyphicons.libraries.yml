@@ -9,4 +9,4 @@ glyphicons:
 bootstrap_glyphicons:
   css:
     component:
-      /libraries/glyphicons/css/style.css: {}
+      libraries/css/style.css: {}

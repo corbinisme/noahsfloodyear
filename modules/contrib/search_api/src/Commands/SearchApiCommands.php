@@ -49,7 +49,7 @@ class SearchApiCommands extends DrushCommands {
   /**
    * {@inheritdoc}
    */
-  public function setLogger(LoggerInterface $logger): void {
+  public function setLogger(LoggerInterface $logger) {
     parent::setLogger($logger);
     $this->commandHelper->setLogger($logger);
   }

@@ -46,7 +46,7 @@ class ConfigOverrideKernelTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     // Set up necessary schemas.
@@ -101,7 +101,7 @@ class ConfigOverrideKernelTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function tearDown(): void {
+  protected function tearDown() {
     parent::tearDown();
 
     unset($GLOBALS['config']['search_api.server.test_server']);

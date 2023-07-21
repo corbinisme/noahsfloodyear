@@ -124,10 +124,7 @@ class TaskManager implements TaskManagerInterface {
    * {@inheritdoc}
    */
   public function getTasksCount(array $conditions = []) {
-    return $this->getTasksQuery($conditions)
-      ->count()
-      ->accessCheck(FALSE)
-      ->execute();
+    return $this->getTasksQuery($conditions)->count()->execute();
   }
 
   /**

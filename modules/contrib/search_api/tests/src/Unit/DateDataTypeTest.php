@@ -25,7 +25,7 @@ class DateDataTypeTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
     // Make sure the default timezone isn't UTC.

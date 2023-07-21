@@ -71,7 +71,7 @@ class ViewsDisplayCachingTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
     $this->installSchema('search_api', ['search_api_item']);

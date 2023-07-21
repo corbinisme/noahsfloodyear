@@ -32,7 +32,7 @@ class FieldsHelperTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
@@ -85,7 +85,7 @@ class FieldsHelperTest extends UnitTestCase {
         [TRUE, ['value' => $value]],
       ]);
 
-    $this->assertEquals(['asd'], $this->fieldsHelper->extractFieldValues($field_data));
+    $this->assertArrayEquals(['asd'], $this->fieldsHelper->extractFieldValues($field_data));
   }
 
 }

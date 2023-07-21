@@ -39,7 +39,7 @@ class IndexImportTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->installSchema('search_api', ['search_api_item']);

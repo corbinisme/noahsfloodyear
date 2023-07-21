@@ -326,6 +326,8 @@ abstract class FieldsProcessorPluginBase extends ProcessorPluginBase implements 
     $type = $field->getType();
 
     foreach ($values as $i => &$value) {
+      // We restore the field's type for each run of the loop since we need the
+      // unchanged one as long as the current field value hasn't been updated.
       if ($value instanceof TextValueInterface) {
         $tokens = $value->getTokens();
         if ($tokens !== NULL) {
@@ -350,18 +352,13 @@ abstract class FieldsProcessorPluginBase extends ProcessorPluginBase implements 
               }
             }
           }
-          if ($new_tokens === []) {
-            unset($values[$i]);
-          }
-          else {
-            $value->setTokens($new_tokens);
-          }
+          $value->setTokens($new_tokens);
         }
         else {
           $text = $value->getText();
           if ($text !== '') {
             $this->processFieldValue($text, $type);
-            if ($text === '' || $text === []) {
+            if ($text === '') {
               unset($values[$i]);
             }
             elseif (is_scalar($text)) {
@@ -376,7 +373,7 @@ abstract class FieldsProcessorPluginBase extends ProcessorPluginBase implements 
       elseif ($value !== '') {
         $this->processFieldValue($value, $type);
 
-        if ($value === '' || $value === []) {
+        if ($value === '') {
           unset($values[$i]);
         }
       }

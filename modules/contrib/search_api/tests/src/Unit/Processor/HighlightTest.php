@@ -45,7 +45,7 @@ class HighlightTest extends UnitTestCase {
   /**
    * Creates a new processor object for use in the tests.
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
     $this->setUpMockContainer();
@@ -89,7 +89,7 @@ class HighlightTest extends UnitTestCase {
     $query = $this->createMock(QueryInterface::class);
 
     $results = $this->getMockBuilder(ResultSet::class)
-      ->onlyMethods(['getResultCount', 'getQuery', 'getResultItems'])
+      ->setMethods(['getResultCount', 'getQuery', 'getResultItems'])
       ->setConstructorArgs([$query])
       ->getMock();
 
@@ -116,7 +116,7 @@ class HighlightTest extends UnitTestCase {
       ->willReturn(QueryInterface::PROCESSING_BASIC);
 
     $results = $this->getMockBuilder(ResultSet::class)
-      ->onlyMethods(['getResultCount', 'getQuery', 'getResultItems'])
+      ->setMethods(['getResultCount', 'getQuery', 'getResultItems'])
       ->setConstructorArgs([$query])
       ->getMock();
 
@@ -143,7 +143,7 @@ class HighlightTest extends UnitTestCase {
       ->willReturn(QueryInterface::PROCESSING_FULL);
 
     $results = $this->getMockBuilder(ResultSet::class)
-      ->onlyMethods(['getResultCount', 'getQuery', 'getResultItems'])
+      ->setMethods(['getResultCount', 'getQuery', 'getResultItems'])
       ->setConstructorArgs([$query])
       ->getMock();
 

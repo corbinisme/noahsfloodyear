@@ -24,15 +24,11 @@
   .nav-link {
     padding-left: $navbar-nav-link-padding-x;
     padding-right: $navbar-nav-link-padding-x;
-  }
 
-  .dropdown-toggle {
-    &::after {
-      float: right;
-      @include media-breakpoint-up(lg) {
-        clear: both;
-        float: none;
-      }
+    &.dropdown-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

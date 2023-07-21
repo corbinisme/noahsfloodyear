@@ -38,8 +38,10 @@ class ServerStorageTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
+
+    $this->installSchema('system', 'key_value_expire');
 
     $this->installEntitySchema('search_api_task');
     $this->storage = $this->container->get('entity_type.manager')->getStorage('search_api_server');

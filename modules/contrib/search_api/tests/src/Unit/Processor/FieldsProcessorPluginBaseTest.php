@@ -37,7 +37,7 @@ class FieldsProcessorPluginBaseTest extends UnitTestCase {
   /**
    * Creates a new processor object for use in the tests.
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->setUpMockContainer();

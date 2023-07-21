@@ -1,5 +1,6 @@
 /* timeline */
 .view-timeline {
+	position: relative;
 	.timeline-line {
 		transition: all ease 0.3s;
 		border-left: 2px solid $timelineBorderLine;

@@ -65,7 +65,7 @@ class IndexChangesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->installSchema('search_api', [

@@ -41,7 +41,7 @@ class EntityTypeTest extends ProcessorTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp($processor = NULL): void {
+  public function setUp($processor = NULL) {
     parent::setUp('entity_type');
 
     NodeType::create([

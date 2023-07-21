@@ -32,7 +32,7 @@ class OverviewPageTest extends SearchApiBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->drupalLogin($this->adminUser);

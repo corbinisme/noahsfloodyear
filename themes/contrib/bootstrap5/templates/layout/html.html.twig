@@ -48,9 +48,11 @@
       Keyboard navigation/accessibility link to main content section in
       page.html.twig.
     #}
-    <a href="#main-content" class="visually-hidden focusable skip-link">
-      {{ 'Skip to main content'|t }}
-    </a>
+    <div class="visually-hidden-focusable skip-link p-3 container">
+      <a href="#main-content" class="p-2">
+        {{ 'Skip to main content'|t }}
+      </a>
+    </div>
     {{ page_top }}
     {{ page }}
     {{ page_bottom }}

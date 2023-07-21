@@ -76,7 +76,10 @@ td {
     }
   }
 }
+
 .dropbutton-widget {
+  background-color: $white;
+
   @include border-radius($form-select-border-radius, 0);
   @include box-shadow($form-select-box-shadow);
 
@@ -87,40 +90,10 @@ td {
   }
 }
 
-fieldset {
-  &.form-item {
-    @extend .card;
-    > legend {
-      @extend .card-header;
+.webform-dropbutton {
+  .dropbutton-wrapper {
+    .dropbutton-widget {
+      background-color: $white;
     }
-
-    > .fieldset-wrapper {
-      @extend .card-body;
-    }
-  }
-}
-
-.form-item-upload {
-  @extend .card;
-  margin-bottom: $spacer;
-
-  label {
-    @extend .card-header;
-  }
-
-  > div {
-    @extend .card-body;
-  }
-}
-
-.form-type-managed-file {
-  @extend .card;
-
-  > label {
-    @extend .card-header;
-  }
-
-  > div {
-    @extend .card-body;
   }
 }

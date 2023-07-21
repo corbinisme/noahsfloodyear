@@ -33,7 +33,7 @@ class ExcerptFieldTest extends SearchApiBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     \Drupal::getContainer()

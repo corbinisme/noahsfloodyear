@@ -45,7 +45,7 @@ class ContentAccessTest extends ProcessorTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp($processor = NULL): void {
+  public function setUp($processor = NULL) {
     parent::setUp('content_access');
 
     // Activate our custom grant.

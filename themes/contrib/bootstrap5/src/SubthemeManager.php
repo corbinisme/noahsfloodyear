@@ -144,7 +144,9 @@ class SubthemeManager {
         $fs->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
 
         $files = $fs->scanDirectory(
-          \Drupal::service('extension.list.theme')->getPath('bootstrap5') . DIRECTORY_SEPARATOR . $subforder . DIRECTORY_SEPARATOR, '/.*/');
+          \Drupal::service('extension.list.theme')->getPath('bootstrap5') . DIRECTORY_SEPARATOR . $subforder . DIRECTORY_SEPARATOR, '/.*css/', [
+            'recurse' => FALSE,
+        ]);
         foreach ($files as $file) {
           //dump($file);
           $fileName = $file->filename;
@@ -215,12 +217,21 @@ class SubthemeManager {
       $infoYml['name'] = $themeName;
       $infoYml['description'] = $themeName . ' subtheme based on Bootstrap 5 theme.';
       $infoYml['base theme'] = 'bootstrap5';
-      $infoYml['stylesheets-remove'] = [];
-      $infoYml['stylesheets-remove'][] = '@bootstrap5/css/style.css';
+
       $infoYml['libraries'] = [];
       $infoYml['libraries'][] = $themeMName . '/global-styling';
+      $infoYml['libraries-override'] = [
+        'bootstrap5/global-styling' => false,
+      ];
 
-      foreach (['version', 'project', 'datestamp'] as $value) {
+      foreach ([
+        'version',
+        'project',
+        'datestamp',
+        'starterkit',
+        'generator',
+        'libraries-extend',
+      ] as $value) {
         if (isset($infoYml[$value])) {
           unset($infoYml[$value]);
         }

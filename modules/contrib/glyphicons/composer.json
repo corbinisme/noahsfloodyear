@@ -6,6 +6,9 @@
   "license": "GPL-2.0+",
   "homepage": "http://drupal.org/project/glyphicons",
   "minimum-stability": "dev",
+  "require": {
+    "drupal-ckeditor-libraries-group/colordialog": "^4.20"
+  },
   "authors": [
     {
       "name": "Goran Miric (g_miric)",

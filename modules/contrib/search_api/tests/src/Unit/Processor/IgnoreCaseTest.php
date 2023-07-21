@@ -23,7 +23,7 @@ class IgnoreCaseTest extends UnitTestCase {
   /**
    * Creates a new processor object for use in the tests.
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
     $this->processor = new IgnoreCase([], 'string', []);
   }
@@ -73,7 +73,7 @@ class IgnoreCaseTest extends UnitTestCase {
 
     $passed_value = NULL;
     $this->invokeMethod('processConditionValue', [&$passed_value]);
-    $this->assertNull($passed_value);
+    $this->assertSame(NULL, $passed_value);
 
     $condition = new Condition('field', NULL);
     $conditions = [$condition];

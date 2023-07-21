@@ -59,7 +59,7 @@ class DatasourceTaskTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     // Enable translation for the entity_test module.

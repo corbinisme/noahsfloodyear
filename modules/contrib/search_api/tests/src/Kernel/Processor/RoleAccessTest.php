@@ -39,7 +39,7 @@ class RoleAccessTest extends ProcessorTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp($processor = NULL): void {
+  public function setUp($processor = NULL) {
     parent::setUp('role_access');
 
     $this->installSchema('system', ['sequences']);

@@ -20,7 +20,8 @@ class Glyphicons extends CKEditorPluginBase implements CKEditorPluginCssInterfac
    * Get path to library folder.
    */
   public static function getLibraryPath() {
-    return \Drupal::service('library.libraries_directory_file_finder')->find('glyphicons');
+    return \Drupal::service('extension.list.module')
+        ->getPath('glyphicons') . '/libraries/';
   }
 
   /**

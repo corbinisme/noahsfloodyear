@@ -20,7 +20,7 @@ class TaxonomyTermArgumentTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->setupContainer();
@@ -113,18 +113,22 @@ class TaxonomyTermArgumentTest extends UnitTestCase {
     $prophecy->label()->willReturn('Second');
     $prophecy->id()->willReturn(2);
     $term2 = $prophecy->reveal();
-    $this->termStorage->expects($this->exactly(2))
+    $this->termStorage->expects($this->at(0))
       ->method('load')
-      ->willReturnMap([
-        [$term1->id(), $term1],
-        [$term2->id(), $term2],
-      ]);
-    $this->entityRepository->expects($this->exactly(2))
+      ->with($term1->id())
+      ->willReturn($term1);
+    $this->termStorage->expects($this->at(1))
+      ->method('load')
+      ->with($term2->id())
+      ->willReturn($term2);
+    $this->entityRepository->expects($this->at(0))
       ->method('getTranslationFromContext')
-      ->willReturnMap([
-        [$term1, NULL, [], $term1],
-        [$term2, NULL, [], $term2],
-      ]);
+      ->with($term1)
+      ->will($this->returnValue($term1));
+    $this->entityRepository->expects($this->at(1))
+      ->method('getTranslationFromContext')
+      ->with($term2)
+      ->will($this->returnValue($term2));
 
     $plugin->value = [$term1->id(), $term2->id()];
 

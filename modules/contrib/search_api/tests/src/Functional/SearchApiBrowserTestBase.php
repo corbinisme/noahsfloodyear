@@ -101,7 +101,7 @@ abstract class SearchApiBrowserTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     // Create the users used for the tests.

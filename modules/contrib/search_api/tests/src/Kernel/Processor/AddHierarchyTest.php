@@ -77,7 +77,7 @@ class AddHierarchyTest extends ProcessorTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp($processor = NULL): void {
+  public function setUp($processor = NULL) {
     parent::setUp();
 
     $this->installConfig(['filter']);

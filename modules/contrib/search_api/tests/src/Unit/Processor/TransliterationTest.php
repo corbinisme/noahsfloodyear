@@ -28,7 +28,7 @@ class TransliterationTest extends UnitTestCase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->index = $this->createMock(IndexInterface::class);

@@ -64,11 +64,12 @@ class ServerChangesTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp(): void {
+  public function setUp() {
     parent::setUp();
 
     $this->installEntitySchema('user');
     $this->installSchema('search_api', ['search_api_item']);
+    $this->installSchema('system', ['key_value_expire']);
     $this->installEntitySchema('search_api_task');
     $this->installConfig('search_api');
 

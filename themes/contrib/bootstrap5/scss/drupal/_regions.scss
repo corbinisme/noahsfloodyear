@@ -9,6 +9,7 @@
 tr {
   &.region-title {
     --#{$variable-prefix}table-bg: #{$light};
+
     td {
       --#{$variable-prefix}table-bg: #{$light};
     }

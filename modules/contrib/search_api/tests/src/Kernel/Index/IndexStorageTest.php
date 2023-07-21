@@ -30,9 +30,10 @@ class IndexStorageTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
 
+    $this->installSchema('system', 'key_value_expire');
     $this->installEntitySchema('search_api_task');
     $this->installConfig('search_api');
 

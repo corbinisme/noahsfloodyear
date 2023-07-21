@@ -20,7 +20,7 @@ class StopwordsTest extends UnitTestCase {
   /**
    * Creates a new processor object for use in the tests.
    */
-  protected function setUp(): void {
+  protected function setUp() {
     parent::setUp();
     $this->setUpMockContainer();
     $this->processor = new Stopwords([], 'stopwords', []);

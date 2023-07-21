@@ -27,7 +27,7 @@ class TypeBoostTest extends ProcessorTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp($processor = NULL): void {
+  public function setUp($processor = NULL) {
     parent::setUp('type_boost');
 
     // Create an article node type, if not already present.
