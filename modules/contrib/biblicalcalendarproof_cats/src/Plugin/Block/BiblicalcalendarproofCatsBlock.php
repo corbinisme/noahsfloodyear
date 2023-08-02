@@ -134,6 +134,7 @@ class BiblicalcalendarproofCatsBlock extends BlockBase  {
             '#data' => $data,
             '#attached' => [
                 'library' => [
+                    'bcp_swiper/swiper',
                     'biblicalcalendarproof_cats/biblicalcalendarproofcats',
                 ],
             ]

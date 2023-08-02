@@ -1,36 +1,44 @@
 @import url("https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap");
-.path-frontpage .view-spj-bios {
-  display: flex;
-  flex-wrap: wrap;
+.path-frontpage .homepage-categories {
+  margin-bottom: 4em;
+  padding: 1em 3em;
 }
-.path-frontpage .view-spj-bios span.badge {
+.path-frontpage .homepage-categories .swiper-wrapper {
+  padding-bottom: 2em;
+}
+.path-frontpage .homepage-categories.swiper-initialized .role-type video {
+  opacity: 1;
+}
+.path-frontpage .homepage-categories span.badge {
   white-space: break-spaces;
   margin-bottom: 5px;
 }
-.path-frontpage .view-spj-bios .role-type {
-  flex: 1 33%;
+.path-frontpage .homepage-categories .role-type {
   padding: 1em;
-  margin: 0.5em;
-  background: rgba(255, 255, 255, 0.2);
 }
-.path-frontpage .view-spj-bios .role-type video {
-  width: 80%;
+.path-frontpage .homepage-categories .role-type video {
+  width: 100%;
   height: auto;
+  opacity: 0;
 }
-.path-frontpage .view-spj-bios .role-type .views-content {
+.path-frontpage .homepage-categories .role-type .views-content {
   display: flex;
   flex-wrap: wrap;
 }
-.path-frontpage .view-spj-bios .role-type .views-content .views-row {
-  order: 1;
+.path-frontpage .homepage-categories .role-type .views-content h2 {
+  order: 0;
+}
+.path-frontpage .homepage-categories .role-type .views-content .views-row {
+  order: 2;
   flex: 1 100%;
 }
-.path-frontpage .view-spj-bios .role-type .views-content .views-row.video-timeline {
-  order: 0;
+.path-frontpage .homepage-categories .role-type .views-content .views-row.video-timeline {
+  order: 1;
   margin-bottom: 1em;
+  position: relative;
 }
-.path-frontpage .view-spj-bios .role-type .views-content .views-row.video-timeline::after {
-  content: "Related";
+.path-frontpage .homepage-categories .role-type .views-content .views-row.video-timeline::after {
+  content: none;
   display: block;
   text-decoration: underline;
   font-size: 1.2em;
@@ -39,11 +47,12 @@
   border-top: 1px dashed #fff;
   padding-top: 1em;
 }
-.path-frontpage .view-spj-bios h2 {
+.path-frontpage .homepage-categories h2 {
   text-transform: uppercase;
   margin-top: 0;
-  color: #f1cb98;
+  color: #000;
   font-weight: bold;
+  font-size: 1.4em;
 }
 .path-frontpage .featuredlinks a {
   display: block;
@@ -100,7 +109,7 @@
   }
 }
 .block-views-blockhomepage-cat-blocks-block-3 .view-content .group-wrapper .views-row {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.02);
   padding: 1em;
 }
 .block-views-blockhomepage-cat-blocks-block-3 .view-content .group-wrapper .views-row:hover {
@@ -425,21 +434,25 @@
 .path-calendar h1.page-header {
   display: none;
 }
-.path-calendar #block-calendarnavblock {
+.path-calendar .block-calendar-generator-nav {
   background-color: #28599b;
   box-shadow: 0px 0px 5px #000;
   margin-bottom: 2em;
 }
-.path-calendar #block-calendarnavblock .calendar_nav {
+.path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
 }
-.path-calendar #block-calendarnavblock .calendar_nav .input-group-addon {
+.path-calendar .block-calendar-generator-nav .calendar_nav .input-group-addon {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
+.path-calendar .block-calendar-generator-nav .calendar_nav .text-right {
+  display: flex;
+  justify-content: end;
+}
 @media (max-width: 991px) {
-  .path-calendar #block-calendarnavblock .calendar_nav .currentEra {
+  .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra {
     width: 100% !important;
   }
 }
@@ -699,6 +712,15 @@
   border-bottom: 1px solid transparent;
   background: #fff;
 }
+@media (max-width: 991px) {
+  .view-timeline .views-row {
+    flex-wrap: wrap;
+  }
+  .view-timeline .views-row .views-field-field-gc-year {
+    flex: 1 1%;
+    max-width: 2.5em;
+  }
+}
 .view-timeline .views-row .views-field-title {
   transition: all ease 0.3s;
 }
@@ -881,6 +903,10 @@
 body {
   overflow-x: hidden;
 }
+body.h-100 {
+  min-height: 100%;
+  height: auto !important;
+}
 
 header {
   background-color: #28599b;
@@ -890,6 +916,7 @@ header .navbar {
   color: #fff;
   position: relative;
   background-image: url("../images/headerBG.png");
+  background-size: cover;
 }
 header .navbar .site-title {
   display: none;
@@ -912,7 +939,12 @@ header .navbar .navbar-nav .is-active {
   }
 }
 
-footer {
+main .region-breadcrumb .block-page-title-block h1 {
+  margin-top: 2em;
+}
+
+.footer {
   background: #333;
   color: #fff;
+  margin-top: 4em;
 }

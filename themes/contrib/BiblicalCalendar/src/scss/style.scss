@@ -4,8 +4,7 @@ $bgColor: #28599b;
 $linkColor: #fff;  
 $headingColor: #f1cb98;   
 $bodyBG: #fff;
-
-
+   
 
 @import url('https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap');
 @import "partials/mediafunctions";  
@@ -15,9 +14,16 @@ $bodyBG: #fff;
 @import 'partials/timeline'; 
 @import 'partials/articles';
 @import 'partials/hero';
-
+ 
+ 
 body {
-    overflow-x: hidden;
+    overflow-x: hidden;   
+
+    &.h-100 {
+        min-height: 100%;
+        height: auto!important;
+    }
+   
 }
 
 
@@ -34,6 +40,7 @@ header {
             display: none;
         }
         background-image:url("../images/headerBG.png");
+        background-size: cover;
 
         .navbar-nav {
             --bs-nav-link-color: $linkColor;
@@ -57,7 +64,19 @@ header {
 }
 
 
-footer {
+main {
+    .region-breadcrumb {
+        .block-page-title-block {
+            h1 {
+                margin-top: 2em;
+            }
+        }
+    }
+}
+
+
+.footer {
     background: #333;
     color: $linkColor;
+    margin-top: 4em;
 }

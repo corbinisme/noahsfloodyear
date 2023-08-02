@@ -1,0 +1,15 @@
+swiperlocal:
+  js:
+    /libraries/Swiper/dist/swiper-bundle.js: { }
+    js/swiperinit.js: {}
+  css: 
+    theme:
+      /libraries/Swiper/dist/swiper-bundle.css: { }
+swiper:
+  css:
+    theme:
+      https://unpkg.com/swiper@8.2.4/swiper-bundle.min.css: {external: true}
+  js:
+    https://unpkg.com/swiper@8.2.4/swiper-bundle.min.js: {external: true}
+    js/swiperinit.js: {}
+    

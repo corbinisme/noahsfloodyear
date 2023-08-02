@@ -47,6 +47,14 @@
 		border-top: 1px solid transparent;
 		border-bottom: 1px solid transparent;
 		background: $bodyBG;
+		@include respond-below(md){
+			flex-wrap: wrap;
+			.views-field-field-gc-year {
+				flex: 1 1%;
+				max-width: 2.5em
+			}
+			
+		}
 		.views-field-title {
 			transition: all ease 0.3s;
 		}

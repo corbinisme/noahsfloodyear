@@ -222,7 +222,7 @@ $SC: #0000AA;
 		}
 	}
 
-	#block-calendarnavblock {
+	.block-calendar-generator-nav {
 		background-color: #28599b;
     	box-shadow: 0px 0px 5px #000;
 		margin-bottom: 2em;
@@ -234,6 +234,11 @@ $SC: #0000AA;
 				color: #fff;
 				background-color: rgba(255,255,255,.2);
 				cursor: pointer;
+			}
+
+			.text-right {
+				display: flex;
+				justify-content: end;
 			}
 			
 
