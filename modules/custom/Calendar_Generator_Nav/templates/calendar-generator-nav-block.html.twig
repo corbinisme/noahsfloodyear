@@ -1,0 +1,24 @@
+<div class="container calendarnav">
+
+    <div class="calendar_nav row">
+        <div class="col-sm-4">
+            <select name="Era Selection" class="form-control currentEra d-inline-block w-auto" id="GC_Era" name="GC_Era"> 
+
+                <option data-id="AD" {% if data.era == "AD" %}selected{% endif %}>AD</option> 
+                <option data-id="BC" {% if data.era == "BC" %}selected{% endif %}>BC</option> 
+                <option data-id="AM" {% if data.era == "AM" %}selected{% endif %}>AM</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <a class="input-group-addon yearToggle btn btn-primary prev" data-dir="prev">Prev</a>
+                <input class="form-control currentyear" type="number" value="1">
+                <a class="input-group-addon yearToggle btn btn-primary next" data-dir="next">Next</a>
+            </div>
+        </div>
+        <div class="col-sm-4 text-right">
+            <a href="#" onclick="calendarnav.generateBtn(this)" 
+            class="btn btn-primary generateBtn">Generate</a>
+        </div>
+    </div>
+</div>

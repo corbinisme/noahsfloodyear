@@ -442,14 +442,23 @@
 .path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
 }
-.path-calendar .block-calendar-generator-nav .calendar_nav .input-group-addon {
+.path-calendar .block-calendar-generator-nav .calendar_nav .input-group .input-group-addon {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
+.path-calendar .block-calendar-generator-nav .calendar_nav .input-group .input-group-addon.prev {
+  margin: 0;
+}
 .path-calendar .block-calendar-generator-nav .calendar_nav .text-right {
   display: flex;
   justify-content: end;
+}
+@media (max-width: 991px) {
+  .path-calendar .block-calendar-generator-nav .calendar_nav .text-right .generateBtn {
+    display: block;
+    width: 100%;
+  }
 }
 @media (max-width: 991px) {
   .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra {
@@ -459,15 +468,23 @@
 .path-calendar .SignificantDateRow {
   margin-bottom: 1em;
 }
+.path-calendar .SignificantDateRow .views-field-body {
+  display: none;
+}
+.path-calendar .SignificantDateRow.showing .views-field-body {
+  display: block;
+}
 .path-calendar .SignificantDateRow h2.field-content {
   padding: 20px;
   position: relative;
+  /*
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
   max-width: 100vw;
   width: calc(100vw - 10px);
+  */
 }
 .path-calendar .SignificantDateRow h2 a {
   border-radius: 0.5em;

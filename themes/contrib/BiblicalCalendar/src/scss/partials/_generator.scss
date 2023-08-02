@@ -230,15 +230,34 @@ $SC: #0000AA;
 		.calendar_nav {
 			padding: 1em 0;
 
-			.input-group-addon {
-				color: #fff;
-				background-color: rgba(255,255,255,.2);
-				cursor: pointer;
+			.input-group {
+
+			
+				.input-group-addon {
+					color: #fff;
+					background-color: rgba(255,255,255,.2);
+					cursor: pointer;
+
+					&.prev {
+						margin: 0;
+					}
+
+				}
 			}
+
+			
 
 			.text-right {
 				display: flex;
 				justify-content: end;
+
+				.generateBtn {
+					@include respond-below(md){
+						display: block;
+						width: 100%;
+					}
+					
+				}
 			}
 			
 
@@ -252,16 +271,27 @@ $SC: #0000AA;
 	
 	.SignificantDateRow {
 		margin-bottom: 1em;
+
+		.views-field-body {
+			display: none;
+		}
+		&.showing {
+			.views-field-body {
+				display: block;
+			}
+		}
 		h2 {
 			&.field-content {
 				padding: 20px;
 				position: relative;
+				/*
 				left: 50%;
 				right: 50%;
 				margin-left: -50vw;
 				margin-right: -50vw;
 				max-width: 100vw;
 				width: calc(100vw - 10px);
+				*/
 			}
 
 

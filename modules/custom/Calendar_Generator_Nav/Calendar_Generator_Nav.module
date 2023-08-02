@@ -1,0 +1,13 @@
+<?php 
+/**
+ * Implements hook_theme().
+ */
+function Calendar_Generator_Nav_theme($existing, $type, $theme, $path) {
+  return [
+    'calendar_generator_nav_block' => [
+      'variables' => [
+        ['data' => []]
+      ],
+    ],
+  ];
+}
