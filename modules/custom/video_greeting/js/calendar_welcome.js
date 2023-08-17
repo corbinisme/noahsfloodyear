@@ -13,7 +13,7 @@ function removeVideo(){
 function playVid(){
     //alert("play");
     document.getElementById('placeholderImg').remove();
-    document.getElementById("block-videogreeting").classList.add("playing")
+    document.getElementById("block-biblicalcalendar-videogreeting").classList.add("playing")
     video._video.play();
 }
 

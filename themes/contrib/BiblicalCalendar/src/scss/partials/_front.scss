@@ -173,10 +173,14 @@
 	}
 }
 
-#block-videogreeting {
+#block-videogreetin, #block-biblicalcalendar-videogreeting {
 	position: fixed;
 	top: 300px;
 	width: 250px;
+	z-index: 88;
+	h2 {
+		display: none;
+	}
 
 	canvas {
 		opacity: 1;
@@ -222,4 +226,8 @@
 
 
 	}
+}
+
+#block-biblicalcalendar-content {
+	margin-top: 4em;
 }

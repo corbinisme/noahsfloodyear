@@ -58,7 +58,11 @@ set footer_classes = ' ' ~
 
 <header>
   {{ page.header }}
-
+    <div class="topBar">
+        <div class="{{ container }}">
+        {{ page.topbar }}
+        </div>
+      </div>
   {% if page.nav_branding or page.nav_main or page.nav_additional %}
   <nav class="{{ nav_classes }}">
     <div class="{{ b5_top_container }} d-flex">

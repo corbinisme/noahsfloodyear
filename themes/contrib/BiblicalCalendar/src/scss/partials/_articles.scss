@@ -34,4 +34,27 @@
             height: 34px;
         }
     }
+    #datatable {
+        @include respond-below(md){
+           display: block;
+        
+        tbody {
+            display: flex;
+            flex-wrap: wrap;
+
+            tr {
+                display: flex;
+                flex-wrap: wrap;
+
+                td {
+                    flex: 1 100%;
+
+                    a {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        }
+    }
 }

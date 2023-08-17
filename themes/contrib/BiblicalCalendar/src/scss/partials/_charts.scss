@@ -1,16 +1,21 @@
+.block-views-blockbiblical-charts-block-1 {
+	margin-top: 2em;
+}
 .view-id-biblical_charts {
+	margin-top: 2em;
+	
 	.view-content {
-		display: block;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Creates responsive columns */
+		gap: 20px; /* Gap between grid items */
 
 		.views-row {
-			float: left;
-			width: 50%;
-			background-image: url("/Content/files/linkIcon.png");
-			background-size: cover;
-			background-repeat: no-repeat;
-			height: 184px;
-			margin: 0 10px;
-			padding: 2em;
+
+
+			background-color: #f0f0f0;
+			padding: 20px;
+			border: 1px solid #ddd;
+			text-align: center;
 
 			.views-field-title {
 				font-size: 2em;
