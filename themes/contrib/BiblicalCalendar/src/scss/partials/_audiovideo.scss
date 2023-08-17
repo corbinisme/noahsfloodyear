@@ -1,0 +1,32 @@
+.block-views-blockaudio-block-1 {
+
+    h3:not(.field-content) {
+        margin: 0.5em 0;
+        a {
+            text-decoration: none;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 1.3em;
+        }
+    }
+}
+
+.block-views-blockvideo-timelines-block-1 {
+    margin-top: 4em;
+
+    .views-row {
+        margin: 2em 0;
+        padding-bottom: 2em;
+        border-bottom: 2px dashed #ccc;
+
+        .video_real {
+            @include respond-above(md){
+                
+
+                video {
+                    max-width: 80%;
+                }
+            }
+        }
+    }
+}

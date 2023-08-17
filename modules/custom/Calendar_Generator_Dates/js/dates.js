@@ -1,7 +1,7 @@
 var dates = {
 
     init: function(){
-        console.log("dates!");
+ 
         dates.setupSignificantDates();
         calendar.init();
     },
@@ -43,7 +43,7 @@ window.addEventListener('load',
         calendar.expandContent();
     },
     binding: function(){
-       console.log("calendar page binding")
+       
     },
     setHCmonthNums: function(){
         let initCounter = 1;
@@ -80,7 +80,7 @@ window.addEventListener('load',
         
         calendar.loadedMain = true;
         let parent = document.querySelector(".loadhtmlwrapper");
-        console.log("expand calendar")
+        
         parent.querySelectorAll(".Cell.Month").forEach(function(ce){
             let val = ce.innerHTML;
             

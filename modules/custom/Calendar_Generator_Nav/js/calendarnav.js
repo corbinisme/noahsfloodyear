@@ -116,5 +116,5 @@ var calendarnav = {
 }
 window.onload = function(){
     calendarnav.init()
-    console.log("calendar nav loaded")
+    
 }

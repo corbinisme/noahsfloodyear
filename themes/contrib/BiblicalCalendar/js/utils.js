@@ -1,6 +1,6 @@
 var utils = {
     init: function(){
-        console.log("util")
+        
     }
 }
 utils.init();
