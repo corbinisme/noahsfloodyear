@@ -1,6 +1,6 @@
 var calwelcome = {
     init: function(){
-        console.log("cal welcome")
+        
     }
 }
 
@@ -26,7 +26,7 @@ function playVid(){
   
   
       var cookie = getCookie("visitgreen");
-      console.log("cookie", cookie)
+      
       if (cookie == "1") {
           /*
           $('#gsVideo').remove(); //remove video wrapper
@@ -37,7 +37,7 @@ function playVid(){
           setCookie("visitgreen", "1", 30);
           
           var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth; //looking to find window size to prevent video on tablet and mobile
-          console.log(width);
+
           if (width > 1000) { //the width value to check
   
             $('.video-section').removeClass("hidden")
@@ -61,4 +61,3 @@ function playVid(){
   })(jQuery);
 
 calwelcome.init();
-console.log("welcome")

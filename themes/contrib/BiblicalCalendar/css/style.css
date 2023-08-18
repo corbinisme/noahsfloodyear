@@ -1,4 +1,8 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap");
+.path-frontpage #block-biblicalcalendar-page-title h1 {
+  display: none;
+}
 .path-frontpage .homepage-categories {
   margin-bottom: 4em;
   padding: 1em 3em;
@@ -31,6 +35,9 @@
 .path-frontpage .homepage-categories .role-type .views-content .views-row {
   order: 2;
   flex: 1 100%;
+}
+.path-frontpage .homepage-categories .role-type .views-content .views-row.regular::before {
+  content: "•";
 }
 .path-frontpage .homepage-categories .role-type .views-content .views-row.video-timeline {
   order: 1;

@@ -1,5 +1,11 @@
 .path-frontpage {
 
+	#block-biblicalcalendar-page-title {
+		h1 {
+			display: none;
+		}
+	}
+
 	.homepage-categories {
 		margin-bottom: 4em;
 		padding: 1em 3em;
@@ -42,6 +48,12 @@
 				.views-row {
 					order: 2;
 					flex: 1 100%;
+
+					&.regular {
+						&::before {
+							content: '\2022';
+						}
+					}
 					
 
 					&.video-timeline {
