@@ -219,11 +219,14 @@
 }
 
 #block-biblicalcalendar-content {
-  margin-top: 4em;
+  margin-top: 0.5em;
 }
 
 .path-calendar .newHR {
   clear: both;
+}
+.path-calendar .SeeTheEnd a {
+  color: #ddd;
 }
 .path-calendar .subtitle {
   font-size: 3em;
@@ -244,11 +247,13 @@
   line-height: 30px;
   text-transform: uppercase;
   text-align: center;
-  color: #28599b;
+  color: #f1cb98;
   padding: 15px 0 20px;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   font-weight: bold;
   font-style: italic;
+  text-shadow: 0 1px 1px #333;
+  background: #3a82de;
 }
 .path-calendar #block-calendarbottomsection {
   max-width: 1000px;
@@ -430,7 +435,7 @@
 .path-calendar .key .label {
   flex: 1 33%;
   padding: 1em;
-  font-size: 1.3em;
+  font-size: 1.2em;
   text-align: center;
   color: #fff;
 }
@@ -490,12 +495,21 @@
   background-color: #28599b;
   box-shadow: 0px 0px 5px #000;
   margin-bottom: 2em;
+  border-radius: 5px;
+  font-size: 2em;
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
 }
+.path-calendar .block-calendar-generator-nav .calendar_nav .input-group {
+  height: 1.5em;
+}
 .path-calendar .block-calendar-generator-nav .calendar_nav .input-group .input-group-addon {
   color: #fff;
+  display: flex;
+  color: #f1cb98;
+  font-weight: bold;
+  align-items: center;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
@@ -506,11 +520,24 @@
   display: flex;
   justify-content: end;
 }
+.path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn {
+  display: flex;
+  align-items: center;
+}
 @media (max-width: 991px) {
-  .path-calendar .block-calendar-generator-nav .calendar_nav .generateBtn {
+  .path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn {
     display: block;
     width: 100%;
   }
+}
+.path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn .btn {
+  color: #f1cb98;
+  height: 3em;
+  font-weight: bold;
+}
+.path-calendar .block-calendar-generator-nav .calendar_nav .currentEra .btn {
+  color: #f1cb98;
+  font-weight: bold;
 }
 @media (max-width: 991px) {
   .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra {
@@ -631,6 +658,7 @@
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC {
   background: #a50000;
+  color: #fff;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.Month {
   background-color: transparent;

@@ -83,9 +83,9 @@ class CalendarGeneratorNavBlock extends BlockBase {
 
     $content = "<div class='col-sm-4 yearInput'>" .
     "<div class='input-group'>" . 
-    "<a class='input-group-addon yearToggle btn btn-primary prev' data-dir='prev'>Prev</a>" .  
+    "<a class='input-group-addon yearToggle btn bg-primary prev' data-dir='prev'>Prev</a>" .  
     "<input class='form-control currentyear' type='number' value='" . $year . "' />" . 
-    "<a class='input-group-addon yearToggle btn btn-primary next' data-dir='next'>Next</a>" .  
+    "<a class='input-group-addon yearToggle btn bg-primary next' data-dir='next'>Next</a>" .  
     "</div>" . 
     "</div>";
 
@@ -105,7 +105,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
     
     $markup .= $this::getEraDropdown($era);
     $markup .= $this::getYearSelector($year);
-    $markup .="<div class='col-sm-4 text-left generateBtn'><a href='#' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</a></div>";
+    $markup .="<div class='col-sm-4 text-left generateBtn'><button type='button' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</button></div>";
     $markup .="</div></div>";
     
 
