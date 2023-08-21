@@ -4,7 +4,7 @@ $bgColor: #28599b;
 $linkColor: #fff;  
 $headingColor: #f1cb98;   
 $bodyBG: #fff;
-   
+        
 
 @import url('https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap');
 @import "partials/mediafunctions";  
@@ -15,7 +15,7 @@ $bodyBG: #fff;
 @import 'partials/articles';
 @import 'partials/hero'; 
 @import 'partials/audiovideo';
-   
+       
  
 body {
     overflow-x: hidden;   
@@ -36,8 +36,9 @@ body {
     color: #fff!important;
  }
 
+  
 
-
+ 
 header {
     background-color: $bgColor;
     overflow: visible;

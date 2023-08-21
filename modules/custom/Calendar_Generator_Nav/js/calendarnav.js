@@ -9,7 +9,7 @@ var calendarnav = {
 
     },
     getCurrentEra: function(){
-        let era = document.querySelector(".calendar_nav .currentEra").value.toLowerCase();
+        let era = document.querySelector(".calendar_nav .currentEra").getAttribute("data-value").toLowerCase();
         return era;
     },
     updateYear: function(dir){
@@ -96,6 +96,18 @@ var calendarnav = {
         //functionality of the nav
         //console.log("binding nav for calendar page");
         calendarnav.setDefault();
+
+        document.querySelectorAll(".currentEra .btn").forEach(function(btn){
+            btn.addEventListener("click", function(e){  
+
+                document.querySelectorAll(".currentEra .btn").forEach(function(btn){
+                    btn.classList.remove("active");
+                });
+                e.target.classList.add("active");
+                document.querySelector(".currentEra").setAttribute("data-value", e.target.getAttribute("data-id"));
+
+            });
+        });
 
         document.querySelector(".calendar_nav .generateBtn").addEventListener("click", function(e){
             e.preventDefault();

@@ -1,5 +1,10 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap");
+.path-frontpage .featuredlinks {
+  background: #eee;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
 .path-frontpage #block-biblicalcalendar-page-title h1 {
   display: none;
 }
@@ -88,6 +93,7 @@
   }
 }
 .path-frontpage #block-biblicalcalendar-subhero {
+  position: relative;
   background: #4a98dc;
   color: #fff;
   padding: 2em;
@@ -100,6 +106,34 @@
   margin-bottom: 50px;
   box-shadow: 0px 0px 19px #333;
   top: -5px;
+  padding-bottom: 4em;
+  margin-bottom: 9em;
+}
+@media (max-width: 991px) {
+  .path-frontpage #block-biblicalcalendar-subhero {
+    padding: 0.5em;
+    padding-bottom: 4em;
+  }
+}
+.path-frontpage #block-biblicalcalendar-subhero a {
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+@media (max-width: 991px) {
+  .path-frontpage #block-biblicalcalendar-subhero a {
+    font-size: 0.7em;
+  }
+}
+.path-frontpage #block-biblicalcalendar-subhero .intro_video {
+  position: absolute;
+  width: 100%;
+  margin-top: 0.5em;
+  z-index: 9;
+  left: 0;
+}
+.path-frontpage #block-biblicalcalendar-subhero .intro_video iframe {
+  max-width: 100%;
 }
 
 .block-views-blockhomepage-cat-blocks-block-3 .view-content {
@@ -473,7 +507,7 @@
   justify-content: end;
 }
 @media (max-width: 991px) {
-  .path-calendar .block-calendar-generator-nav .calendar_nav .text-right .generateBtn {
+  .path-calendar .block-calendar-generator-nav .calendar_nav .generateBtn {
     display: block;
     width: 100%;
   }
@@ -481,6 +515,10 @@
 @media (max-width: 991px) {
   .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra {
     width: 100% !important;
+  }
+  .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra .generateBtn {
+    display: block;
+    width: 100%;
   }
 }
 .path-calendar .SignificantDateRow {
@@ -586,6 +624,7 @@
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC {
   background-color: #1f1f1f;
+  color: #fff;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC.Month {
   background: transparent;

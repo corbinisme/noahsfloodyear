@@ -255,20 +255,30 @@ $SC: #0000AA;
 				display: flex;
 				justify-content: end;
 
-				.generateBtn {
-					@include respond-below(md){
-						display: block;
-						width: 100%;
-					}
-					
+				
+			}
+
+			.generateBtn {
+				@include respond-below(md){
+					display: block;
+					width: 100%;
 				}
+				
 			}
 			
 
 			.currentEra {
 				@include respond-below(md){
 					width: 100%!important;
+
+					.generateBtn {
+						display: block;
+						width: 100%;
+					}
 				}
+				
+
+
 			}
 		}
 	}
@@ -390,6 +400,7 @@ $SC: #0000AA;
 					text-align: center;
 					&.GC {
 						background-color: #1f1f1f;
+						color: #fff;
 						&.Month {
 							background: transparent;
 

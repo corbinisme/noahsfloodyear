@@ -2,12 +2,12 @@
 
     <div class="calendar_nav row">
         <div class="col-sm-4">
-            <select name="Era Selection" class="form-control currentEra d-inline-block w-auto" id="GC_Era" name="GC_Era"> 
+            <div class="btn-group currentEra d-inline-block" id="GC_Era" name="GC_Era" data-value=""> 
 
-                <option data-id="AD" {% if data.era == "AD" %}selected{% endif %}>AD</option> 
-                <option data-id="BC" {% if data.era == "BC" %}selected{% endif %}>BC</option> 
-                <option data-id="AM" {% if data.era == "AM" %}selected{% endif %}>AM</option>
-            </select>
+                <button type="button" data-id="AD" class="btn btn-primary {% if data.era == "AD" %}active{% endif %}">AD</button> 
+                <button type="button" data-id="BC" class="btn btn-primary {% if data.era == "BC" %}active{% endif %}">BC</button> 
+                <button type="button" data-id="AM" class="btn btn-primary {% if data.era == "AM" %}active{% endif %}">AM</button>
+            </div>
         </div>
         <div class="col-sm-4">
             <div class="input-group">

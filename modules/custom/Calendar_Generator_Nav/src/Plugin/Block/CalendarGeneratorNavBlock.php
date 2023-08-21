@@ -48,24 +48,31 @@ class CalendarGeneratorNavBlock extends BlockBase {
     $bcSel = "";
     $amSel = "";
     if($era=="ad"){
-      $adSel = "selected";
+      $adSel = " active";
     }
     if($era=="bc"){
-      $bcSel = "selected";
+      $bcSel = " active";
     }
     if($era=="am"){
-      $amSel = "selected";
+      $amSel = " active";
     }
     ?>
     
     <?php
-    $html = "<div class='col-sm-4'>";
+    $html = "<div class='col-sm-4 text-right eraSelector'>";
     
-    $html .= "<select class=\"form-control currentEra\" id=\"GC_Era\" name=\"GC_Era\" style='width: 82px'>";
+    /*$html .= "<select class=\"form-control currentEra\" id=\"GC_Era\" name=\"GC_Era\" style='width: 82px'>";
     $html .= " <option  ". $adSel ."' data-id=\"AD\">AD</option>";
     $html .= " <option  " .$bcSel ." data-id=\"BC\">BC</option>";
     $html .= " <option  ". $amSel . " data-id=\"AM\">AM</option>";
-    $html .= "</select></div>";
+    $html .= "</select>";
+    */
+
+    $html .= '<div class="btn-group currentEra" id="GC_Era" name="GC_Era" data-value="' .strtoupper($era) . '">';
+    $html .=             '<button type="button" data-id="AD" class="btn btn-primary' . $adSel. '">AD</button> ';
+    $html .=             '<button type="button" data-id="BC" class="btn btn-primary' . $bcSel. '">BC</button> ';
+    $html .=             '<button type="button" data-id="AM" class="btn btn-primary' . $amSel. '">AM</button>';
+    $html .=         '</div></div>';
     
     return $html;
   
@@ -74,7 +81,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
 
   private function getYearSelector($year){
 
-    $content = "<div class='col-sm-4'>" .
+    $content = "<div class='col-sm-4 yearInput'>" .
     "<div class='input-group'>" . 
     "<a class='input-group-addon yearToggle btn btn-primary prev' data-dir='prev'>Prev</a>" .  
     "<input class='form-control currentyear' type='number' value='" . $year . "' />" . 
@@ -93,18 +100,18 @@ class CalendarGeneratorNavBlock extends BlockBase {
   	$era = $splits[count($splits)-2];
 
     // this is not sending data to the template for some reason
-    /*
+    
     $markup = "<div class='container'><div class='calendar_nav row'>";
     
     $markup .= $this::getEraDropdown($era);
     $markup .= $this::getYearSelector($year);
-    $markup .="<div class='col-sm-4 text-right'><a href='#' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</a></div>";
+    $markup .="<div class='col-sm-4 text-left generateBtn'><a href='#' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</a></div>";
     $markup .="</div></div>";
-    */
+    
 
       return [
-      	//'#markup' => $this->t($markup),
-        '#theme' => 'calendar_generator_nav_block',
+      	'#markup' => $this->t($markup),
+        //'#theme' => 'calendar_generator_nav_block',
         '#data'=>[
           'year' => $year,
           'era' => strtoupper($era)

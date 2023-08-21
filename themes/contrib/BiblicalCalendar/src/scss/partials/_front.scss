@@ -1,5 +1,11 @@
 .path-frontpage {
 
+	.featuredlinks {
+		background: #eee;
+		margin-top: 3em;
+		margin-bottom: 3em;
+	}
+
 	#block-biblicalcalendar-page-title {
 		h1 {
 			display: none;
@@ -127,6 +133,7 @@
 	
 	
 	#block-biblicalcalendar-subhero {
+		position: relative;
 		background: #4a98dc;
 		color: #fff;
 		padding: 2em;
@@ -139,6 +146,37 @@
 		margin-bottom: 50px;
 		box-shadow: 0px 0px 19px #333;
 		top: -5px;
+		padding-bottom: 4em;
+		margin-bottom: 9em;
+
+		@include respond-below(md){
+			padding: 0.5em;
+			padding-bottom: 4em;
+		}
+		
+
+		a {
+			color: #fff;
+			text-decoration: none;
+			display: inline-block;
+
+			@include respond-below(md){
+				font-size: .7em;
+			}
+		}
+
+		.intro_video {
+			position: absolute;
+			width: 100%;
+			margin-top: 0.5em;
+			z-index: 9;
+			left: 0;
+
+			iframe {
+				max-width: 100%;
+			}
+		}
+
 	}
 }
 
