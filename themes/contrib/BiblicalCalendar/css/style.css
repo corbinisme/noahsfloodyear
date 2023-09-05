@@ -500,9 +500,13 @@
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
+  font-size: 1.4em;
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav .input-group {
   height: 1.5em;
+}
+.path-calendar .block-calendar-generator-nav .calendar_nav .input-group .form-control {
+  border-color: #f1cb98;
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav .input-group .input-group-addon {
   color: #fff;
@@ -510,7 +514,8 @@
   color: #f1cb98;
   font-weight: bold;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: transparent !important;
+  border: 1px solid #f1cb98;
   cursor: pointer;
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav .input-group .input-group-addon.prev {
@@ -532,12 +537,22 @@
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn .btn {
   color: #f1cb98;
-  height: 3em;
+  line-height: 3.3em;
   font-weight: bold;
+  border-color: #f1cb98;
+  background-color: transparent;
+}
+.path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn .btn.active {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra .btn {
   color: #f1cb98;
   font-weight: bold;
+  background-color: transparent;
+  border-color: #f1cb98;
+}
+.path-calendar .block-calendar-generator-nav .calendar_nav .currentEra .btn.active {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 @media (max-width: 991px) {
   .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra {
@@ -1082,10 +1097,28 @@ header .navbar .navbar-nav {
 header .navbar .navbar-nav .is-active {
   font-weight: bold;
 }
-header .menu--secondary-menu ul li a {
+header .navbar .navbar-nav li a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+header .navbar .navbar-nav li a.is-active {
+  font-weight: bold;
+  color: #fff;
+}
+header .menu--secondary-menu ul.navbar-nav li a {
   font-size: 1.2em;
   background: rgba(255, 255, 255, 0.2);
   margin-right: 0.5em;
+  color: #f1cb98;
+  font-weight: bold;
+}
+header .menu--secondary-menu ul.navbar-nav li a:hover {
+  background: rgba(255, 255, 255, 0.4);
+  color: #f1cb98;
+}
+header .menu--secondary-menu ul.navbar-nav li a.is-active {
+  color: #f1cb98;
+  text-decoration: underline;
 }
 @media (max-width: 991px) {
   header .navbar-collapse {

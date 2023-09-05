@@ -245,9 +245,14 @@ $SC: #0000AA;
 
 		.calendar_nav {
 			padding: 1em 0;
+			font-size: 1.4em;
 
 			.input-group {
 				height: 1.5em;
+
+				.form-control {
+					border-color: $headingColor;
+				}
 			
 				.input-group-addon {
 					color: #fff;
@@ -255,7 +260,8 @@ $SC: #0000AA;
 					color: $headingColor;
 					font-weight: bold;
 					align-items: center;
-					background-color: rgba(255,255,255,.2);
+					background-color: transparent!important;
+					border: 1px solid $headingColor;
 					cursor: pointer;
 
 					&.prev {
@@ -283,8 +289,13 @@ $SC: #0000AA;
 				}
 				.btn {
 					color: $headingColor;
-					height: 3em;
+					line-height: 3.3em;
 					font-weight: bold;
+					border-color: $headingColor;
+					background-color: transparent;
+					&.active {
+						background-color: rgba(255,255,255,.2);
+					}
 				}
 				
 			}
@@ -295,6 +306,11 @@ $SC: #0000AA;
 				.btn {
 					color: $headingColor;
 					font-weight: bold;
+					background-color: transparent;
+					border-color: $headingColor;
+					&.active {
+						background-color: rgba(255,255,255,.2);
+					}
 				}
 				@include respond-below(md){
 					width: 100%!important;
@@ -302,6 +318,7 @@ $SC: #0000AA;
 					.generateBtn {
 						display: block;
 						width: 100%;
+
 					}
 				}
 				
