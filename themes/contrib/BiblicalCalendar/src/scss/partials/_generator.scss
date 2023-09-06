@@ -2,8 +2,55 @@ $GC: #1F1F1F;
 $HCC: #A50000;
 $SC: #0000AA;
 
+$passover: #f70d48;
+$unleavenedBread: #623e02;
+$pentecost: #0de1ec;
+$trumpets: #f2d316;
+$atonement: #e647fb;
+$tabernacles: #fa8a48;
+$lastGreatDay: #15be27;
+
 
 .path-calendar {
+
+	#block-biblicalcalendar-calendardatesblock {
+
+		.table {
+
+			td {
+				position: relative;
+
+				span {
+					display: inline-block;
+					min-width: 10px;
+					height: 1em;
+					margin-left: 5px;
+				}
+			}
+			.passover span {
+				background-color: $passover;
+			}
+			.unleaveanedbread  span {
+				background-color: $unleavenedBread;
+			}
+			.pentecost  span {
+				background-color: $pentecost;
+			}
+			.trumpets span  {
+				background-color: $trumpets;
+			}
+			
+			.atonement  span {
+				background-color: $atonement;
+			}
+			.tabernacles span  {
+				background-color: $tabernacles;
+			}
+			.lastgreatday  span {
+				background-color: $lastGreatDay;
+			}
+		}
+	}
 
 	.newHR {
 		clear: both;
@@ -61,6 +108,18 @@ $SC: #0000AA;
 		display: block; float: left; width: 33.3%; 
 		min-height: 70px; background: #2b60a4; 
 	}
+	
+	#Math .TotalDays >.Title:nth-child(1),
+	#Math .TotalDays >.NumCycles,
+	#Math .CalcDays >.Title:nth-child(1),
+	#Math .CalcDays >.NumCycles,
+	#Math .Calculated >.Title:nth-child(1),
+	#Math .Calculated >.NumYears
+	 {
+		width: 100%;
+		text-align: center;
+	}
+	
 #Math .TotalDays, 
 #Math .CalcDays { border-right: 1px solid #fff; width: 33%; }
 #Math .CalcDays { background: #053E84; }
@@ -530,4 +589,27 @@ $SC: #0000AA;
 		}
 		margin-top: 2em;
 	}
+
+	#NewCalendarContainer {
+
+		.afterContent {
+			position: relative;
+			&::after {
+				display: block;
+				position: absolute;
+				content: "";
+				height: 100%;
+				right: 0;
+				width: 3px;
+				top: 0;
+			}
+		}
+		[data-name="prepentecost"]{
+			&::after {
+				background-color: $pentecost;
+				width: 10px;
+			}
+		}
+	}
+
 } 

@@ -38,12 +38,37 @@ window.addEventListener('load',
   var calendar = {
     init: function(){
         
-        
+        calendar.getDates();
         calendar.binding();
         calendar.expandContent();
     },
     binding: function(){
        
+    },
+    dates: {
+        "passover": null,
+        "unleavenedbread": null,
+        "pentecost": null,
+        "trumpets": null,
+        "atonement": null,
+        "tabernacles": null,
+        "lastgreatday": null,
+    },
+    getDates: function(){
+        let gregDate = document.querySelector("input[name='gregDate'" ).value;
+        gregDate = gregDate.substring(2, gregDate.length);
+        const era = document.querySelector("input[name='eraType'" ).value.toUpperCase();
+
+        const table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
+        calendar.dates.passover = new Date(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        calendar.dates.unleavenedbread = new Date(table.querySelector(".unleavenedbread").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        calendar.dates.pentecost = new Date(table.querySelector(".pentecost").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        calendar.dates.trumpets = new Date(table.querySelector(".trumpets").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        calendar.dates.atonement = new Date(table.querySelector(".atonement").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        calendar.dates.tabernacles = new Date(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        calendar.dates.lastgreatday = new Date(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        console.log(calendar.dates)
+
     },
     setHCmonthNums: function(){
         let initCounter = 1;
@@ -148,6 +173,9 @@ window.addEventListener('load',
             }
         }
     },
+    placePassover: function(){
+
+    },
     findPassover:function() {
         var a = document.getElementById("Sivan5");
         var b = document.getElementById("Sivan7");
@@ -181,6 +209,8 @@ window.addEventListener('load',
         }
         if (using != null) {
             var u = using.parentNode;
+            u.classList.add("afterContent");
+            u.setAttribute("data-name", "prepentecost");
             var child = u.firstChild;
             child = child.nextSibling;
             var GregorianDate = calendar.strip(child.innerHTML);

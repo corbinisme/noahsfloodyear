@@ -222,6 +222,36 @@
   margin-top: 0.5em;
 }
 
+.path-calendar #block-biblicalcalendar-calendardatesblock .table td {
+  position: relative;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table td span {
+  display: inline-block;
+  min-width: 10px;
+  height: 1em;
+  margin-left: 5px;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .passover span {
+  background-color: #f70d48;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .unleaveanedbread span {
+  background-color: #623e02;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .pentecost span {
+  background-color: #0de1ec;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .trumpets span {
+  background-color: #f2d316;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .atonement span {
+  background-color: #e647fb;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .tabernacles span {
+  background-color: #fa8a48;
+}
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .lastgreatday span {
+  background-color: #15be27;
+}
 .path-calendar .newHR {
   clear: both;
 }
@@ -270,6 +300,15 @@
   width: 33.3%;
   min-height: 70px;
   background: #2b60a4;
+}
+.path-calendar #Math .TotalDays > .Title:nth-child(1),
+.path-calendar #Math .TotalDays > .NumCycles,
+.path-calendar #Math .CalcDays > .Title:nth-child(1),
+.path-calendar #Math .CalcDays > .NumCycles,
+.path-calendar #Math .Calculated > .Title:nth-child(1),
+.path-calendar #Math .Calculated > .NumYears {
+  width: 100%;
+  text-align: center;
 }
 .path-calendar #Math .TotalDays,
 .path-calendar #Math .CalcDays {
@@ -735,6 +774,22 @@
 }
 .path-calendar #block-calendarpagebottomtext h2 {
   display: none;
+}
+.path-calendar #NewCalendarContainer .afterContent {
+  position: relative;
+}
+.path-calendar #NewCalendarContainer .afterContent::after {
+  display: block;
+  position: absolute;
+  content: "";
+  height: 100%;
+  right: 0;
+  width: 3px;
+  top: 0;
+}
+.path-calendar #NewCalendarContainer [data-name=prepentecost]::after {
+  background-color: #0de1ec;
+  width: 10px;
 }
 
 .block-views-blockbiblical-charts-block-1 {

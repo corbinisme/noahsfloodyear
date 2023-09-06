@@ -190,30 +190,30 @@ class CalendarDatesBlock extends BlockBase {
 		$markup .= "<h3 class='subtitle text-center'>" . $result[0]->AM . " AM (After Man)</h2>";
 	}
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
-
+	$markup .= "<input type='hidden' name='eraType' value='" .$result[0]->GC_Era . "' />";
 	if($result[0]->AM=="1" || ($result[0]->GC_Year=="4046" && $era=="BC")){
 
 		$markup .= '<table class="table"><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></tr></thead>' .
 		'<tbody>' .
-		'<tr><td>Passover</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "passover") . ', April 2</td><td></td></tr>' .
-		'<tr><td>Unleavened Bread</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "unleavenedbread") . ', April 3</td><td> April 10</td></tr>'.
-		'<tr><td>Pentecost</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "pentecost") . ', May 22</td><td></td></tr>'.
-		'<tr><td>Trumpets</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "feastoftrumpets") . ', Sep 13</td><td></td></tr>'.
-		'<tr><td>Atonement</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "dayofatonement") . ',Sep 22</td><td></td></tr>'.
-		'<tr><td>Tabernacles</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "feastoftabernacles") . ',Sep 27</td><td>Oct 3</td></tr>'.
-		'<tr><td>Last Great Day (8th Day)</td><td>' . CalendarDatesBlock::getDayOfWeek(7, "lastgreatday") . ', Oct 4</td><td></td>'.
+		'<tr><td class="passover">Passover <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "passover") . ', April 2</td><td></td></tr>' .
+		'<tr><td class="unleavenedbread">Unleavened Bread <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "unleavenedbread") . ', April 3</td><td class="start"> April 10</td></tr>'.
+		'<tr><td class="pentecost">Pentecost <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "pentecost") . ', May 22</td><td></td></tr>'.
+		'<tr><td class="trumpets">Trumpets <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "feastoftrumpets") . ', Sep 13</td><td></td></tr>'.
+		'<tr><td class="atonement">Atonement <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "dayofatonement") . ',Sep 22</td><td></td></tr>'.
+		'<tr><td class="tabernacles">Tabernacles <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "feastoftabernacles") . ',Sep 27</td><td  class="start">Oct 3</td></tr>'.
+		'<tr><td class="lastgreatday">Last Great Day (8th Day) <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "lastgreatday") . ', Oct 4</td><td></td>'.
 		'</tr></tbody></table>';
 	} else {
 
 	$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
 	$markup .= "<tr>";
-	$markup .= "<tr><td>Passover</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "passover") . ", " . $result[0]->passover_start . "</td><td></td></tr>";
-	$markup .= "<tr><td>Unleavened Bread</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "unleavenedbread") . ", " . $result[0]->unleavened_bread_start . "</td><td>" . $result[0]->unleavened_bread_end . "</td></tr>";
-	$markup .= "<tr><td>Pentecost</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "pentecost") . ", " . $result[0]->pentecost_start . "</td><td></td></tr>";
-	$markup .= "<tr><td>Trumpets</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftrumpets") . ", " . $result[0]->feast_of_trumpets_start . "</td><td></td></tr>";
-	$markup .= "<tr><td>Atonement</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "dayofatonement") . ", " . $result[0]->day_of_atonement_start . "</td><td></td></tr>";
-	$markup .= "<tr><td>Tabernacles</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftabernacles") . ", " . $result[0]->feast_of_tabernacles_start . "</td><td>" . $result[0]->feast_of_tabernacles_end . "</td></tr>";
-	$markup .= "<tr><td>Last Great Day (8th Day)</td><td>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "lastgreatday") . ", " . $result[0]->last_great_day_start . "</td><td></td></tr>";
+	$markup .= "<tr><td  class='passover'>Passover <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "passover") . ", " . $result[0]->passover_start . "</td><td></td></tr>";
+	$markup .= "<tr><td class='unleavenedbread'>Unleavened Bread <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "unleavenedbread") . ", " . $result[0]->unleavened_bread_start . "</td><td class='end'>" . $result[0]->unleavened_bread_end . "</td></tr>";
+	$markup .= "<tr><td class='pentecost'>Pentecost <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "pentecost") . ", " . $result[0]->pentecost_start . "</td><td></td></tr>";
+	$markup .= "<tr><td class='trumpets'>Trumpets <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftrumpets") . ", " . $result[0]->feast_of_trumpets_start . "</td><td></td></tr>";
+	$markup .= "<tr><td class='atonement'>Atonement <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "dayofatonement") . ", " . $result[0]->day_of_atonement_start . "</td><td></td></tr>";
+	$markup .= "<tr><td class='tabernacles'>Tabernacles <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftabernacles") . ", " . $result[0]->feast_of_tabernacles_start . "</td><td class='start'>" . $result[0]->feast_of_tabernacles_end . "</td></tr>";
+	$markup .= "<tr><td class='lastgreatday'>Last Great Day (8th Day) <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "lastgreatday") . ", " . $result[0]->last_great_day_start . "</td><td></td></tr>";
 	$markup .= "</tr>";
 	$markup .= "</table>";
 	}
