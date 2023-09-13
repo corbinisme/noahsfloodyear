@@ -38,9 +38,12 @@ window.addEventListener('load',
   var calendar = {
     init: function(){
         
+        calendar.countMonthDuplicates();
         calendar.getDates();
+        calendar.placePassover();
         calendar.binding();
         calendar.expandContent();
+        
     },
     binding: function(){
        
@@ -54,19 +57,30 @@ window.addEventListener('load',
         "tabernacles": null,
         "lastgreatday": null,
     },
+    makeDateString: function(date){
+        let dateString = date;
+        dateString = dateString.substring(dateString.indexOf(",")+1, dateString.length);
+        dateString = dateString.substring(0, dateString.indexOf(",")).trim()
+
+        console.log(dateString)
+        return dateString
+    },
     getDates: function(){
         let gregDate = document.querySelector("input[name='gregDate'" ).value;
         gregDate = gregDate.substring(2, gregDate.length);
         const era = document.querySelector("input[name='eraType'" ).value.toUpperCase();
 
         const table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
-        calendar.dates.passover = new Date(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
-        calendar.dates.unleavenedbread = new Date(table.querySelector(".unleavenedbread").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
-        calendar.dates.pentecost = new Date(table.querySelector(".pentecost").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
-        calendar.dates.trumpets = new Date(table.querySelector(".trumpets").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
-        calendar.dates.atonement = new Date(table.querySelector(".atonement").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
-        calendar.dates.tabernacles = new Date(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
-        calendar.dates.lastgreatday = new Date(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + " "  +era);
+        // get a Date() object for each date
+        // in the format of "Day Month, Year AD"
+        calendar.dates.passover = this.makeDateString(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  + era);
+        calendar.dates.unleavenedbread = this.makeDateString(table.querySelector(".unleavenedbread").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.pentecost = this.makeDateString(table.querySelector(".pentecost").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.trumpets = this.makeDateString(table.querySelector(".trumpets").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.atonement = this.makeDateString(table.querySelector(".atonement").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.tabernacles = this.makeDateString(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.lastgreatday = this.makeDateString(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        
         console.log(calendar.dates)
 
     },
@@ -174,7 +188,75 @@ window.addEventListener('load',
         }
     },
     placePassover: function(){
+        //get passover date on GC and find
+        const passoverDate = calendar.dates.passover;
+        const passovverDateParts = passoverDate.split(" ");
+        const passoverMonth = passovverDateParts[0];
+        const passoverDay = parseInt(passovverDateParts[1]);
 
+        const nisanMonth = document.getElementById("Nisan5").closest(".month");
+        const nisanMonthCount = parseInt(nisanMonth.getAttribute("data-month-count"));
+
+        let passoverMonthNode =null;
+        document.querySelectorAll(".month." + passoverMonth).forEach(function(mo){
+            if(parseInt(mo.getAttribute("data-month-count")) >= nisanMonthCount){
+                passoverMonthNode = mo;
+            }
+        })
+        passoverMonthNode.classList.add("passovermonth");
+        let passoverMonthsGregDates = [];
+        passoverMonthNode.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
+            
+            const inner = parseInt(ce.innerText);
+            passoverMonthsGregDates.push(inner);
+            ce.setAttribute("data-day", inner)
+        });
+
+        console.log("passoverMonthsGregDates", passoverMonthsGregDates) 
+        // see if passoverDay is between any of the dates
+        let passoverDayNode = null;
+        // find which two dates in passoverMonthGregDates that passoverDay is between
+        let firstDate = null;
+        let secondDate = null;
+        passoverMonthsGregDates.forEach(function(date){
+            if(passoverDay > date){
+                firstDate = date;
+            } else if(passoverDay < date){
+                secondDate = date;
+            }
+        });
+        console.log(passoverDay, firstDate, secondDate);
+        const firstDateNode = passoverMonthNode.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
+        const firstDateColumnNode = firstDateNode.closest(".Column");
+        firstDateColumnNode.classList.add("afterContent")
+        firstDateColumnNode.setAttribute("data-name", "passover");
+        
+        let unleavenedbreadColumnNode = null;
+        if(firstDateColumnNode.nextSibling){
+            unleavenedbreadColumnNode = firstDateColumnNode.nextSibling;
+        } else {
+            unleavenedbreadColumnNode = firstDateColumnNode.closest(".Month").nextSibling.querySelector(".Column:nth-child(1)")
+        }
+        unleavenedbreadColumnNode.classList.add("beforeContent");
+        unleavenedbreadColumnNode.classList.add("afterContent");
+        unleavenedbreadColumnNode.setAttribute("data-name", "unleavenedbread");
+
+    },
+    countMonthDuplicates: function(){
+        let count = 1;
+        document.querySelectorAll("#NewCalendarContainer>div").forEach(function(mo){
+            const monthName = mo.classList[0];
+
+            mo.classList.add("month");
+            mo.setAttribute("data-month", monthName);
+            mo.setAttribute("data-month-count", count);
+            count++;
+        });
+    },
+    placePentecostWeekCounts: function(){
+        const pentecostNode = document.querySelector(".afterContent[data-name='prepentecost']");
+        pentecostNode.classList.add("pentecostcount");
+        pentecostNode.classList.add("pentecostcount_7");
     },
     findPassover:function() {
         var a = document.getElementById("Sivan5");
@@ -211,6 +293,7 @@ window.addEventListener('load',
             var u = using.parentNode;
             u.classList.add("afterContent");
             u.setAttribute("data-name", "prepentecost");
+            calendar.placePentecostWeekCounts();
             var child = u.firstChild;
             child = child.nextSibling;
             var GregorianDate = calendar.strip(child.innerHTML);
@@ -226,6 +309,7 @@ window.addEventListener('load',
                 child = child.nextSibling;
             }
             calendar.findFirstOfNisan();
+            
         }
     },
     strip: function(html) {

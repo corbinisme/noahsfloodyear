@@ -603,11 +603,35 @@ $lastGreatDay: #15be27;
 				width: 3px;
 				top: 0;
 			}
+
+			.Cell {
+				span {
+					position: relative;
+					z-index: 6;
+				}
+			}
 		}
 		[data-name="prepentecost"]{
 			&::after {
 				background-color: $pentecost;
 				width: 10px;
+			}
+		}
+		[data-name="passover"]{
+			&::after {
+				background-color: $passover;
+				width: 10px;
+				right: 5px;
+			}
+			
+		}
+		[data-name="unleavenedbread"]{
+			&::after {
+				background-color: $unleavenedBread;
+				right: auto;
+				left: -7px;
+				width: calc(50% + 7px);
+				z-index: 4;
 			}
 		}
 	}

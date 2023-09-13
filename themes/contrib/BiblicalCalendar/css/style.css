@@ -787,9 +787,25 @@
   width: 3px;
   top: 0;
 }
+.path-calendar #NewCalendarContainer .afterContent .Cell span {
+  position: relative;
+  z-index: 6;
+}
 .path-calendar #NewCalendarContainer [data-name=prepentecost]::after {
   background-color: #0de1ec;
   width: 10px;
+}
+.path-calendar #NewCalendarContainer [data-name=passover]::after {
+  background-color: #f70d48;
+  width: 10px;
+  right: 5px;
+}
+.path-calendar #NewCalendarContainer [data-name=unleavenedbread]::after {
+  background-color: #623e02;
+  right: auto;
+  left: -7px;
+  width: calc(50% + 7px);
+  z-index: 4;
 }
 
 .block-views-blockbiblical-charts-block-1 {
