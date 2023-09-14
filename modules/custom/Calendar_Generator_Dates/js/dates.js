@@ -41,8 +41,10 @@ window.addEventListener('load',
         calendar.countMonthDuplicates();
         calendar.getDates();
         calendar.placePassover();
+       
         calendar.binding();
         calendar.expandContent();
+        calendar.placePentecostWeekCounts();
         
     },
     binding: function(){
@@ -62,7 +64,7 @@ window.addEventListener('load',
         dateString = dateString.substring(dateString.indexOf(",")+1, dateString.length);
         dateString = dateString.substring(0, dateString.indexOf(",")).trim()
 
-        console.log(dateString)
+   
         return dateString
     },
     getDates: function(){
@@ -81,7 +83,7 @@ window.addEventListener('load',
         calendar.dates.tabernacles = this.makeDateString(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.lastgreatday = this.makeDateString(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         
-        console.log(calendar.dates)
+
 
     },
     setHCmonthNums: function(){
@@ -240,7 +242,48 @@ window.addEventListener('load',
         unleavenedbreadColumnNode.classList.add("beforeContent");
         unleavenedbreadColumnNode.classList.add("afterContent");
         unleavenedbreadColumnNode.setAttribute("data-name", "unleavenedbread");
+        
+    },
+    getPreviousWeek: function(count){
+        
+        let currentNode = document.querySelector(".pentecostcolumn_current");
+        let previousNode = null;
 
+        
+        if(currentNode.previousSibling){
+            previousNode = currentNode.previousSibling;
+        } else {
+            // go to previous month
+            const previousMonthNode = currentNode.previousSibling;
+            if(previousMonthNode){
+                const previousMonthColumnNode = previousMonthNode.querySelector(".Column:nth-child(1)");
+                previousMonthColumnNode.classList.add("pentecostcolumn_current");
+                previousNode = previousMonthColumnNode
+            } else {
+                // go back a .Month
+                const currentMonthNode = currentNode.closest(".month");
+                const previousMonthNode = currentMonthNode.previousSibling;
+                const prevMonColumnCount = previousMonthNode.querySelectorAll(".Column").length;
+                const previousMonthColumnNode = previousMonthNode.querySelector(".Column:nth-child(" + prevMonColumnCount + ")");
+                previousNode = previousMonthColumnNode;
+            }
+        }
+        previousNode.classList.add("pentecostcolumn_current");
+        previousNode.classList.add("pentecostcount");
+        previousNode.classList.add("pentecostcount_" + (count-1));
+        previousNode.setAttribute("data-count", (count-1));
+    },
+    countToPentecost: function(){
+        const pentecostColumnNode = document.querySelector(".Column[data-name='prepentecost']");
+        pentecostColumnNode.classList.add("pentecostcolumn_current");
+        pentecostColumnNode.classList.add("pentecostcount_7");
+        pentecostColumnNode.setAttribute("data-count", "7")
+        let count = 7;
+        for(var i=count; i>0; i--){
+
+            this.getPreviousWeek(i);
+        }
+        
     },
     countMonthDuplicates: function(){
         let count = 1;
@@ -256,7 +299,8 @@ window.addEventListener('load',
     placePentecostWeekCounts: function(){
         const pentecostNode = document.querySelector(".afterContent[data-name='prepentecost']");
         pentecostNode.classList.add("pentecostcount");
-        pentecostNode.classList.add("pentecostcount_7");
+        pentecostNode.classList.add("pentecostcolumn_current");
+        this.countToPentecost();
     },
     findPassover:function() {
         var a = document.getElementById("Sivan5");
@@ -293,7 +337,7 @@ window.addEventListener('load',
             var u = using.parentNode;
             u.classList.add("afterContent");
             u.setAttribute("data-name", "prepentecost");
-            calendar.placePentecostWeekCounts();
+            
             var child = u.firstChild;
             child = child.nextSibling;
             var GregorianDate = calendar.strip(child.innerHTML);
