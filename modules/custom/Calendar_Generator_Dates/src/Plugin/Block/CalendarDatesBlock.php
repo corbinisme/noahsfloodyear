@@ -195,12 +195,12 @@ class CalendarDatesBlock extends BlockBase {
 
 		$markup .= '<table class="table"><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></tr></thead>' .
 		'<tbody>' .
-		'<tr><td class="passover">Passover <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "passover") . ', April 2</td><td></td></tr>' .
-		'<tr><td class="unleavenedbread">Unleavened Bread <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "unleavenedbread") . ', April 3</td><td class="start"> April 10</td></tr>'.
+		'<tr><td class="passover">Passover <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "passover") . ', Apr 2</td><td></td></tr>' .
+		'<tr><td class="unleavenedbread">Unleavened Bread <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "unleavenedbread") . ', Apr 3</td><td class="start"> April 10</td></tr>'.
 		'<tr><td class="pentecost">Pentecost <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "pentecost") . ', May 22</td><td></td></tr>'.
 		'<tr><td class="trumpets">Trumpets <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "feastoftrumpets") . ', Sep 13</td><td></td></tr>'.
-		'<tr><td class="atonement">Atonement <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "dayofatonement") . ',Sep 22</td><td></td></tr>'.
-		'<tr><td class="tabernacles">Tabernacles <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "feastoftabernacles") . ',Sep 27</td><td  class="start">Oct 3</td></tr>'.
+		'<tr><td class="atonement">Atonement <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "dayofatonement") . ', Sep 22</td><td></td></tr>'.
+		'<tr><td class="tabernacles">Tabernacles <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "feastoftabernacles") . ', Sep 27</td><td  class="start">Oct 3</td></tr>'.
 		'<tr><td class="lastgreatday">Last Great Day (8th Day) <span></span></td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "lastgreatday") . ', Oct 4</td><td></td>'.
 		'</tr></tbody></table>';
 	} else {

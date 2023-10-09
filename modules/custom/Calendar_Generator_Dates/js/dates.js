@@ -40,10 +40,12 @@ window.addEventListener('load',
         
         calendar.countMonthDuplicates();
         calendar.getDates();
-        calendar.placePassover();
+        
        
         calendar.binding();
+        
         calendar.expandContent();
+        calendar.placePassover();
         calendar.placePentecostWeekCounts();
         
     },
@@ -177,6 +179,8 @@ window.addEventListener('load',
         if (using != null) {
 
             var u = using.parentNode;
+            u.closest(".month").classList.add("nisanmonth");
+            u.classList.add("nisancolumn");
             var child = u.firstChild;
             var value = u.Value;
 
@@ -196,15 +200,27 @@ window.addEventListener('load',
         const passoverMonth = passovverDateParts[0];
         const passoverDay = parseInt(passovverDateParts[1]);
 
-        const nisanMonth = document.getElementById("Nisan5").closest(".month");
-        const nisanMonthCount = parseInt(nisanMonth.getAttribute("data-month-count"));
+        const nisanMonth = document.querySelector(".nisancolumn").closest(".month");
+        let nisanMonthCount = null;
+        if(nisanMonth) 
+            nisanMonthCount= parseInt(nisanMonth.getAttribute("data-month-count"));
 
         let passoverMonthNode =null;
+
+        let totalPassoverMonthPotentials = 0;
         document.querySelectorAll(".month." + passoverMonth).forEach(function(mo){
+            console.log("counts: passover month: ",mo.getAttribute("data-month-count"), "minas", nisanMonthCount)
             if(parseInt(mo.getAttribute("data-month-count")) >= nisanMonthCount){
+  
                 passoverMonthNode = mo;
+                totalPassoverMonthPotentials++;
             }
         })
+        // if totalPassoverMonthPotentials is more than one, choose the first in the query list
+        if(totalPassoverMonthPotentials > 1){
+            passoverMonthNode = document.querySelector(".month." + passoverMonth);
+        }
+
         passoverMonthNode.classList.add("passovermonth");
         let passoverMonthsGregDates = [];
         passoverMonthNode.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
@@ -221,9 +237,9 @@ window.addEventListener('load',
         let firstDate = null;
         let secondDate = null;
         passoverMonthsGregDates.forEach(function(date){
-            if(passoverDay > date){
+            if(passoverDay >= date){
                 firstDate = date;
-            } else if(passoverDay < date){
+            } else if(passoverDay <= date){
                 secondDate = date;
             }
         });
