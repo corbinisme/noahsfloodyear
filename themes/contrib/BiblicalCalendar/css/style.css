@@ -872,6 +872,20 @@
   user-select: none;
 }
 
+.modal {
+  display: none;
+}
+.modal.in {
+  display: flex;
+  height: 100vh;
+  align-content: center;
+}
+.modal.in .modal-dialog {
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
 /* timeline */
 .view-timeline {
   position: relative;

@@ -1,0 +1,5 @@
+name: Biblical Calendar Proof Chart 3
+description: Widget for showing Chart 3
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9

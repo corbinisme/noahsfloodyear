@@ -10,7 +10,7 @@ or this theme's _variables_drupal.scss and recompile css!)
 
 ## FEATURES
 
-* Bootstrap 5 library ([5.3.0](https://blog.getbootstrap.com/2023/05/30/bootstrap-5-3-0/)
+* Bootstrap 5 library ([5.3.2](https://blog.getbootstrap.com/2023/09/14/bootstrap-5-3-2/)
   and [5.2.3](https://blog.getbootstrap.com/2022/11/22/bootstrap-5-2-3/)) included
 * Bootstrap 5 breakpoints
 * Bootstrap 5 integration with CKEditor
@@ -53,6 +53,7 @@ Head to `Appearance` and clicking bootstrap5 `settings`.
 - To lint SASS files run `npm run lint:sass` (it will fail build if lint fails)
 - To lint JS files run `npm run lint:js` (it will fail build if lint fails)
 - To compile SASS run `sass scss/style.scss css/style.css` (requires [SASS compiler](https://sass-lang.com/install))
+- To compile SASS for CKEditor5 run `sass scss/ck5style.scss css/ck5style.css`
 - To compile JS: run `npm run build:js`
 - optional: create symlink from bootstrap5 repo folder to a local Drupal installation to simplify
   development `ln -s /path/to/bootstrap5 /path/to/local-drupal-site/web/themes/contrib`

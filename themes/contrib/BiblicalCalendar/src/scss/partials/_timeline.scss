@@ -1,3 +1,20 @@
+.modal {
+	display: none;
+	&.in {
+		display: flex;
+		height: 100vh;
+		align-content: center;
+
+		.modal-dialog {
+			display: flex;
+			align-content: center;
+			flex-wrap:wrap;
+		}
+	}
+	
+}
+
+
 /* timeline */
 .view-timeline {
 	position: relative;

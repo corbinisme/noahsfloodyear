@@ -141,8 +141,9 @@ var timeline = {
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-				<button type="button" class="close modalClose" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">Timeline Detail</h4>
+				<button type="button" class="close modalClose btn btn-outline-secondary" data-dismiss="modal">&times;</button>
+				
 				</div>
 				<div class="modal-body" style="max-height: 60vh; overflow: auto;">
 				<p>Some text in the modal.</p>
@@ -170,12 +171,15 @@ var timeline = {
 	},
 	sizeModal: function(){
 		let modal  = document.getElementById("timelineModal");
-		var height = modal.getBoundingClientRect().height;
-		var winHeight = window.outerHeight;
-		var diff = winHeight-height;
+		let height = modal.getBoundingClientRect().height;
+		let winHeight = window.outerHeight;
+
+		let diff = winHeight-(height);
+		
 		console.log(height, winHeight, diff);
 
-		modal.style.top = (diff/2) + "px";
+		//modal.style.top = (diff/2)  +  "px";
+		
 
 	},
 	setModal: function(id){
@@ -194,7 +198,7 @@ var timeline = {
 
 		modal.classList.add("in")
 		modal.classList.add("show")
-		modal.style.top = "0px";
+		//modal.style.top = "0px";
 		console.log("modal");
 		timeline.sizeModal();
 
@@ -315,3 +319,7 @@ var timeline = {
 window.onload = function(){
 	timeline.init();
 }
+// set window resize event
+window.addEventListener('resize', function(event){
+	timeline.sizeModal();
+});

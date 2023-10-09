@@ -1,0 +1,7 @@
+Chart_Three.getChart:
+  path: '/biblical-research/chart3'
+  defaults:
+    _controller: 'Drupal\Chart_Three\Controller\ChartThreeController::index'
+    _title: 'Chart Three'
+  requirements: 
+    _permission: 'access content'

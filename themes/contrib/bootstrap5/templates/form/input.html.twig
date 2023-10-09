@@ -11,7 +11,7 @@
  */
 #}
 
-{% if attributes.hasClass('button') and not attributes.hasClass('field-add-more-submit') %}
+{% if attributes.hasClass('button') and not attributes.hasClass('field-add-more-submit') and not attributes.hasClass('btn') %}
   {%
     set classes = [
       'btn',

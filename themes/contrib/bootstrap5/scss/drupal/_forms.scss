@@ -97,3 +97,12 @@ td {
     }
   }
 }
+
+.system-file-system-settings {
+  .form-item {
+    label {
+      display: table;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
