@@ -1,0 +1,9 @@
+language: en
+account: ''
+attachment_mode: 'build'
+snippet_version: 6
+snippet_path: "public://hotjar/hotjar.script.js"
+visibility_pages: 0
+pages: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
+visibility_roles: 0
+roles: {  }

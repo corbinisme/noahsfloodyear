@@ -1,0 +1,35 @@
+# Schema for the configuration files of the hotjar module.
+
+hotjar.settings:
+  type: config_object
+  label: 'Hotjar settings'
+  mapping:
+    account:
+      type: label
+      label: 'Hotjar ID'
+      translatable: true
+    snippet_version:
+      type: integer
+      label: 'Hotjar version'
+    snippet_path:
+      type: label
+      label: 'Snippet path'
+      translatable: true
+    attachment_mode:
+      type: string
+      label: 'Attachment mode'
+    visibility_pages:
+      type: integer
+      label: 'Add tracking to specific pages'
+    pages:
+      type: string
+      label: 'Pages by their paths'
+    visibility_roles:
+      type: integer
+      label: 'Add tracking for specific roles'
+    roles:
+      type: sequence
+      label: 'Roles'
+      sequence:
+        type: string
+        label: 'Role'

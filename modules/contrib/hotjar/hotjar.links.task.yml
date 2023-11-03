@@ -1,0 +1,4 @@
+hotjar.admin_settings_form_tab:
+  route_name: hotjar.admin_settings_form
+  title: Settings
+  base_route: hotjar.admin_settings_form

@@ -7,9 +7,18 @@ var calendar = {
             window.setTimeout(function(){
                 calendar.loadGenerator();
                 calendar.expandContent();
+                calendar.updateThreeBoxes();
             }, 1000);
             
         }
+    },
+    updateThreeBoxes: function(){
+        const math = document.getElementById("math");
+        const totaldays = math.querySelector(".TotalDays");
+        const calcdays = math.querySelector(".CalcDays");
+        const calculated = math.querySelector(".Calculated");
+
+        totaldays.querySelector(".Title").innerHTML = "What 247 year period from creation?";
     },
     binding: function(){
         document.querySelectorAll(".SignificantDateRow").forEach(function(row){

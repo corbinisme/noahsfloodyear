@@ -47,6 +47,7 @@ window.addEventListener('load',
         calendar.expandContent();
         calendar.placePassover();
         calendar.placePentecostWeekCounts();
+        calendar.updateThreeBoxes();
         
     },
     binding: function(){
@@ -60,6 +61,17 @@ window.addEventListener('load',
         "atonement": null,
         "tabernacles": null,
         "lastgreatday": null,
+    },
+    updateThreeBoxes: function(){
+        const math = document.getElementById("Math");
+        const totaldays = math.querySelector(".TotalDays");
+        const calcdays = math.querySelector(".CalcDays");
+        const calculated = math.querySelector(".Calculated");
+
+        totaldays.querySelector(".Title").innerHTML = "<u>What 247 year period from creation?</u>";
+        let numCycleVals = parseInt(totaldays.querySelector(".NumCycles").innerText);
+        totaldays.querySelector(".NumCycles").innerHTML = "<span class='badge bg-info text-white'>" +(numCycleVals+1) +"</span>";
+        
     },
     makeDateString: function(date){
         let dateString = date;

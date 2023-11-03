@@ -205,17 +205,17 @@ class CalendarDatesBlock extends BlockBase {
 		'</tr></tbody></table>';
 	} else {
 
-	$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
-	$markup .= "<tr>";
-	$markup .= "<tr><td  class='passover'>Passover <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "passover") . ", " . $result[0]->passover_start . "</td><td></td></tr>";
-	$markup .= "<tr><td class='unleavenedbread'>Unleavened Bread <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "unleavenedbread") . ", " . $result[0]->unleavened_bread_start . "</td><td class='end'>" . $result[0]->unleavened_bread_end . "</td></tr>";
-	$markup .= "<tr><td class='pentecost'>Pentecost <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "pentecost") . ", " . $result[0]->pentecost_start . "</td><td></td></tr>";
-	$markup .= "<tr><td class='trumpets'>Trumpets <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftrumpets") . ", " . $result[0]->feast_of_trumpets_start . "</td><td></td></tr>";
-	$markup .= "<tr><td class='atonement'>Atonement <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "dayofatonement") . ", " . $result[0]->day_of_atonement_start . "</td><td></td></tr>";
-	$markup .= "<tr><td class='tabernacles'>Tabernacles <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftabernacles") . ", " . $result[0]->feast_of_tabernacles_start . "</td><td class='start'>" . $result[0]->feast_of_tabernacles_end . "</td></tr>";
-	$markup .= "<tr><td class='lastgreatday'>Last Great Day (8th Day) <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "lastgreatday") . ", " . $result[0]->last_great_day_start . "</td><td></td></tr>";
-	$markup .= "</tr>";
-	$markup .= "</table>";
+		$markup .= "<table class='table'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
+		$markup .= "<tr>";
+		$markup .= "<tr><td  class='passover'>Passover <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "passover") . ", " . $result[0]->passover_start . "</td><td></td></tr>";
+		$markup .= "<tr><td class='unleavenedbread'>Unleavened Bread <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "unleavenedbread") . ", " . $result[0]->unleavened_bread_start . "</td><td class='end'>" . $result[0]->unleavened_bread_end . "</td></tr>";
+		$markup .= "<tr><td class='pentecost'>Pentecost <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "pentecost") . ", " . $result[0]->pentecost_start . "</td><td></td></tr>";
+		$markup .= "<tr><td class='trumpets'>Trumpets <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftrumpets") . ", " . $result[0]->feast_of_trumpets_start . "</td><td></td></tr>";
+		$markup .= "<tr><td class='atonement'>Atonement <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "dayofatonement") . ", " . $result[0]->day_of_atonement_start . "</td><td></td></tr>";
+		$markup .= "<tr><td class='tabernacles'>Tabernacles <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftabernacles") . ", " . $result[0]->feast_of_tabernacles_start . "</td><td class='start'>" . $result[0]->feast_of_tabernacles_end . "</td></tr>";
+		$markup .= "<tr><td class='lastgreatday'>Last Great Day (8th Day) <span></span></td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "lastgreatday") . ", " . $result[0]->last_great_day_start . "</td><td></td></tr>";
+		$markup .= "</tr>";
+		$markup .= "</table>";
 	}
 
 	$markup .= "<h3 class='text-center disclaimer_heading'>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</h3>";
@@ -233,6 +233,19 @@ class CalendarDatesBlock extends BlockBase {
 	$markup .= "<input type='hidden' id='AMYear' value='" . $result[0]->AM . "' />";
 	// add the other one
 	$markup .= "<div class='calendarWrapper hidden'><div class='calendarMarkup'>";
+
+	$markup .= "<div class='row' style='display: flex;'>";
+	$markup .= "<div class='col-sm-4'>";
+		$markup .= "<h4>What 247 year period from creation?</h4>";
+	$markup .= "</div>";
+	$markup .= "<div class='col-sm-4'>";
+		$markup .= "<h4>Which 19 year time cycle of the 13 in the 247 year period?</h4>";
+	$markup .= "</div>";
+	$markup .= "<div class='col-sm-4'>";
+		$markup .= "<h4>What year in the 19 year time cycle?</h4>";
+	$markup .= "</div>";
+	$markup .= "</div>";
+	$markup .= "<hr />";
 
 	$markup .= "<div class='calendarMetrics' style='background: rgba(0,0,0,0.4); border-radius: 10px; padding: 2em;'><div class='row'>
 		<div class='col-sm-4'>How many 247 Year Cycles: " . ceil($cycles) . " </div>
