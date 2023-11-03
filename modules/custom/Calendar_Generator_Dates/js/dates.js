@@ -70,8 +70,20 @@ window.addEventListener('load',
 
         totaldays.querySelector(".Title").innerHTML = "<u>What 247 year period from creation?</u>";
         let numCycleVals = parseInt(totaldays.querySelector(".NumCycles").innerText);
-        totaldays.querySelector(".NumCycles").innerHTML = "<span class='badge bg-info text-white'>" +(numCycleVals+1) +"</span>";
+        totaldays.querySelector(".NumCycles").innerHTML = "<span class='mt-2 mb-2 btn btn-info text-white'>" +(numCycleVals+1) +"</span>";
         
+
+
+        calcdays.querySelector(".Title").innerHTML = "<u>Which 19 year time cycle of the 13 in the 247 year period?</u>";
+        calcdays.querySelector(".NumCycles").innerHTML = "<span class='mt-2 mb-2 btn btn-info text-white'>" + calcdays.querySelector(".NumCycles").innerText + "</span>";
+        calcdays.querySelectorAll(".Title").forEach(function(el, idx){
+            if(idx==1){
+                //el.innerHTML = "Difference between the solar and Hebrew calendars";
+            }
+        })
+
+        calculated.querySelector(".Title").innerHTML = "<u>What year in the 19 year time cycle?</u>";
+        calculated.querySelector(".NumYears").innerHTML = "<span class='mt-2 mb-2 btn btn-info text-white'>" + calculated.querySelector(".NumYears").innerText + "</span>";
     },
     makeDateString: function(date){
         let dateString = date;
