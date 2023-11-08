@@ -70,20 +70,56 @@ window.addEventListener('load',
 
         totaldays.querySelector(".Title").innerHTML = "<u>What 247 year period from creation?</u>";
         let numCycleVals = parseInt(totaldays.querySelector(".NumCycles").innerText);
-        totaldays.querySelector(".NumCycles").innerHTML = "<span class='mt-2 mb-2 btn btn-info text-white'>" +(numCycleVals+1) +"</span>";
+        totaldays.querySelector(".NumCycles").innerHTML = "<span class='mt-2 mb-2 btn btn-secondary text-white'>" +(numCycleVals+1) +"</span>";
         
 
 
         calcdays.querySelector(".Title").innerHTML = "<u>Which 19 year time cycle of the 13 in the 247 year period?</u>";
-        calcdays.querySelector(".NumCycles").innerHTML = "<span class='mt-2 mb-2 btn btn-info text-white'>" + calcdays.querySelector(".NumCycles").innerText + "</span>";
+        calcdays.querySelector(".NumCycles").innerHTML = "<span class='mt-2 mb-2 btn btn-secondary text-white'>" + calcdays.querySelector(".NumCycles").innerText + "</span>";
         calcdays.querySelectorAll(".Title").forEach(function(el, idx){
-            if(idx==1){
-                //el.innerHTML = "Difference between the solar and Hebrew calendars";
+            if(idx>0){
+                if(idx==1){
+                    el.innerHTML = "<u>Difference between the solar and Hebrew calendars</u>";
+                } 
+                if(idx==2){
+                    el.innerHTML = "<u>Last year's difference equals</u>";
+                }
+                el.classList.add("text-center");
+                el.classList.add("fullOverride");
             }
-        })
+        });
+        calcdays.querySelectorAll(".NumDays").forEach(function(el, idx){
+            el.classList.add("text-center");
+
+            el.classList.add("justify-content-center");
+            el.classList.add("w-100");
+            el.classList.add("btn-outline-secondary");
+            el.classList.add("btn");
+            el.classList.add("d-inline-flex");
+            el.classList.add("m-0")
+
+        });
 
         calculated.querySelector(".Title").innerHTML = "<u>What year in the 19 year time cycle?</u>";
-        calculated.querySelector(".NumYears").innerHTML = "<span class='mt-2 mb-2 btn btn-info text-white'>" + calculated.querySelector(".NumYears").innerText + "</span>";
+        calculated.querySelector(".NumYears").innerHTML = "<span class='mt-2 mb-2 btn btn-secondary text-white'>" + calculated.querySelector(".NumYears").innerText + "</span>";
+
+        calculated.querySelectorAll(".Title").forEach(function(el, idx){
+            if(idx>0){
+                if(idx==1){
+                    el.innerHTML = "<u>Difference between last year and present year</u>";
+                    el.classList.add("text-center");
+                    el.classList.add("fullOverride");
+                }
+
+            }
+        });
+        const numDaysCalc = calculated.querySelector(".NumDays");
+        numDaysCalc.classList.add("justify-content-center");
+        numDaysCalc.classList.add("w-100");
+        numDaysCalc.classList.add("btn-outline-secondary");
+        numDaysCalc.classList.add("btn");
+        numDaysCalc.classList.add("d-inline-flex");
+        numDaysCalc.classList.add("m-0");
     },
     makeDateString: function(date){
         let dateString = date;

@@ -3,7 +3,7 @@ $HCC: #A50000;
 $SC: #0000AA;
 
 $passover: #f70d48;
-$unleavenedBread: #623e02;
+$unleavenedBread: #a07833;
 $pentecost: #0de1ec;
 $trumpets: #f2d316;
 $atonement: #e647fb;
@@ -12,6 +12,12 @@ $lastGreatDay: #15be27;
 
 
 .path-calendar {
+
+	.fullOverride {
+		width: 100%!important;
+		float: none!important;
+		clear: both;
+	}
 
 	#block-biblicalcalendar-calendardatesblock {
 
@@ -30,7 +36,7 @@ $lastGreatDay: #15be27;
 			.passover span {
 				background-color: $passover;
 			}
-			.unleaveanedbread  span {
+			.unleavenedbread span {
 				background-color: $unleavenedBread;
 			}
 			.pentecost  span {
@@ -103,6 +109,17 @@ $lastGreatDay: #15be27;
 	#Math {
 		display: flex;
     	width: 100%;
+
+		
+			@include respond-below(md){
+				flex-wrap: wrap;
+
+				>div {
+					width: 100%!important;
+					
+				}
+			}
+		
 	}
 	#Math .TotalDays, #Math .CalcDays, #Math .Calculated { 
 		display: block; float: left; width: 33.3%; 
@@ -124,7 +141,7 @@ $lastGreatDay: #15be27;
 #Math .CalcDays { border-right: 1px solid #fff; width: 33%; }
 #Math .CalcDays { background: #053E84; }
 #Math .Title {
-  height: 45px;
+  min-height: 45px;
  	 @include respond-below(md){
 	text-align: center!important;
 	}
@@ -635,6 +652,7 @@ $lastGreatDay: #15be27;
 			&::after {
 				background-color: $pentecost;
 				width: 10px;
+				height:120px;
 			}
 		}
 		[data-name="passover"]{
@@ -642,6 +660,7 @@ $lastGreatDay: #15be27;
 				background-color: $passover;
 				width: 10px;
 				right: 5px;
+				height: 120px;
 			}
 			
 		}
@@ -652,6 +671,7 @@ $lastGreatDay: #15be27;
 				left: -7px;
 				width: calc(50% + 7px);
 				z-index: 4;
+				height: 120px;
 			}
 		}
 	}

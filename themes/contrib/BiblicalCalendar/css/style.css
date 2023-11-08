@@ -222,6 +222,11 @@
   margin-top: 0.5em;
 }
 
+.path-calendar .fullOverride {
+  width: 100% !important;
+  float: none !important;
+  clear: both;
+}
 .path-calendar #block-biblicalcalendar-calendardatesblock .table td {
   position: relative;
 }
@@ -234,8 +239,8 @@
 .path-calendar #block-biblicalcalendar-calendardatesblock .table .passover span {
   background-color: #f70d48;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .unleaveanedbread span {
-  background-color: #623e02;
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .unleavenedbread span {
+  background-color: #a07833;
 }
 .path-calendar #block-biblicalcalendar-calendardatesblock .table .pentecost span {
   background-color: #0de1ec;
@@ -294,6 +299,14 @@
   display: flex;
   width: 100%;
 }
+@media (max-width: 991px) {
+  .path-calendar #Math {
+    flex-wrap: wrap;
+  }
+  .path-calendar #Math > div {
+    width: 100% !important;
+  }
+}
 .path-calendar #Math .TotalDays, .path-calendar #Math .CalcDays, .path-calendar #Math .Calculated {
   display: block;
   float: left;
@@ -319,7 +332,7 @@
   background: #053E84;
 }
 .path-calendar #Math .Title {
-  height: 45px;
+  min-height: 45px;
 }
 @media (max-width: 991px) {
   .path-calendar #Math .Title {
@@ -810,18 +823,21 @@
 .path-calendar #NewCalendarContainer [data-name=prepentecost]::after {
   background-color: #0de1ec;
   width: 10px;
+  height: 120px;
 }
 .path-calendar #NewCalendarContainer [data-name=passover]::after {
   background-color: #f70d48;
   width: 10px;
   right: 5px;
+  height: 120px;
 }
 .path-calendar #NewCalendarContainer [data-name=unleavenedbread]::after {
-  background-color: #623e02;
+  background-color: #a07833;
   right: auto;
   left: -7px;
   width: calc(50% + 7px);
   z-index: 4;
+  height: 120px;
 }
 
 .block-views-blockbiblical-charts-block-1 {

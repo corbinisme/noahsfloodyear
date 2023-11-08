@@ -3,8 +3,9 @@ $timelineBorderLine: #b2ccdd;
 $bgColor: #28599b;
 $linkColor: #fff;     
 $headingColor: #f1cb98;   
-$bodyBG: #fff;              
-                     
+$bodyBG: #fff;      
+
+                 
 
 @import url('https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap');
 @import "partials/mediafunctions";  
@@ -14,7 +15,11 @@ $bodyBG: #fff;
 @import 'partials/timeline'; 
 @import 'partials/articles';
 @import 'partials/hero'; 
-@import 'partials/audiovideo';
+@import 'partials/audiovideo'; 
+
+
+
+  
          
  
 body {
@@ -24,13 +29,12 @@ body {
         min-height: 100%;
         height: auto!important;
     } 
+
+
+      
      
 }     
 
-     
- 
-
- 
  
 .field--name-field-media-document .file-download{
     color: #fff!important;
