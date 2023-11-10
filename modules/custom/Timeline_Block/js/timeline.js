@@ -98,39 +98,42 @@ var timeline = {
 		    
 		  });
 
-		  item.addEventListener('click', function(e){
-			  e.preventDefault();
-			  let href = e.target.getAttribute("href");
-
-			  let nid = e.target.closest(".views-row").querySelector(".views-field-field-am-year").innerText;
-
-			  if(timeline.loadedData==null){
-				fetch('/timelineRest')
-				.then(response => response.json())
-				.then(data => {
-					
-					timeline.loadedData = {};
-					data.forEach(function(el, idx){
-						
-						let am = el['field_am_year'][0].value;
-						timeline.loadedData[am] = data[idx];
-					});
-					
-					timeline.setModal(timeline.loadedData[nid]);
-				});
-
-				
-			  } else {
-				
-					
-				timeline.setModal(timeline.loadedData[nid]);
-			  }
-
-
-			  
-		  })
+		  
 		})
-		
+		document.querySelectorAll('.view-id-timeline .views-field-title a').forEach(item => {
+			item.addEventListener('click', function(e){
+				e.preventDefault();
+				let href = e.target.getAttribute("href");
+  
+				let nid = e.target.closest(".views-row").querySelector(".views-field-field-am-year").innerText;
+  
+				if(timeline.loadedData==null){
+				  fetch('/timelineRest')
+				  .then(response => response.json())
+				  .then(data => {
+					  
+					  timeline.loadedData = {};
+					  data.forEach(function(el, idx){
+						  
+						  let am = el['field_am_year'][0].value;
+						  timeline.loadedData[am] = data[idx];
+					  });
+					  
+					  timeline.setModal(timeline.loadedData[nid]);
+				  });
+  
+				  
+				} else {
+				  
+					  
+				  timeline.setModal(timeline.loadedData[nid]);
+				}
+  
+  
+				
+			})
+		});
+
 	},
 	buildModal: function(){
 	
@@ -184,16 +187,24 @@ var timeline = {
 	},
 	setModal: function(id){
 
-		let title = id['title'][0].value;
-		let body = (id['body'][0]?id['body'][0].processed:"");
+		const title = id['title'][0].value;
+		const body = (id['body'][0]?id['body'][0].processed:"");
+		const amyear = id['field_am_year'][0].value;
 		console.log("title",title, body);
 		if(document.getElementById("timelineModal")==null){
 			timeline.buildModal();
 		}
 
-		let modal  = document.getElementById("timelineModal");
-		let bodyNode = modal.querySelector(".modal-body");
-		bodyNode.innerHTML = body;
+		const modal  = document.getElementById("timelineModal");
+		const bodyNode = modal.querySelector(".modal-body");
+		const buttonBottom = document.createElement("a");
+		buttonBottom.classList.add("btn");
+		buttonBottom.classList.add("btn-primary");
+		buttonBottom.classList.add("text-white");
+		buttonBottom.classList.add("m-0");
+		buttonBottom.innerHTML = "View Calendar Year";
+		buttonBottom.href = "/calendar/am/"+amyear;
+		bodyNode.innerHTML = body + buttonBottom.outerHTML;
 
 
 		modal.classList.add("in")
