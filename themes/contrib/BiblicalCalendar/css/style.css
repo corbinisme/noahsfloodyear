@@ -797,6 +797,7 @@
   position: absolute;
   top: 0px;
   left: 5px;
+  z-index: 56;
   font-weight: bold;
   text-shadow: 1px 1px #000;
   font-size: 18px;

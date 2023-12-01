@@ -346,8 +346,12 @@ window.addEventListener('load',
         }
         previousNode.classList.add("pentecostcolumn_current");
         previousNode.classList.add("pentecostcount");
-        previousNode.classList.add("pentecostcount_" + (count-1));
-        previousNode.setAttribute("data-count", (count-1));
+        let newcount = count-1;
+        if(newcount==0){
+            newcount = '';
+        }
+        previousNode.classList.add("pentecostcount_" + (newcount));
+        previousNode.setAttribute("data-count", (newcount));
     },
     countToPentecost: function(){
         const pentecostColumnNode = document.querySelector(".Column[data-name='prepentecost']");
