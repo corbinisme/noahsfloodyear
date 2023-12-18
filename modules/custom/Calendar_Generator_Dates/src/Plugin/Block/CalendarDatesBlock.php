@@ -66,10 +66,10 @@ class CalendarDatesBlock extends BlockBase {
 				$list['passover'] = "Fri"; 
 				$list['unleavenedbread'] = "Sat";
 				$list['pentecost'] = "Sun";
-				$list['feastoftrumpets'] = "Tues";
-				$list['dayofatonement'] = "Thurs";
-				$list['feastoftabernacles'] = "Tues";
-				$list['lastgreatday'] = "Tues";
+				$list['feastoftrumpets'] = "Mon";
+				$list['dayofatonement'] = "Wed";
+				$list['feastoftabernacles'] = "Mon";
+				$list['lastgreatday'] = "Mon";
 			break;
 			case 3: 
 				$list['passover'] = "Wed"; 
@@ -218,6 +218,7 @@ class CalendarDatesBlock extends BlockBase {
 		$markup .= "</table>";
 	}
 
+	$markup .= "<input type='hidden' id='hsvalue' value='" . $result[0]->HS . "' />";
 	$markup .= "<h3 class='text-center disclaimer_heading'>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</h3>";
 	
 
