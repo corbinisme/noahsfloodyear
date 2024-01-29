@@ -675,6 +675,38 @@ $lastGreatDay: #15be27;
 				height: 120px;
 			}
 		}
+		[data-name="atonement"]{
+			&::after {
+				background-color: $atonement;
+				width: 10px;
+				right: 5px;
+				height: 120px;
+			}
+		}
+		[data-name="feastoftrumpets"]{
+			&::after {
+				background-color: $trumpets;
+				width: 10px;
+				right: 5px;
+				height: 120px;
+			}
+		}
+		[data-name="feastoftabernacles"]{
+			&::after {
+				background-color: $tabernacles;
+				width: 10px;
+				right: 5px;
+				height: 120px;
+			}
+		}
+		[data-name="lastgreatday"]{
+			&::after {
+				background-color: $lastGreatDay;
+				width: 10px;
+				right: 5px;
+				height: 120px;
+			}
+		}
 	}
 
 } 

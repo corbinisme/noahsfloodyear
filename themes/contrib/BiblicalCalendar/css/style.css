@@ -840,6 +840,30 @@
   z-index: 4;
   height: 120px;
 }
+.path-calendar #NewCalendarContainer [data-name=atonement]::after {
+  background-color: #e647fb;
+  width: 10px;
+  right: 5px;
+  height: 120px;
+}
+.path-calendar #NewCalendarContainer [data-name=feastoftrumpets]::after {
+  background-color: #f2d316;
+  width: 10px;
+  right: 5px;
+  height: 120px;
+}
+.path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after {
+  background-color: #fa8a48;
+  width: 10px;
+  right: 5px;
+  height: 120px;
+}
+.path-calendar #NewCalendarContainer [data-name=lastgreatday]::after {
+  background-color: #15be27;
+  width: 10px;
+  right: 5px;
+  height: 120px;
+}
 
 .block-views-blockbiblical-charts-block-1 {
   margin-top: 2em;

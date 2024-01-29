@@ -47,6 +47,7 @@ window.addEventListener('load',
         calendar.expandContent();
         calendar.placePassover();
         calendar.placePentecostWeekCounts();
+        calendar.placeFallFeasts();
         calendar.updateThreeBoxes();
         
     },
@@ -144,9 +145,6 @@ window.addEventListener('load',
         calendar.dates.atonement = this.makeDateString(table.querySelector(".atonement").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.tabernacles = this.makeDateString(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.lastgreatday = this.makeDateString(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
-        
-
-
     },
     setHCmonthNums: function(){
         let initCounter = 1;
@@ -169,10 +167,8 @@ window.addEventListener('load',
                 case "Shev": monthNum = 11; break;
                 case "Adar": monthNum = 12; break;
                 case "Adar II": monthNum = 13; break;
-    
             }
             if(orig!=""){
-    
                 mo.querySelector("span").innerHTML = "(" + monthNum + ") " + orig;
                 initCounter++;
             }
@@ -269,7 +265,7 @@ window.addEventListener('load',
 
         let totalPassoverMonthPotentials = 0;
         document.querySelectorAll(".month." + passoverMonth).forEach(function(mo){
-            console.log("counts: passover month: ",mo.getAttribute("data-month-count"), "minas", nisanMonthCount)
+            //console.log("counts: passover month: ",mo.getAttribute("data-month-count"), "minas", nisanMonthCount)
             if(parseInt(mo.getAttribute("data-month-count")) >= nisanMonthCount){
   
                 passoverMonthNode = mo;
@@ -290,7 +286,7 @@ window.addEventListener('load',
             ce.setAttribute("data-day", inner)
         });
 
-        console.log("passoverMonthsGregDates", passoverMonthsGregDates) 
+        //console.log("passoverMonthsGregDates", passoverMonthsGregDates) 
         // see if passoverDay is between any of the dates
         let passoverDayNode = null;
         // find which two dates in passoverMonthGregDates that passoverDay is between
@@ -303,7 +299,7 @@ window.addEventListener('load',
                 secondDate = date;
             }
         });
-        console.log(passoverDay, firstDate, secondDate);
+        //console.log(passoverDay, firstDate, secondDate);
         const firstDateNode = passoverMonthNode.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
         const firstDateColumnNode = firstDateNode.closest(".Column");
         firstDateColumnNode.classList.add("afterContent")
@@ -375,6 +371,260 @@ window.addEventListener('load',
             mo.setAttribute("data-month-count", count);
             count++;
         });
+    },
+    placeFallFeasts: function(){
+        //console.log("placeFallFeasts");
+        let atonementDates = calendar.dates.atonement.split(" ");
+        let trumpetsDates = calendar.dates.trumpets.split(" ");
+        let tabernaclesDates = calendar.dates.tabernacles.split(" ");
+        let lastgreatdayDates = calendar.dates.lastgreatday.split(" ");
+        //console.log("atonementDate", atonementDates);
+        //console.log("trumpetsDate", trumpetsDates);
+        //console.log("tabernaclesDate", tabernaclesDates);
+        //console.log("lastgreatdayDate", lastgreatdayDates);
+
+        const atonementMonth = atonementDates[0];
+        const atonementDay = parseInt(atonementDates[1]);
+        const trumpetsMonth = trumpetsDates[0];
+        const trumpetsDay = parseInt(trumpetsDates[1]);
+        const tabernaclesMonth = tabernaclesDates[0];
+        const tabernaclesDay = parseInt(tabernaclesDates[1]);
+        const lastgreatdayMonth = lastgreatdayDates[0];
+        const lastgreatdayDay = parseInt(lastgreatdayDates[1]);
+        
+        const atonementMonthNode = document.querySelector(".month." + atonementMonth);
+        const trumpetsMonthNode = document.querySelector(".month." + trumpetsMonth);
+        const tabernaclesMonthNode = document.querySelector(".month." + tabernaclesMonth);
+        const lastgreatdayMonthNode = document.querySelector(".month." + lastgreatdayMonth);
+
+        let atonementMonthCount = null;
+        let trumpetsMonthCount = null;
+        let tabernaclesMonthCount = null;
+        let lastgreatdayMonthCount = null;
+        if(atonementMonthNode) 
+            atonementMonthCount= parseInt(atonementMonthNode.getAttribute("data-month-count"));
+        if(tabernaclesMonthNode)
+            tabernaclesMonthCount= parseInt(tabernaclesMonthNode.getAttribute("data-month-count"));
+        if(lastgreatdayMonthNode)
+            lastgreatdayMonthCount= parseInt(lastgreatdayMonthNode.getAttribute("data-month-count"));
+
+        let atonementMonthPotentials = [];
+        let trumpetsMonthPotentials = [];
+        let tabernaclesMonthPotentials = [];
+        let lastgreatdayMonthPotentials = [];
+        document.querySelectorAll(".month." + atonementMonth).forEach(function(mo){
+            if(parseInt(mo.getAttribute("data-month-count")) >= atonementMonthCount){
+                atonementMonthPotentials.push(mo);
+            }
+        })
+        document.querySelectorAll(".month." + trumpetsMonth).forEach(function(mo){
+            if(parseInt(mo.getAttribute("data-month-count")) >= trumpetsMonthCount){
+                trumpetsMonthPotentials.push(mo);
+            }
+        });
+        document.querySelectorAll(".month." + tabernaclesMonth).forEach(function(mo){
+            if(parseInt(mo.getAttribute("data-month-count")) >= tabernaclesMonthCount){
+                tabernaclesMonthPotentials.push(mo);
+            }
+        })
+        document.querySelectorAll(".month." + lastgreatdayMonth).forEach(function(mo){
+            if(parseInt(mo.getAttribute("data-month-count")) >= lastgreatdayMonthCount){
+                lastgreatdayMonthPotentials.push(mo);
+            }
+        })
+        let atonementMonthNodeFinal = null;
+        let trumpetsMonthNodeFinal = null;
+        let tabernaclesMonthNodeFinal = null;
+        let lastgreatdayMonthNodeFinal = null;
+        if(atonementMonthPotentials.length > 1){
+            atonementMonthNodeFinal = document.querySelector(".month." + atonementMonth);
+        } else {
+            atonementMonthNodeFinal = atonementMonthPotentials[0];
+        }
+        if(trumpetsMonthPotentials.length > 1){
+            trumpetsMonthNodeFinal = document.querySelector(".month." + trumpetsMonth);
+        } else {
+            trumpetsMonthNodeFinal = trumpetsMonthPotentials[0];
+        }
+        if(tabernaclesMonthPotentials.length > 1){
+            tabernaclesMonthNodeFinal = document.querySelector(".month." + tabernaclesMonth);
+        } else {
+            tabernaclesMonthNodeFinal = tabernaclesMonthPotentials[0];
+        }
+        if(lastgreatdayMonthPotentials.length > 1){
+            lastgreatdayMonthNodeFinal = document.querySelector(".month." + lastgreatdayMonth);
+        } else {
+            lastgreatdayMonthNodeFinal = lastgreatdayMonthPotentials[0];
+        }
+        atonementMonthNodeFinal.classList.add("atonementmonth");
+        tabernaclesMonthNodeFinal.classList.add("tabernaclesmonth");
+        lastgreatdayMonthNodeFinal.classList.add("lastgreatdaymonth");
+        let atonementMonthsGregDates = [];
+        let trumpetsMonthsGregDates = [];
+        let tabernaclesMonthsGregDates = [];
+        let lastgreatdayMonthsGregDates = [];
+        atonementMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
+            
+            const inner = parseInt(ce.innerText);
+            atonementMonthsGregDates.push(inner);
+            ce.setAttribute("data-day", inner)
+        });
+        trumpetsMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
+            
+            const inner = parseInt(ce.innerText);
+            trumpetsMonthsGregDates.push(inner);
+            ce.setAttribute("data-day", inner)
+        });
+
+        tabernaclesMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
+            
+            const inner = parseInt(ce.innerText);
+            tabernaclesMonthsGregDates.push(inner);
+            ce.setAttribute("data-day", inner)
+        });
+        lastgreatdayMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
+            
+            const inner = parseInt(ce.innerText);
+            lastgreatdayMonthsGregDates.push(inner);
+            ce.setAttribute("data-day", inner)
+        });
+
+        // see if atonementDay is between any of the dates
+        
+
+        let atonementDayNode = null;
+        // find which two dates in atonementMonthGregDates that atonementDay is between
+        let atonementfirstDate = null;
+        let atonementsecondDate = null;
+        atonementMonthsGregDates.forEach(function(date){
+            if(atonementDay >= date){
+                atonementfirstDate = date;
+            } else if(atonementDay <= date){
+                atonementsecondDate = date;
+            }
+        });
+        //console.log(atonementDay, atonementfirstDate, atonementsecondDate);
+        const atonementfirstDateNode = atonementMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + atonementfirstDate + "']");
+        const atonementfirstDateColumnNode = atonementfirstDateNode.closest(".Column");
+        atonementfirstDateColumnNode.classList.add("afterContent")
+        atonementfirstDateColumnNode.setAttribute("data-name", "atonement");
+        
+        let atonementsecondDateNode = null;
+        if(atonementfirstDateColumnNode.nextSibling){
+            atonementsecondDateNode = atonementfirstDateColumnNode.nextSibling;
+        } else {
+            atonementsecondDateNode = atonementfirstDateColumnNode.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
+        }
+        //atonementsecondDateNode.classList.add("beforeContent"); 
+        
+        // trumpets
+        let trumpetsDayNode = null;
+        // find which two dates in trumpetsMonthGregDates that trumpetsDay is between
+        let trumpetsfirstDate = null;
+        let trumpetssecondDate = null;
+        trumpetsMonthsGregDates.forEach(function(date){
+            if(trumpetsDay >= date){
+                trumpetsfirstDate = date;
+            } else if(trumpetsDay <= date){
+                trumpetssecondDate = date;
+            }
+        }
+        );
+        //console.log(trumpetsDay, trumpetsfirstDate, trumpetssecondDate);
+        const trumpetsfirstDateNode = trumpetsMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + trumpetsfirstDate + "']");
+        const trumpetsfirstDateColumnNode = trumpetsfirstDateNode.closest(".Column");
+        trumpetsfirstDateColumnNode.classList.add("afterContent")
+        trumpetsfirstDateColumnNode.setAttribute("data-name", "feastoftrumpets");
+
+
+        // tabernacles
+        let tabernaclesDayNode = null;
+        // find which two dates in tabernaclesMonthGregDates that tabernaclesDay is between
+        let tabernaclesfirstDate = null;
+        let tabernaclessecondDate = null;
+        tabernaclesMonthsGregDates.forEach(function(date){
+            if(tabernaclesDay >= date){
+                tabernaclesfirstDate = date;
+            } else if(tabernaclesDay <= date){
+                tabernaclessecondDate = date;
+            }
+        });
+        //console.log(tabernaclesDay, tabernaclesfirstDate, tabernaclessecondDate);
+        // lastgreatday
+        let lastgreatdayDayNode = null;
+        // find which two dates in lastgreatdayMonthGregDates that lastgreatdayDay is between
+        let lastgreatdayfirstDate = null;
+        let lastgreatdaysecondDate = null;
+        lastgreatdayMonthsGregDates.forEach(function(date){
+            if(lastgreatdayDay >= date){
+                lastgreatdayfirstDate = date;
+            } else if(lastgreatdayDay <= date){
+                lastgreatdaysecondDate = date;
+            }
+        });
+        //console.log(lastgreatdayDay, lastgreatdayfirstDate, lastgreatdaysecondDate);
+        const lastgreatdayfirstDateNode = lastgreatdayMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + lastgreatdayfirstDate + "']");
+        const lastgreatdayfirstDateColumnNode = lastgreatdayfirstDateNode.closest(".Column");
+        lastgreatdayfirstDateColumnNode.classList.add("afterContent")
+        lastgreatdayfirstDateColumnNode.setAttribute("data-name", "lastgreatday");
+
+        
+        
+        const tabernaclesfirstDateNode = tabernaclesMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + tabernaclesfirstDate + "']");
+        const tabernaclesfirstDateColumnNode = tabernaclesfirstDateNode.closest(".Column");
+        tabernaclesfirstDateColumnNode.classList.add("afterContent")
+        tabernaclesfirstDateColumnNode.setAttribute("data-name", "feastoftabernacles");
+
+        let tabernaclessecondDateNode = null;
+        if(tabernaclesfirstDateColumnNode.nextSibling){
+            tabernaclessecondDateNode = tabernaclesfirstDateColumnNode.nextSibling;
+        } else {
+            tabernaclessecondDateNode = tabernaclesfirstDateColumnNode.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
+        }
+        tabernaclessecondDateNode.classList.add("beforeContent");
+        tabernaclessecondDateNode.classList.add("afterContent");
+        // fill in all dates from tabernaclesfirstDateColumnNode to lastgreatdayFirstDateColumnNode
+        this.fillInTabernacles();
+
+        
+
+
+
+    },
+    fillInTabernacles: function(){
+        const tabernaclesfirstDateColumnNode = document.querySelector(".Column[data-name='feastoftabernacles']");
+        // get computed width of tabernaclesfirstDateColumnNode
+        const tabernaclesfirstDateColumnNodeWidth = window.getComputedStyle(tabernaclesfirstDateColumnNode).width;
+        const newWidth = parseInt(tabernaclesfirstDateColumnNodeWidth.substring(0, tabernaclesfirstDateColumnNodeWidth.length-2));
+        const newright = newWidth -5;
+        // for this hack, just get the width of the cell until the 8th day
+        const style = document.createElement("style");
+        style.id="tabernaclesStyle";
+        style.innerHTML = ".path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after{z-index:2;width: " + newWidth + "px;right: -" + newright + "px;}";
+        style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=lastgreatday]::after{z-index:3;}";  
+        document.head.appendChild(style);
+
+
+        
+
+       
+
+    },
+    fillInColumn: function(col){
+        let currentCol = col;
+        let currentColName = (currentCol.hasAttribute("data-name")?currentCol.getAttribute("data-name"):"");
+        while(currentColName != "lastgreatday"){
+            
+            if(currentCol.nextSibling){
+                currentCol = currentCol.nextSibling;
+            } else {
+                currentCol = currentCol.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
+            }
+            currentColName = (currentCol.hasAttribute("data-name")?currentCol.getAttribute("data-name"):"");
+            console.log("currentColName", currentColName, currentCol)
+        }
+
+        
     },
     placePentecostWeekCounts: function(){
         const pentecostNode = document.querySelector(".afterContent[data-name='prepentecost']");
