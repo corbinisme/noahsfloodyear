@@ -805,6 +805,15 @@
   text-align: left;
   color: #0de1ec;
 }
+.path-calendar #NewCalendarContainer .Column.feastoftabernaclesAndLGDmonth::before {
+  background-color: #fa8a48;
+  width: 50px;
+  height: 120px;
+  content: "";
+  display: block;
+  right: 15px;
+  position: absolute;
+}
 .path-calendar #NewCalendarContainer .afterContent {
   position: relative;
 }

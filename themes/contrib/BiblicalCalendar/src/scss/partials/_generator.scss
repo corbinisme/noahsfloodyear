@@ -629,6 +629,17 @@ $lastGreatDay: #15be27;
 
 				}
 			}
+			&.feastoftabernaclesAndLGDmonth {
+				&::before {
+					background-color: $tabernacles;
+					width: 50px;
+					height: 120px;
+					content: "";
+					display: block;
+					right: 15px;
+					position: absolute;
+				}
+			}
 		}
 		.afterContent {
 			position: relative;

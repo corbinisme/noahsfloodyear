@@ -549,6 +549,9 @@ window.addEventListener('load',
                 tabernaclessecondDate = date;
             }
         });
+        if(tabernaclesfirstDate == null){
+            tabernaclesfirstDate = tabernaclesMonthsGregDates[0];
+        }
         //console.log(tabernaclesDay, tabernaclesfirstDate, tabernaclessecondDate);
         // lastgreatday
         let lastgreatdayDayNode = null;
@@ -592,16 +595,40 @@ window.addEventListener('load',
 
     },
     fillInTabernacles: function(){
+        // check if the last great day is in a new month or not
+        const lastgreatdayfirstDateMonth = document.querySelector(".lastgreatdaymonth").getAttribute("data-month");
         const tabernaclesfirstDateColumnNode = document.querySelector(".Column[data-name='feastoftabernacles']");
-        // get computed width of tabernaclesfirstDateColumnNode
+        const tabernaclesFirstDateMonth = tabernaclesfirstDateColumnNode.closest(".month").getAttribute("data-month");
         const tabernaclesfirstDateColumnNodeWidth = window.getComputedStyle(tabernaclesfirstDateColumnNode).width;
         const newWidth = parseInt(tabernaclesfirstDateColumnNodeWidth.substring(0, tabernaclesfirstDateColumnNodeWidth.length-2));
-        const newright = newWidth -5;
-        // for this hack, just get the width of the cell until the 8th day
         const style = document.createElement("style");
         style.id="tabernaclesStyle";
-        style.innerHTML = ".path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after{z-index:2;width: " + newWidth + "px;right: -" + newright + "px;}";
-        style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=lastgreatday]::after{z-index:3;}";  
+
+        if(lastgreatdayfirstDateMonth != tabernaclesFirstDateMonth){
+            // put the overlay on the end month and count backwards
+            // in the case of the months dropping to two lines
+            const lastgreatdayMonthNode = document.querySelector(".Column[data-name='lastgreatday']");
+            lastgreatdayMonthNode.classList.add("feastoftabernaclesAndLGDmonth");
+
+            style.innerHTML = ".path-calendar #NewCalendarContainer .feastoftabernaclesAndLGDmonth::before{z-index:2;width: " + (newWidth-15) + "px!important;}";
+            style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=lastgreatday]::after{z-index:3;}";  
+            style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after{right:.5px;}";
+            
+        } else {
+
+            // still, check if the start and end are on different lines even in the same month
+            // get computed position of feastoftabernaclesfirstDateColumnNode
+            const position = tabernaclesfirstDateColumnNode.getBoundingClientRect();
+            console.log("position", position)
+
+            // get computed width of tabernaclesfirstDateColumnNode
+            const newright = newWidth -5;
+            // for this hack, just get the width of the cell until the 8th day
+           
+            style.innerHTML = ".path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after{z-index:2;width: " + newWidth + "px;right: -" + newright + "px;}";
+            style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=lastgreatday]::after{z-index:3;}";  
+            
+        }
         document.head.appendChild(style);
 
 
