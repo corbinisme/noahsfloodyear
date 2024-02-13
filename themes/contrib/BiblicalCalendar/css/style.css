@@ -222,6 +222,127 @@
   margin-top: 0.5em;
 }
 
+.path-calendar {
+  /*
+  .data_passover_column {
+  	position: relative;
+  	&::after {
+  		content: "Passover";
+  		display: block;
+  		@extend .bg-passover !optional;
+  		position: absolute;
+  		top:-2px;
+
+  	}
+  }
+  .data_unleavenedbread_column {
+  	position: relative;
+  	&::after {
+  		content: "D.U.B.";
+  		display: block;
+  		@extend .bg-unleavenedbread !optional;
+  		position: absolute;
+  		top:-2px;
+
+  	}
+  }
+  .data_pentecost_column {
+  	position: relative;
+  	&::after {
+  		content: "Pentecost";
+  		display: block;
+  		@extend .bg-pentecost !optional;
+  		position: absolute;
+  		top:-2px;
+
+  	}
+  }
+  .data_trumpets_column {
+  	position: relative;
+  	&::after {
+  		content: "Trumpets";
+  		display: block;
+  		@extend .bg-trumpets !optional;
+  		position: absolute;
+  		top:-2px;
+
+  	}
+  }
+  .data_atonement_column {
+  	position: relative;
+  	&::after {
+  		content: "Atonement";
+  		display: block;
+  		@extend .bg-atonement !optional;
+  		position: absolute;
+  		top:-2px;
+  	}
+  }
+  .data_tabernacles_column {
+  	position: relative;
+  	&::after {
+  		content: "F.O.T.";
+  		display: block;
+  		@extend .bg-tabernacles !optional;
+  		position: absolute;
+  		top:-2px;
+  	}
+  }
+  .data_lastgreatday_column {
+  	position: relative;
+  	&::after {
+  		content: "LGD";
+  		display: block;
+  		@extend .bg-lastGreatDay !optional;
+  		position: absolute;
+  		top:-2px;
+  	}
+  }
+  */
+}
+.path-calendar .bg-passover {
+  background-color: #f70d48;
+}
+.path-calendar .bg-unleavenedbread {
+  background-color: #a07833;
+}
+.path-calendar .bg-pentecost {
+  background-color: #0de1ec;
+}
+.path-calendar .bg-trumpets {
+  background-color: #f2d316;
+}
+.path-calendar .bg-atonement {
+  background-color: #e647fb;
+}
+.path-calendar .bg-tabernacles, .path-calendar .bg-tabernaclesend {
+  background-color: #fa8a48;
+}
+.path-calendar .bg-lastgreatday {
+  background-color: #15be27;
+}
+.path-calendar .holydaymonthcolumn {
+  position: relative;
+}
+.path-calendar .holydayoverlay {
+  position: absolute;
+  top: -9px;
+  left: 0;
+  width: 100%;
+  display: flex;
+}
+.path-calendar .holydayoverlay .holyday {
+  position: relative;
+  display: block;
+  flex: 1 auto;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #fff;
+  height: 10px;
+  text-shadow: 1px 1px 5px #000000;
+  padding: 3px;
+}
 .path-calendar .fullOverride {
   width: 100% !important;
   float: none !important;
@@ -788,6 +909,16 @@
 .path-calendar #block-calendarpagebottomtext h2 {
   display: none;
 }
+.path-calendar #NewCalendarContainer {
+  /*[data-name="prepentecost"]{
+  	&::after {
+  		background-color: $pentecost;
+  		width: 10px;
+  		height:120px;
+  	}
+  }
+  */
+}
 .path-calendar #NewCalendarContainer .Column.pentecostcount {
   position: relative;
 }
@@ -829,11 +960,6 @@
 .path-calendar #NewCalendarContainer .afterContent .Cell span {
   position: relative;
   z-index: 6;
-}
-.path-calendar #NewCalendarContainer [data-name=prepentecost]::after {
-  background-color: #0de1ec;
-  width: 10px;
-  height: 120px;
 }
 .path-calendar #NewCalendarContainer [data-name=passover]::after {
   background-color: #f70d48;

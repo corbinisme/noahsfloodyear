@@ -47,8 +47,9 @@ window.addEventListener('load',
         calendar.expandContent();
         calendar.placePassover();
         calendar.placePentecostWeekCounts();
-        calendar.placeFallFeasts();
+        //calendar.placeFallFeasts();
         calendar.updateThreeBoxes();
+        calendar.placeHolyDays();
         
     },
     binding: function(){
@@ -57,10 +58,12 @@ window.addEventListener('load',
     dates: {
         "passover": null,
         "unleavenedbread": null,
+        "unleavenedbreadend": null,
         "pentecost": null,
         "trumpets": null,
         "atonement": null,
         "tabernacles": null,
+        "tabernaclesend": null,
         "lastgreatday": null,
     },
     updateThreeBoxes: function(){
@@ -140,10 +143,12 @@ window.addEventListener('load',
         // in the format of "Day Month, Year AD"
         calendar.dates.passover = this.makeDateString(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  + era);
         calendar.dates.unleavenedbread = this.makeDateString(table.querySelector(".unleavenedbread").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.unleavenedbreadend = table.querySelector(".unleavenedbread").closest("tr").querySelector(".end").innerText;
         calendar.dates.pentecost = this.makeDateString(table.querySelector(".pentecost").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.trumpets = this.makeDateString(table.querySelector(".trumpets").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.atonement = this.makeDateString(table.querySelector(".atonement").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.tabernacles = this.makeDateString(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        calendar.dates.tabernaclesend = table.querySelector(".tabernacles").closest("tr").querySelector(".end").innerText;
         calendar.dates.lastgreatday = this.makeDateString(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
     },
     setHCmonthNums: function(){
@@ -302,8 +307,8 @@ window.addEventListener('load',
         //console.log(passoverDay, firstDate, secondDate);
         const firstDateNode = passoverMonthNode.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
         const firstDateColumnNode = firstDateNode.closest(".Column");
-        firstDateColumnNode.classList.add("afterContent")
-        firstDateColumnNode.setAttribute("data-name", "passover");
+        //firstDateColumnNode.classList.add("afterContent")
+        //firstDateColumnNode.setAttribute("data-name", "passover");
         
         let unleavenedbreadColumnNode = null;
         if(firstDateColumnNode.nextSibling){
@@ -311,9 +316,9 @@ window.addEventListener('load',
         } else {
             unleavenedbreadColumnNode = firstDateColumnNode.closest(".Month").nextSibling.querySelector(".Column:nth-child(1)")
         }
-        unleavenedbreadColumnNode.classList.add("beforeContent");
-        unleavenedbreadColumnNode.classList.add("afterContent");
-        unleavenedbreadColumnNode.setAttribute("data-name", "unleavenedbread");
+        //unleavenedbreadColumnNode.classList.add("beforeContent");
+        //unleavenedbreadColumnNode.classList.add("afterContent");
+        //unleavenedbreadColumnNode.setAttribute("data-name", "unleavenedbread");
         
     },
     getPreviousWeek: function(count){
@@ -360,6 +365,120 @@ window.addEventListener('load',
             this.getPreviousWeek(i);
         }
         
+    },
+    findNumbersInRange: function(arr, target) {
+        arr.sort((a, b) => a - b); // Sort the array in ascending order
+        let prev = arr[0];
+        let next = arr[arr.length - 1];
+      
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] <= target) {
+            prev = arr[i]; // Update previous number
+          } else {
+            next = arr[i]; // Update next number
+            break; // Stop searching once we find the next number
+          }
+        }
+      
+        return [prev, next];
+    },
+    placeHolyDays: function(){
+        // loop through calendar.dates
+        Object.keys(calendar.dates).forEach(function(key){
+            console.log(key, calendar.dates[key]);
+            let date = calendar.dates[key];
+            let dateParts = date.split(" ");
+            let month = dateParts[0];
+            let day = parseInt(dateParts[1]);
+            let monthNode = document.querySelector(".month." + month);
+            let monthCount = parseInt(monthNode.getAttribute("data-month-count"));
+            let monthPotentials = [];
+            document.querySelectorAll(".month." + month).forEach(function(mo){
+                if(parseInt(mo.getAttribute("data-month-count")) >= monthCount){
+                    monthPotentials.push(mo);
+                }
+            });
+            let monthNodeFinal = null;
+            if(monthPotentials.length > 1){
+                monthNodeFinal = document.querySelector(".month." + month);
+            } else {
+                monthNodeFinal = monthPotentials[0];
+            }
+            console.log(key, monthNodeFinal)
+            monthNodeFinal.classList.add(key + "month");
+            
+
+
+            let monthGregDates = [];
+            monthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
+                
+                const inner = parseInt(ce.innerText);
+                monthGregDates.push(inner);
+                ce.setAttribute("data-day", inner)
+            }); 
+            
+            let dayNode = null;
+            // find which two dates in monthGregDates that day is between
+            let firstDate = null;
+            let secondDate = null;
+            const datesResult = calendar.findNumbersInRange(monthGregDates, day);
+            console.log(key, day + ":", datesResult, "in ", monthGregDates);
+            firstDate = datesResult[0];
+            secondDate = datesResult[1];
+
+            let useThisDate = secondDate;
+            if(firstDate == day){
+                useThisDate = firstDate;
+            }
+
+            let offset = day-useThisDate;
+            let percentage = offset * 100 / 7;
+            // round percentage to 100th place
+            percentage = Math.round(percentage * 100) / 100;
+            // attach to the second date
+            const secondDateColumnNode = monthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + useThisDate + "']").closest(".Column");
+            secondDateColumnNode.classList.add(`data_${key}_column`);
+            secondDateColumnNode.setAttribute(`date_${key}`, day);
+            secondDateColumnNode.setAttribute(`date_${key}_percentage`, percentage + "%");
+            secondDateColumnNode.setAttribute(`date_${key}_offset`, offset);
+
+            
+            secondDateColumnNode.classList.add("holydaymonthcolumn");
+            if(secondDateColumnNode.querySelector(".holydayoverlay")){
+
+            } else {
+                const holydaydiv = document.createElement("div");
+                holydaydiv.classList.add("holydayoverlay");
+                secondDateColumnNode.appendChild(holydaydiv);
+            }
+            const holydaywrapper = secondDateColumnNode.querySelector(".holydayoverlay");
+            
+            const thisHolyDay = document.createElement("div");
+            thisHolyDay.classList.add("holyday");
+            thisHolyDay.classList.add("bg-"+key);
+            thisHolyDay.setAttribute("data-day", day);
+            thisHolyDay.setAttribute("data-holy-day", key);
+            holydaywrapper.appendChild(thisHolyDay);
+
+            /*
+            const firstDateNode = monthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
+            const firstDateColumnNode = firstDateNode.closest(".Column");
+            firstDateColumnNode.classList.add("afterContent")
+            firstDateColumnNode.setAttribute("data-name", key);
+            let secondDateNode = null;
+            if(firstDateColumnNode.nextSibling){
+                secondDateNode = firstDateColumnNode.nextSibling;
+            } else {
+                secondDateNode = firstDateColumnNode.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
+            }
+            secondDateNode.classList.add("beforeContent");
+            secondDateNode.classList.add("afterContent");
+            secondDateNode.setAttribute("data-name", key);
+            // fill in all dates from firstDateColumnNode to secondDateColumnNode
+            */
+        });
+        
+
     },
     countMonthDuplicates: function(){
         let count = 1;

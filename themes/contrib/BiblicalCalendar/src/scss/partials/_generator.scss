@@ -13,6 +13,131 @@ $lastGreatDay: #15be27;
 
 .path-calendar {
 
+	.bg-passover {
+		background-color: $passover;
+	}
+	.bg-unleavenedbread {
+		background-color: $unleavenedBread;
+	}
+	.bg-pentecost {
+		background-color: $pentecost;
+	}
+	.bg-trumpets {
+		background-color: $trumpets;
+	}
+	.bg-atonement {
+		background-color: $atonement;
+	}
+	.bg-tabernacles, .bg-tabernaclesend {
+		background-color: $tabernacles;
+	}
+	.bg-lastgreatday {
+		background-color: $lastGreatDay;
+	}
+
+	/*
+	.data_passover_column {
+		position: relative;
+		&::after {
+			content: "Passover";
+			display: block;
+			@extend .bg-passover !optional;
+			position: absolute;
+			top:-2px;
+			
+		}
+	}
+	.data_unleavenedbread_column {
+		position: relative;
+		&::after {
+			content: "D.U.B.";
+			display: block;
+			@extend .bg-unleavenedbread !optional;
+			position: absolute;
+			top:-2px;
+			
+		}
+	}
+	.data_pentecost_column {
+		position: relative;
+		&::after {
+			content: "Pentecost";
+			display: block;
+			@extend .bg-pentecost !optional;
+			position: absolute;
+			top:-2px;
+			
+		}
+	}
+	.data_trumpets_column {
+		position: relative;
+		&::after {
+			content: "Trumpets";
+			display: block;
+			@extend .bg-trumpets !optional;
+			position: absolute;
+			top:-2px;
+			
+		}
+	}
+	.data_atonement_column {
+		position: relative;
+		&::after {
+			content: "Atonement";
+			display: block;
+			@extend .bg-atonement !optional;
+			position: absolute;
+			top:-2px;
+		}
+	}
+	.data_tabernacles_column {
+		position: relative;
+		&::after {
+			content: "F.O.T.";
+			display: block;
+			@extend .bg-tabernacles !optional;
+			position: absolute;
+			top:-2px;
+		}
+	}
+	.data_lastgreatday_column {
+		position: relative;
+		&::after {
+			content: "LGD";
+			display: block;
+			@extend .bg-lastGreatDay !optional;
+			position: absolute;
+			top:-2px;
+		}
+	}
+	*/
+	.holydaymonthcolumn {
+		position: relative;
+	}
+	.holydayoverlay {
+		position: absolute;
+		top: -9px;
+		left: 0;
+		width: 100%;
+		display: flex;
+
+		.holyday {
+			position: relative;
+			display: block;
+			flex: 1 auto;
+			text-align: center;
+			font-size: 1.5em;
+			font-weight: bold;
+			color: #fff;
+			height: 10px;
+			text-shadow: 1px 1px 5px #000000;
+			padding: 3px;
+		
+		}
+	}
+
+	
+
 	.fullOverride {
 		width: 100%!important;
 		float: none!important;
@@ -660,13 +785,14 @@ $lastGreatDay: #15be27;
 				}
 			}
 		}
-		[data-name="prepentecost"]{
+		/*[data-name="prepentecost"]{
 			&::after {
 				background-color: $pentecost;
 				width: 10px;
 				height:120px;
 			}
 		}
+		*/
 		[data-name="passover"]{
 			&::after {
 				background-color: $passover;

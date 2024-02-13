@@ -16,7 +16,6 @@ $bodyBG: #fff;
 @import 'partials/articles';
 @import 'partials/hero'; 
 @import 'partials/audiovideo'; 
-   
  
 body {
     overflow-x: hidden;   
@@ -24,18 +23,16 @@ body {
     &.h-100 { 
         min-height: 100%;
         height: auto!important;
-    } 
+    }  
 
-     
-}     
+}       
 
  
 .field--name-field-media-document .file-download{
-    color: #fff!important;
+    color: #fff!important; 
  }
 
-
-
+   
  
 header {
     background-color: $bgColor;
