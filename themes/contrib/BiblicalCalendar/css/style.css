@@ -326,7 +326,7 @@
 }
 .path-calendar .holydayoverlay {
   position: absolute;
-  top: -9px;
+  top: 60px;
   left: 0;
   width: 100%;
   display: flex;
@@ -339,9 +339,10 @@
   font-size: 1.5em;
   font-weight: bold;
   color: #fff;
-  height: 10px;
+  height: 30px;
   text-shadow: 1px 1px 5px #000000;
   padding: 3px;
+  max-width: 10px;
 }
 .path-calendar .fullOverride {
   width: 100% !important;
@@ -403,13 +404,11 @@
   line-height: 30px;
   text-transform: uppercase;
   text-align: center;
-  color: #f1cb98;
+  color: inherit;
   padding: 15px 0 20px;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   font-weight: bold;
-  font-style: italic;
-  text-shadow: 0 1px 1px #333;
-  background: #3a82de;
+  background: transparent;
 }
 .path-calendar #block-calendarbottomsection {
   max-width: 1000px;
@@ -776,7 +775,7 @@
   left: 50%;
   margin-left: -50vw;
   padding: 2em;
-  background: #3a82de;
+  background: #e9e9e9;
 }
 @media (max-width: 991px) {
   .path-calendar .calendarWrapper {
