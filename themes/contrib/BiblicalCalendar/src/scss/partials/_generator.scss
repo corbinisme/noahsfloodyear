@@ -16,7 +16,7 @@ $lastGreatDay: #15be27;
 	.bg-passover {
 		background-color: $passover;
 	}
-	.bg-unleavenedbread {
+	.bg-unleavenedbread, .bg-unleavenedbreadend {
 		background-color: $unleavenedBread;
 	}
 	.bg-pentecost {
@@ -665,6 +665,10 @@ $lastGreatDay: #15be27;
 								text-shadow: 1px 1px 5px #000000;
 								color: #fff;
 								padding: 3px;
+								span {
+									position: relative;
+									z-index: 98;
+								}
 							}
 							
 						}

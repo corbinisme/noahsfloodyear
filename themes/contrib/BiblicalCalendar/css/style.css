@@ -303,7 +303,7 @@
 .path-calendar .bg-passover {
   background-color: #f70d48;
 }
-.path-calendar .bg-unleavenedbread {
+.path-calendar .bg-unleavenedbread, .path-calendar .bg-unleavenedbreadend {
   background-color: #a07833;
 }
 .path-calendar .bg-pentecost {
@@ -857,6 +857,10 @@
   text-shadow: 1px 1px 5px #000000;
   color: #fff;
   padding: 3px;
+}
+.path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.Month.first span {
+  position: relative;
+  z-index: 98;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC {
   background: #0000aa;

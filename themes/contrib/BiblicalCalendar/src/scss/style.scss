@@ -15,7 +15,7 @@ $bodyBG: #fff;
 @import 'partials/timeline'; 
 @import 'partials/articles';
 @import 'partials/hero'; 
-@import 'partials/audiovideo'; 
+@import 'partials/audiovideo';  
  
 body {
     overflow-x: hidden;   
@@ -26,8 +26,7 @@ body {
     }  
 
 }       
-
- 
+  
 .field--name-field-media-document .file-download{
     color: #fff!important; 
  }
@@ -45,7 +44,7 @@ header {
             display: none;
         }
         background-image:url("../images/headerBG.png");      
-        background-size: cover;
+        background-size: cover; 
 
         .navbar-nav {
             --bs-nav-link-color: $linkColor;
