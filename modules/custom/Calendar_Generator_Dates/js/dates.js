@@ -248,8 +248,9 @@ window.addEventListener('load',
             child = child.nextSibling;
             child = child.nextSibling;
             while (child) {
-                child.style.backgroundColor = '#FFFABA';
-                child.style.color = 'black';
+                
+                //child.style.backgroundColor = '#FFFABA';
+                //child.style.color = 'black';
                 child = child.nextSibling;
             }
         }
@@ -449,6 +450,7 @@ window.addEventListener('load',
             } else {
                 const holydaydiv = document.createElement("div");
                 holydaydiv.classList.add("holydayoverlay");
+                // get date of this column
                 secondDateColumnNode.appendChild(holydaydiv);
             }
             const holydaywrapper = secondDateColumnNode.querySelector(".holydayoverlay");
@@ -477,7 +479,28 @@ window.addEventListener('load',
             // fill in all dates from firstDateColumnNode to secondDateColumnNode
             */
         });
-        
+        // set the offsets
+        document.querySelectorAll(".holydayoverlay").forEach(function(col){
+            const parent = col.closest(".Column");  
+            let currentParentWidth = window.getComputedStyle(parent).width;
+            currentParentWidth = parseInt(currentParentWidth.substring(0, currentParentWidth.length-2));
+            console.log("currentParentWidth", currentParentWidth);
+            const holyDayWidth = currentParentWidth / 7;
+            const children = col.querySelectorAll(".holyday").forEach(function(hd){
+                let holdaylabel = hd.getAttribute("data-holy-day");
+                let offsetVal = parent.getAttribute(`date_${holdaylabel}_offset`);
+               
+                let percentageVal = parseInt(parent.getAttribute(`date_${holdaylabel}_percentage`));
+                if(percentageVal < 0){
+                    //percentageVal = percentageVal * -1;
+                }
+                
+                hd.style.left = percentageVal + "%";
+                hd.style.position = "absolute";
+                hd.style.width = holyDayWidth + "px";
+
+            });
+        });
 
     },
     countMonthDuplicates: function(){
@@ -824,8 +847,8 @@ window.addEventListener('load',
             var output = GregorianMonth + ' ' + (parseFloat(GregorianDate) + 1);
             //document.getElementById("PentcostDate").innerHTML = output;
             while (child) {
-                child.style.backgroundColor = '#FFFABA';
-                child.style.color = 'black';
+                //child.style.backgroundColor = '#FFFABA';
+                //child.style.color = 'black';
                 child = child.nextSibling;
             }
             calendar.findFirstOfNisan();
