@@ -1,4 +1,5 @@
 <div class="video_real">
+
 <div data-section="video-embedded-inline" {{ attributes }}>
 
   {{ title_prefix }}
@@ -9,9 +10,20 @@
   {% endif %}
   {{ title_suffix }}
     <div{{ content_attributes }} data-container="flex">
-        <video controls class="video_timeline">
-        <source src="{{ content.field_video_source.0}}" />
+        {{ content.field_featured_image.0.entity.uri.value }}
+    
+        <video controls class="video_timeline" poster="">
+          <source src="{{ content.field_video_source.0}}" />
         </video>
+        
+        <!--<div class="video_timeline">
+            <iframe class="iframeVideo" src="{{ content.field_video_source.0}}" frameborder="0"  allowfullscreen>
+            </iframe>
+        </div>
+        -->
+        
+
+        
         <div>
             {{ content.body}}
         </div>

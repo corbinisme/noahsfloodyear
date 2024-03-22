@@ -1357,6 +1357,19 @@ body.h-100 {
   color: #fff !important;
 }
 
+#navbarSupportedContent .dropdown-menu .nav-item:hover {
+  color: #333;
+}
+
+.block-views-blockaudio-block-1 h3.field-content {
+  font-size: 1.3em;
+}
+.block-views-blockaudio-block-1 h3.field-content a {
+  text-decoration: none;
+  color: #333;
+  pointer-events: none;
+}
+
 header {
   background-color: #28599b;
   overflow: visible;
@@ -1376,6 +1389,12 @@ header .navbar .navbar-nav {
 }
 header .navbar .navbar-nav .is-active {
   font-weight: bold;
+}
+header .navbar .navbar-nav .dropdown:hover .dropdown-menu {
+  display: block;
+}
+header .navbar .navbar-nav .dropdown:hover .dropdown-menu li a:hover {
+  color: #333;
 }
 header .navbar .navbar-nav li a:hover {
   color: #fff;
