@@ -1,0 +1,33 @@
+<?php 
+/**
+ * Implements hook_preprocess_search_result().
+ */
+function BiblicalCalendar_preprocess_search_result(&$variables) {
+  // Get the search keywords.
+  $keywords = \Drupal::request()->query->get('keys');
+
+  // Highlight matching keywords in the excerpt.
+  if (!empty($keywords)) {
+    $excerpt = $variables['result']['#search_result']->getField('body')->getExcerpt();
+    $variables['snippet'] = highlight_keywords($excerpt, $keywords);
+  }
+}
+
+/**
+ * Highlight matching keywords in a given text.
+ *
+ * @param string $text
+ *   The text to highlight keywords in.
+ * @param string $keywords
+ *   The keywords to highlight.
+ *
+ * @return string
+ *   The text with highlighted keywords.
+ */
+function highlight_keywords($text, $keywords) {
+  $keywords = explode(' ', $keywords);
+  foreach ($keywords as $keyword) {
+    $text = preg_replace("/\b($keyword)\b/i", '<span class="highlight">$1</span>', $text);
+  }
+  return $text;
+}
