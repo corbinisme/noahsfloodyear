@@ -8,7 +8,7 @@ function BiblicalCalendar_preprocess_search_result(&$variables) {
 
   // Highlight matching keywords in the excerpt.
   if (!empty($keywords)) {
-    $excerpt = $variables['result']['#search_result']->getField('body')->getExcerpt();
+    $excerpt = $variables['result']['#search_result']? $variables['result']['#search_result']->getField('body')->getExcerpt(): "";
     $variables['snippet'] = highlight_keywords($excerpt, $keywords);
   }
 }
