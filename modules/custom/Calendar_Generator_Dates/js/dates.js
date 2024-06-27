@@ -45,12 +45,22 @@ window.addEventListener('load',
         calendar.binding();
         
         calendar.expandContent();
+        //calendar.additionalLegend();
         calendar.placePassover();
         calendar.placePentecostWeekCounts();
         //calendar.placeFallFeasts();
         calendar.updateThreeBoxes();
         calendar.placeHolyDays();
         
+    },
+    additionalLegend: function(){
+       let hcc=  document.querySelector(".HCC.label");
+       let sabbathLegend = document.createElement("div");
+       sabbathLegend.classList.add("SabbathLegend");
+       sabbathLegend.classList.add("label");
+       sabbathLegend.innerHTML = "Total # of Sabbaths";
+        hcc.parentNode.insertBefore(sabbathLegend, hcc.nextSibling);
+
     },
     binding: function(){
        
@@ -359,12 +369,14 @@ window.addEventListener('load',
         const pentecostColumnNode = document.querySelector(".Column[data-name='prepentecost']");
         pentecostColumnNode.classList.add("pentecostcolumn_current");
         pentecostColumnNode.classList.add("pentecostcount_7");
+        pentecostColumnNode.classList.add("border_pentecost");
         pentecostColumnNode.setAttribute("data-count", "7")
         let count = 7;
         for(var i=count; i>0; i--){
 
             this.getPreviousWeek(i);
         }
+
         
     },
     findNumbersInRange: function(arr, target) {

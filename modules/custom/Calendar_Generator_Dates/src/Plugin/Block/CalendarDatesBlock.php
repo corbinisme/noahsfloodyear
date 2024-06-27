@@ -125,22 +125,25 @@ class CalendarDatesBlock extends BlockBase {
   private function getLegend(){
 
 
-	$mar = '<div class="key">
+	$mar = '<div class="calendar_legend"><div class="key keepThis">
 			<div class="GC label">Gregorian Calendar</div>
 			<div class="HCC label">Hebrew Calendar</div>
+			<div class="SabbathLegend label">Total # of Sabbaths</div>
 			<div class="SC label">Solar Calendar</div>
-		</div>
-		<div class="calendarWrapper">
+		</div></div>
+		<div class="calendarWrapperSub">
 		<div class="actions">
 			<div class="caption">
 			<h3 class="disclaimer_heading">THE BELOW DATES REPRESENT THE SABBATHS OF EACH MONTH</h3>
 			</div>
+		</div>
+		<div class="actions hidden">
 			<div class="yearToggle prev"><a href="#">Previous Year</a></div>
 			<div class="yearToggle next"><a href="#">Next Year</a></div>
 		</div>
 		</div>';
 
-	return "";
+	return $mar;
   }
 
 
@@ -181,7 +184,7 @@ class CalendarDatesBlock extends BlockBase {
 	$result = $query->fetchAll();
 
 	//$markup .= "<pre>" . 
-	print_r($result[0], true) . "</pre>";
+	//print_r($result[0], true) . "</pre>";
 
 	//if the filter date is AM, show GC
 	if($era=="AM"||$era=="am"){
@@ -191,9 +194,13 @@ class CalendarDatesBlock extends BlockBase {
 	}
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
 	$markup .= "<input type='hidden' name='eraType' value='" .$result[0]->GC_Era . "' />";
+	
+	$markup .= "<div class='calendarWrapper'><div class='row'><div class='col-lg-6'>";
+	
+	$markup .= '<table class="table"><thead><tr><th>Holy Day</th><th>Start Day</th><th nowrap>End</th></tr></thead>';
 	if($result[0]->AM=="1" || ($result[0]->GC_Year=="4046" && $era=="BC")){
 
-		$markup .= '<table class="table w-auto m-auto"><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></tr></thead>' .
+		 $markup .=
 		'<tbody>' .
 		'<tr><td class="passover"><span></span> Passover </td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "passover") . ', Apr 2</td><td></td></tr>' .
 		'<tr><td class="unleavenedbread"><span class="ubbg"></span> Unleavened Bread </td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "unleavenedbread") . ', Apr 3</td><td class="end"> Apr 10</td></tr>'.
@@ -202,10 +209,10 @@ class CalendarDatesBlock extends BlockBase {
 		'<tr><td class="atonement"><span></span> Atonement </td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "dayofatonement") . ', Sep 22</td><td></td></tr>'.
 		'<tr><td class="tabernacles"><span></span> Tabernacles </td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "feastoftabernacles") . ', Sep 27</td><td  class="end">Oct 3</td></tr>'.
 		'<tr><td class="lastgreatday"><span></span> Last Great Day (8th Day)</td><td class="start">' . CalendarDatesBlock::getDayOfWeek(7, "lastgreatday") . ', Oct 4</td><td></td>'.
-		'</tr></tbody></table>';
+		'</tr>';
+		
 	} else {
 
-		$markup .= "<table class='table w-auto m-auto'><thead><tr><th>Holy Day</th><th>Start Day</th><th>End</th></thead>";
 		$markup .= "<tr>";
 		$markup .= "<tr><td  class='passover'><span></span> Passover </td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "passover") . ", " . $result[0]->passover_start . "</td><td></td></tr>";
 		$markup .= "<tr><td class='unleavenedbread'><span class='ubbg'></span> Unleavened Bread </td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "unleavenedbread") . ", " . $result[0]->unleavened_bread_start . "</td><td class='end'>" . $result[0]->unleavened_bread_end . "</td></tr>";
@@ -215,12 +222,14 @@ class CalendarDatesBlock extends BlockBase {
 		$markup .= "<tr><td class='tabernacles'><span></span> Tabernacles </td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "feastoftabernacles") . ", " . $result[0]->feast_of_tabernacles_start . "</td><td class='end'>" . $result[0]->feast_of_tabernacles_end . "</td></tr>";
 		$markup .= "<tr><td class='lastgreatday'><span></span> Last Great Day (8th Day) </td><td class='start'>" . CalendarDatesBlock::getDayOfWeek($result[0]->HS, "lastgreatday") . ", " . $result[0]->last_great_day_start . "</td><td></td></tr>";
 		$markup .= "</tr>";
-		$markup .= "</table>";
+		
 	}
+	$markup .='<tr><td colspan="3"><small>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</small></td></tr>' .
+		'</tbody></table>';
 
 	$markup .= "<input type='hidden' id='hsvalue' value='" . $result[0]->HS . "' />";
-	$markup .= "<h3 class='text-center disclaimer_heading'>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</h3>";
 	
+	$markup .= "</div><div class='col-lg-6'>";
 
 	$amYear = $result[0]->AM;
 	$cycles = $amYear/247;
@@ -229,49 +238,55 @@ class CalendarDatesBlock extends BlockBase {
 	$placeInCycle = $amYear - (floor($amYear/247)*247);
 	$where19 = $placeInCycle%19;
 	
+	$solarHebDiff = $result[0]->HCCYearLength - $result[0]->SC_YearLen;
+	// get absolute value of the difference
+	$lastYearDiff = $result[0]->D - $solarHebDiff;
 	
-	
+	//$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
 	$markup .= "<input type='hidden' id='AMYear' value='" . $result[0]->AM . "' />";
 	// add the other one
-	$markup .= "<div class='calendarWrapper hidden'><div class='calendarMarkup'>";
+	$markup .= "<div class='calendarMarkup'>";
 
-	$markup .= "<div class='row' style='display: flex;'>";
-	$markup .= "<div class='col-sm-4'>";
-		$markup .= "<h4>What 247 year period from creation?</h4>";
-	$markup .= "</div>";
-	$markup .= "<div class='col-sm-4'>";
-		$markup .= "<h4>Which 19 year time cycle of the 13 in the 247 year period?</h4>";
-	$markup .= "</div>";
-	$markup .= "<div class='col-sm-4'>";
-		$markup .= "<h4>What year in the 19 year time cycle?</h4>";
-	$markup .= "</div>";
-	$markup .= "</div>";
-	$markup .= "<hr />";
+	$markup .= "<table class='table'>
+		<thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody>";
+	$markup .= "<tr>";
+		$markup .= "<td>What 247 year period from creation?</td>";
+		$markup .= "<td>" . ceil($cycles) . "</td>";
+	$markup .= "</tr>";
+	$markup .= "<tr>";
+		$markup .= "<td>Which 19 year time cycle of the 13 in the 247 year period?</td>";
+		$markup .= "<td>" . $which19 . "</td>";
+	$markup .= "</tr>";
+	$markup .= "<tr>";
+		$markup .= "<td>What year in the 19 year time cycle?</td>";
+		$markup .= "<td>" . $where19 . "</td>";
+	$markup .= "</tr>";
+	$markup .= "<tr>
+		<td>
+			Hebrew Calendar Days</td>
+			<td>" . $result[0]->HCCYearLength . "</td>
+		</tr>
+		<tr>
+			<td>Solar Calendar Days</td>
+			<td>" . $result[0]->SC_YearLen . "</td>
+		</tr>
+		<tr>
+			<td>Difference between the solar and Hebrew calendars</td>
+			<td>" . $solarHebDiff . "</td>
+		</tr>
+		<tr>
+			<td>Difference between last year and present year</td>
+			<td>". $result[0]->D . "</td>
+		</tr>
+		<tr>
+			<td>Last Year's Difference</td>
+			<td>" . $lastYearDiff .  "</td>
+		</tr>";
+	$markup .= "</tbody>";
+	$markup .= "</table>";
 
-	$markup .= "<div class='calendarMetrics' style='background: rgba(0,0,0,0.4); border-radius: 10px; padding: 2em;'><div class='row'>
-		<div class='col-sm-4'>How many 247 Year Cycles: " . ceil($cycles) . " </div>
-		<div class='col-sm-4'>Which 19 Year Cycle: " . $which19 . " </div>
-		<div class='col-sm-4'>Where in 19 Year Cycle: " . $where19 . " </div>
-	</div>
-	<div class='row'>
-		<div class='col-sm-4'>
-		<hr />
-			Hebrew Calendar Days: " . $result[0]->HCCYearLength . "<br />
-			
-		</div>
-		<div class='col-sm-4'>
-			<hr />
-			Solar Calendar Days: " . $result[0]->SC_YearLen . " 
-			
-			
-		</div>
-		<div class='col-sm-4'>
-			<hr />
-			Difference: ". $result[0]->D . "
-		</div>
-	</div>
+	$markup .= "</div></div></div>";
 
-	</div>";
 
 	$markup .= CalendarDatesBlock::getLegend();
 	$markup .= "</div><div class='clear'></div>";

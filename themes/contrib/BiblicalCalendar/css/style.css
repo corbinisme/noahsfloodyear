@@ -224,6 +224,35 @@
 
 .path-calendar {
   /*
+  .pentecostcount_7 {
+  	border: 1px solid $pentecost!important;
+  	outline: 2px solid $pentecost;
+  	cursor: pointer;
+  }
+  .data_passover_column, .data_unleavenedbread_column {
+  	border:1px solid $passover!important;
+  	outline: 2px solid $passover;
+  	cursor: pointer;
+  }
+  .Column.data_passover_column {
+  	border-right-color: #000!important;
+  }
+  .Column.data_unleavenedbread_column {
+  	border-left-color: #000!important;
+  }
+
+  .data_trumpets_column,
+  .data_atonement_column,
+  .data_tabernacles_column,
+  .data_tabernaclesend_column,
+  .data_lastgreatday_column {
+  	border:1px solid $trumpets!important;
+  	outline: 2px solid $trumpets;
+  	cursor: pointer;
+
+  }
+  	*/
+  /*
   .data_passover_column {
   	position: relative;
   	&::after {
@@ -321,6 +350,12 @@
 .path-calendar .bg-lastgreatday {
   background-color: #15be27;
 }
+.path-calendar .instructions {
+  font-size: 1.4em !important;
+}
+.path-calendar .key:not(.keepThis) {
+  display: none;
+}
 .path-calendar .holydaymonthcolumn {
   position: relative;
 }
@@ -342,7 +377,7 @@
   height: 30px;
   text-shadow: 1px 1px 5px #000000;
   padding: 3px;
-  max-width: 10px;
+  cursor: pointer;
 }
 .path-calendar .fullOverride {
   width: 100% !important;
@@ -391,13 +426,13 @@
   margin-bottom: 2em;
 }
 .path-calendar .field--name-body {
-  margin-top: 7em;
+  margin-top: 4em;
 }
 .path-calendar .SignificantDateV2, .path-calendar .Header {
   display: none;
 }
 .path-calendar .calendarMetrics {
-  display: none !important;
+  /*display: none!important;*/
 }
 .path-calendar .disclaimer_heading, .path-calendar .Disclaimer {
   font-size: 20px;
@@ -405,10 +440,11 @@
   text-transform: uppercase;
   text-align: center;
   color: inherit;
-  padding: 15px 0 20px;
+  padding: 15px 0 0px;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   font-weight: bold;
   background: transparent;
+  margin-bottom: 0;
 }
 .path-calendar #block-calendarbottomsection {
   max-width: 1000px;
@@ -416,7 +452,7 @@
   background: rgba(51, 51, 51, 0.7098039216);
 }
 .path-calendar #Math {
-  display: flex;
+  display: none;
   width: 100%;
 }
 @media (max-width: 991px) {
@@ -424,7 +460,9 @@
     flex-wrap: wrap;
   }
   .path-calendar #Math > div {
-    width: 100% !important;
+    /*
+    width: 100%!important;
+    */
   }
 }
 .path-calendar #Math .TotalDays, .path-calendar #Math .CalcDays, .path-calendar #Math .Calculated {
@@ -581,6 +619,9 @@
 .path-calendar .breadcrumb {
   display: none;
 }
+.path-calendar .loadhtmlwrapper {
+  margin-top: -1em;
+}
 .path-calendar .main-container {
   max-width: 100%;
   width: 100%;
@@ -621,24 +662,31 @@
 }
 @media (min-width: 992px) {
   .path-calendar .key .label.GC {
-    border-radius: 0 0 0 20px;
+    border-radius: 20px 0 0 20px;
   }
 }
 .path-calendar .key .label.HCC {
   background: #A50000;
+}
+.path-calendar .key .label.SabbathLegend {
+  background: #fff;
+  color: #111;
 }
 .path-calendar .key .label.SC {
   background: #0000AA;
 }
 @media (min-width: 992px) {
   .path-calendar .key .label.SC {
-    border-radius: 0 0 20px 0;
+    border-radius: 0 20px 20px 0;
   }
 }
 .path-calendar .actions {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.path-calendar .actions.hidden {
+  display: none;
 }
 .path-calendar .actions .caption {
   order: 2;
@@ -758,7 +806,7 @@
 }
 .path-calendar .SignificantDateRow h2 a {
   border-radius: 0.5em;
-  font-size: 1.5em;
+  font-size: 1em;
   display: block;
   color: #f1cb98;
   background: #1F1F1F;
@@ -768,6 +816,14 @@
   border-bottom: 1px solid #f1cb09;
   padding: 1em;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+.path-calendar .calendar_legend {
+  margin: 1em auto;
+  padding: 1em;
+  background: rgba(13, 110, 253, 0.25);
+}
+.path-calendar .calendarWrapperTop {
+  padding-bottom: 1em;
 }
 .path-calendar .calendarWrapper {
   position: relative;
@@ -803,6 +859,7 @@
 }
 .path-calendar .calendarWrapper .calendarMarkup .Disclaimer {
   text-align: center;
+  display: none;
 }
 .path-calendar .calendarWrapper .calendarMarkup .ArrowCenter {
   display: none;
@@ -1550,4 +1607,4 @@ main .region-breadcrumb .block-page-title-block h1 {
   background: #333;
   color: #fff;
   margin-top: 4em;
-}
+}/*# sourceMappingURL=style.css.map */

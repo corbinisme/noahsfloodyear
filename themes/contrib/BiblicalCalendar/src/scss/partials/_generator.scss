@@ -35,6 +35,44 @@ $lastGreatDay: #15be27;
 		background-color: $lastGreatDay;
 	}
 
+	.instructions {
+		font-size: 1.4em!important;
+	}
+
+	/*
+	.pentecostcount_7 {
+		border: 1px solid $pentecost!important;
+		outline: 2px solid $pentecost;
+		cursor: pointer;
+	}
+	.data_passover_column, .data_unleavenedbread_column {
+		border:1px solid $passover!important;
+		outline: 2px solid $passover;
+		cursor: pointer;
+	}
+	.Column.data_passover_column {
+		border-right-color: #000!important;
+	}
+	.Column.data_unleavenedbread_column {
+		border-left-color: #000!important;
+	}
+
+	.data_trumpets_column,
+	.data_atonement_column,
+	.data_tabernacles_column,
+	.data_tabernaclesend_column,
+	.data_lastgreatday_column {
+		border:1px solid $trumpets!important;
+		outline: 2px solid $trumpets;
+		cursor: pointer;
+	
+	}
+		*/
+
+	.key:not(.keepThis){
+		display: none;
+	}
+		
 	/*
 	.data_passover_column {
 		position: relative;
@@ -132,7 +170,8 @@ $lastGreatDay: #15be27;
 			height: 30px;
 			text-shadow: 1px 1px 5px #000000;
 			padding: 3px;
-			max-width: 10px;
+			cursor: pointer;
+
 		
 		}
 	}
@@ -202,14 +241,14 @@ $lastGreatDay: #15be27;
 
 
 	.field--name-body {
-		margin-top: 7em;
+		margin-top: 4em;
 	}
 	.SignificantDateV2, .Header {
 		display: none;
 	}
 
 	.calendarMetrics {
-		display: none!important;
+		/*display: none!important;*/
 	}
 
 	.disclaimer_heading, .Disclaimer {
@@ -218,10 +257,11 @@ $lastGreatDay: #15be27;
 		text-transform: uppercase;
 		text-align: center;
 		color: inherit;
-		padding: 15px 0 20px;
+		padding: 15px 0 0px;
 		font-family: "Century Gothic" ,CenturyGothic,AppleGothic,sans-serif;
 		font-weight: bold;
     	background: transparent;
+		margin-bottom: 0;
 		
 	}
 
@@ -231,7 +271,7 @@ $lastGreatDay: #15be27;
 		background: #333333b5;
 	}
 	#Math {
-		display: flex;
+		display: none;
     	width: 100%;
 
 		
@@ -239,7 +279,9 @@ $lastGreatDay: #15be27;
 				flex-wrap: wrap;
 
 				>div {
+					/*
 					width: 100%!important;
+					*/
 					
 				}
 			}
@@ -348,7 +390,9 @@ $lastGreatDay: #15be27;
 		display: none;
 	}
 
-	
+	.loadhtmlwrapper  {
+		margin-top: -1em;
+	}
 	.main-container {
 		max-width: 100%;
 		width: 100%;
@@ -388,7 +432,7 @@ $lastGreatDay: #15be27;
 			&.GC {
 				background:$GC;
 				@include respond-above(md){
-					border-radius: 0 0 0 20px;
+					border-radius: 20px 0 0 20px;
 				}
     			
 				
@@ -396,10 +440,14 @@ $lastGreatDay: #15be27;
 			&.HCC {
 				background: $HCC;
 			}
+			&.SabbathLegend {
+				background: #fff;
+				color: #111;
+			}
 			&.SC {
 				background: $SC;
 				@include respond-above(md){
-    			border-radius: 0 0 20px 0;
+    			border-radius: 0 20px 20px 0;
 				}
 			}
 		}
@@ -409,6 +457,9 @@ $lastGreatDay: #15be27;
 		width: 100%;
 		display: flex;
 		justify-content: center;
+		&.hidden {
+			display: none;
+		}
 		.caption {
 			order: 2;
 			padding: 0 2em;
@@ -556,7 +607,7 @@ $lastGreatDay: #15be27;
 
 			a {
 				border-radius: .5em;
-				font-size: 1.5em;
+				font-size: 1em;
 				display: block;
 				color: #f1cb98;
 				background: #1F1F1F;
@@ -570,6 +621,14 @@ $lastGreatDay: #15be27;
 			}
 		}
 		
+	}
+	.calendar_legend {
+		margin: 1em auto;
+		padding: 1em;
+		background: rgba(13, 110, 253, 0.25);
+	}
+	.calendarWrapperTop {
+		padding-bottom: 1em;
 	}
 	.calendarWrapper {
 		position: relative;
@@ -608,6 +667,7 @@ $lastGreatDay: #15be27;
 			}
 			.Disclaimer {
 				text-align: center;
+				display: none;
 			}
 			.ArrowCenter {
 				display: none;
