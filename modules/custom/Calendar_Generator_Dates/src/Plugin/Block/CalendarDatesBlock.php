@@ -240,7 +240,7 @@ class CalendarDatesBlock extends BlockBase {
 	
 	$solarHebDiff = $result[0]->HCCYearLength - $result[0]->SC_YearLen;
 	// get absolute value of the difference
-	$lastYearDiff = $result[0]->D - $solarHebDiff;
+	$lastYearDiff = (int)$result[0]->D - (int)$solarHebDiff;
 	
 	//$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
 	$markup .= "<input type='hidden' id='AMYear' value='" . $result[0]->AM . "' />";
