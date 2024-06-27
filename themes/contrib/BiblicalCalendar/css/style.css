@@ -718,6 +718,11 @@
   border-radius: 5px;
   font-size: 2em;
 }
+@media (max-width: 991px) {
+  .path-calendar .block-calendar-generator-nav {
+    font-size: 1.5em;
+  }
+}
 .path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
   font-size: 1.4em;
@@ -749,12 +754,6 @@
   display: flex;
   align-items: center;
 }
-@media (max-width: 991px) {
-  .path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn {
-    display: block;
-    width: 100%;
-  }
-}
 .path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn .btn {
   color: #f1cb98;
   line-height: 3.3em;
@@ -764,6 +763,13 @@
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn .btn.active {
   background-color: rgba(255, 255, 255, 0.2);
+}
+@media (max-width: 767px) {
+  .path-calendar .block-calendar-generator-nav .calendar_nav div.generateBtn .btn {
+    display: block;
+    width: 100%;
+    line-height: inherit;
+  }
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav .currentEra .btn {
   color: #f1cb98;

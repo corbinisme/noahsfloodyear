@@ -493,6 +493,9 @@ $lastGreatDay: #15be27;
 		margin-bottom: 2em;
 		border-radius: 5px;
 		font-size: 2em;
+		@include respond-below(md){
+			font-size: 1.5em;
+		}
 
 		.calendar_nav {
 			padding: 1em 0;
@@ -534,10 +537,7 @@ $lastGreatDay: #15be27;
 			div.generateBtn {
 				display: flex;
 				align-items: center;
-				@include respond-below(md){
-					display: block;
-					width: 100%;
-				}
+				
 				.btn {
 					color: $headingColor;
 					line-height: 3.3em;
@@ -546,6 +546,11 @@ $lastGreatDay: #15be27;
 					background-color: transparent;
 					&.active {
 						background-color: rgba(255,255,255,.2);
+					}
+					@include respond-below(sm){
+						display: block;
+						width: 100%;
+						line-height: inherit;
 					}
 				}
 				

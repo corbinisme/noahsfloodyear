@@ -59,7 +59,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
     ?>
     
     <?php
-    $html = "<div class='col-sm-4 text-right eraSelector'>";
+    $html = "<div class='col-md-4 text-right eraSelector'>";
     
     /*$html .= "<select class=\"form-control currentEra\" id=\"GC_Era\" name=\"GC_Era\" style='width: 82px'>";
     $html .= " <option  ". $adSel ."' data-id=\"AD\">AD</option>";
@@ -81,7 +81,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
 
   private function getYearSelector($year){
 
-    $content = "<div class='col-sm-4 yearInput'>" .
+    $content = "<div class='col-md-4 yearInput'>" .
     "<div class='input-group'>" . 
     "<a class='input-group-addon yearToggle btn bg-primary prev' data-dir='prev'>Prev</a>" .  
     "<input class='form-control currentyear' type='number' value='" . $year . "' />" . 
@@ -105,7 +105,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
     
     $markup .= $this::getEraDropdown($era);
     $markup .= $this::getYearSelector($year);
-    $markup .="<div class='col-sm-4 text-left generateBtn'><button type='button' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</button></div>";
+    $markup .="<div class='col-md-4 text-left generateBtn'><button type='button' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</button></div>";
     $markup .="</div></div>";
     
 
