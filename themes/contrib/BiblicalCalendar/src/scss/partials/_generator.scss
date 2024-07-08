@@ -39,6 +39,17 @@ $lastGreatDay: #15be27;
 		font-size: 1.4em!important;
 	}
 
+	.weekgrid {
+		height: 5px;
+		background: #eee;
+		display: flex;
+		.daygrid {
+			height: 100%;
+			width: 14.28571428571429%;
+
+		}
+	}
+
 	/*
 	.pentecostcount_7 {
 		border: 1px solid $pentecost!important;

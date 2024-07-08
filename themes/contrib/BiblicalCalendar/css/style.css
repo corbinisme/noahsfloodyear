@@ -353,6 +353,15 @@
 .path-calendar .instructions {
   font-size: 1.4em !important;
 }
+.path-calendar .weekgrid {
+  height: 5px;
+  background: #eee;
+  display: flex;
+}
+.path-calendar .weekgrid .daygrid {
+  height: 100%;
+  width: 14.2857142857%;
+}
 .path-calendar .key:not(.keepThis) {
   display: none;
 }

@@ -48,9 +48,63 @@ window.addEventListener('load',
         //calendar.additionalLegend();
         calendar.placePassover();
         calendar.placePentecostWeekCounts();
-        //calendar.placeFallFeasts();
+
         calendar.updateThreeBoxes();
+        calendar.labelDates();
         calendar.placeHolyDays();
+        
+    },
+    labelDates: function(){
+
+        let year = null;
+        let era = null;
+        if(document.getElementById("input[name='gregDate']")){
+            let yearstring = document.getElementById("input[name='gregDate']").value;
+            // remove the first two characters
+            year = yearstring.substring(2, yearstring.length);
+            // get the first two characters
+            era = yearstring.substring(0, 2);
+        } else {
+            let d = new Date();
+            year = d.getFullYear();
+
+            era = "AD";
+        }
+        // get the dates parsed on each column
+        document.querySelectorAll("#NewCalendarContainer .Column .GC:not(.Month)").forEach(function(ce){
+            //console.log("this is",ce.innerText);
+            let col = ce.closest(".Column");
+            let day = ce.innerText;
+            let month = col.closest(".month").getAttribute("data-month");
+
+            // get date from string 
+            let datestring = month + " " + day + ", " + year;
+            // get date object
+            let dateObj = new Date(datestring);
+
+            //console.log("date", datestring);
+            col.setAttribute("data-datestring", datestring);
+
+
+            let divvy = document.createElement("div");
+            divvy.classList.add("weekgrid");
+            divvy.setAttribute("data-date", datestring);
+            for(let i=1; i<=7; i++){
+                let daydiv = document.createElement("div");
+                daydiv.classList.add("daygrid");
+                // add one day to the dateObj
+                //console.log(datestring, "setting i", i)
+                // add one day to the dateObj
+                dateObj.setDate(dateObj.getDate() + 1);
+                daydiv.setAttribute("data-date", dateObj.toDateString());
+                
+                divvy.appendChild(daydiv);
+            }
+
+            col.insertBefore(divvy, col.firstChild);
+
+            
+        });
         
     },
     additionalLegend: function(){
@@ -439,7 +493,7 @@ window.addEventListener('load',
             firstDate = datesResult[0];
             secondDate = datesResult[1];
 
-            let useThisDate = secondDate;
+            let useThisDate = firstDate;
             if(firstDate == day){
                 useThisDate = firstDate;
             }
@@ -457,6 +511,22 @@ window.addEventListener('load',
 
             
             secondDateColumnNode.classList.add("holydaymonthcolumn");
+            
+            let weekgrid = secondDateColumnNode.querySelector(".weekgrid");
+            if(weekgrid){
+            weekgrid.querySelectorAll(".daygrid").forEach(function(dg){
+                let dgDate = dg.getAttribute("data-date");
+                console.log(dgDate, date)
+                let dgDateParts = dgDate.split(" ");
+                let dgDay = parseInt(dgDateParts[2]);
+                if(dgDay == day){
+                    dg.classList.add("holyday");
+                    dg.classList.add("bg-"+key);
+                }
+            });
+            }
+
+            /*
             if(secondDateColumnNode.querySelector(".holydayoverlay")){
 
             } else {
@@ -474,6 +544,7 @@ window.addEventListener('load',
             thisHolyDay.setAttribute("data-holy-day", key);
             holydaywrapper.appendChild(thisHolyDay);
 
+            */
             /*
             const firstDateNode = monthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
             const firstDateColumnNode = firstDateNode.closest(".Column");
@@ -492,6 +563,7 @@ window.addEventListener('load',
             */
         });
         // set the offsets
+        /*
         document.querySelectorAll(".holydayoverlay").forEach(function(col){
             const parent = col.closest(".Column");  
             let currentParentWidth = window.getComputedStyle(parent).width;
@@ -513,6 +585,7 @@ window.addEventListener('load',
 
             });
         });
+        */
 
     },
     countMonthDuplicates: function(){
@@ -526,228 +599,7 @@ window.addEventListener('load',
             count++;
         });
     },
-    placeFallFeasts: function(){
-        //console.log("placeFallFeasts");
-        let atonementDates = calendar.dates.atonement.split(" ");
-        let trumpetsDates = calendar.dates.trumpets.split(" ");
-        let tabernaclesDates = calendar.dates.tabernacles.split(" ");
-        let lastgreatdayDates = calendar.dates.lastgreatday.split(" ");
-        //console.log("atonementDate", atonementDates);
-        //console.log("trumpetsDate", trumpetsDates);
-        //console.log("tabernaclesDate", tabernaclesDates);
-        //console.log("lastgreatdayDate", lastgreatdayDates);
 
-        const atonementMonth = atonementDates[0];
-        const atonementDay = parseInt(atonementDates[1]);
-        const trumpetsMonth = trumpetsDates[0];
-        const trumpetsDay = parseInt(trumpetsDates[1]);
-        const tabernaclesMonth = tabernaclesDates[0];
-        const tabernaclesDay = parseInt(tabernaclesDates[1]);
-        const lastgreatdayMonth = lastgreatdayDates[0];
-        const lastgreatdayDay = parseInt(lastgreatdayDates[1]);
-        
-        const atonementMonthNode = document.querySelector(".month." + atonementMonth);
-        const trumpetsMonthNode = document.querySelector(".month." + trumpetsMonth);
-        const tabernaclesMonthNode = document.querySelector(".month." + tabernaclesMonth);
-        const lastgreatdayMonthNode = document.querySelector(".month." + lastgreatdayMonth);
-
-        let atonementMonthCount = null;
-        let trumpetsMonthCount = null;
-        let tabernaclesMonthCount = null;
-        let lastgreatdayMonthCount = null;
-        if(atonementMonthNode) 
-            atonementMonthCount= parseInt(atonementMonthNode.getAttribute("data-month-count"));
-        if(tabernaclesMonthNode)
-            tabernaclesMonthCount= parseInt(tabernaclesMonthNode.getAttribute("data-month-count"));
-        if(lastgreatdayMonthNode)
-            lastgreatdayMonthCount= parseInt(lastgreatdayMonthNode.getAttribute("data-month-count"));
-
-        let atonementMonthPotentials = [];
-        let trumpetsMonthPotentials = [];
-        let tabernaclesMonthPotentials = [];
-        let lastgreatdayMonthPotentials = [];
-        document.querySelectorAll(".month." + atonementMonth).forEach(function(mo){
-            if(parseInt(mo.getAttribute("data-month-count")) >= atonementMonthCount){
-                atonementMonthPotentials.push(mo);
-            }
-        })
-        document.querySelectorAll(".month." + trumpetsMonth).forEach(function(mo){
-            if(parseInt(mo.getAttribute("data-month-count")) >= trumpetsMonthCount){
-                trumpetsMonthPotentials.push(mo);
-            }
-        });
-        document.querySelectorAll(".month." + tabernaclesMonth).forEach(function(mo){
-            if(parseInt(mo.getAttribute("data-month-count")) >= tabernaclesMonthCount){
-                tabernaclesMonthPotentials.push(mo);
-            }
-        })
-        document.querySelectorAll(".month." + lastgreatdayMonth).forEach(function(mo){
-            if(parseInt(mo.getAttribute("data-month-count")) >= lastgreatdayMonthCount){
-                lastgreatdayMonthPotentials.push(mo);
-            }
-        })
-        let atonementMonthNodeFinal = null;
-        let trumpetsMonthNodeFinal = null;
-        let tabernaclesMonthNodeFinal = null;
-        let lastgreatdayMonthNodeFinal = null;
-        if(atonementMonthPotentials.length > 1){
-            atonementMonthNodeFinal = document.querySelector(".month." + atonementMonth);
-        } else {
-            atonementMonthNodeFinal = atonementMonthPotentials[0];
-        }
-        if(trumpetsMonthPotentials.length > 1){
-            trumpetsMonthNodeFinal = document.querySelector(".month." + trumpetsMonth);
-        } else {
-            trumpetsMonthNodeFinal = trumpetsMonthPotentials[0];
-        }
-        if(tabernaclesMonthPotentials.length > 1){
-            tabernaclesMonthNodeFinal = document.querySelector(".month." + tabernaclesMonth);
-        } else {
-            tabernaclesMonthNodeFinal = tabernaclesMonthPotentials[0];
-        }
-        if(lastgreatdayMonthPotentials.length > 1){
-            lastgreatdayMonthNodeFinal = document.querySelector(".month." + lastgreatdayMonth);
-        } else {
-            lastgreatdayMonthNodeFinal = lastgreatdayMonthPotentials[0];
-        }
-        atonementMonthNodeFinal.classList.add("atonementmonth");
-        tabernaclesMonthNodeFinal.classList.add("tabernaclesmonth");
-        lastgreatdayMonthNodeFinal.classList.add("lastgreatdaymonth");
-        let atonementMonthsGregDates = [];
-        let trumpetsMonthsGregDates = [];
-        let tabernaclesMonthsGregDates = [];
-        let lastgreatdayMonthsGregDates = [];
-        atonementMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
-            
-            const inner = parseInt(ce.innerText);
-            atonementMonthsGregDates.push(inner);
-            ce.setAttribute("data-day", inner)
-        });
-        trumpetsMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
-            
-            const inner = parseInt(ce.innerText);
-            trumpetsMonthsGregDates.push(inner);
-            ce.setAttribute("data-day", inner)
-        });
-
-        tabernaclesMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
-            
-            const inner = parseInt(ce.innerText);
-            tabernaclesMonthsGregDates.push(inner);
-            ce.setAttribute("data-day", inner)
-        });
-        lastgreatdayMonthNodeFinal.querySelectorAll(".Cell.GC:not(.Month)").forEach(function(ce){
-            
-            const inner = parseInt(ce.innerText);
-            lastgreatdayMonthsGregDates.push(inner);
-            ce.setAttribute("data-day", inner)
-        });
-
-        // see if atonementDay is between any of the dates
-        
-
-        let atonementDayNode = null;
-        // find which two dates in atonementMonthGregDates that atonementDay is between
-        let atonementfirstDate = null;
-        let atonementsecondDate = null;
-        atonementMonthsGregDates.forEach(function(date){
-            if(atonementDay >= date){
-                atonementfirstDate = date;
-            } else if(atonementDay <= date){
-                atonementsecondDate = date;
-            }
-        });
-        //console.log(atonementDay, atonementfirstDate, atonementsecondDate);
-        const atonementfirstDateNode = atonementMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + atonementfirstDate + "']");
-        const atonementfirstDateColumnNode = atonementfirstDateNode.closest(".Column");
-        atonementfirstDateColumnNode.classList.add("afterContent")
-        atonementfirstDateColumnNode.setAttribute("data-name", "atonement");
-        
-        let atonementsecondDateNode = null;
-        if(atonementfirstDateColumnNode.nextSibling){
-            atonementsecondDateNode = atonementfirstDateColumnNode.nextSibling;
-        } else {
-            atonementsecondDateNode = atonementfirstDateColumnNode.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
-        }
-        //atonementsecondDateNode.classList.add("beforeContent"); 
-        
-        // trumpets
-        let trumpetsDayNode = null;
-        // find which two dates in trumpetsMonthGregDates that trumpetsDay is between
-        let trumpetsfirstDate = null;
-        let trumpetssecondDate = null;
-        trumpetsMonthsGregDates.forEach(function(date){
-            if(trumpetsDay >= date){
-                trumpetsfirstDate = date;
-            } else if(trumpetsDay <= date){
-                trumpetssecondDate = date;
-            }
-        }
-        );
-        //console.log(trumpetsDay, trumpetsfirstDate, trumpetssecondDate);
-        const trumpetsfirstDateNode = trumpetsMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + trumpetsfirstDate + "']");
-        const trumpetsfirstDateColumnNode = trumpetsfirstDateNode.closest(".Column");
-        trumpetsfirstDateColumnNode.classList.add("afterContent")
-        trumpetsfirstDateColumnNode.setAttribute("data-name", "feastoftrumpets");
-
-
-        // tabernacles
-        let tabernaclesDayNode = null;
-        // find which two dates in tabernaclesMonthGregDates that tabernaclesDay is between
-        let tabernaclesfirstDate = null;
-        let tabernaclessecondDate = null;
-        tabernaclesMonthsGregDates.forEach(function(date){
-            if(tabernaclesDay >= date){
-                tabernaclesfirstDate = date;
-            } else if(tabernaclesDay <= date){
-                tabernaclessecondDate = date;
-            }
-        });
-        if(tabernaclesfirstDate == null){
-            tabernaclesfirstDate = tabernaclesMonthsGregDates[0];
-        }
-        //console.log(tabernaclesDay, tabernaclesfirstDate, tabernaclessecondDate);
-        // lastgreatday
-        let lastgreatdayDayNode = null;
-        // find which two dates in lastgreatdayMonthGregDates that lastgreatdayDay is between
-        let lastgreatdayfirstDate = null;
-        let lastgreatdaysecondDate = null;
-        lastgreatdayMonthsGregDates.forEach(function(date){
-            if(lastgreatdayDay >= date){
-                lastgreatdayfirstDate = date;
-            } else if(lastgreatdayDay <= date){
-                lastgreatdaysecondDate = date;
-            }
-        });
-        //console.log(lastgreatdayDay, lastgreatdayfirstDate, lastgreatdaysecondDate);
-        const lastgreatdayfirstDateNode = lastgreatdayMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + lastgreatdayfirstDate + "']");
-        const lastgreatdayfirstDateColumnNode = lastgreatdayfirstDateNode.closest(".Column");
-        lastgreatdayfirstDateColumnNode.classList.add("afterContent")
-        lastgreatdayfirstDateColumnNode.setAttribute("data-name", "lastgreatday");
-
-        
-        
-        const tabernaclesfirstDateNode = tabernaclesMonthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + tabernaclesfirstDate + "']");
-        const tabernaclesfirstDateColumnNode = tabernaclesfirstDateNode.closest(".Column");
-        tabernaclesfirstDateColumnNode.classList.add("afterContent")
-        tabernaclesfirstDateColumnNode.setAttribute("data-name", "feastoftabernacles");
-
-        let tabernaclessecondDateNode = null;
-        if(tabernaclesfirstDateColumnNode.nextSibling){
-            tabernaclessecondDateNode = tabernaclesfirstDateColumnNode.nextSibling;
-        } else {
-            tabernaclessecondDateNode = tabernaclesfirstDateColumnNode.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
-        }
-        tabernaclessecondDateNode.classList.add("beforeContent");
-        tabernaclessecondDateNode.classList.add("afterContent");
-        // fill in all dates from tabernaclesfirstDateColumnNode to lastgreatdayFirstDateColumnNode
-        this.fillInTabernacles();
-
-        
-
-
-
-    },
     fillInTabernacles: function(){
         // check if the last great day is in a new month or not
         const lastgreatdayfirstDateMonth = document.querySelector(".lastgreatdaymonth").getAttribute("data-month");
@@ -773,7 +625,7 @@ window.addEventListener('load',
             // still, check if the start and end are on different lines even in the same month
             // get computed position of feastoftabernaclesfirstDateColumnNode
             const position = tabernaclesfirstDateColumnNode.getBoundingClientRect();
-            console.log("position", position)
+            //console.log("position", position)
 
             // get computed width of tabernaclesfirstDateColumnNode
             const newright = newWidth -5;
@@ -802,7 +654,7 @@ window.addEventListener('load',
                 currentCol = currentCol.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
             }
             currentColName = (currentCol.hasAttribute("data-name")?currentCol.getAttribute("data-name"):"");
-            console.log("currentColName", currentColName, currentCol)
+            //console.log("currentColName", currentColName, currentCol)
         }
 
         
