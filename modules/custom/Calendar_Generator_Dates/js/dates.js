@@ -81,6 +81,8 @@ window.addEventListener('load',
             let datestring = month + " " + day + ", " + year;
             // get date object
             let dateObj = new Date(datestring);
+            // start at beginning of week
+            dateObj.setDate(dateObj.getDate() -7);
 
             //console.log("date", datestring);
             col.setAttribute("data-datestring", datestring);
@@ -96,8 +98,11 @@ window.addEventListener('load',
                 //console.log(datestring, "setting i", i)
                 // add one day to the dateObj
                 dateObj.setDate(dateObj.getDate() + 1);
+
+
+                let dateDisplay = dateObj.toLocaleString('en-us', {month: 'short'}) + " " + dateObj.getDate();
                 daydiv.setAttribute("data-date", dateObj.toDateString());
-                
+                daydiv.setAttribute("data-day", dateDisplay);
                 divvy.appendChild(daydiv);
             }
 
@@ -451,12 +456,26 @@ window.addEventListener('load',
     },
     placeHolyDays: function(){
         // loop through calendar.dates
+        //console.log("!!!!!!! here we need to account for the placement of the holy day being in another month, as the date shown is the end of the week")
         Object.keys(calendar.dates).forEach(function(key){
-            console.log(key, calendar.dates[key]);
+            //console.log(key, calendar.dates[key]);
             let date = calendar.dates[key];
             let dateParts = date.split(" ");
             let month = dateParts[0];
             let day = parseInt(dateParts[1]);
+            // make a date obj to calculate?
+            let dateObj = new Date(date);
+            let previousMonth = null;
+
+            if(day<7){
+                // need to check previous month as well
+
+                // subtract 7 days from dateObj
+                dateObj.setDate(dateObj.getDate() - 7);
+                let previousMonth = dateObj.toLocaleString('en-us', {month: 'short'});
+                //console.log("previousMonth", previousMonth);
+
+            }
             let monthNode = document.querySelector(".month." + month);
             let monthCount = parseInt(monthNode.getAttribute("data-month-count"));
             let monthPotentials = [];
@@ -471,7 +490,7 @@ window.addEventListener('load',
             } else {
                 monthNodeFinal = monthPotentials[0];
             }
-            console.log(key, monthNodeFinal)
+            //console.log(key, monthNodeFinal)
             monthNodeFinal.classList.add(key + "month");
             
 
@@ -489,34 +508,28 @@ window.addEventListener('load',
             let firstDate = null;
             let secondDate = null;
             const datesResult = calendar.findNumbersInRange(monthGregDates, day);
-            console.log(key, day + ":", datesResult, "in ", monthGregDates);
+            //console.log(key, day + ":", datesResult, "in ", monthGregDates);
             firstDate = datesResult[0];
             secondDate = datesResult[1];
 
-            let useThisDate = firstDate;
+            //console.log("first", firstDate, "second", secondDate)
+            let useThisDate = secondDate;
             if(firstDate == day){
                 useThisDate = firstDate;
             }
 
-            let offset = day-useThisDate;
-            let percentage = offset * 100 / 7;
-            // round percentage to 100th place
-            percentage = Math.round(percentage * 100) / 100;
             // attach to the second date
             const secondDateColumnNode = monthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + useThisDate + "']").closest(".Column");
             secondDateColumnNode.classList.add(`data_${key}_column`);
             secondDateColumnNode.setAttribute(`date_${key}`, day);
-            secondDateColumnNode.setAttribute(`date_${key}_percentage`, percentage + "%");
-            secondDateColumnNode.setAttribute(`date_${key}_offset`, offset);
 
-            
             secondDateColumnNode.classList.add("holydaymonthcolumn");
             
             let weekgrid = secondDateColumnNode.querySelector(".weekgrid");
             if(weekgrid){
             weekgrid.querySelectorAll(".daygrid").forEach(function(dg){
                 let dgDate = dg.getAttribute("data-date");
-                console.log(dgDate, date)
+                //console.log(dgDate, date)
                 let dgDateParts = dgDate.split(" ");
                 let dgDay = parseInt(dgDateParts[2]);
                 if(dgDay == day){
@@ -562,31 +575,9 @@ window.addEventListener('load',
             // fill in all dates from firstDateColumnNode to secondDateColumnNode
             */
         });
-        // set the offsets
-        /*
-        document.querySelectorAll(".holydayoverlay").forEach(function(col){
-            const parent = col.closest(".Column");  
-            let currentParentWidth = window.getComputedStyle(parent).width;
-            currentParentWidth = parseInt(currentParentWidth.substring(0, currentParentWidth.length-2));
-            console.log("currentParentWidth", currentParentWidth);
-            const holyDayWidth = currentParentWidth / 7;
-            const children = col.querySelectorAll(".holyday").forEach(function(hd){
-                let holdaylabel = hd.getAttribute("data-holy-day");
-                let offsetVal = parent.getAttribute(`date_${holdaylabel}_offset`);
-               
-                let percentageVal = parseInt(parent.getAttribute(`date_${holdaylabel}_percentage`));
-                if(percentageVal < 0){
-                    //percentageVal = percentageVal * -1;
-                }
-                
-                hd.style.left = percentageVal + "%";
-                hd.style.position = "absolute";
-                hd.style.width = holyDayWidth + "px";
-
-            });
-        });
-        */
-
+        calendar.fillInTabernacles();
+        //calendar.fillInUnleavenedBread();
+        
     },
     countMonthDuplicates: function(){
         let count = 1;
@@ -601,7 +592,41 @@ window.addEventListener('load',
     },
 
     fillInTabernacles: function(){
+        let tabernaclesStartDate = calendar.dates.tabernacles;
+        let tabernaclesStartDateObj = new Date(tabernaclesStartDate);
+        
+        let tabStart  = document.querySelector(".daygrid[data-day='" + tabernaclesStartDate + "']");
+        if(tabStart){
+            tabStart.classList.add("bg-tabernacles");
+        }
+        // loop through the dates of tabernacles
+        for(let i=1;i<7;i++){
+            //console.log("setting tabernacles date", i)
+            tabernaclesStartDateObj.setDate(tabernaclesStartDateObj.getDate() + 1);
+            let month = tabernaclesStartDateObj.toLocaleString('en-us', {month: 'short'});
+            let day = tabernaclesStartDateObj.getDate();
+            //console.log("tabernacles date", month, day);
+            document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-tabernacles");
+        }
+
+        let unleavenedbreadDate = calendar.dates.unleavenedbread;
+        let unleavenedbreadDateObj = new Date(unleavenedbreadDate);
+        let unleavenedbreadStart  = document.querySelector(".daygrid[data-day='" + unleavenedbreadDate + "']");
+        if(unleavenedbreadStart){
+            unleavenedbreadStart.classList.add("bg-unleavenedbread");
+        }
+        // loop through the dates of unleavened bread
+        for(let i=1;i<7;i++){
+            //console.log("setting unleavened bread date", i)
+            unleavenedbreadDateObj.setDate(unleavenedbreadDateObj.getDate() + 1);
+            let month = unleavenedbreadDateObj.toLocaleString('en-us', {month: 'short'});
+            let day = unleavenedbreadDateObj.getDate();
+            //console.log("unleavened bread date", month, day);
+            document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-unleavenedbread");
+        }
+        
         // check if the last great day is in a new month or not
+        /*
         const lastgreatdayfirstDateMonth = document.querySelector(".lastgreatdaymonth").getAttribute("data-month");
         const tabernaclesfirstDateColumnNode = document.querySelector(".Column[data-name='feastoftabernacles']");
         const tabernaclesFirstDateMonth = tabernaclesfirstDateColumnNode.closest(".month").getAttribute("data-month");
@@ -636,11 +661,11 @@ window.addEventListener('load',
             
         }
         document.head.appendChild(style);
+        */
 
 
         
 
-       
 
     },
     fillInColumn: function(col){
