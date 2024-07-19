@@ -36,6 +36,7 @@
         "drupal/glyphicons": "^1.4",
         "drupal/google_analytics": "4.0",
         "drupal/hotjar": "3.1",
+        "drupal/metatag": "^2.0",
         "drupal/migrate_plus": "^5.2",
         "drupal/migrate_tools": "^5.1",
         "drupal/module_filter": "^3.2",
