@@ -850,7 +850,7 @@
 }
 @media (max-width: 991px) {
   .path-calendar .calendarWrapper {
-    padding: 2em 0;
+    padding: 2em 1.5em;
   }
 }
 .path-calendar .calendarWrapper .clear {
@@ -999,8 +999,11 @@
   justify-content: end;
   margin-right: 2px;
 }
-.path-calendar #NewCalendarContainer .Column .Cell.HCC.first span {
+.path-calendar #NewCalendarContainer .Column .Cell.HCC.first.Month span {
   justify-content: center;
+}
+.path-calendar #NewCalendarContainer .Column .Cell.SabbathCount {
+  text-align: right;
 }
 .path-calendar #NewCalendarContainer .Column.pentecostcount {
   position: relative;

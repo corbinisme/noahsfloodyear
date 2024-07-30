@@ -653,7 +653,7 @@ $lastGreatDay: #15be27;
 		margin-left: -50vw;
 		padding: 2em;
 		@include respond-below(md){
-			padding: 2em 0;
+			padding: 2em 1.5em;
 		}
 		background: #e9e9e9;
 
@@ -822,11 +822,14 @@ $lastGreatDay: #15be27;
 					margin-right: 2px;
 				}
 				&.HCC {
-					&.first {
+					&.first.Month {
 						span {
 							justify-content: center;
 						}
 					}
+				}
+				&.SabbathCount {
+					text-align: right;
 				}
 			}
 			&.pentecostcount {
