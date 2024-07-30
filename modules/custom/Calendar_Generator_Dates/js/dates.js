@@ -106,7 +106,9 @@ window.addEventListener('load',
                 divvy.appendChild(daydiv);
             }
 
-            col.insertBefore(divvy, col.firstChild);
+            // insert this before .HCC:not(.Month)
+            let targetCol = col.querySelector(".Cell.SC");
+            col.insertBefore(divvy, targetCol);
 
             
         });

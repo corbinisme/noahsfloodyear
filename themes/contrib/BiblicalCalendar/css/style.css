@@ -354,8 +354,8 @@
   font-size: 1.4em !important;
 }
 .path-calendar .weekgrid {
-  height: 5px;
-  background: #eee;
+  height: 10px;
+  background: #000;
   display: flex;
 }
 .path-calendar .weekgrid .daygrid {
@@ -993,6 +993,14 @@
   	}
   }
   */
+}
+.path-calendar #NewCalendarContainer .Column .Cell span {
+  display: flex;
+  justify-content: end;
+  margin-right: 2px;
+}
+.path-calendar #NewCalendarContainer .Column .Cell.HCC.first span {
+  justify-content: center;
 }
 .path-calendar #NewCalendarContainer .Column.pentecostcount {
   position: relative;

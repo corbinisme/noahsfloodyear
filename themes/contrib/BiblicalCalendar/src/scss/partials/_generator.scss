@@ -40,8 +40,8 @@ $lastGreatDay: #15be27;
 	}
 
 	.weekgrid {
-		height: 5px;
-		background: #eee;
+		height: 10px;
+		background: #000;
 		display: flex;
 		.daygrid {
 			height: 100%;
@@ -815,6 +815,20 @@ $lastGreatDay: #15be27;
 
 
 		.Column {
+			.Cell {
+				span {
+					display: flex;
+					justify-content: end;
+					margin-right: 2px;
+				}
+				&.HCC {
+					&.first {
+						span {
+							justify-content: center;
+						}
+					}
+				}
+			}
 			&.pentecostcount {
 				position: relative;
 				&::before {
