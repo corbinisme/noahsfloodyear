@@ -1,5 +1,5 @@
 var dates = {
-
+    loopy:null,
     init: function(){
  
         dates.findDifferenceWithLastYear();
@@ -28,46 +28,62 @@ var dates = {
         })
     },
     findDifferenceWithLastYear: function(){
-        let diffNode = document.querySelector(".diffWithLastYear");
-        if(diffNode){
-            let hasValue  = true;
-            if(diffNode.innerHTML==""){
-                hasValue = false;
-            }
-        
-            if(!hasValue){
-                let math = document.querySelector("#Math");
-                if(math){
-                    let numdays= math.querySelector(".Calculated .NumDays");
-                    if(numdays){
-                        let numval = parseInt(numdays.innerHTML);
-                        let amYear = document.getElementById("AMYear").value;
-                        
 
-                        let url = "/calendarupdate";
+        let st = window.localStorage;
+        if(st.getItem("importChartThree")){
 
-                        console.log("will update " + amYear + " to " + numval, " | ", url);
-                        let data = {
-                            "year": amYear,
-                            "value": numval
-                        }
-                        fetch(url, {
-                            method: 'POST', // Specify the request method
-                            body: JSON.stringify(data), // Convert the data to a JSON string
-                            headers: {
-                            'Content-Type': 'application/json' // Set the content type to JSON
+            let diffNode = document.querySelector(".diffWithLastYear");
+            if(diffNode){
+                let hasValue  = true;
+                if(diffNode.innerHTML==""){
+                    hasValue = false;
+                }
+            
+                if(!hasValue){
+                    let math = document.querySelector("#Math");
+                    if(math){
+                        let numdays= math.querySelector(".Calculated .NumDays");
+                        if(numdays){
+                            let numval = parseInt(numdays.innerHTML);
+                            let amYear = document.getElementById("AMYear").value;
+                            
+
+                            let url = "/calendarupdate";
+
+                            console.log("will update " + amYear + " to " + numval, " | ", url);
+                            let data = {
+                                "year": amYear,
+                                "value": numval
                             }
-                        })
-                        .then(resp=>resp.json())
-                        .then(dat=>{
-                            console.log("response:",dat)
-                        })
+                            fetch(url, {
+                                method: 'POST', // Specify the request method
+                                body: JSON.stringify(data), // Convert the data to a JSON string
+                                headers: {
+                                'Content-Type': 'application/json' // Set the content type to JSON
+                                }
+                            })
+                            .then(resp=>resp.json())
+                            .then(dat=>{
+                                console.log("response:",dat);
+                                dates.goToNext(amYear);
+                            })
+                        }
                     }
+                } else {
+                    console.log("already has value")
                 }
             } else {
-                console.log("already has value")
+                // end loop
+                st.removeItem("importChartThree");
             }
         }
+
+    },
+    goToNext: function(amYear){
+        let amInt = parseInt(amYear);
+        amInt++;
+        let newUrl = "/calendar/am/"+ amInt;
+        window.location.href = newUrl;
 
     }
 }
