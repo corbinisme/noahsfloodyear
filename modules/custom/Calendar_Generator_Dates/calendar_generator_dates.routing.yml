@@ -8,6 +8,14 @@ calendar_generator_dates.calendar:
   requirements: 
     _permission: 'access content'
 
+calendar_generator_dates.update:
+  path: '/calendarupdate'
+  defaults:
+    _controller: 'Drupal\calendar_generator_dates\Controller\CalendarController::updateChartThreeValue'
+    _title: 'Calendar Generator Chart 3 update'
+  requirements: 
+    _role: 'administrator'
+
 calendar_generator_dates.calendarlegend:
   path: '/calendarlegendjson/{era_type}/{year}'
   defaults:

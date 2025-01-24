@@ -276,7 +276,7 @@ class CalendarDatesBlock extends BlockBase {
 		</tr>
 		<tr>
 			<td>Difference between last year and present year</td>
-			<td>". $result[0]->D . "</td>
+			<td class='diffWithLastYear'>". $result[0]->D . "</td>
 		</tr>
 		<tr>
 			<td>Last Year's Difference</td>

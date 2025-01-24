@@ -3,9 +3,29 @@
 namespace Drupal\calendar_generator_dates\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\Core\Controller\ControllerBase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 class CalendarController extends ControllerBase {
 
+  /**
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  private $requestStack;
+
+  public function __construct(RequestStack $request_stack) {
+    $this->requestStack = $request_stack;
+  }
+    /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('request_stack')
+    );
+  }
   
     public function calendar_json($era_type, $year){
 
@@ -93,6 +113,43 @@ class CalendarController extends ControllerBase {
       $res["we"] = "eeee";
       return $res;
 
+    }
+
+    private function chartThreeUpdate($year, $dvalue){
+      $new_key = "chart3 db";
+      $database = \Drupal::database();
+      $con = \Drupal\Core\Database\Database::getConnection('calendar');
+
+
+      $sql = "Update chart3 set D=". $dvalue . " WHERE year=" .$year;
+      //$query = $con->query($sql);
+      //$result = $query->fetchAll();
+
+      return $sql;
+      
+
+
+    }
+    public function updateChartThreeValue() {
+      // get am year
+      // get dco value
+      // update
+
+      $post = $this->requestStack->getCurrentRequest()->getContent();
+      $data = json_decode($post, true);
+      $year = isset($data['year'])?$data['year']:null;
+      $value = isset($data['value'])?$data['value']:null;
+      if($year && $value){
+
+
+        // update in db
+        $sql = $this->chartThreeUpdate($year, $value);
+
+        return new JsonResponse(['status'=>'success', "year"=>$year, "value"=>$value, "message"=>$sql]);
+      } else {
+        return new JsonResponse(['status'=>'error', 'message'=>"invalid params"]);
+      }
+      
     }
 
 
