@@ -18,6 +18,9 @@
 /vendor/
 /dev/
 robots.txt
+/core
+/modules/contrib
+/themes/contrib
 
 /Content/
 /backups/
