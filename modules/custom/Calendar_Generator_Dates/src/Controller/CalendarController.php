@@ -122,8 +122,8 @@ class CalendarController extends ControllerBase {
 
 
       $sql = "Update chart3 set D=". $dvalue . " WHERE year=" .$year;
-      $query = $con->query($sql);
-      $result = $query->fetchAll();
+      //$query = $con->query($sql);
+      //$result = $query->fetchAll();
 
       return $sql;
       
