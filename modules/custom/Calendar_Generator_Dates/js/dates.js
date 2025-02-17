@@ -65,7 +65,7 @@ var dates = {
                             .then(resp=>resp.json())
                             .then(dat=>{
                                 console.log("response:",dat);
-                                dates.goToNext(amYear);
+                                //dates.goToNext(amYear);
                             })
                         }
                     }
