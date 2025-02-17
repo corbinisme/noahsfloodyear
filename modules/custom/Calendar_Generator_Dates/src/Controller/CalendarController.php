@@ -115,6 +115,69 @@ class CalendarController extends ControllerBase {
 
     }
 
+    public function importChartThreeData() {
+      $new_key = "chart3 db";
+      $database = \Drupal::database();
+      $con = \Drupal\Core\Database\Database::getConnection('calendar');
+      $output = [];
+      // open a csv file in this module directory
+      $filePath = DRUPAL_ROOT . '/modules/custom/Calendar_Generator_Dates/data/chart3.csv';
+      // get real path of the file
+      //$filePath = realpath($filePath);
+      $file = fopen($filePath, 'r');
+      //return new JsonResponse(['status'=>'success', 'data'=>$filePath]);
+    
+      
+      
+      $header = fgetcsv($file);
+      $header = array_map('trim', $header);
+      $header = array_map('strtolower', $header);
+      // loop through each row of the csv file
+      $rows = array();
+      while (($row = fgetcsv($file)) !== FALSE) {
+        $row = array_map('trim', $row);
+        $row = array_map('strtolower', $row);
+        $rows[] = array_combine($header, $row);
+      }
+      $counter = 0;
+      foreach($rows as $row) {
+        if(true) {
+          $thisRow['year'] = (int)$row['am yr'];
+          $thisRow['d'] = $row['d'];
+          
+          
+          // check if the row already exists in the database
+          
+          
+            // update the row
+            $con->update('chart3')
+              ->fields([
+                'd' => $thisRow['d'],
+              ])
+              ->condition('year', $thisRow['year'])
+              ->execute();
+
+              $output[] = [
+                'year' => $thisRow['year'],
+                'd' => $thisRow['d'],
+                'status' => 'updated'
+              ];
+          
+         
+        } else {
+          continue;
+        }
+        $counter++;
+      }
+
+      /*$sql = "SELECT * FROM chart3 limit 1000";
+      $query = $con->query($sql);
+      $result = $query->fetchAll();
+      */
+
+      return new JsonResponse(['status'=>'success', 'data'=>$output]);
+    }
+
     private function chartThreeUpdate($year, $dvalue){
       $new_key = "chart3 db";
       $database = \Drupal::database();

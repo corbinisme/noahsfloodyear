@@ -16,6 +16,14 @@ calendar_generator_dates.update:
   requirements: 
     _role: 'administrator'
 
+calendar_generator_dates.import:
+  path: '/chartthreeimport'
+  defaults:
+    _controller: 'Drupal\calendar_generator_dates\Controller\CalendarController::importChartThreeData'
+    _title: 'Calendar Generator Chart 3 import'
+  requirements: 
+    _role: 'administrator'
+
 calendar_generator_dates.calendarlegend:
   path: '/calendarlegendjson/{era_type}/{year}'
   defaults:
