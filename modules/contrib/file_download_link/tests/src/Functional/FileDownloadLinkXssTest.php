@@ -33,13 +33,19 @@ class FileDownloadLinkXssTest extends BrowserTestBase {
   protected $defaultTheme = 'stark';
 
   /**
+   * XSS string
+   *
+   * @var string
+   */
+  protected $xssString = "<script>alert('xss');</script>";
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
     parent::setUp();
     $admin_user = $this->drupalCreateUser([], NULL, TRUE);
     $this->drupalLogin($admin_user);
-    $xss = "<script>alert('xss')</script>";
 
     $english_uri = $this::generateFile('my-english-text', 10, 10, 'text');
     $english_file = File::create([
@@ -56,22 +62,22 @@ class FileDownloadLinkXssTest extends BrowserTestBase {
 
     $media = Media::create([
       'bundle' => 'test_media',
-      'name' => $xss,
+      'name' => $this->xssString,
       'field_media_file' => $english_file->id(),
-      'field_description' => $xss,
+      'field_description' => $this->xssString,
     ]);
     $media->addTranslation('fr', [
-      'name' => $xss,
+      'name' => $this->xssString,
       'field_media_file' => $french_file->id(),
-      'field_description' => $xss,
+      'field_description' => $this->xssString,
     ]);
     $media->save();
     // Create un-translated media.
     $media_un = Media::create([
       'bundle' => 'test_media',
-      'name' => $xss,
+      'name' => $this->xssString,
       'field_media_file' => $english_file->id(),
-      'field_description' => $xss,
+      'field_description' => $this->xssString,
     ]);
     $media_un->save();
 
@@ -96,25 +102,25 @@ class FileDownloadLinkXssTest extends BrowserTestBase {
       'field_image' => [
         [
           'target_id' => $image1->id(),
-          'alt' => $xss,
+          'alt' => $this->xssString,
         ],
         [
           'target_id' => $image2->id(),
-          'alt' => $xss,
+          'alt' => $this->xssString,
         ],
       ],
     ]);
     $node->addTranslation('fr', [
-      'title' => $xss,
+      'title' => 'Ma Node de Teste',
       'field_media' => [$media->id(), $media_un->id()],
       'field_image' => [
         [
           'target_id' => $image1->id(),
-          'alt' => $xss,
+          'alt' => $this->xssString,
         ],
         [
           'target_id' => $image2->id(),
-          'alt' => $xss,
+          'alt' => $this->xssString,
         ],
       ],
     ]);
@@ -126,10 +132,13 @@ class FileDownloadLinkXssTest extends BrowserTestBase {
    */
   public function testFileDownloadLinkXss() {
     $this->drupalGet('node/1');
-    $xss = "<script>alert('xss')</script>";
-    $this->assertSession()->responseNotContains($xss);
+    $this->assertSession()->pageTextContains('My Test Node');
+    $this->assertSession()->responseNotContains($this->xssString);
+    $this->assertSession()->pageTextContains($this->xssString);
     $this->drupalGet('fr/node/1');
-    $this->assertSession()->responseNotContains($xss);
+    $this->assertSession()->pageTextContains('Ma Node de Teste');
+    $this->assertSession()->responseNotContains($this->xssString);
+    $this->assertSession()->pageTextContains($this->xssString);
   }
 
 }

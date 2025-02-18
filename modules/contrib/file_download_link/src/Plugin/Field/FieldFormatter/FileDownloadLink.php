@@ -3,6 +3,7 @@
 namespace Drupal\file_download_link\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -327,8 +328,9 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
           // Custom classes are added to render array later.
         }
 
-        // Next line is important. See https://www.drupal.org/node/2528662.
-        $bubbleable_metadata->applyTo($elements[$delta]);
+        // Apply cacheability of tokens to render array.
+        $bubbleable_metadata->merge(CacheableMetadata::createFromRenderArray($elements[$delta]))
+          ->applyTo($elements[$delta]);
       }
 
       // An empty title is replaced by filename.
