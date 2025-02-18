@@ -2,4 +2,4 @@ name: 'React App Basic'
 type: module
 description: 'Basic set up of a react app.'
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ">=8"

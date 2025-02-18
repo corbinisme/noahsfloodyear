@@ -2,4 +2,4 @@ name: Swiper JS slideshow
 description: Adding CDN library support for Swiper JS slideshows
 package: Swiper
 type: module
-core_version_requirement: ^9
+core_version_requirement: ">=8"

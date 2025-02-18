@@ -45,6 +45,7 @@
         "drupal/restui": "1.20",
         "drupal/search_api": "1.25",
         "drupal/smtp": "^1.2",
+        "drupal/upgrade_status": "^4.3",
         "drupal/webform": "^6.1",
         "drush/drush": "^11.0"
     },
