@@ -172,7 +172,7 @@ We call a macro which calls itself to render the full tree.
 
 ### Configuration
 
-If using configuration synchronisation, make sure your core.extension.yml contains
+If using configuration synchronization, make sure your core.extension.yml contains
 
 ```
 theme:

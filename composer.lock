@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb80ac06e81819b7aa9c03ccb6d9ce4a",
+    "content-hash": "293f63a94964a0e6a4ae53bd70804de3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1668,17 +1668,17 @@
         },
         {
             "name": "drupal/bootstrap5",
-            "version": "3.0.14",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/bootstrap5.git",
-                "reference": "3.0.14"
+                "reference": "4.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/bootstrap5-3.0.14.zip",
-                "reference": "3.0.14",
-                "shasum": "a595afb1f983e96b4719f47592f08349792ef058"
+                "url": "https://ftp.drupal.org/files/projects/bootstrap5-4.0.2.zip",
+                "reference": "4.0.2",
+                "shasum": "68d01fc72174ff1e61363a2521ffc2d79cddcf7e"
             },
             "require": {
                 "drupal/core": "^9.4 || ^10"
@@ -1686,8 +1686,8 @@
             "type": "drupal-theme",
             "extra": {
                 "drupal": {
-                    "version": "3.0.14",
-                    "datestamp": "1723049842",
+                    "version": "4.0.2",
+                    "datestamp": "1717926263",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3106,20 +3106,21 @@
         },
         {
             "name": "drupal/migrate_plus",
-            "version": "5.3.0",
+            "version": "6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/migrate_plus.git",
-                "reference": "8.x-5.3"
+                "reference": "6.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-5.3.zip",
-                "reference": "8.x-5.3",
-                "shasum": "3cf6dde235d7604ee49be2986812c0ee5e2982f6"
+                "url": "https://ftp.drupal.org/files/projects/migrate_plus-6.0.5.zip",
+                "reference": "6.0.5",
+                "shasum": "441e91086feaca7a6f1acf1735023fff0dfc5e1e"
             },
             "require": {
-                "drupal/core": "^9.1"
+                "drupal/core": ">=9.1",
+                "php": ">=7.4"
             },
             "require-dev": {
                 "drupal/migrate_example_advanced_setup": "*",
@@ -3132,8 +3133,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-5.3",
-                    "datestamp": "1650658156",
+                    "version": "6.0.5",
+                    "datestamp": "1732124623",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3170,35 +3171,36 @@
         },
         {
             "name": "drupal/migrate_tools",
-            "version": "5.2.0",
+            "version": "6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/migrate_tools.git",
-                "reference": "8.x-5.2"
+                "reference": "6.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_tools-8.x-5.2.zip",
-                "reference": "8.x-5.2",
-                "shasum": "e473c32780c567b62b3aa7dd92c2fb5227b9ee12"
+                "url": "https://ftp.drupal.org/files/projects/migrate_tools-6.0.5.zip",
+                "reference": "6.0.5",
+                "shasum": "c82519b366f43827818b04bfbc0009a6e028b835"
             },
             "require": {
-                "drupal/core": "^9.1",
-                "drupal/migrate_plus": "^5",
-                "php": ">=7.1"
+                "drupal/core": ">=9.1",
+                "php": ">=7.4"
             },
             "require-dev": {
-                "drupal/migrate_source_csv": "^3.0",
-                "drush/drush": "^10"
+                "drupal/migrate_plus": ">=5",
+                "drupal/migrate_source_csv": ">=3",
+                "drush/drush": ">=11"
             },
             "suggest": {
-                "drush/drush": "^9 || ^10"
+                "drupal/migrate_plus": ">=5",
+                "drush/drush": ">=11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-5.2",
-                    "datestamp": "1672425094",
+                    "version": "6.0.5",
+                    "datestamp": "1730824457",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3206,7 +3208,7 @@
                 },
                 "drush": {
                     "services": {
-                        "drush.services.yml": "^9 || ^10"
+                        "drush.services.yml": ">=9"
                     }
                 }
             },

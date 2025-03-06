@@ -1,7 +1,7 @@
 {
   "name": "bootstrap5",
-  "version": "3.0.x",
-  "description": "Bootstrap5 theme for Drupal 9 and 10.",
+  "version": "4.0.x",
+  "description": "Bootstrap5 theme for Drupal 10 and 11.",
   "main": "index.js",
   "scripts": {
     "static:start": "http-server . -a localhost -p 8088",
