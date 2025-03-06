@@ -1,3 +1,0 @@
-react-list:
-  js:
-    js/dist/index.js: { preprocess: false }

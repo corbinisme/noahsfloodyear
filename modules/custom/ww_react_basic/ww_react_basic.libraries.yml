@@ -1,3 +1,0 @@
-react-basic:
-  js:
-    js/dist/index.js: { preprocess: false }
