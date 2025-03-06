@@ -2,4 +2,4 @@ name: Biblical Calendar Proof Categories List
 description: Showing a list of categories and content
 package: Custom
 type: module
-core_version_requirement: ^9
+core_version_requirement: ">=8"

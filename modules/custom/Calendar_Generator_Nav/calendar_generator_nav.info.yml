@@ -2,4 +2,4 @@ name: Calendar Generator Navigation
 description: The top nav for the calendar page
 type: module
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ">=8"

@@ -29,7 +29,6 @@
         "drupal/custom_breadcrumbs": "1.0",
         "drupal/datatables": "^2.0",
         "drupal/devel": "5.0",
-        "drupal/easy_breadcrumb": "2.0",
         "drupal/entity_save_and_addanother": "1.0",
         "drupal/file_download_link": "^2.0",
         "drupal/fontawesome": "2.23",
@@ -45,7 +44,7 @@
         "drupal/restui": "1.20",
         "drupal/search_api": "1.25",
         "drupal/smtp": "^1.2",
-        "drupal/webform": "^6.1",
+        "drupal/upgrade_status": "^4.3",
         "drush/drush": "^11.0"
     },
     "conflict": {
