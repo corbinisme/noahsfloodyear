@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85b7e84523b2e0b860b036dd7001dc7c",
+    "content-hash": "8f0a57f34ad9ca2fc6cd5a42cdb7f9cd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2094,60 +2094,6 @@
             }
         },
         {
-            "name": "drupal/bootstrap_barrio",
-            "version": "5.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/bootstrap_barrio.git",
-                "reference": "5.1.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/bootstrap_barrio-5.1.0.zip",
-                "reference": "5.1.0",
-                "shasum": "2a0ac73c2cc3285226ffc2cf2b4fc2354c4af241"
-            },
-            "require": {
-                "drupal/core": "^8 || ^9",
-                "twbs/bootstrap": "^4.4.1"
-            },
-            "type": "drupal-theme",
-            "extra": {
-                "drupal": {
-                    "version": "5.1.0",
-                    "datestamp": "1597668835",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Alberto Siles",
-                    "homepage": "https://www.drupal.org/user/827704",
-                    "email": "alberto@siles.pe"
-                },
-                {
-                    "name": "ricardo.castaneda",
-                    "homepage": "https://www.drupal.org/user/3520894"
-                },
-                {
-                    "name": "WillAcon",
-                    "homepage": "https://www.drupal.org/user/2824325"
-                }
-            ],
-            "description": "Bootstrap 4 base theme.",
-            "homepage": "https://www.drupal.org/project/bootstrap_barrio",
-            "support": {
-                "source": "https://git.drupalcode.org/project/bootstrap_barrio"
-            }
-        },
-        {
             "name": "drupal/ckeditor",
             "version": "1.0.2",
             "source": {
@@ -2299,26 +2245,26 @@
         },
         {
             "name": "drupal/contentimport",
-            "version": "9.3.0",
+            "version": "10.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/contentimport.git",
-                "reference": "8.x-9.3"
+                "reference": "10.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/contentimport-8.x-9.3.zip",
-                "reference": "8.x-9.3",
-                "shasum": "79303d86ef05754b72dd3ab263b78fa890de38c9"
+                "url": "https://ftp.drupal.org/files/projects/contentimport-10.0.0.zip",
+                "reference": "10.0.0",
+                "shasum": "312586ec7d2666ca4e1b512571ecca6ff015e270"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-9.3",
-                    "datestamp": "1593703928",
+                    "version": "10.0.0",
+                    "datestamp": "1710659653",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3733,59 +3679,6 @@
                 "source": "https://git.drupalcode.org/project/migrate_tools",
                 "issues": "https://www.drupal.org/project/issues/migrate_tools",
                 "slack": "#migrate"
-            }
-        },
-        {
-            "name": "drupal/module_filter",
-            "version": "3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/module_filter.git",
-                "reference": "8.x-3.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/module_filter-8.x-3.4.zip",
-                "reference": "8.x-3.4",
-                "shasum": "eb506728a4156837bd2d18918563d92853f149a4"
-            },
-            "require": {
-                "drupal/core": "^8 || ^9"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "drupal": {
-                    "version": "8.x-3.4",
-                    "datestamp": "1671484800",
-                    "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "andrey.troeglazov",
-                    "homepage": "https://www.drupal.org/user/3145389"
-                },
-                {
-                    "name": "greenskin",
-                    "homepage": "https://www.drupal.org/user/173855"
-                },
-                {
-                    "name": "smustgrave",
-                    "homepage": "https://www.drupal.org/user/3252890"
-                }
-            ],
-            "description": "Filter the modules list.",
-            "homepage": "http://drupal.org/project/module_filter",
-            "support": {
-                "source": "https://git.drupalcode.org/project/module_filter",
-                "issues": "https://www.drupal.org/project/issues/module_filter"
             }
         },
         {
@@ -9072,61 +8965,6 @@
                 }
             ],
             "time": "2022-08-02T15:47:23+00:00"
-        },
-        {
-            "name": "twbs/bootstrap",
-            "version": "v4.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "e5643aaa89eb67327a5b4abe7db976f0ea276b70"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e5643aaa89eb67327a5b4abe7db976f0ea276b70",
-                "reference": "e5643aaa89eb67327a5b4abe7db976f0ea276b70",
-                "shasum": ""
-            },
-            "replace": {
-                "twitter/bootstrap": "self.version"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                },
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                }
-            ],
-            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "https://getbootstrap.com/",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "mobile-first",
-                "responsive",
-                "sass",
-                "web"
-            ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v4.6.2"
-            },
-            "time": "2022-07-19T15:13:44+00:00"
         },
         {
             "name": "twig/twig",
