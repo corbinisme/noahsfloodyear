@@ -32,6 +32,7 @@
         "drupal/entity_save_and_addanother": "1.0",
         "drupal/file_download_link": "^2.0",
         "drupal/fontawesome": "2.23",
+        "drupal/gin": "^3.0",
         "drupal/glyphicons": "^1.4",
         "drupal/google_analytics": "4.0",
         "drupal/hotjar": "3.1",
