@@ -22,15 +22,15 @@
         "drupal/contentimport": "^10.0",
         "drupal/core-composer-scaffold": "^9.1",
         "drupal/core-project-message": "^9.1",
-        "drupal/core-recommended": "^9.1",
+        "drupal/core-recommended": "^10.0",
         "drupal/core-vendor-hardening": "^9.1",
-        "drupal/csv_importer": "^1.16",
+        "drupal/csv_importer": "^2.0",
         "drupal/datatables": "^2.0",
-        "drupal/devel": "^5.1",
+        "drupal/devel": "^5.3",
         "drupal/entity_save_and_addanother": "^1.0",
         "drupal/file_download_link": "^2.0",
-        "drupal/fontawesome": "^2.26",
-        "drupal/gin": "^3.0",
+        "drupal/fontawesome": "^3.0",
+        "drupal/gin": "^4.0",
         "drupal/glyphicons": "^1.7",
         "drupal/google_analytics": "^4.0",
         "drupal/hotjar": "^3.1",
@@ -40,9 +40,9 @@
         "drupal/pathauto": "^1.13",
         "drupal/redirect": "^1.11",
         "drupal/restui": "^1.22",
-        "drupal/search_api": "^1.30",
+        "drupal/search_api": "^1.38",
         "drupal/smtp": "^1.4",
-        "drush/drush": "^11.6"
+        "drush/drush": "^12.5"
     },
     "conflict": {
         "drupal/drupal": "*"
