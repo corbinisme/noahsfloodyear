@@ -1,7 +1,7 @@
 name: BiblicalCalendar
 type: theme
 description: 'Child Theme with Bootstrap 5 css library'
-core_version_requirement: ^9.4 || ^10
+core_version_requirement: ">=8"
 base theme: bootstrap5
 
 

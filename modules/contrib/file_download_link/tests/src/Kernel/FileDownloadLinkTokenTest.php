@@ -2,9 +2,7 @@
 
 namespace Drupal\Tests\file_download_link\Kernel;
 
-use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\user\Traits\UserCreationTrait;
-use PHPUnit\Framework\Assert;
 
 /**
  * Class for testing file_download_link formatter with tokens.
@@ -12,9 +10,8 @@ use PHPUnit\Framework\Assert;
  * @group file_download_link
  * @requires module token
  */
-class FileDownloadLinkTokenTest extends KernelTestBase {
+class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
 
-  use FileDownloadLinkTestTrait;
   use UserCreationTrait;
 
   /**
@@ -23,14 +20,7 @@ class FileDownloadLinkTokenTest extends KernelTestBase {
    * @var array
    */
   protected static $modules = [
-    'field',
-    'system',
-    'user',
-    'node',
-    'file',
     'token',
-    'file_download_link',
-    'image',
   ];
 
   /**
@@ -38,393 +28,321 @@ class FileDownloadLinkTokenTest extends KernelTestBase {
    */
   protected function setUp(): void {
     parent::setUp();
-    $this->installConfig(['system', 'field']);
-    $this->installSchema('file', ['file_usage']);
-    $this->installSchema('user', ['users_data']);
     $this->setUpCurrentUser(['uid' => 99]);
-    $this->installEntitySchema('user');
-    $this->installEntitySchema('file');
-    $this->installEntitySchema('node');
-    $this->installEntitySchema('node_type');
-    $this->entity = $this->createTestEntity();
   }
 
   /**
-   * Test the formatter using a token from the file.
-   */
-  public function testFormatterFileTokens() {
-    $settings = [
-      'link_text' => 'The extension is [file:extension]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_file->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_file->referencedEntities()[0];
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'The extension is txt',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.txt'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-text',
-            'file-download-plain',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-  }
-
-  /**
-   * Test the formatter using a token from the node.
-   */
-  public function testFormatterNodeTokens() {
-    $settings = [
-      'link_text' => 'The image width is [node:field_image:width]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_image->referencedEntities()[0];
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'The image width is 40',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-  }
-
-  /**
-   * Test the formatter using a token from the image.
-   */
-  public function testFormatterImageTokens() {
-    $settings = [
-      'link_text' => 'The extension is [file:extension]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_image->referencedEntities()[0];
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'The extension is png',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-  }
-
-  /**
-   * Test the formatter using a token from the image.
-   */
-  public function testFormatterTitleTokens() {
-    $settings = [
-      'link_text' => 'Testing tokens in title',
-      'link_title' => 'Download [file:extension]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_image->referencedEntities()[0];
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'Testing tokens in title',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-          ],
-          'title' => 'Download png',
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-  }
-
-  /**
-   * Test the formatter using a token from the image.
-   */
-  public function testFormatterClassTokens() {
-    $settings = [
-      'link_text' => 'Testing tokens in classes',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-      'custom_classes' => 'link-[file:mime] static-class',
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_image->referencedEntities()[0];
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'Testing tokens in classes',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-            'link-image-png',
-            'static-class',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-  }
-
-  /**
-   * Test that tokens work right for cardinality != 1.
-   */
-  public function testFormatterDeltaTokens() {
-    $settings = [
-      'link_text' => '[node:field_image:alt]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_image->referencedEntities()[0];
-    $expected_delta_0 = [
-      '#type' => 'link',
-      '#title' => 'This alt text is for the first image.',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-    $expected_delta_1 = [
-      '#type' => 'link',
-      '#title' => "When delta is 1 we should see this alt text. Let's add special chars & test them!",
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_delta_0, $render[0]);
-    Assert::assertEquals($expected_delta_1, $render[1]);
-  }
-
-  /**
-   * Tests that tokes are cleared correctly.
-   */
-  public function testClearTokens() {
-    // Text should end up as file name.
-    // Title should end up unset.
-    $settings = [
-      'link_text' => '[fake:token]',
-      'link_title' => '[fake:token]',
-      'custom_classes' => '[fake:token]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_file->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $file = $this->entity->field_file->referencedEntities()[0];
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'file.txt',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.txt'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-text',
-            'file-download-plain',
-          ],
-        ],
-      ],
-      '#cache' => [
-        'tags' => array_merge($file->getCacheTags(), $this->entity->getCacheTags()),
-        'contexts' => [],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-  }
-
-  /**
-   * Test the formatter using a token from the user.
+   * {@inheritdoc}
    *
-   * This is unikely to be used. But we ensure user info is cached right.
+   * A note on cache tags and tokens...as the first test case 'no tokens,
+   * default settings' demonstrates, if there are no tokens anywhere, then
+   * the cache tags just come from the file being linked. However, if there
+   * are ANY tokens (even invalid ones) the Token::generate() method will
+   * add the cacheability of all data objects passed to the token service,
+   * even if there are no tokens for that object. That's why in the test case
+   * 'tokens for text file', there's a cache tag for node:1. Even though there
+   * are no node tokens, the node is passed as part of the data array to the
+   * token service. With regard to the current user tokens, the user is not
+   * passed as an object in the data array. As a result its cache tags only
+   * end up in the bubbleable_metadata when that type of token is truly
+   * present.
    */
-  public function testFormatterUserTokens() {
-    $settings = [
-      'link_text' => 'Download this, [current-user:uid]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'Download this, 99',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
+  public static function providerTestFileDownloadLink() {
+    return [
+      'no tokens, default settings' => [
+        'field' => 'field_file',
+        'settings' => [],
+        'output' => [
+          [
+            'title' => 'Download',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-text',
+                  'file-download-plain',
+                ],
+                'target' => '_blank',
+                'download' => TRUE,
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:2'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
           ],
         ],
       ],
-      '#cache' => [
-        'tags' => ['file:1', 'node:1', 'user:99'],
-        'contexts' => ['user'],
-        'max-age' => -1,
-      ],
-      '#attached' => [],
-    ];
-
-    Assert::assertEquals($expected_render, $render[0]);
-
-    $settings = [
-      'link_text' => 'Download',
-      'link_title' => 'You know you want it, [current-user:uid]',
-      'new_tab' => FALSE,
-      'force_download' => FALSE,
-    ];
-    $render = $this->entity->field_image->view([
-      'type' => 'file_download_link',
-      'label' => 'hidden',
-      'settings' => $settings,
-    ]);
-    $expected_render = [
-      '#type' => 'link',
-      '#title' => 'Download',
-      '#url' => \Drupal::service('file_url_generator')->generate('public://file.png'),
-      '#options' => [
-        'attributes' => [
-          'class' => [
-            'file-download',
-            'file-download-image',
-            'file-download-png',
-          ],
-          'title' => 'You know you want it, 99',
+      'tokens for text file' => [
+        'field' => 'field_file',
+        'settings' => [
+          'link_text' => 'The extension is [file:extension]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'The extension is txt',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-text',
+                  'file-download-plain',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:2', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ]
         ],
       ],
-      '#cache' => [
-        'tags' => ['file:1', 'node:1', 'user:99'],
-        'contexts' => ['user'],
-        'max-age' => -1,
+      'tokens for image field' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_text' => 'The image width is [node:field_image:width]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'The image width is 40',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ],
+        ],
       ],
-      '#attached' => [],
+      'tokens for image file' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_text' => 'The extension is [file:extension]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'The extension is png',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ]
+        ],
+      ],
+      'tokens in link title' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_text' => 'Testing tokens in title',
+          'link_title' => 'Download [file:extension]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'Testing tokens in title',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+                'title' => 'Download png',
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ],
+        ],
+      ],
+      'tokens in custom classes' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_text' => 'Testing tokens in classes',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+          'custom_classes' => 'link-[file:mime] static-class',
+        ],
+        'output' => [
+          [
+            'title' => 'Testing tokens in classes',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                  'link-image-png',
+                  'static-class',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ],
+        ],
+      ],
+      'tokens for multi-valued field (i.e. testing delta handling)' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_text' => '[node:field_image:alt]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'This alt text is for the first image.',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ],
+          [
+            'title' => 'When delta is 1 we should see this alt text. Let\'s add special chars & test them!',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ],
+        ],
+      ],
+      'invalid tokens are cleared' => [
+        'field' => 'field_file',
+        'settings' => [
+          'link_text' => '[fake:token]',
+          'link_title' => '[fake:token]',
+          'custom_classes' => '[fake:token]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'file.txt',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-plain',
+                  'file-download-text',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:2', 'node:1'],
+              'contexts' => [],
+              'max-age' => -1,
+            ],
+          ],
+        ],
+      ],
+      'current user tokens' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_text' => 'Download this, [current-user:uid]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'Download this, 99',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'user:99', 'node:1'],
+              'contexts' => ['user'],
+              'max-age' => -1,
+            ],
+          ],
+        ],
+      ],
+      'current user tokens in link title' => [
+        'field' => 'field_image',
+        'settings' => [
+          'link_title' => 'You know you want it, [current-user:uid]',
+          'new_tab' => FALSE,
+          'force_download' => FALSE,
+        ],
+        'output' => [
+          [
+            'title' => 'Download',
+            'options' => [
+              'attributes' => [
+                'class' => [
+                  'file-download',
+                  'file-download-image',
+                  'file-download-png',
+                ],
+                'title' => 'You know you want it, 99',
+              ],
+            ],
+            'cache' => [
+              'tags' => ['file:1', 'user:99', 'node:1'],
+              'contexts' => ['user'],
+              'max-age' => -1,
+            ],
+          ],
+        ],
+      ],
     ];
-
-    Assert::assertEquals($expected_render, $render[0]);
   }
 
 }
