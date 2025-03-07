@@ -2,7 +2,7 @@
 
 /**
  * @file
- * bootstrap5 theme file.
+ * Bootstrap5 theme file.
  */
 
 use Drupal\block\Entity\Block;
@@ -40,7 +40,7 @@ function bootstrap5_form_system_theme_settings_alter(&$form, FormStateInterface 
  * Validate callback to ensure filter order and allowed_html are compatible.
  */
 function bootstrap5_form_system_theme_settings_subtheme_validate(array &$form, FormStateInterface $form_state) {
-  $subtheme_form_manager = new SubthemeFormManager();
+  $subtheme_form_manager = new SubthemeFormManager(\Drupal::service('file_system'), \Drupal::service('messenger'), \Drupal::service('extension.list.theme'));
   return $subtheme_form_manager->validateForm($form, $form_state);
 }
 
@@ -50,7 +50,7 @@ function bootstrap5_form_system_theme_settings_subtheme_validate(array &$form, F
  * @see bootstrap5_form_system_theme_settings_alter()
  */
 function bootstrap5_form_system_theme_settings_subtheme_submit($form, FormStateInterface $form_state) {
-  $subtheme_form_manager = new SubthemeFormManager();
+  $subtheme_form_manager = new SubthemeFormManager(\Drupal::service('file_system'), \Drupal::service('messenger'), \Drupal::service('extension.list.theme'));
   return $subtheme_form_manager->submitForm($form, $form_state);
 }
 
@@ -277,7 +277,8 @@ function bootstrap5_views_pre_render(ViewExecutable $view) {
   if ($view->id() === 'media_library') {
     if ($view->display_handler->options['defaults']['css_class']) {
       $add_classes($view->displayHandlers->get('default')->options['css_class'], ['media-library-view']);
-    } else {
+    }
+    else {
       $add_classes($view->display_handler->options['css_class'], ['media-library-view']);
     }
 
@@ -296,7 +297,8 @@ function bootstrap5_views_pre_render(ViewExecutable $view) {
         $add_classes($view->field['delete_media']->options['alter']['link_class'], ['media-library-item__remove']);
         $add_classes($view->field['delete_media']->options['alter']['link_class'], ['icon-link']);
       }
-    } elseif (strpos($view->current_display, 'widget') === 0) {
+    }
+    elseif (strpos($view->current_display, 'widget') === 0) {
       if (array_key_exists('rendered_entity', $view->field)) {
         $add_classes($view->field['rendered_entity']->options['element_class'], ['media-library-item__content']);
       }
@@ -306,7 +308,8 @@ function bootstrap5_views_pre_render(ViewExecutable $view) {
 
       if ($view->display_handler->options['defaults']['css_class']) {
         $add_classes($view->displayHandlers->get('default')->options['css_class'], ['media-library-view--widget']);
-      } else {
+      }
+      else {
         $add_classes($view->display_handler->options['css_class'], ['media-library-view--widget']);
       }
     }
