@@ -95,7 +95,6 @@ window.addEventListener('load',
   }, false);
 
 
-
   var calendar = {
     init: function(){
         
