@@ -1,0 +1,13 @@
+name: CKEditor Color Dialog
+type: module
+description: "Adds in the Color Dialog plugin for CKEditor."
+package: CKEditor
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+
+dependencies:
+  - drupal:ckeditor
+
+# Information added by Drupal.org packaging script on 2024-11-14
+version: '8.x-1.5'
+project: 'colordialog'
+datestamp: 1731586348

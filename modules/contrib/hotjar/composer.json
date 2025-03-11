@@ -1,0 +1,11 @@
+{
+  "name": "drupal/hotjar",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "description": "Allows your site to be tracked by Hotjar by adding a Javascript tracking code to every page",
+  "require": {
+    "ext-json": "*",
+    "drupal/core": "^9.4 || ^10"
+  },
+  "minimum-stability": "stable"
+}

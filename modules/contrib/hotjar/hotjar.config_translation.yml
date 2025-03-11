@@ -1,0 +1,5 @@
+hotjar.admin_settings_form:
+  title: 'Hotjar'
+  base_route_name: hotjar.admin_settings_form
+  names:
+    - hotjar.settings

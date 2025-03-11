@@ -1,0 +1,13 @@
+name: Content Import
+type: module
+description: 'To Import content from CSV file'
+core_version_requirement: '^8.7.7 || ^9 || ^10'
+package: Other
+configure: contentimport.admin_settings
+dependencies:
+  - drupal:node
+
+# Information added by Drupal.org packaging script on 2024-03-17
+version: '10.0.0'
+project: 'contentimport'
+datestamp: 1710659655

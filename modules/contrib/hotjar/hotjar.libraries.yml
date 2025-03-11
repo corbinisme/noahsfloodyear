@@ -1,0 +1,6 @@
+hotjar:
+  version: VERSION
+  js:
+    js/hotjar.js: {}
+  dependencies:
+    - core/drupalSettings
