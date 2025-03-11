@@ -25,6 +25,7 @@ robots.txt
 /Content/
 /backups/
 /libraries/generator/
+/modules/contrib/
 
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
