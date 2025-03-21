@@ -144,6 +144,7 @@ class CalendarController extends ControllerBase {
         if(true) {
           $thisRow['year'] = (int)$row['am yr'];
           $thisRow['d'] = $row['d'];
+          $thisRow['hs'] = $row['hs'];
           
           
           // check if the row already exists in the database
@@ -153,6 +154,7 @@ class CalendarController extends ControllerBase {
             $con->update('chart3')
               ->fields([
                 'd' => $thisRow['d'],
+                'hs' => $thisRow['hs']
               ])
               ->condition('year', $thisRow['year'])
               ->execute();
@@ -160,6 +162,7 @@ class CalendarController extends ControllerBase {
               $output[] = [
                 'year' => $thisRow['year'],
                 'd' => $thisRow['d'],
+                'hs' => $thisRow['hs'],
                 'status' => 'updated'
               ];
           
