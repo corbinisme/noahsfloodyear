@@ -1630,6 +1630,21 @@ main .region-breadcrumb .block-page-title-block h1 {
   margin-top: 2em;
 }
 
+.twentyKformWrapper {
+  background: #f7f7f7;
+  border-radius: 1em;
+  padding: 2em 1em;
+}
+
+.webform-submission-add-form h2 {
+  font-size: 3em;
+}
+.webform-submission-add-form .webform-custom-submit {
+  font-size: 2em;
+  width: 100%;
+  float: right;
+}
+
 .footer {
   background: #333;
   color: #fff;
