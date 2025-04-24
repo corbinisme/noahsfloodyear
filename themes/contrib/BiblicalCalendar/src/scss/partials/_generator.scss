@@ -485,6 +485,31 @@ $lastGreatDay: #15be27;
 		}
 	}
 
+	.calendar-how-to {
+		margin-top: 4em;
+		margin-bottom: 4em;
+	}
+
+	.year_bar {
+		.year_bar_action {
+			font-size: 1.4em;
+			padding: .5em;
+		}
+	}
+	.calendar-top-three {
+		.iconGrid {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			
+		
+			svg {
+				font-size: 2em;
+				margin-right: .5em;
+			}
+		}
+	}
+
 	
 	#block-calendarblock, #block-calendarpagebottomtext {
 		max-width: 976px;
@@ -499,15 +524,16 @@ $lastGreatDay: #15be27;
 	}
 
 	.block-calendar-generator-nav {
-		background-color: #28599b;
-    	box-shadow: 0px 0px 5px #000;
-		margin-bottom: 2em;
-		border-radius: 5px;
-		font-size: 2em;
-		@include respond-below(md){
-			font-size: 1.5em;
-		}
+		
+		.year_bar {
+			background-color: #ddd;
+			border-radius: 1em;
+			
 
+			.row {
+				align-items: center;
+			}
+		}
 		.calendar_nav {
 			padding: 1em 0;
 			font-size: 1.4em;
