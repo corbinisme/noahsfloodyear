@@ -511,6 +511,14 @@ $lastGreatDay: #15be27;
 		.calendar_nav {
 			padding: 1em 0;
 			font-size: 1.4em;
+			display: flex;
+			flex-wrap: nowrap;
+			flex-direction: column;
+
+			> div {
+				flex: 1 100%;
+
+			}
 
 			.input-group {
 				height: 1.5em;
@@ -648,9 +656,7 @@ $lastGreatDay: #15be27;
 	}
 	.calendarWrapper {
 		position: relative;
-		width: 100vw;
-		left: 50%;
-		margin-left: -50vw;
+		
 		padding: 2em;
 		@include respond-below(md){
 			padding: 2em 1.5em;

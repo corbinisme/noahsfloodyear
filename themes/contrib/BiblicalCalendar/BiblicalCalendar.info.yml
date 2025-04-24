@@ -23,6 +23,7 @@ regions:
   content: 'Main content'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
+  above_footer: 'Above footer'
   footer: Footer
   help: 'Help'
   home_box: 'Home Box'

@@ -735,6 +735,12 @@
 .path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
   font-size: 1.4em;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+.path-calendar .block-calendar-generator-nav .calendar_nav > div {
+  flex: 1 100%;
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav .input-group {
   height: 1.5em;
@@ -842,9 +848,6 @@
 }
 .path-calendar .calendarWrapper {
   position: relative;
-  width: 100vw;
-  left: 50%;
-  margin-left: -50vw;
   padding: 2em;
   background: #e9e9e9;
 }

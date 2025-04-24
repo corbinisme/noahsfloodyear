@@ -130,6 +130,14 @@ set footer_classes = ' ' ~
     </div>
   </div>
 
+
+{% if page.above_footer %}
+<aside class="above-footer">
+  <div class="{{ b5_top_container }}">
+    {{ page.above_footer }}
+  </div>
+</aside>
+{% endif %}
 </main>
 
 {% if page.footer %}
