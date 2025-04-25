@@ -819,6 +819,13 @@
 .path-calendar .SignificantDateRow {
   margin-bottom: 1em;
 }
+.path-calendar .SignificantDateRow a {
+  background-color: #333;
+  color: gold;
+  padding: 1em;
+  border-radius: 1em;
+  display: block;
+}
 .path-calendar .SignificantDateRow .views-field-body {
   display: none;
 }
