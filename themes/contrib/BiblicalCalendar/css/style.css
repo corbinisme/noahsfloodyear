@@ -1007,6 +1007,8 @@
   display: none;
 }
 .path-calendar #NewCalendarContainer {
+  display: flex;
+  flex-wrap: wrap;
   /*[data-name="prepentecost"]{
   	&::after {
   		background-color: $pentecost;
@@ -1016,12 +1018,35 @@
   }
   */
 }
+.path-calendar #NewCalendarContainer div.month {
+  float: none;
+  display: flex;
+  flex: 1 33%;
+  max-width: 33%;
+}
+@media (max-width: 991px) {
+  .path-calendar #NewCalendarContainer div.month {
+    max-width: 100%;
+    flex: 1 100%;
+  }
+}
+.path-calendar #NewCalendarContainer div.month .Column {
+  float: none;
+  width: auto;
+  min-width: 1px;
+  max-width: 50%;
+  flex: 1 auto;
+}
+.path-calendar #NewCalendarContainer div.month .Column:last-child {
+  margin-right: 10px;
+}
 .path-calendar #NewCalendarContainer .Column .Cell span {
   display: flex;
   justify-content: end;
   margin-right: 2px;
 }
 .path-calendar #NewCalendarContainer .Column .Cell.HCC.first.Month span {
+  position: absolute;
   justify-content: center;
 }
 .path-calendar #NewCalendarContainer .Column .Cell.SabbathCount {

@@ -852,8 +852,32 @@ $lastGreatDay: #15be27;
 	}
 
 	#NewCalendarContainer {
+		display: flex;
+		flex-wrap: wrap;
 
 
+		div.month {
+			float: none;
+			display: flex;
+			flex: 1 33%;
+			max-width: 33%;
+			@include respond-below(md){
+				max-width: 100%;
+				flex: 1 100%;
+			}
+			
+			
+			.Column {
+				float: none;
+				width: auto;
+				min-width: 1px;
+				max-width: 50%;
+				flex: 1 auto;
+				&:last-child {
+					margin-right: 10px;
+				}
+			}
+		}
 		.Column {
 			.Cell {
 				span {
@@ -864,6 +888,7 @@ $lastGreatDay: #15be27;
 				&.HCC {
 					&.first.Month {
 						span {
+							position: absolute;
 							justify-content: center;
 						}
 					}
