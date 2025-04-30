@@ -195,6 +195,7 @@ class CalendarDatesBlock extends BlockBase {
 	$markup .= "<input type='hidden' name='gregDate' value='" .$result[0]->GC_Era . $result[0]->GC_Year .  "' />";
 	$markup .= "<input type='hidden' name='eraType' value='" .$result[0]->GC_Era . "' />";
 	
+	/*
 	$markup .= "<div class='calendarWrapper'><div class='row'><div class='col-lg-6'>";
 	
 	$markup .= '<table class="table"><thead><tr><th>Holy Day</th><th>Start Day</th><th nowrap>End</th></tr></thead>';
@@ -230,6 +231,7 @@ class CalendarDatesBlock extends BlockBase {
 	$markup .= "<input type='hidden' id='hsvalue' value='" . $result[0]->HS . "' />";
 	
 	$markup .= "</div><div class='col-lg-6'>";
+	*/
 
 	$amYear = $result[0]->AM;
 	$cycles = $amYear/247;
@@ -245,6 +247,8 @@ class CalendarDatesBlock extends BlockBase {
 	//$markup .= "<pre>" . print_r($result[0], true) . "</pre>";
 	$markup .= "<input type='hidden' id='AMYear' value='" . $result[0]->AM . "' />";
 	// add the other one
+	
+	/*
 	$markup .= "<div class='calendarMarkup'>";
 
 	$markup .= "<table class='table'>
@@ -286,9 +290,10 @@ class CalendarDatesBlock extends BlockBase {
 	$markup .= "</table>";
 
 	$markup .= "</div></div></div>";
+	*/
 
 
-	$markup .= CalendarDatesBlock::getLegend();
+	//$markup .= CalendarDatesBlock::getLegend();
 	$markup .= "</div><div class='clear'></div>";
 	
 	

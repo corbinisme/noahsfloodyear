@@ -393,34 +393,34 @@
   float: none !important;
   clear: both;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table td {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table td, .path-calendar .interactiveLegend .table td {
   position: relative;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table td span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table td span, .path-calendar .interactiveLegend .table td span {
   display: inline-block;
   min-width: 10px;
   height: 1em;
   margin-left: 5px;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .passover span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .passover span, .path-calendar .interactiveLegend .table .passover span {
   background-color: #f70d48;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .unleavenedbread span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .unleavenedbread span, .path-calendar .interactiveLegend .table .unleavenedbread span {
   background-color: #a07833;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .pentecost span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .pentecost span, .path-calendar .interactiveLegend .table .pentecost span {
   background-color: #0de1ec;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .trumpets span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .trumpets span, .path-calendar .interactiveLegend .table .trumpets span {
   background-color: #f2d316;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .atonement span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .atonement span, .path-calendar .interactiveLegend .table .atonement span {
   background-color: #e647fb;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .tabernacles span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .tabernacles span, .path-calendar .interactiveLegend .table .tabernacles span {
   background-color: #fa8a48;
 }
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .lastgreatday span {
+.path-calendar #block-biblicalcalendar-calendardatesblock .table .lastgreatday span, .path-calendar .interactiveLegend .table .lastgreatday span {
   background-color: #15be27;
 }
 .path-calendar .newHR {
@@ -432,7 +432,7 @@
 .path-calendar .subtitle {
   font-size: 3em;
   margin-top: -0.5em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 .path-calendar .field--name-body {
   margin-top: 4em;
@@ -726,6 +726,26 @@
   font-size: 2em;
   margin-right: 0.5em;
 }
+.path-calendar .calendar-controls {
+  font-size: 16px;
+}
+.path-calendar .calendar-controls .calendar-toggles {
+  margin: 2em 0;
+}
+.path-calendar .omniSelector {
+  display: flex;
+  flex-wrap: nowrap;
+  border: 2px solid #333;
+  border-radius: 20px;
+  padding: 1em;
+}
+.path-calendar .omniSelector .form-control {
+  border: none;
+}
+.path-calendar .omniSelector .form-select {
+  flex: 1 2%;
+  border: none;
+}
 .path-calendar #block-calendarblock, .path-calendar #block-calendarpagebottomtext {
   max-width: 976px;
   width: 80%;
@@ -747,9 +767,6 @@
 .path-calendar .block-calendar-generator-nav .calendar_nav {
   padding: 1em 0;
   font-size: 1.4em;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
 }
 .path-calendar .block-calendar-generator-nav .calendar_nav > div {
   flex: 1 100%;
@@ -924,7 +941,7 @@
   font-style: italic;
   font-size: 20px;
   line-height: 30px;
-  height: 30px;
+  height: 50px;
   position: relative;
   text-align: center;
   font-weight: bold;
@@ -955,6 +972,7 @@
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.Month.first span {
   position: relative;
   z-index: 98;
+  transform: rotate(-90deg);
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC {
   background: #0000aa;
@@ -1039,6 +1057,14 @@
 }
 .path-calendar #NewCalendarContainer div.month .Column:last-child {
   margin-right: 10px;
+}
+.path-calendar #NewCalendarContainer .Column .Cell.Month.GC.first span {
+  transform: rotate(-90deg);
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-indent: -18px;
+  font-size: 15px;
 }
 .path-calendar #NewCalendarContainer .Column .Cell span {
   display: flex;

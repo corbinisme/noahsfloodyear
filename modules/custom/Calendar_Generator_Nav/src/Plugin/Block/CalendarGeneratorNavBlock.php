@@ -43,7 +43,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
 
 
 
-  private function getEraDropdown($era){
+  private function getEraDropdown($era, $year){
     $adSel = "";
     $bcSel = "";
     $amSel = "";
@@ -59,24 +59,65 @@ class CalendarGeneratorNavBlock extends BlockBase {
     ?>
     
     <?php
-    $html = "<div class='col-md-12 text-right eraSelector'>";
-    
-    /*$html .= "<select class=\"form-control currentEra\" id=\"GC_Era\" name=\"GC_Era\" style='width: 82px'>";
+    $html = "<div class='col-md-12 eraSelector'>";
+    $html .= "<div class='omniSelector'>";
+    $html .= "<input type='text' class='form-control currentyear' name='yearSelect' id='yearSelect' value='" . $year . "' placeholder='Type Year' />";
+    $html .= "<select class=\"form-select currentEra\" id=\"GC_Era\" name=\"GC_Era\" style='width: 82px'>";
     $html .= " <option  ". $adSel ."' data-id=\"AD\">AD</option>";
     $html .= " <option  " .$bcSel ." data-id=\"BC\">BC</option>";
     $html .= " <option  ". $amSel . " data-id=\"AM\">AM</option>";
     $html .= "</select>";
-    */
+    $html .= "<a class='btn btn-outline-primary' id='generateBtn' onClick='calendarnav.generateBtn(this)'><i class='fa fa-arrow-right'></i></a>";
+    $html .= "</div>";
+    
 
-    $html .= '<div class="btn-group currentEra" id="GC_Era" name="GC_Era" data-value="' .strtoupper($era) . '">';
+    /*$html .= '<div class="btn-group currentEra" id="GC_Era" name="GC_Era" data-value="' .strtoupper($era) . '">';
     $html .=             '<button type="button" data-id="AD" class="btn btn-primary' . $adSel. '">AD</button> ';
     $html .=             '<button type="button" data-id="BC" class="btn btn-primary' . $bcSel. '">BC</button> ';
     $html .=             '<button type="button" data-id="AM" class="btn btn-primary' . $amSel. '">AM</button>';
-    $html .=         '</div></div>';
+    */
+    $html .=         '</div>';
     
     return $html;
   
     
+  }
+  private function getToggles(){
+    $content = "<div class='calendar-toggles'>";
+    $content .= '<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="toggleGC" checked>
+  <label class="form-check-label" for="toggleGC">Gregorian</label>
+</div>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="toggleHC" checked>
+  <label class="form-check-label" for="toggleHC">Hebrew</label>
+</div>
+<div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" id="toggleSC" checked>
+  <label class="form-check-label" for="toggleSC">Solar</label>
+</div>
+';
+    $content .= "</div>";
+    return $content;
+  }
+
+  private function getInteractiveLegend(){
+    $content = "<div class='col-md-12 interactiveLegend'>";
+    $content .= '
+    <table class="table">
+      <tbody>
+      <tr><td class="passover"><span></span> Passover </td></tr>
+      <tr><td class="unleavenedbread"><span class="ubbg"></span> Unleavened Bread </td></tr>
+      <tr><td class="pentecost"><span></span> Pentecost </td></tr>
+      <tr><td class="trumpets"><span></span> Trumpets </td></tr>
+      <tr><td class="atonement"><span></span> Atonement </td></tr>
+      <tr><td class="tabernacles"><span></span> Tabernacles </td></tr>
+      <tr><td class="lastgreatday"><span></span> Last Great Day (8th Day)</td></tr>
+      </tbody></table>
+      <small>THE ABOVE DATES ARE OBSERVED THE PREVIOUS EVENING, AFTER SUNSET</small>';
+    $content .= "<div class='legend'></div></div>";
+    
+    return $content;
   }
 
   private function getYearSelector($year){
@@ -103,9 +144,12 @@ class CalendarGeneratorNavBlock extends BlockBase {
     
     $markup = "<div class='container'><div class='calendar_nav row'>";
     
-    $markup .= $this::getEraDropdown($era);
-    $markup .= $this::getYearSelector($year);
-    $markup .="<div class='col-md-12 text-left generateBtn'><button type='button' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</button></div>";
+    $markup .= $this::getEraDropdown($era, $year);
+    $markup .= "<div class='calendar-controls'>";
+    $markup .= $this::getToggles();
+    $markup .= $this::getInteractiveLegend();
+    $markup .= "</div>";
+    //$markup .="<div class='col-md-12 text-left generateBtn'><button type='button' onClick='calendarnav.generateBtn(this)' class='btn btn-primary generateBtn'>Generate</button></div>";
     $markup .="</div></div>";
     
 

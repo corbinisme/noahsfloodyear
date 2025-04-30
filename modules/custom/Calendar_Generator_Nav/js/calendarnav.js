@@ -9,7 +9,7 @@ var calendarnav = {
 
     },
     getCurrentEra: function(){
-        let era = document.querySelector(".calendar_nav .currentEra").getAttribute("data-value").toLowerCase();
+        let era = document.querySelector(".calendar_nav .currentEra").value.toLowerCase();
         return era;
     },
     updateYear: function(dir){
