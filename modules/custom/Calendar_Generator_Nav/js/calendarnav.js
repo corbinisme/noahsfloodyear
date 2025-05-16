@@ -109,19 +109,55 @@ var calendarnav = {
             });
         });
 
-        document.querySelector(".calendar_nav .generateBtn").addEventListener("click", function(e){
-            e.preventDefault();
-            calendarnav.generateBtn()
-        });
+        if(document.querySelector(".calendar_nav .generateBtn")){
+            document.querySelector(".calendar_nav .generateBtn").addEventListener("click", function(e){
+                e.preventDefault();
+                calendarnav.generateBtn()
+            });
+        }
 
         document.querySelectorAll(".yearToggle").forEach(function(nav){
             nav.addEventListener("click", function(e){
+                e.preventDefault();
+                
                 let dir = e.target.getAttribute("data-dir");
                 calendarnav.updateYear(dir);
                 
             })
 
         })
+        if(document.querySelector(".mobile-sidebar-toggle")){
+            document.querySelector(".mobile-sidebar-toggle").addEventListener("click", function(e){
+                e.preventDefault();
+                
+                document.querySelector(".region-sidebar-first").classList.toggle("show");
+               
+                
+            })
+
+        }
+
+       if(document.querySelector(".calendar-toggle")){
+            document.querySelector(".calendar-toggle").addEventListener("click", function(e){
+                e.preventDefault();
+                e.target.classList.toggle("active");
+                document.querySelector(".calendar-how-to .calendar-top-three").classList.toggle("show");
+               
+                
+            })
+
+        }
+       
+
+
+        document.querySelectorAll(".year_bar_action").forEach(function(nav){
+            nav.addEventListener("click", function(e){
+                e.preventDefault();
+                let dir = e.target.getAttribute("data-dir");
+                calendarnav.updateYear(dir);
+                
+            })
+        });
 
         
     },

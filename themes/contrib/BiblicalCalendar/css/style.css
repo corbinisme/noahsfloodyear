@@ -717,14 +717,106 @@
   font-size: 1.4em;
   padding: 0.5em;
 }
+.path-calendar .calendar-how-to .calendar-toggle {
+  display: none;
+}
+@media (max-width: 991px) {
+  .path-calendar .calendar-how-to .calendar-toggle {
+    display: block;
+    margin-bottom: 1em;
+  }
+  .path-calendar .calendar-how-to .calendar-toggle svg {
+    transition: all 0.5s ease;
+  }
+  .path-calendar .calendar-how-to .calendar-toggle.active svg {
+    transform: rotate(180deg);
+  }
+}
+@media (max-width: 991px) {
+  .path-calendar .calendar-top-three {
+    display: none;
+  }
+  .path-calendar .calendar-top-three.show {
+    display: flex;
+  }
+}
+@media (max-width: 991px) {
+  .path-calendar .calendar-top-three .row {
+    flex-direction: row;
+  }
+  .path-calendar .calendar-top-three .row > * {
+    flex: 1 100%;
+    max-width: 100%;
+    margin-bottom: 1em;
+  }
+  .path-calendar .calendar-top-three .row > * .iconGrid {
+    height: auto;
+  }
+}
 .path-calendar .calendar-top-three .iconGrid {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 200px;
+  background: #eee;
+  border-radius: 1em;
+  flex-direction: column;
+  padding: 1em;
 }
 .path-calendar .calendar-top-three .iconGrid svg {
   font-size: 2em;
   margin-right: 0.5em;
+}
+.path-calendar .calendar-top-three .iconGrid span {
+  display: block;
+  text-align: center;
+  margin-top: 1em;
+}
+.path-calendar .region-sidebar-first .mobile-sidebar-toggle {
+  display: none;
+}
+@media (max-width: 991px) {
+  .path-calendar .region-sidebar-first {
+    position: fixed;
+    top: 0px;
+    width: 345px;
+    background: #fff;
+    z-index: 501;
+    left: 0;
+    padding-right: 45px;
+    transform: translateX(-300px);
+    height: 100vh;
+    overflow: auto;
+    transition: all 0.5s ease;
+    overflow: hidden;
+    padding-top: 150px;
+  }
+  .path-calendar .region-sidebar-first.show {
+    transform: translateX(0);
+    overflow: auto;
+  }
+  .path-calendar .region-sidebar-first .mobile-sidebar-toggle-wrapper {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 777;
+    height: 100vh;
+    width: 45px;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-content: center;
+  }
+  .path-calendar .region-sidebar-first .mobile-sidebar-toggle-wrapper .mobile-sidebar-toggle {
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 }
 .path-calendar .calendar-controls {
   font-size: 16px;
@@ -1529,6 +1621,8 @@ body.h-100 {
 header {
   background-color: #28599b;
   overflow: visible;
+  position: relative;
+  z-index: 778;
 }
 header .navbar {
   color: #fff;

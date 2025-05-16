@@ -143,7 +143,7 @@ class CalendarGeneratorNavBlock extends BlockBase {
     // this is not sending data to the template for some reason
     
     $markup = "<div class='container'><div class='calendar_nav row'>";
-    
+    $markup .= "<div class='mobile-sidebar-toggle-wrapper'><a href='#' class='mobile-sidebar-toggle'><i class='fa fa-bars'></i></a></div>";
     $markup .= $this::getEraDropdown($era, $year);
     $markup .= "<div class='calendar-controls'>";
     $markup .= $this::getToggles();

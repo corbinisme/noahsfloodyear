@@ -59,6 +59,8 @@ body {
 header {
     background-color: $bgColor;
     overflow: visible;
+    position: relative;
+    z-index: 778;
     .navbar {
         
         color: $linkColor;

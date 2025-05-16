@@ -50,19 +50,19 @@ class CalendarGeneratorYearBar extends BlockBase {
       <div class="col-sm-4">
         <div class="iconGrid">
           <i class="fa fa-calendar"></i>
-          Type in a year in AD, BC, or the Hebrew Calendar
+          <span>Type in a year in AD, BC, or the Hebrew Calendar</span>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="iconGrid">
         <i class="fa fa-arrow-up"></i>
-        Point
+        <span>Find significant days throughout history</span>
         </div>
       </div>
       <div class="col-sm-4">
        <div class="iconGrid">
         <i class="fa fa-search"></i>
-        View every Sabbath since the creation of man.
+        <span>View every Sabbath since the creation of man.</span>
       </div>
       </div>
     </div>
