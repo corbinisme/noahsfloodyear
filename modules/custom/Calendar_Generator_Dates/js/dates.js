@@ -163,11 +163,12 @@ window.addEventListener('load',
                 let dateDisplay = dateObj.toLocaleString('en-us', {month: 'short'}) + " " + dateObj.getDate();
                 daydiv.setAttribute("data-date", dateObj.toDateString());
                 daydiv.setAttribute("data-day", dateDisplay);
+                daydiv.setAttribute("data-day-number", dateObj.getDate());
                 divvy.appendChild(daydiv);
             }
 
             // insert this before .HCC:not(.Month)
-            let targetCol = col.querySelector(".Cell.SC");
+            let targetCol = col.querySelector(".Cell.GC:not(.Month)");
             col.insertBefore(divvy, targetCol);
 
             
@@ -269,9 +270,15 @@ window.addEventListener('load',
         gregDate = gregDate.substring(2, gregDate.length);
         const era = document.querySelector("input[name='eraType'" ).value.toUpperCase();
 
-        const table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
+        let table = null;
+        if(document.querySelector("#block-biblicalcalendar-calendardatesblock .table")){
+            table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
+        } else {
+            table = document.querySelector(".block-calendar-nav-block .table");
+        }
         // get a Date() object for each date
         // in the format of "Day Month, Year AD"
+        
         calendar.dates.passover = this.makeDateString(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  + era);
         calendar.dates.unleavenedbread = this.makeDateString(table.querySelector(".unleavenedbread").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.unleavenedbreadend = table.querySelector(".unleavenedbread").closest("tr").querySelector(".end").innerText;
@@ -281,6 +288,7 @@ window.addEventListener('load',
         calendar.dates.tabernacles = this.makeDateString(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.tabernaclesend = table.querySelector(".tabernacles").closest("tr").querySelector(".end").innerText;
         calendar.dates.lastgreatday = this.makeDateString(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        
     },
     setHCmonthNums: function(){
         let initCounter = 1;

@@ -40,12 +40,21 @@ $lastGreatDay: #15be27;
 	}
 
 	.weekgrid {
-		height: 10px;
+		height: 30px;
 		background: #000;
 		display: flex;
+		color: #fff;
 		.daygrid {
 			height: 100%;
 			width: 14.28571428571429%;
+
+			&:after {
+				content: attr(data-day-number);
+				display: block;
+				text-align: center;
+				font-weight: bold;
+				font-size: 8px;
+			}
 
 		}
 	}
@@ -198,9 +207,15 @@ $lastGreatDay: #15be27;
 	#block-biblicalcalendar-calendardatesblock,.interactiveLegend {
 
 		.table {
-
+			
+			&.calendar-dates {
+				td:not(:first-child) {
+					display: none;
+				}
+			}
 			td {
 				position: relative;
+				padding-left: 0;
 
 				span {
 					display: inline-block;
@@ -816,8 +831,6 @@ $lastGreatDay: #15be27;
 	}
 	.calendarWrapper {
 		position: relative;
-		
-		padding: 2em;
 		@include respond-below(md){
 			padding: 2em 1.5em;
 		}
@@ -842,6 +855,7 @@ $lastGreatDay: #15be27;
 			*/
 			.container {
 				width: 100%;
+				padding: 0;
 			}
 
 			#DemoOfNextYear {
@@ -898,6 +912,7 @@ $lastGreatDay: #15be27;
 					&.HCC {
 						background: #a50000;
 						color: #fff;
+						height: 90px;
 						&.Month {
 							background-color: transparent;
 							color: #7f9aac;
@@ -907,6 +922,10 @@ $lastGreatDay: #15be27;
 								text-shadow: 1px 1px 5px #000000;
 								color: #fff;
 								padding: 3px;
+								text-align: left;
+								justify-content: center;
+								display: flex;
+								align-items: center;
 								
 								
 								span {
@@ -989,7 +1008,7 @@ $lastGreatDay: #15be27;
 			float: none;
 			display: flex;
 			flex: 1 33%;
-			max-width: 33%;
+
 			@include respond-below(md){
 				max-width: 100%;
 				flex: 1 100%;
@@ -1002,6 +1021,14 @@ $lastGreatDay: #15be27;
 				min-width: 1px;
 				max-width: 50%;
 				flex: 1 auto;
+
+				.weekgrid:hover {
+					transform: scale(1.5);
+					transition: all .5s ease;
+					position: relative;
+					z-index: 100;
+					box-shadow: 0 0 5px #000;
+				}
 				&:last-child {
 					margin-right: 10px;
 				}
@@ -1028,6 +1055,7 @@ $lastGreatDay: #15be27;
 				}
 				&.HCC {
 					&.first.Month {
+
 						span {
 							position: absolute;
 							justify-content: center;
