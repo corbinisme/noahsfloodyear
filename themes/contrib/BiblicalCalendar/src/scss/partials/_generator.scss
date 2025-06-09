@@ -39,6 +39,119 @@ $lastGreatDay: #15be27;
 		font-size: 1.4em!important;
 	}
 
+	.region-calendar-bottom {
+		margin-top: 2em;
+		h2 {
+			display: none;
+			@include respond-below(md){
+				display: block;
+			}
+			
+			&.calendar-bottom-heading {
+				
+				a {
+					display: block;
+					background-color: #eee;
+					padding: 1em;
+					text-decoration: none;
+
+					svg, i {
+						transition: all .5s ease;
+						transform: rotate(0deg);
+					}
+					
+					
+					&.active {
+						background-color: #2196F3;
+						color: #fff;
+
+						svg,i {
+							transform: rotate(180deg);
+						}
+						
+					};
+				}
+			}
+		}
+
+		.calendar-bottom-header {
+			display: none;
+			@include respond-above(md){
+				display: block;
+				
+			}
+		}
+		.calendar-bottom-item {
+			@include respond-above(md){
+				display: none;
+				&.active {
+					display: block;
+				}
+			}
+			@include respond-below(md){
+				> div {
+					display: none;
+				}
+				&.active {
+					> div {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	.calendar-bottom-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		justify-content: space-between;
+		gap: 1em;
+
+		@include respond-below(md){
+			flex-wrap: wrap;
+			flex-direction: column;
+			justify-content: center;
+		}
+		li {
+			flex: 1 auto;
+			text-align: center;
+			
+			a {
+				display: block;
+				color: #333;
+				text-decoration: none;
+				font-weight: bold;
+				font-size: 1.2em;
+				display: block;
+				padding: 1em;
+				background-color: #eee;
+				position: relative;
+				&:hover {
+					color: #000;
+				}
+				&.active {
+					background-color: #2196F3;
+					color: #fff;
+					&::after {
+						content: "";
+						display: block;
+						margin: 0 auto;
+						width: 0;
+						position: relative;
+						bottom: -27px;
+						z-index: 5;
+						height: 0;
+						border-left: 10px solid transparent;
+						border-right: 10px solid transparent;
+						border-top: 10px solid #2196F3;
+					}
+				}
+			}
+			
+		}
+	}
+
 	.weekgrid {
 		height: 30px;
 		background: #000;
@@ -414,6 +527,16 @@ $lastGreatDay: #15be27;
 	}
 	.breadcrumb {
 		display: none;
+	}
+
+	main {
+		> .container {
+			@include respond-below(md){
+				padding-left: 3.5em;
+			}
+			
+			
+		}
 	}
 
 	.loadhtmlwrapper  {

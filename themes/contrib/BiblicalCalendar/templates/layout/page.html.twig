@@ -121,13 +121,26 @@ set footer_classes = ' ' ~
       {% endif %}
       <div class="order-1 order-lg-2 {{ content_classes }}">
         {{ page.content }}
+
+        
       </div>
+     
       {% if page.sidebar_second %}
         <div class="order-3 {{ sidebar_second_classes }}">
           {{ page.sidebar_second }}
         </div>
       {% endif %}
+
+
+      
     </div>
+
+     <!-- Render the calendar bottom -->
+      {% if page.calendar_bottom %}
+        <div class="calendar_bottom">
+          {{ page.calendar_bottom }}
+        </div>
+      {% endif %}
   </div>
 
 

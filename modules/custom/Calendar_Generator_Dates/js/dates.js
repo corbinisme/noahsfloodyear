@@ -1,11 +1,61 @@
 var dates = {
     loopy:null,
+    yearData: null,
     init: function(){
  
         dates.findDifferenceWithLastYear();
         dates.setupSignificantDates();
         calendar.init();
+        dates.scrapeDataFromHTML();
         
+    },
+    scrapeDataFromHTML: function(){
+        const parentNode = document.getElementById("NewCalendarContainer");
+        let months = parentNode.querySelectorAll(".month");
+        const AMyear = parseInt(document.getElementById("AMYear").value);
+        
+        let columnData = [];
+        months.forEach(function(mo){
+            // get the month name from the node
+            
+            const monthName = mo.getAttribute("data-month");
+            const monthCount = parseInt(mo.getAttribute("data-month-count"));
+            
+            let dateArr = [];
+            mo.querySelectorAll(".Column").forEach(function(col){
+                // get the dates from the column
+                let weekquery = col.querySelectorAll(".weekgrid");
+                let gcDate = weekquery[0].getAttribute("data-date");
+
+                let hebMonth ="";
+                if(col.querySelector(".Month.first.HCC")){
+                    hebMonth = col.querySelector(".Month.first.HCC").querySelector("span").innerText;
+
+                }
+                let temp = {
+                    GC: gcDate,
+                    hebMonth: hebMonth,
+                }
+                dateArr.push(temp);
+            });
+
+            columnData.push({
+
+                month: monthName,
+                monthCount: monthCount,
+                dates: dateArr
+            });
+
+        });
+
+        dates.yearData = [
+                {
+                    AM: AMyear, 
+                    data: columnData
+                }
+        ];
+
+        console.log("yearData", dates.yearData);
     },
     setupSignificantDates: function(){
         document.querySelectorAll(".SignificantDateRow").forEach(function(row){
@@ -30,7 +80,7 @@ var dates = {
     findDifferenceWithLastYear: function(){
 
         let st = window.localStorage;
-        if(st.getItem("importChartThree")){
+        if(st.getItem("importChartThree" && false)){
 
             let diffNode = document.querySelector(".diffWithLastYear");
             if(diffNode){
