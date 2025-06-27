@@ -19,8 +19,6 @@
 /dev/
 robots.txt
 /core
-/modules/contrib
-/themes/contrib
 
 /Content/
 /backups/
@@ -42,7 +40,6 @@ node_modules/
 
 /tcog/
 
-/.ddev/
 /.well-known
 /cgi-bin/
 # If you prefer to store your .gitignore file in the sites/ folder, comment
