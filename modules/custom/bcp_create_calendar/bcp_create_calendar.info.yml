@@ -1,0 +1,6 @@
+name: Calendar Creator
+description: Creating nodes for calendar machine type
+type: module
+core: 8.x
+core_version_requirement: ">=8"
+package: Custom

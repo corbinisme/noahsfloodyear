@@ -1,0 +1,7 @@
+bcp_create_calendar.landing:
+  path: '/api/calendarcreate'
+  defaults:
+    _controller: 'Drupal\bcp_create_calendar\Controller\BcpCreateCalendarController::calendarList'
+    _title: 'Calendar Creator'
+  requirements: 
+    _permission: 'administrator access'
