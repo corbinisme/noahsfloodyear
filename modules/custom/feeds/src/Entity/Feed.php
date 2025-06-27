@@ -18,11 +18,10 @@ use Drupal\feeds\Event\FeedsEvents;
 use Drupal\feeds\Event\ImportFinishedEvent;
 use Drupal\feeds\Exception\LockException;
 use Drupal\feeds\FeedInterface;
+use Drupal\feeds\FeedTypeInterface;
 use Drupal\feeds\Feeds\Item\ItemInterface;
 use Drupal\feeds\Feeds\State\CleanState;
-use Drupal\feeds\FeedTypeInterface;
 use Drupal\feeds\Plugin\Type\FeedsPluginInterface;
-use Drupal\feeds\State;
 use Drupal\feeds\StateInterface;
 use Drupal\user\UserInterface;
 
@@ -77,6 +76,7 @@ use Drupal\user\UserInterface;
  *     "schedule-import-form" = "/feed/{feeds_feed}/schedule-import",
  *     "clear-form" = "/feed/{feeds_feed}/delete-items",
  *     "unlock" = "/feed/{feeds_feed}/unlock",
+ *     "template" = "/feed/{feeds_feed}/template",
  *   }
  * )
  */
@@ -94,7 +94,7 @@ class Feed extends ContentEntityBase implements FeedInterface {
   /**
    * Implements the magic __wakeup function to reset states.
    */
-  public function __wakeup() {
+  public function __wakeup(): void {
     $this->states = [];
   }
 
@@ -190,7 +190,7 @@ class Feed extends ContentEntityBase implements FeedInterface {
    */
   public function getType() {
     $type = $this->get('type')->entity;
-    if (empty($type)) {
+    if (!$type instanceof FeedTypeInterface) {
       if ($this->id()) {
         throw new EntityStorageException(strtr('The feed type "@type" for feed @id no longer exists.', [
           '@type' => $this->bundle(),
@@ -396,6 +396,16 @@ class Feed extends ContentEntityBase implements FeedInterface {
   }
 
   /**
+   * Returns a factory for creating State objects.
+   *
+   * @return \Drupal\feeds\Feeds\State\StateFactoryInterface
+   *   A State factory object.
+   */
+  protected function getStateFactory() {
+    return \Drupal::service('feeds.state_factory');
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function getState($stage) {
@@ -403,16 +413,7 @@ class Feed extends ContentEntityBase implements FeedInterface {
       $state = $this->getStateStorage()->get($stage);
 
       if (empty($state)) {
-        // @todo move this logic to a factory or alike.
-        switch ($stage) {
-          case StateInterface::CLEAN:
-            $state = new CleanState($this->id());
-            break;
-
-          default:
-            $state = new State();
-            break;
-        }
+        $state = $this->getStateFactory()->createInstance($this, $stage);
       }
 
       $this->states[$stage] = $state;
@@ -423,7 +424,7 @@ class Feed extends ContentEntityBase implements FeedInterface {
   /**
    * {@inheritdoc}
    */
-  public function setState($stage, StateInterface $state = NULL) {
+  public function setState($stage, ?StateInterface $state = NULL) {
     $this->states[$stage] = $state;
   }
 
