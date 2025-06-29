@@ -5,3 +5,13 @@ bcp_create_calendar.landing:
     _title: 'Calendar Creator'
   requirements: 
     _permission: 'administrator access'
+
+bcp_create_calendar.create:
+  path: '/api/calendarcreate/create/{era}/{year}'
+  defaults:
+    era: 'AD'
+    year: '2023'
+    _controller: 'Drupal\bcp_create_calendar\Controller\BcpCreateCalendarController::createCalendarNode'
+    _title: 'Create Calendar'
+  requirements: 
+    _permission: 'administrator access'

@@ -1,0 +1,3 @@
+create_calendar:
+  js:
+      js/bcp_create.js: {}

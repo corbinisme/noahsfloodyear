@@ -6,7 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BcpCreateCalendarController extends ControllerBase implements ContainerInjectionInterface {
     protected $entityTypeManager;
@@ -58,6 +58,26 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
         }
         return $res;
     }
+
+    public function createCalendarNode($era, $year) {
+
+        $calData = $this->getCalendarData($era, $year);
+        $thisData = [
+            'gc_era' => $era,
+            'gc_year' => $year,
+            'data' => $calData,
+        ];
+        // return json response
+        return new JsonResponse([
+            'message' => 'Creating calendar node',
+            'data' => $thisData,
+            'status' => 200,
+        ]);
+    }
+
+    /**
+     * Returns a renderable array for the calendar list.
+     */
     public function calendarList() {
 
         // loop through files in the /Content directory in the web root
@@ -78,6 +98,8 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
 
         }
 
+        // display links
+
         foreach($file_list as  $file) {
             // get the first two characters of the file name
             $prefixEra = substr($file, 0, 2);
@@ -88,17 +110,11 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
             if($year === '0') {
                 continue;
             }
-            $markup .= '<div><strong>' . $prefixEra . ' - ' . $year . '</strong>';
+            //$markup .= '<div><strong>' . $prefixEra . ' - ' . $year . '</strong>';
             
-            $calData = $this->getCalendarData($prefixEra, $year);
-            $thisData = [
-                'file' => $file,
-                'gc_era' => $prefixEra,
-                'gc_year' => $year,
-                'data' => $calData,
-            ];
-            $markup .= "<pre>" . print_r($thisData, TRUE) . "</pre>";
-            $markup .="</div>";
+            
+            $markup .= "<a href='/api/calendarcreate/create/$prefixEra/$year' class='btn btn-primary'>" . $prefixEra . " - " . $year . "</a>";
+            
 
 
             
@@ -108,6 +124,11 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
             '#type' => 'markup',
             '#markup' => $markup,
             '#title' => $this->t('Files in Content Directory: @directory', ['@directory' => $directory]),
+            '#attached' => [
+                'library' => [
+                    'bcp_create_calendar/create_calendar',
+                ],
+            ],
             
         ];
         
