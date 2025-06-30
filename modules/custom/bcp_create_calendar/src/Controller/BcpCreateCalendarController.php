@@ -53,6 +53,15 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
                 'HCCYearLength' => $row->HCCYearLength,
                 'SC_YearLen' => $row->SC_YearLen,
                 'year' => $row->year,
+                'passover_start' => $row->passover_start,
+                'unleavened_bread_start' => $row->unleavened_bread_start,
+                'unleavened_bread_end' => $row->unleavened_bread_end,
+                'pentecost_start' => $row->pentecost_start,
+                'feast_of_trumpets_start' => $row->feast_of_trumpets_start,
+                'feast_of_atonement_start' => $row->feast_of_atonement_start,
+                'feast_of_tabernacles_start' => $row->feast_of_tabernacles_start,
+                'feast_of_tabernacles_end' => $row->feast_of_tabernacles_end,
+                'last_great_day_start' => $row->last_great_day_start,
     
             ];
         }

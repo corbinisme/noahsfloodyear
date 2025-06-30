@@ -1,10 +1,19 @@
 console.log("BCP Create Calendar JS loaded");
 var bcp_create = {
     currentLink: 0,
+    st: window.localStorage,
     init: function() {
         console.log("BCP Create Calendar JS initialized");
         // Add any additional initialization code here
         this.binding();
+        if(this.st.getItem('currentLink')) {
+            this.currentLink = parseInt(this.st.getItem('currentLink'));
+            console.log("Current link from storage:", this.currentLink);
+            // add the active class to the link
+           document.querySelector('.file-list a[data-counter="' + this.currentLink + '"]').classList.add('active');
+        } else {
+            this.st.setItem('currentLink', this.currentLink);
+        }
     },
     fetchFileContent: function(index) {
         console.log("Fetching file content from: " + index);
@@ -18,6 +27,8 @@ var bcp_create = {
         
         //let thisCounter = parseInt(thisNode.getAttribute('data-counter'));
         bcp_create.currentLink = index;
+        bcp_create.st.setItem('currentLink', bcp_create.currentLink);
+
         console.log("Counter: " + bcp_create.currentLink);
 
         let filePath = thisNode.getAttribute('href');
