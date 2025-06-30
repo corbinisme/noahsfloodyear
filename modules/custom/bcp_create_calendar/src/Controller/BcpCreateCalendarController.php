@@ -65,7 +65,8 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
         $thisData = [
             'gc_era' => $era,
             'gc_year' => $year,
-            'data' => $calData,
+            'calData' => $calData,
+            "html" => "load file?"
         ];
         // return json response
         return new JsonResponse([
@@ -82,7 +83,7 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
 
         // loop through files in the /Content directory in the web root
         $markup = '';
-        $markup .= '<h2>Files in Content Directory</h2>';
+        $markup .= '<h2>Files in Content Directory</h2><div class="file-list">';
         $directory = DRUPAL_ROOT . '/Content/download/generator/output';
         $files = scandir($directory);
         $file_list = [];
@@ -110,15 +111,12 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
             if($year === '0') {
                 continue;
             }
-            //$markup .= '<div><strong>' . $prefixEra . ' - ' . $year . '</strong>';
-            
+
             
             $markup .= "<a href='/api/calendarcreate/create/$prefixEra/$year' class='btn btn-primary'>" . $prefixEra . " - " . $year . "</a>";
-            
-
-
-            
+               
         }
+        $markup .= '</div>';
        
         return [
             '#type' => 'markup',
