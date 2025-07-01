@@ -105,9 +105,9 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
         // based on the era and year. For now, it returns a placeholder array.
         $database = \Drupal::database();
         $con = \Drupal\Core\Database\Database::getConnection('calendar');
-        $sql = "SELECT holydays.*, chart3.*, calendardates.First_Sabbath, calendardates.GC_YearLen, `calendardates`.Nisan_1, calendardates.Tish_1, calendardates.HCCYearLength, calendardates.SC_YearLen, calendardates.GC_Era, calendardates.GC_Year ";
-        $sql .=" FROM `holydays` JOIN `chart3` on `holydays`.AM = `chart3`.year JOIN `calendardates` on `calendardates`.AM = `holydays`.AM where ";
-      
+        $sql = "SELECT holydays.*, chart3new.*, calendardates.First_Sabbath, calendardates.GC_YearLen, `calendardates`.Nisan_1, calendardates.Tish_1, calendardates.HCCYearLength, calendardates.SC_YearLen, calendardates.GC_Era, calendardates.GC_Year ";
+        $sql .=" FROM `holydays` JOIN `chart3new` on `holydays`.AM = `chart3new`.amyr JOIN `calendardates` on `calendardates`.AM = `holydays`.AM where ";
+
         $era = strtolower($era);
         if($era=="bc"){
             $sql .= " calendardates.GC_Era = 'BC' and calendardates.GC_Year = " . $year;
@@ -128,10 +128,21 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
                 'GC_YearLen' => $row->GC_YearLen,
                 'Nisan_1' => $row->Nisan_1,
                 'Tish_1' => $row->Tish_1,
+                'a2g' => $row->a2g,
+                'dco' => $row->dco,
+                'days' => $row->days,
+                'mly' => $row->mly,
+                'sa' => $row->sa,
+                'hs' => $row->hs,
+                'gs' => $row->gs,
+                'c19' => $row->c19,
+                'c247' => $row->c247,
+                'd' => $row->d,
+                'gyr' => $row->gyr,
 
                 'HCCYearLength' => $row->HCCYearLength,
                 'SC_YearLen' => $row->SC_YearLen,
-                'year' => $row->year,
+                'amyr' => $row->amyr,
                 'passover_start' => $row->passover_start,
                 'unleavened_bread_start' => $row->unleavened_bread_start,
                 'unleavened_bread_end' => $row->unleavened_bread_end,
@@ -154,7 +165,30 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
         $data = $dataArray;
         $node->set('field_am_year', $data['AM']);
         $node->set('field_gc_era', $data['GC_Era']);
-        // Set other fields as needed
+        $node->set("field_passover_start", $data['passover_start']);
+        $node->set("field_unleavened_bread_start", $data['unleavened_bread_start']);
+        $node->set("field_unleavened_bread_end", $data['unleavened_bread_end']);
+        $node->set("field_pentecost_start", $data['pentecost_start']);
+        $node->set("field_trumpets_start", $data['feast_of_trumpets_start']);
+        $node->set("field_atonement_start", $data['day_of_atonement_start']);
+        $node->set("field_tabernacles_start", $data['feast_of_tabernacles_start']);
+        $node->set("field_tabernacles_end", $data['feast_of_tabernacles_end']);
+        $node->set("field_eighth_day_start", $data['last_great_day_start']);   
+        $node->set("field_solar_years_to_first_grego", $data['a2g']); 
+        $node->set("field_19_year_cycle", $data['c19']);
+        $node->set("field_247_year_cycle", $data['c247']);
+        $node->set("field_days_carried_over", $data['dco']);
+        $node->set("field_first_sabbath", $data['gs']);
+        $node->set("field_first_sabbath_of_hebrew_ye", $data['hs']);
+        $node->set("field_tishri_1", $data['Tish_1']);
+        $node->set("field_nisan_1", $data['Nisan_1']);
+        $node->set("field_gregorian_year_length", $data['GC_YearLen']);
+        $node->set("field_solar_year_length", $data['days']);
+        $node->set("field_hebrew_year_length", $data['HCCYearLength']);
+        $node->set("field_difference_between_solar_a", $data['d']);
+        $node->set("field_first_sabbath_of_solar_yea", $data['sa']);
+       
+
         $node->save();
         return $node->id;
     }
@@ -179,7 +213,7 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
             // create a new node
             $node = $nodeStorage->create([
                 'type' => 'calendar',
-                'title' => "AM Year: " . $calData['AM'] . " - " . $era . " " . $year,
+                'title' => "AM " . $calData['AM'] . " - " . $era . " " . $year,
                 'field_gregorianyear' => $year,
                 'field_gc_era' => $era,
             ]);
