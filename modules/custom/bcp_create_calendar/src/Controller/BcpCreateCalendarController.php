@@ -20,6 +20,85 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
             $container->get('entity_type.manager')
         );
     }
+    public function fillChart3(){
+        
+        $output = [];
+        // open a csv file in this module directory
+        $filePath = DRUPAL_ROOT . '/modules/custom/Calendar_Generator_Dates/data/chart3.csv';
+        // get real path of the file
+        //$filePath = realpath($filePath);
+        $file = fopen($filePath, 'r');
+        //return new JsonResponse(['status'=>'success', 'data'=>$filePath]);
+        
+        $header = fgetcsv($file);
+        $header = array_map('trim', $header);
+        $header = array_map('strtolower', $header);
+        // remove spaces from the header titles
+        $header = array_map(function($value) {
+            return str_replace(' ', '', $value);
+        }, $header);
+        // if the header value is "as" replace with "sa"
+        $header = array_map(function($value) {
+            return $value === 'as' ? 'sa' : $value;
+        }, $header);
+        // loop through each row of the csv file
+        $rows = array();
+        while (($row = fgetcsv($file)) !== FALSE) {
+            $row = array_map('trim', $row);
+            $row = array_map('strtolower', $row);
+            // if there is a "-" at the end of the value, move it to the front
+            $row = array_map(function($value) {
+                if (substr($value, -1) === '-') {
+                    return '-' . substr($value, 0, -1);
+                }
+                return $value;
+            }, $row);
+            // if value is "n/a", replace with 0
+            $row = array_map(function($value) {
+                return $value === 'n/a' ? 0 : $value;
+            }, $row);
+            // remove spaces from the row titles
+            $rows[] = array_combine($header, $row);
+        }
+        $counter = 0;
+
+        // sql query to insert data into chart3 table
+        
+        $database = \Drupal::database();
+        $con = \Drupal\Core\Database\Database::getConnection('calendar');
+        // Use Drupal's database API to insert data into chart3 table.
+        foreach($rows as $row) {
+            if(true) {
+                $fields = [
+                  "amyr"=>$row['amyr'],
+                    "days"=> $row['days'],
+                    "dco"=> $row['dco'],
+                    "mly"=> (int)$row['mly'],
+                    "sa"=> (int)$row['as'],
+                    "hs"=> (int)$row['hs'],
+                    "d"=> $row['d'],
+                    "c19"=> $row['c19'],
+                    "c247"=> (int)$row['c247'],
+                    "a2g"=> $row['a2g'],
+                    "gs"=> $row['gs'],     
+                    "gyr"=> $row['gyr']
+                    ];
+                    
+                    
+                    
+                // insert into chart3 table
+                $con->insert('chart3new')
+                    ->fields($fields)
+                    ->execute();
+                $counter++;
+            }
+        }
+
+
+        
+            
+        return new JsonResponse(['status'=>'success', 'data'=>$rows]);
+    }
 
     private function getCalendarData($era, $year) {
         // This function would contain the logic to retrieve calendar data

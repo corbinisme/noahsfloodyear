@@ -15,3 +15,11 @@ bcp_create_calendar.create:
     _title: 'Create Calendar'
   requirements: 
     _permission: 'administrator access'
+
+bcp_create_calendar.fillChart3:
+  path: '/api/calendarcreate/chart3'
+  defaults:
+    _controller: 'Drupal\bcp_create_calendar\Controller\BcpCreateCalendarController::fillChart3'
+    _title: 'Create Calendar'
+  requirements: 
+    _permission: 'administrator access'
