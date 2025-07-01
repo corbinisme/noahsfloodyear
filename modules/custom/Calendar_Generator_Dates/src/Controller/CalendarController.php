@@ -142,20 +142,46 @@ class CalendarController extends ControllerBase {
       $counter = 0;
       foreach($rows as $row) {
         if(true) {
-          $thisRow['year'] = (int)$row['am yr'];
-          $thisRow['d'] = $row['d'];
-          $thisRow['hs'] = $row['hs'];
-          
-          
+          $fields = [
+            //'year' => $row['am yr'],
+            //'days' => $row['days'],
+            //'DCO' => $row['dco'],
+            'MLY' => (int)$row['mly'],
+            //'AM S' => $row['as'],
+            'HS' => (int)$row['hs'],
+            //'D' => $row['d'],
+            //'Cyc' => $row['c19'],
+            'C247' => (int)$row['c247'],
+            'A2G' => $row['a2g'],
+            //'Gor. S' => $row['gs'],
+            //'Gor. Yr' => $row['g yr']
+          ];
+          /*$thisRow['year'] = (int)$row['am yr'];
+          $thisRow['days'] = $row['days'];
+          $thisRow['DCO'] = $row['dco'];
+          $thisRow['MLY'] = $row['mly'];
+          $thisRow['AM S']  = $row['as'];
+          $thisRow['HS'] = $row['hs'];
+          $thisRow['D'] = $row['d'];
+          $thisRow['Cyc'] = $row['c19'];
+          $thisRow['C247'] = $row['c247'];
+          $thisRow['A2G'] = $row['a2g'];
+          $thisRow['Gor. S'] = $row['gs'];
+          $thisRow['Gor Yr'] = $row['g yr'];
+          */
+
+
           // check if the row already exists in the database
-          
+          $gorYear = $row['g yr'];
+          // remove non-numeric characters from the year
+          $gorYear = preg_replace('/\D/', '', $gorYear);
           
             // update the row
             $con->update('chart3')
-              ->fields([
-                'd' => $thisRow['d'],
-                'hs' => $thisRow['hs']
-              ])
+              ->fields(
+                $fields
+
+              )
               ->condition('year', $thisRow['year'])
               ->execute();
 

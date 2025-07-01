@@ -58,24 +58,69 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
                 'unleavened_bread_end' => $row->unleavened_bread_end,
                 'pentecost_start' => $row->pentecost_start,
                 'feast_of_trumpets_start' => $row->feast_of_trumpets_start,
-                'feast_of_atonement_start' => $row->feast_of_atonement_start,
+                'day_of_atonement_start' => $row->day_of_atonement_start,
                 'feast_of_tabernacles_start' => $row->feast_of_tabernacles_start,
                 'feast_of_tabernacles_end' => $row->feast_of_tabernacles_end,
                 'last_great_day_start' => $row->last_great_day_start,
     
             ];
         }
+
+        
         return $res;
+    }
+
+    private function setData($node, $dataArray) {
+        
+        $data = $dataArray;
+        $node->set('field_am_year', $data['AM']);
+        $node->set('field_gc_era', $data['GC_Era']);
+        // Set other fields as needed
+        $node->save();
+        return $node->id;
     }
 
     public function createCalendarNode($era, $year) {
 
-        $calData = $this->getCalendarData($era, $year);
+        $nid = 0;
+        $calData = $this->getCalendarData($era, $year)[0];
+        // check if this node already exists
+        $nodeStorage = $this->entityTypeManager->getStorage('node');
+        $query = $nodeStorage->getQuery()
+            ->accessCheck(FALSE)
+            ->condition('type', 'calendar')
+            ->condition('field_am_year', $calData['AM'])
+            ->execute();
+        if (!empty($query)) {
+            // update existing node
+            
+            $updateNode = $nodeStorage->load(reset($query));
+            $nid = $updateNode->id();
+        } else {
+            // create a new node
+            $node = $nodeStorage->create([
+                'type' => 'calendar',
+                'title' => "AM Year: " . $calData['AM'] . " - " . $era . " " . $year,
+                'field_gregorianyear' => $year,
+                'field_gc_era' => $era,
+            ]);
+            $node->save();
+            $nid = $node->id();
+
+        }
+
+        
+
+        $nodeUpdate = $nodeStorage->load($nid);
+        $updateId = $this->setData($nodeUpdate, $calData);
+        
+
         $thisData = [
             'gc_era' => $era,
             'gc_year' => $year,
             'calData' => $calData,
-            "html" => "load file?"
+            "html" => "load file?",
+            "nid" => $nid,
         ];
         // return json response
         return new JsonResponse([
