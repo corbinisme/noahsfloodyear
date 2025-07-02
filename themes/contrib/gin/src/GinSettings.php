@@ -7,6 +7,7 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\user\UserDataInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -17,40 +18,20 @@ class GinSettings implements ContainerInjectionInterface {
   use StringTranslationTrait;
 
   /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * The user data service.
-   *
-   * @var \Drupal\user\UserDataInterface|null
-   */
-  protected $userData;
-
-  /**
-   * The current user.
-   *
-   * @var \Drupal\Core\Session\AccountInterface
-   */
-  protected $currentUser;
-
-  /**
    * Settings constructor.
    *
    * @param \Drupal\Core\Session\AccountInterface $currentUser
    *   The current user.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   The config factory.
+   * @param \Drupal\user\UserDataInterface|null $userData
+   *   The user data service.
    */
-  public function __construct(AccountInterface $currentUser, ConfigFactoryInterface $configFactory) {
-    if (\Drupal::hasService('user.data')) {
-      $this->userData = \Drupal::service('user.data');
-    }
-    $this->currentUser = $currentUser;
-    $this->configFactory = $configFactory;
+  public function __construct(
+    protected AccountInterface $currentUser,
+    protected ConfigFactoryInterface $configFactory,
+    protected ?UserDataInterface $userData,
+  ) {
   }
 
   /**
@@ -59,7 +40,8 @@ class GinSettings implements ContainerInjectionInterface {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('current_user'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('user.data', ContainerInterface::NULL_ON_INVALID_REFERENCE)
     );
   }
 
@@ -162,10 +144,18 @@ class GinSettings implements ContainerInjectionInterface {
    *   TRUE or FALSE.
    */
   public function userOverrideEnabled(?AccountInterface $account = NULL) {
+    $overrides = &drupal_static(__CLASS__ . '_' . __METHOD__, []);
+
     if (!$account || !$this->userData) {
       $account = $this->currentUser;
     }
-    return $this->allowUserOverrides() && (bool) $this->userData->get('gin', $account->id(), 'enable_user_settings');
+
+    if (!isset($overrides[$account->id()])) {
+      $overrides[$account->id()] = $this->allowUserOverrides()
+        && (bool) $this->userData->get('gin', $account->id(), 'enable_user_settings');
+    }
+
+    return $overrides[$account->id()];
   }
 
   /**
