@@ -10,8 +10,20 @@ $atonement: #e647fb;
 $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
-
+.path-node {
+	.path-calendar {
+		.calendarWrapper {
+			width: auto;
+			margin-left: 0;
+			left: unset;
+			background-color: transparent;
+			padding: 0;
+		}
+	}
+}
 .path-calendar {
+
+
 
 	.bg-passover {
 		background-color: $passover;

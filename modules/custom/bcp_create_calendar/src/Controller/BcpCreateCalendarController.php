@@ -258,9 +258,9 @@ class BcpCreateCalendarController extends ControllerBase implements ContainerInj
 
         foreach ($files as $file) {
             if ($file !== '.' && $file !== '..' && is_file($directory . '/' . $file)) {
-                if($counter<10){
-                    $file_list[] = $file;
-                }
+                
+                $file_list[] = $file;
+                
                 $counter++;
             }
 
