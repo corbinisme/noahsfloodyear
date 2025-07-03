@@ -1,10 +1,12 @@
 var dates = {
     loopy:null,
+    yearData: null,
     init: function(){
  
         dates.findDifferenceWithLastYear();
         dates.setupSignificantDates();
         calendar.init();
+        dates.scrapeDataFromHTML();
         
     },
     scrapeDataFromHTML: function(){
@@ -307,28 +309,26 @@ window.addEventListener('load',
     },
     makeDateString: function(date){
         let dateString = date;
-        // it might have "Sat, April 3, 4046|BC"
-        // or "April 3, 4046|AD"
-        // check how many commas there are: 1 or 2
-        const commaCount = (dateString.match(/,/g) || []).length;
-        if (commaCount === 1) {
-            // Format: "April 3, 4046|BC" -> return "April 3"
-            dateString = dateString.split(",")[0].trim();
-        } else if (commaCount === 2) {
-            // Format: "Sat, April 3, 4046|BC" -> return "April 3"
-            dateString = dateString.split(",")[1].trim();
-        }
+        dateString = dateString.substring(dateString.indexOf(",")+1, dateString.length);
+        dateString = dateString.substring(0, dateString.indexOf(",")).trim()
 
+   
         return dateString
     },
     getDates: function(){
         let gregDate = document.querySelector("input[name='gregDate'" ).value;
         gregDate = gregDate.substring(2, gregDate.length);
         const era = document.querySelector("input[name='eraType'" ).value.toUpperCase();
-        console.log("getting gregdate")
-        const table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
+
+        let table = null;
+        if(document.querySelector("#block-biblicalcalendar-calendardatesblock .table")){
+            table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
+        } else {
+            table = document.querySelector(".block-calendar-nav-block .table");
+        }
         // get a Date() object for each date
         // in the format of "Day Month, Year AD"
+        
         calendar.dates.passover = this.makeDateString(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  + era);
         calendar.dates.unleavenedbread = this.makeDateString(table.querySelector(".unleavenedbread").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.unleavenedbreadend = table.querySelector(".unleavenedbread").closest("tr").querySelector(".end").innerText;
@@ -338,6 +338,7 @@ window.addEventListener('load',
         calendar.dates.tabernacles = this.makeDateString(table.querySelector(".tabernacles").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
         calendar.dates.tabernaclesend = table.querySelector(".tabernacles").closest("tr").querySelector(".end").innerText;
         calendar.dates.lastgreatday = this.makeDateString(table.querySelector(".lastgreatday").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  +era);
+        
     },
     setHCmonthNums: function(){
         let initCounter = 1;
@@ -449,7 +450,7 @@ window.addEventListener('load',
         const passovverDateParts = passoverDate.split(" ");
         const passoverMonth = passovverDateParts[0];
         const passoverDay = parseInt(passovverDateParts[1]);
-        console.log("passoverMonth", passoverMonth, "passoverDay", passoverDay);
+
         const nisanMonth = document.querySelector(".nisancolumn").closest(".month");
         let nisanMonthCount = null;
         if(nisanMonth) 
@@ -503,11 +504,7 @@ window.addEventListener('load',
         if(firstDateColumnNode.nextSibling){
             unleavenedbreadColumnNode = firstDateColumnNode.nextSibling;
         } else {
-            // Try both ".Month" and ".month" in case of class name differences
-            let monthNode = firstDateColumnNode.closest(".Month") || firstDateColumnNode.closest(".month");
-            if (monthNode && monthNode.nextSibling) {
-                unleavenedbreadColumnNode = monthNode.nextSibling.querySelector(".Column:nth-child(1)");
-            }
+            unleavenedbreadColumnNode = firstDateColumnNode.closest(".Month").nextSibling.querySelector(".Column:nth-child(1)")
         }
         //unleavenedbreadColumnNode.classList.add("beforeContent");
         //unleavenedbreadColumnNode.classList.add("afterContent");
@@ -876,5 +873,3 @@ window.addEventListener('load',
 
     
 }
-
-

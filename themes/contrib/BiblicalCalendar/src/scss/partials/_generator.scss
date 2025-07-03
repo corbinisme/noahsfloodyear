@@ -1,6 +1,6 @@
-$GC: #1F1F1F;
-$HCC: #A50000;
-$SC: #0000AA;
+$GC: #d43da4;
+$HCC: #5cb665;
+$SC: #5a5aa0;
 
 $passover: #f70d48;
 $unleavenedBread: #a07833;
@@ -10,6 +10,60 @@ $atonement: #e647fb;
 $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
+.legend {
+	label {
+		display:inline-block;
+		padding: 3px;
+	}
+}
+label[for='gregorianToggle'] {
+	background: $GC;
+}
+label[for='hebrewToggle'] {
+	background: $HCC;
+}
+label[for='solarToggle'] {
+	background: $SC;
+}
+#block-biblicalcalendar-calendardatesblock {
+
+		.table {
+
+			td {
+				position: relative;
+
+				span {
+					display: inline-block;
+					min-width: 10px;
+					height: 1em;
+					margin-left: 5px;
+				}
+			}
+			.passover span {
+				background-color: $passover;
+			}
+			.unleavenedbread span {
+				background-color: $unleavenedBread;
+			}
+			.pentecost  span {
+				background-color: $pentecost;
+			}
+			.trumpets span  {
+				background-color: $trumpets;
+			}
+			
+			.atonement  span {
+				background-color: $atonement;
+			}
+			.tabernacles span  {
+				background-color: $tabernacles;
+			}
+			.lastgreatday  span {
+				background-color: $lastGreatDay;
+			}
+		}
+	}
+
 .path-node {
 	.path-calendar {
 		.calendarWrapper {
@@ -18,6 +72,31 @@ $lastGreatDay: #15be27;
 			left: unset;
 			background-color: transparent;
 			padding: 0;
+			.calendarMarkup .Column {
+				background: transparent;
+
+				.Cell {
+					&.GC {
+					background-color: $GC;
+					color: #fff;
+
+						&:not(.Month) {
+							border-bottom: 20px solid #fff;
+						}
+					}
+					&.SC.Month {
+						height: 20px;
+						span {
+							font-size: 14px;
+						}
+						&.SabbathCountEnd {
+							font-size: 14px;
+						}
+					}
+
+				}
+				
+			}
 		}
 	}
 }
@@ -25,39 +104,33 @@ $lastGreatDay: #15be27;
 
 
 
-	.bg-passover {
-		background-color: $passover;
-	}
-	.bg-unleavenedbread, .bg-unleavenedbreadend {
-		background-color: $unleavenedBread;
-	}
-	.bg-pentecost {
-		background-color: $pentecost;
-	}
-	.bg-trumpets {
-		background-color: $trumpets;
-	}
-	.bg-atonement {
-		background-color: $atonement;
-	}
-	.bg-tabernacles, .bg-tabernaclesend {
-		background-color: $tabernacles;
-	}
-	.bg-lastgreatday {
-		background-color: $lastGreatDay;
-	}
+	
 
 	.instructions {
 		font-size: 1.4em!important;
 	}
 
 	.weekgrid {
-		height: 10px;
-		background: #000;
+		height: 30px;
+		background: $GC;
 		display: flex;
 		.daygrid {
 			height: 100%;
 			width: 14.28571428571429%;
+
+			&:after {
+
+				content: attr(data-day-number);
+
+				display: block;
+
+				text-align: center;
+
+				font-weight: bold;
+
+				font-size: 8px;
+
+			}
 
 		}
 	}
@@ -207,44 +280,7 @@ $lastGreatDay: #15be27;
 		clear: both;
 	}
 
-	#block-biblicalcalendar-calendardatesblock {
-
-		.table {
-
-			td {
-				position: relative;
-
-				span {
-					display: inline-block;
-					min-width: 10px;
-					height: 1em;
-					margin-left: 5px;
-				}
-			}
-			.passover span {
-				background-color: $passover;
-			}
-			.unleavenedbread span {
-				background-color: $unleavenedBread;
-			}
-			.pentecost  span {
-				background-color: $pentecost;
-			}
-			.trumpets span  {
-				background-color: $trumpets;
-			}
-			
-			.atonement  span {
-				background-color: $atonement;
-			}
-			.tabernacles span  {
-				background-color: $tabernacles;
-			}
-			.lastgreatday  span {
-				background-color: $lastGreatDay;
-			}
-		}
-	}
+	
 
 	.newHR {
 		clear: both;
@@ -414,7 +450,7 @@ $lastGreatDay: #15be27;
 	}
 
 	.loadhtmlwrapper  {
-		margin-top: -1em;
+		margin-top: 1em;
 	}
 	.main-container {
 		max-width: 100%;
@@ -726,7 +762,7 @@ $lastGreatDay: #15be27;
 					font-style: italic;
 					font-size: 20px;
 					line-height: 30px;
-					height: 30px;
+					height: 50px;
 					position: relative;
 					text-align: center;
 					font-weight: bold;
@@ -735,39 +771,60 @@ $lastGreatDay: #15be27;
 						background-color: #1f1f1f;
 						color: #fff;
 						&.Month {
-							background: transparent;
+							background: $GC;
 
 							
 						}
 						
 					}
 					&.HCC {
-						background: #a50000;
+						background:$HCC;
 						color: #fff;
+						height: 90px;
+						&.first:not(.Month) {
+							height: 84px;
+						}
 						&.Month {
-							background-color: transparent;
+							background-color: $HCC;
 							color: #7f9aac;
+							position: relative;
+				
+							height: 0px;
+							padding: 0;
 							&.first {
-								background: #a50000;
+								
 								white-space: nowrap;
 								text-shadow: 1px 1px 5px #000000;
 								color: #fff;
 								padding: 3px;
+								text-align: left;
+								
+
+								justify-content: center;
+
+								display: flex;
+								
+								align-items: center;
 								span {
-									position: relative;
+
+									position: absolute;
+									left: 0;
+									bottom:-50px;
 									z-index: 98;
+									font-size: 14px;
+									transform: rotate(-90deg);
 								}
 							}
 							
 						}
 					}
 					&.SC {
-						background: #0000aa; 
+						background: $SC; 
 						color: #fff;
 						&.Month {
 							background: transparent;
 							&.first{
-								background: #0000aa; 
+								background: $SC;
 								color: #fff;
 							}
 						}
@@ -824,10 +881,94 @@ $lastGreatDay: #15be27;
 	}
 
 	#NewCalendarContainer {
+		display: flex;
 
+		flex-wrap: wrap;
+
+		div.month {
+
+			float: none;
+
+			display: flex;
+
+			flex: 1 33%;
+
+
+
+			@include respond-below(md){
+
+				max-width: 100%;
+
+				flex: 1 100%;
+
+			}
+
+			
+
+			
+
+			.Column {
+
+				float: none;
+
+				width: auto;
+
+				min-width: 1px;
+
+				max-width: 50%;
+
+				flex: 1 auto;
+
+
+
+				.weekgrid:hover {
+
+					transform: scale(1.5);
+
+					transition: all .5s ease;
+
+					position: relative;
+
+					z-index: 100;
+
+					box-shadow: 0 0 5px #000;
+
+				}
+
+				&:last-child {
+
+					margin-right: 10px;
+
+				}
+
+			}
+
+		}
 
 		.Column {
 			.Cell {
+
+				&.Month.GC.first {
+
+					span {
+
+						transform: rotate(-90deg);
+
+						margin: 0;
+
+						
+
+						padding: 0;
+
+						display: block;
+
+						text-indent: -18px;
+
+						font-size: 15px;
+
+					}
+
+				}
 				span {
 					display: flex;
 					justify-content: end;
@@ -836,6 +977,7 @@ $lastGreatDay: #15be27;
 				&.HCC {
 					&.first.Month {
 						span {
+							position: absolute;
 							justify-content: center;
 						}
 					}
@@ -955,3 +1097,88 @@ $lastGreatDay: #15be27;
 	}
 
 } 
+
+.view-faqs {
+	.views-field-title {
+		a {
+			display: block;
+			padding: 1em;
+			background: #eee;
+			color: #000;
+			font-weight: bold;
+			text-decoration: none;
+			position: relative;
+
+			&.active, &:active {
+				background-color: #2196F3;
+
+				color: #fff;
+				&::after {
+
+						content: "";
+						display: block;
+						margin: 0 auto;
+						width: 0;
+						position: relative;
+						bottom: -27px;
+						z-index: 5;
+						height: 0;
+						border-left: 10px solid transparent;
+						border-right: 10px solid transparent;
+						border-top: 10px solid #2196F3;
+
+					}
+			}
+		}
+	}
+}
+.view-id-this_year_stats {
+	.views-row {
+		display: flex;
+		flex-direction: column;
+
+		.views-field {
+			display: flex;
+		}
+		.views-label {
+			flex: 1;
+		}
+		.field-content {
+			flex: 1;
+			font-weight: bold;
+		}
+	}
+}
+.view-holy-days {
+	.table {
+		td, th {padding-left: 0; padding-right: 0;}
+		td:not(:first-child) {
+			display: none;
+		}
+		th:not(:first-child) {
+			display: none;
+		}
+	}
+}
+
+
+.view-featured-significant-dates,
+.view-significant-dates-base {
+	.views-field-nothing,
+	.views-field-title {
+		a {
+			background: #111;
+			color: #fff;
+			padding: 1em;
+			display: inline-block;
+			border-radius: 1em;
+			font-size: .9em;
+			margin-bottom: .5em;
+			text-decoration: none;
+			&:hover {
+				background: #2196F3;
+				color: #fff;
+			}
+		}
+	}
+}

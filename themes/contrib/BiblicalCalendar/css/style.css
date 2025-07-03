@@ -222,12 +222,79 @@
   margin-top: 0.5em;
 }
 
+.legend label {
+  display: inline-block;
+  padding: 3px;
+}
+
+label[for=gregorianToggle] {
+  background: #d43da4;
+}
+
+label[for=hebrewToggle] {
+  background: #5cb665;
+}
+
+label[for=solarToggle] {
+  background: #5a5aa0;
+}
+
+#block-biblicalcalendar-calendardatesblock .table td {
+  position: relative;
+}
+#block-biblicalcalendar-calendardatesblock .table td span {
+  display: inline-block;
+  min-width: 10px;
+  height: 1em;
+  margin-left: 5px;
+}
+#block-biblicalcalendar-calendardatesblock .table .passover span {
+  background-color: #f70d48;
+}
+#block-biblicalcalendar-calendardatesblock .table .unleavenedbread span {
+  background-color: #a07833;
+}
+#block-biblicalcalendar-calendardatesblock .table .pentecost span {
+  background-color: #0de1ec;
+}
+#block-biblicalcalendar-calendardatesblock .table .trumpets span {
+  background-color: #f2d316;
+}
+#block-biblicalcalendar-calendardatesblock .table .atonement span {
+  background-color: #e647fb;
+}
+#block-biblicalcalendar-calendardatesblock .table .tabernacles span {
+  background-color: #fa8a48;
+}
+#block-biblicalcalendar-calendardatesblock .table .lastgreatday span {
+  background-color: #15be27;
+}
+
 .path-node .path-calendar .calendarWrapper {
   width: auto;
   margin-left: 0;
   left: unset;
   background-color: transparent;
   padding: 0;
+}
+.path-node .path-calendar .calendarWrapper .calendarMarkup .Column {
+  background: transparent;
+}
+.path-node .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC {
+  background-color: #d43da4;
+  color: #fff;
+}
+.path-node .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC:not(.Month) {
+  border-bottom: 20px solid #fff;
+}
+.path-node .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.Month {
+  height: 20px;
+}
+.path-node .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.Month span {
+  font-size: 14px;
+}
+.path-node .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.Month.SabbathCountEnd {
+  font-size: 14px;
 }
 
 .path-calendar {
@@ -337,38 +404,24 @@
   }
   */
 }
-.path-calendar .bg-passover {
-  background-color: #f70d48;
-}
-.path-calendar .bg-unleavenedbread, .path-calendar .bg-unleavenedbreadend {
-  background-color: #a07833;
-}
-.path-calendar .bg-pentecost {
-  background-color: #0de1ec;
-}
-.path-calendar .bg-trumpets {
-  background-color: #f2d316;
-}
-.path-calendar .bg-atonement {
-  background-color: #e647fb;
-}
-.path-calendar .bg-tabernacles, .path-calendar .bg-tabernaclesend {
-  background-color: #fa8a48;
-}
-.path-calendar .bg-lastgreatday {
-  background-color: #15be27;
-}
 .path-calendar .instructions {
   font-size: 1.4em !important;
 }
 .path-calendar .weekgrid {
-  height: 10px;
-  background: #000;
+  height: 30px;
+  background: #d43da4;
   display: flex;
 }
 .path-calendar .weekgrid .daygrid {
   height: 100%;
   width: 14.2857142857%;
+}
+.path-calendar .weekgrid .daygrid:after {
+  content: attr(data-day-number);
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 8px;
 }
 .path-calendar .key:not(.keepThis) {
   display: none;
@@ -400,36 +453,6 @@
   width: 100% !important;
   float: none !important;
   clear: both;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table td {
-  position: relative;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table td span {
-  display: inline-block;
-  min-width: 10px;
-  height: 1em;
-  margin-left: 5px;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .passover span {
-  background-color: #f70d48;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .unleavenedbread span {
-  background-color: #a07833;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .pentecost span {
-  background-color: #0de1ec;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .trumpets span {
-  background-color: #f2d316;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .atonement span {
-  background-color: #e647fb;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .tabernacles span {
-  background-color: #fa8a48;
-}
-.path-calendar #block-biblicalcalendar-calendardatesblock .table .lastgreatday span {
-  background-color: #15be27;
 }
 .path-calendar .newHR {
   clear: both;
@@ -637,7 +660,7 @@
   display: none;
 }
 .path-calendar .loadhtmlwrapper {
-  margin-top: -1em;
+  margin-top: 1em;
 }
 .path-calendar .main-container {
   max-width: 100%;
@@ -675,7 +698,7 @@
   }
 }
 .path-calendar .key .label.GC {
-  background: #1F1F1F;
+  background: #d43da4;
 }
 @media (min-width: 992px) {
   .path-calendar .key .label.GC {
@@ -683,14 +706,14 @@
   }
 }
 .path-calendar .key .label.HCC {
-  background: #A50000;
+  background: #5cb665;
 }
 .path-calendar .key .label.SabbathLegend {
   background: #fff;
   color: #111;
 }
 .path-calendar .key .label.SC {
-  background: #0000AA;
+  background: #5a5aa0;
 }
 @media (min-width: 992px) {
   .path-calendar .key .label.SC {
@@ -910,7 +933,7 @@
   font-style: italic;
   font-size: 20px;
   line-height: 30px;
-  height: 30px;
+  height: 50px;
   position: relative;
   text-align: center;
   font-weight: bold;
@@ -921,36 +944,50 @@
   color: #fff;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC.Month {
-  background: transparent;
+  background: #d43da4;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC {
-  background: #a50000;
+  background: #5cb665;
   color: #fff;
+  height: 90px;
+}
+.path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.first:not(.Month) {
+  height: 84px;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.Month {
-  background-color: transparent;
+  background-color: #5cb665;
   color: #7f9aac;
+  position: relative;
+  height: 0px;
+  padding: 0;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.Month.first {
-  background: #a50000;
   white-space: nowrap;
   text-shadow: 1px 1px 5px #000000;
   color: #fff;
   padding: 3px;
+  text-align: left;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.HCC.Month.first span {
-  position: relative;
+  position: absolute;
+  left: 0;
+  bottom: -50px;
   z-index: 98;
+  font-size: 14px;
+  transform: rotate(-90deg);
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC {
-  background: #0000aa;
+  background: #5a5aa0;
   color: #fff;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.Month {
   background: transparent;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.Month.first {
-  background: #0000aa;
+  background: #5a5aa0;
   color: #fff;
 }
 .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.SabbathCount, .path-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.SabbathCountEnd {
@@ -993,6 +1030,8 @@
   display: none;
 }
 .path-calendar #NewCalendarContainer {
+  display: flex;
+  flex-wrap: wrap;
   /*[data-name="prepentecost"]{
   	&::after {
   		background-color: $pentecost;
@@ -1002,12 +1041,49 @@
   }
   */
 }
+.path-calendar #NewCalendarContainer div.month {
+  float: none;
+  display: flex;
+  flex: 1 33%;
+}
+@media (max-width: 991px) {
+  .path-calendar #NewCalendarContainer div.month {
+    max-width: 100%;
+    flex: 1 100%;
+  }
+}
+.path-calendar #NewCalendarContainer div.month .Column {
+  float: none;
+  width: auto;
+  min-width: 1px;
+  max-width: 50%;
+  flex: 1 auto;
+}
+.path-calendar #NewCalendarContainer div.month .Column .weekgrid:hover {
+  transform: scale(1.5);
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 0 5px #000;
+}
+.path-calendar #NewCalendarContainer div.month .Column:last-child {
+  margin-right: 10px;
+}
+.path-calendar #NewCalendarContainer .Column .Cell.Month.GC.first span {
+  transform: rotate(-90deg);
+  margin: 0;
+  padding: 0;
+  display: block;
+  text-indent: -18px;
+  font-size: 15px;
+}
 .path-calendar #NewCalendarContainer .Column .Cell span {
   display: flex;
   justify-content: end;
   margin-right: 2px;
 }
 .path-calendar #NewCalendarContainer .Column .Cell.HCC.first.Month span {
+  position: absolute;
   justify-content: center;
 }
 .path-calendar #NewCalendarContainer .Column .Cell.SabbathCount {
@@ -1092,6 +1168,80 @@
   width: 10px;
   right: 5px;
   height: 120px;
+}
+
+.view-faqs .views-field-title a {
+  display: block;
+  padding: 1em;
+  background: #eee;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+}
+.view-faqs .views-field-title a.active, .view-faqs .views-field-title a:active {
+  background-color: #2196F3;
+  color: #fff;
+}
+.view-faqs .views-field-title a.active::after, .view-faqs .views-field-title a:active::after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 0;
+  position: relative;
+  bottom: -27px;
+  z-index: 5;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #2196F3;
+}
+
+.view-id-this_year_stats .views-row {
+  display: flex;
+  flex-direction: column;
+}
+.view-id-this_year_stats .views-row .views-field {
+  display: flex;
+}
+.view-id-this_year_stats .views-row .views-label {
+  flex: 1;
+}
+.view-id-this_year_stats .views-row .field-content {
+  flex: 1;
+  font-weight: bold;
+}
+
+.view-holy-days .table td, .view-holy-days .table th {
+  padding-left: 0;
+  padding-right: 0;
+}
+.view-holy-days .table td:not(:first-child) {
+  display: none;
+}
+.view-holy-days .table th:not(:first-child) {
+  display: none;
+}
+
+.view-featured-significant-dates .views-field-nothing a,
+.view-featured-significant-dates .views-field-title a,
+.view-significant-dates-base .views-field-nothing a,
+.view-significant-dates-base .views-field-title a {
+  background: #111;
+  color: #fff;
+  padding: 1em;
+  display: inline-block;
+  border-radius: 1em;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
+  text-decoration: none;
+}
+.view-featured-significant-dates .views-field-nothing a:hover,
+.view-featured-significant-dates .views-field-title a:hover,
+.view-significant-dates-base .views-field-nothing a:hover,
+.view-significant-dates-base .views-field-title a:hover {
+  background: #2196F3;
+  color: #fff;
 }
 
 .block-views-blockbiblical-charts-block-1 {
