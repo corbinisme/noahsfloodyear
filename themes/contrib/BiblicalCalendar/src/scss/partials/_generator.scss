@@ -1164,9 +1164,9 @@ label[for='solarToggle'] {
 
 .view-featured-significant-dates,
 .view-significant-dates-base {
-	.views-field-nothing,
-	.views-field-title {
-		a {
+	.views-field-nothing .field-content > a,
+	.views-field-title .field-content > a {
+		
 			background: #111;
 			color: #fff;
 			padding: 1em;
@@ -1179,6 +1179,6 @@ label[for='solarToggle'] {
 				background: #2196F3;
 				color: #fff;
 			}
-		}
+		
 	}
 }

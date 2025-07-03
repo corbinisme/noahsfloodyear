@@ -1223,10 +1223,10 @@ label[for=solarToggle] {
   display: none;
 }
 
-.view-featured-significant-dates .views-field-nothing a,
-.view-featured-significant-dates .views-field-title a,
-.view-significant-dates-base .views-field-nothing a,
-.view-significant-dates-base .views-field-title a {
+.view-featured-significant-dates .views-field-nothing .field-content > a,
+.view-featured-significant-dates .views-field-title .field-content > a,
+.view-significant-dates-base .views-field-nothing .field-content > a,
+.view-significant-dates-base .views-field-title .field-content > a {
   background: #111;
   color: #fff;
   padding: 1em;
@@ -1236,10 +1236,10 @@ label[for=solarToggle] {
   margin-bottom: 0.5em;
   text-decoration: none;
 }
-.view-featured-significant-dates .views-field-nothing a:hover,
-.view-featured-significant-dates .views-field-title a:hover,
-.view-significant-dates-base .views-field-nothing a:hover,
-.view-significant-dates-base .views-field-title a:hover {
+.view-featured-significant-dates .views-field-nothing .field-content > a:hover,
+.view-featured-significant-dates .views-field-title .field-content > a:hover,
+.view-significant-dates-base .views-field-nothing .field-content > a:hover,
+.view-significant-dates-base .views-field-title .field-content > a:hover {
   background: #2196F3;
   color: #fff;
 }
