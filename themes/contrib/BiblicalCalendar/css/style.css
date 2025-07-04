@@ -222,9 +222,26 @@
   margin-top: 0.5em;
 }
 
+#block-biblicalcalendar-page-title {
+  text-align: center;
+}
+
+#block-biblicalcalendar-breadcrumbs .breadcrumb {
+  display: none;
+}
+
+.legend {
+  margin: 2em 0;
+}
 .legend label {
   display: inline-block;
-  padding: 3px;
+  padding: 0.5em;
+}
+.legend .form-check {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  margin-bottom: 0.5em;
 }
 
 label[for=gregorianToggle] {
@@ -1221,6 +1238,20 @@ label[for=solarToggle] {
 }
 .view-holy-days .table th:not(:first-child) {
   display: none;
+}
+
+.omnibox {
+  border-radius: 1em;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin-bottom: 2em;
+}
+.omnibox input[type=text], .omnibox select {
+  border: none;
+}
+.omnibox button {
+  background: #eee;
+  border: none;
 }
 
 .view-featured-significant-dates .views-field-nothing .field-content > a,

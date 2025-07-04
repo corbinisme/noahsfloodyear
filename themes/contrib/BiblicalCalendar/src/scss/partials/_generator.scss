@@ -10,10 +10,28 @@ $atonement: #e647fb;
 $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
+
+#block-biblicalcalendar-page-title {
+	text-align: center;
+
+	
+}
+#block-biblicalcalendar-breadcrumbs {
+	.breadcrumb {
+		display: none
+	}
+}
 .legend {
+	margin: 2em 0;
 	label {
 		display:inline-block;
-		padding: 3px;
+		padding: .5em;
+	}
+	.form-check {
+		display: flex;
+		gap: 1em;
+		align-items: center;
+		margin-bottom: .5em;
 	}
 }
 label[for='gregorianToggle'] {
@@ -1161,7 +1179,21 @@ label[for='solarToggle'] {
 	}
 }
 
+.omnibox {
+	border-radius: 1em;
+	border: 1px solid #ccc;
+	padding: 1em;
+	margin-bottom: 2em;
+	
+	input[type="text"], select {
+		border: none;
+	}
 
+	button {
+		background: #eee;
+		border: none
+	}
+}
 .view-featured-significant-dates,
 .view-significant-dates-base {
 	.views-field-nothing .field-content > a,

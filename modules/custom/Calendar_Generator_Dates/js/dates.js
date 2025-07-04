@@ -233,7 +233,40 @@ window.addEventListener('load',
 
     },
     binding: function(){
-       
+       if(document.getElementById("omnibox-submit")){
+            document.getElementById("omnibox-submit").addEventListener("click", function(e){
+                e.preventDefault();
+                let inputYear = document.getElementById("omnibox-input").value;
+                let inputEra = document.getElementById("omnibox-select").value;
+                if(inputYear && inputEra){
+                    let fetchURL ="";
+                    if(inputEra.toLowerCase() == "am"){
+                        fetchURL = `/jsonapi/node/calendar?filter[field_am_year]=${inputYear}`;
+                    } else {
+                        fetchURL = `/jsonapi/node/calendar?filter[field_gregorianyear]=${inputYear}&filter[field_gc_era]=${inputEra}`;
+                    }
+                    console.log("fetching", fetchURL);
+                    fetch(fetchURL)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("data", data);
+                            if(data.data && data.data.length > 0){
+                                let calendarData = data.data[0];
+                                console.log("calendarData", calendarData);
+                                let field_am_year = calendarData.attributes.field_am_year;
+                                //console.log("amYear", amYear, "gregYear", gregYear, "era", era);
+                                window.location.href = `/calendar/date/am/${field_am_year}`;
+                            } else {
+                                console.error("No data found for the given year and era.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error fetching calendar data:", error);
+                        });
+                    
+                }
+            });
+        }
     },
     dates: {
         "passover": null,
