@@ -222,6 +222,22 @@
   margin-top: 0.5em;
 }
 
+@media all and (max-width: 767px) {
+  .page-node-type-calendar main > .container > .row .order-1 .region-content article .node__content .layout--twocol-section {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    position: relative;
+  }
+}
+@media (max-width: 991px) {
+  .page-node-type-calendar main > .container article .layout__region--first {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-120%);
+  }
+}
+
 #block-biblicalcalendar-page-title {
   text-align: center;
 }

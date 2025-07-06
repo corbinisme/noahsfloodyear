@@ -14,6 +14,16 @@ function BiblicalCalendar_preprocess_search_result(&$variables) {
   */
 }
 
+// add a body class with the path alias
+function BiblicalCalendar_preprocess_html(&$variables) {
+  $path = \Drupal::service('path.current')->getPath();
+  $alias = \Drupal::service('path_alias.manager')->getAliasByPath($path);
+  $class = str_replace('/', '-', trim($alias, '/'));
+  if (!empty($class)) {
+    $variables['attributes']['class'][] = 'path-' . $class;
+  }
+}
+
 /**
  * Highlight matching keywords in a given text.
  *

@@ -11,6 +11,29 @@ $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
 
+.page-node-type-calendar {
+	main {
+		> .container {
+			> .row .order-1 .region-content article .node__content .layout--twocol-section{
+				@media all and (max-width: 767px) {
+					flex-wrap: nowrap;
+					flex-direction: row;
+					position: relative;
+				}
+			}
+
+			article .layout__region--first {
+				@include respond-below(md){
+					position: absolute;
+					top: 0;
+					left: 0;
+					transform: translateX(-120%);
+				}
+				
+			}
+		}
+	}
+}
 #block-biblicalcalendar-page-title {
 	text-align: center;
 
