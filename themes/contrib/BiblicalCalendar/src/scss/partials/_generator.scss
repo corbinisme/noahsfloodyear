@@ -10,15 +10,99 @@ $atonement: #e647fb;
 $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
-
+.language-switcher-language-url {
+	a img {display: none;}
+}
 .page-node-type-calendar {
+
+	.view-id-faqs {
+		.view-content .views-row {
+			.views-field-title {
+				display: none;
+			}
+		}
+		@include respond-below(md){
+			.view-header {
+				display: none;
+			}
+			.view-content .views-row {
+				.views-field-title {
+					display: block;
+					margin-bottom: .3em
+				}
+			}
+		}
+		.content-pane {
+			display: none;
+			&.active {
+				display: block;
+			}
+		}
+	}
+	.mobileToggle {
+		@include respond-above(md){
+			display: none;
+		}
+		position: fixed;
+		margin: 0;
+		left: 0;
+		top: 50%;
+		z-index: 100;
+		i, svg {
+			transition: all .3s ease;
+		}
+
+		&.open {
+			svg, i {
+				transform: rotate(180deg);
+			}
+		}
+	}
+
+	&.gregorianToggle {
+		.Cell.GC, .weekgrid {
+			display: none;
+		}
+	}
+	&.hover-gregorianToggle {
+		.Cell.SC, .Cell.HCC {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+		}
+		
+	}
+	&.hebrewToggle {
+		.Cell.HCC {
+			display: none!important;
+		}
+	}
+	&.hover-hebrewToggle {
+		.Cell.GC, .weekgrid, .Cell.SC {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+		}
+		
+	}
+	&.solarToggle {
+		.Cell.SC {
+			display: none;
+		}
+	}
+	&.hover-solarToggle {
+		.Cell.GC, .weekgrid, .Cell.HCC {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+		}
+		
+	}
 	main {
 		> .container {
 			> .row .order-1 .region-content article .node__content .layout--twocol-section{
-				@media all and (max-width: 767px) {
+				@include respond-below(md){
 					flex-wrap: nowrap;
 					flex-direction: row;
 					position: relative;
+					
 				}
 			}
 
@@ -26,10 +110,30 @@ $lastGreatDay: #15be27;
 				@include respond-below(md){
 					position: absolute;
 					top: 0;
-					left: 0;
-					transform: translateX(-120%);
+					left: 0px;
+					transform: translateX(-100vw);
+					transition: all .3s ease;
+					margin-left: 1em;
+					width: calc(100% - 2em);
+					padding: 1em;
+				
+
+					&.open {
+						transform: translateX(0);
+						box-shadow: 0 0 5px #000;
+						background: #fff;
+						z-index: 100;
+					}
 				}
 				
+			}
+			article .layout__region--second {
+				@include respond-below(md){
+					margin-left: 0;
+					width: 100%;
+					padding: 1em;
+					flex: 1 100%;
+				}
 			}
 		}
 	}
@@ -126,12 +230,12 @@ label[for='solarToggle'] {
 						}
 					}
 					&.SC.Month {
-						height: 20px;
+						height: 25px;
 						span {
 							font-size: 14px;
 						}
 						&.SabbathCountEnd {
-							font-size: 14px;
+							font-size: inherit;
 						}
 					}
 

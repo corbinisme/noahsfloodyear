@@ -109,7 +109,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
 		$markup = "<div class='path-calendar'>";
 		$markup .= "<input type='hidden' name='gregDate' value='" . $adbc . $yearVal . "' />";
 		$markup .= "<input type='hidden' name='eraType' value='" .$adbc . "' />";
-
+    $markup .= "<a href='#' class='mobileToggle btn btn-secondary'><i class='fa fa-chevron-right'></i></a>";
 		$markup .="<div class='loadhtmlwrapper calendarWrapper'><div class='calendarMarkup'>" . $shorten . "</div></div></div>";
 		return $markup;
 	} else {

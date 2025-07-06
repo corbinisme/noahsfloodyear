@@ -233,6 +233,74 @@ window.addEventListener('load',
 
     },
     binding: function(){
+        if(document.querySelector(".mobileToggle")){
+            document.querySelector(".mobileToggle").addEventListener("click", function(e){
+                e.preventDefault();
+                document.querySelector("body").classList.toggle("mobileOpen");
+
+                let sidebar = document.querySelector(".page-node-type-calendar article .layout__region--first");
+                sidebar.classList.toggle("open");
+                if(document.querySelector("body").classList.contains("mobileOpen")){
+
+                    document.querySelector(".mobileToggle").classList.add("open");
+                } else {
+                    document.querySelector(".mobileToggle").classList.remove("open");
+                }
+            });
+        }
+        if(document.querySelector(".page-node-type-calendar .legend")){
+            document.querySelectorAll(".page-node-type-calendar .legend .form-check-input").forEach(function(input){
+               // event listener
+               input.addEventListener("change", function(e){
+                   const body = document.querySelector("body");
+                   let id = e.target.id;
+
+                   console.log("toggling", id, e.target.checked);
+                   if(e.target.checked){
+                       body.classList.remove(id);
+                   } else {
+                       body.classList.add(id);
+                   }
+               });
+            });
+            document.querySelectorAll(".page-node-type-calendar .legend .form-check-label").forEach(function(input){
+               // event listener on hover
+                input.addEventListener("mouseover", function(e){
+                     const body = document.querySelector("body");
+                     let forid = e.target.getAttribute("for");
+                     body.classList.add("hover-" + forid);
+                });
+                input.addEventListener("mouseout", function(e){
+                     const body = document.querySelector("body");
+                     let forid = e.target.getAttribute("for");
+                     body.classList.remove("hover-" + forid);
+                });
+               
+            });
+        }
+        if(document.querySelector(".page-node-type-calendar .view-faqs")){
+            document.querySelectorAll(".page-node-type-calendar .view-faqs .views-field-title a").forEach(function(a){
+                a.addEventListener("click", function(e){
+                    e.preventDefault();
+                    let id = e.target.getAttribute("href");
+                    // get the last chars after the last  / in the href
+                    id = id.substring(id.lastIndexOf("/") + 1);
+                    document.querySelectorAll(".page-node-type-calendar .view-faqs .views-field-title a").forEach(function(aa){ 
+                        aa.classList.remove("active");
+                    });
+                    e.target.classList.add("active");
+
+                    document.querySelectorAll(".view-faqs .content-pane").forEach(function(pane){
+                        if(pane.getAttribute("id") === id){
+                            pane.classList.add("active");
+                        } else {
+                            pane.classList.remove("active");
+                        }
+                    });
+
+                })
+            })
+        }
        if(document.getElementById("omnibox-submit")){
             document.getElementById("omnibox-submit").addEventListener("click", function(e){
                 e.preventDefault();
