@@ -15,6 +15,25 @@ $lastGreatDay: #15be27;
 }
 .page-node-type-calendar {
 
+	#yearBar {
+		background: #eee;
+		border: 1px solid #ccc;
+		border-radius: 1em;
+		padding: 0 30px;
+		font-size: 2em;
+		margin-bottom: 35px;
+		
+		.d-flex {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.yearAction {
+			text-decoration: none;
+			font-weight: bold;
+		}
+	}
+
 	.view-id-faqs {
 		.view-content .views-row {
 			.views-field-title {

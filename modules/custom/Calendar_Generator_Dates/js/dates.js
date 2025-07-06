@@ -278,6 +278,22 @@ window.addEventListener('load',
                
             });
         }
+        if(document.querySelector(".page-node-type-calendar .yearAction")){
+            document.querySelectorAll(".page-node-type-calendar .yearAction").forEach(function(a){
+                a.addEventListener("click", function(e){
+                    e.preventDefault();
+                    let id = e.target.getAttribute("href");
+                    // get the last chars after the last  / in the href
+                    let yearDir = parseInt(e.target.getAttribute("data-dir"));
+                    let currentYear = parseInt(document.getElementById("AMYear").value);
+                    let newYear = currentYear + yearDir;
+                    if(newYear < 1){    
+                        newYear = 1;
+                    }
+                    window.location.href = "../../../calendar/date/am/" + newYear;
+                })
+            })
+        }
         if(document.querySelector(".page-node-type-calendar .view-faqs")){
             document.querySelectorAll(".page-node-type-calendar .view-faqs .views-field-title a").forEach(function(a){
                 a.addEventListener("click", function(e){
