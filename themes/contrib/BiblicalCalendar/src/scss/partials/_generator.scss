@@ -38,6 +38,12 @@ $lastGreatDay: #15be27;
 }
 .page-node-type-calendar {
 
+	&.amyear-1 {
+		.month.Mar[data-month-count="1"] {
+			justify-content: flex-end;
+		}
+	}
+
 	#NewCalendarContainer {
 		margin-bottom: 2em;
 		display: flex;
@@ -61,7 +67,7 @@ $lastGreatDay: #15be27;
 
 				min-width: 1px;
 
-				max-width: 50%;
+				max-width: 25%;
 
 				flex: 1 auto;
 

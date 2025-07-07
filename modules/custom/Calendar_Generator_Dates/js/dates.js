@@ -1,7 +1,11 @@
 var dates = {
     loopy:null,
+    thisAMYear: null,
     init: function(){
  
+        dates.thisAMYear = document.getElementById("AMYear").value;
+        document.querySelector("body").classList.add("amyear-" + dates.thisAMYear);
+        
         dates.findDifferenceWithLastYear();
         dates.setupSignificantDates();
         calendar.init();
@@ -611,6 +615,11 @@ window.addEventListener('load',
             }
         });
         //console.log(passoverDay, firstDate, secondDate);
+        if(firstDate==null){
+            if(document.querySelector(".amyear-1")){
+                firstDate = secondDate;
+            }
+        }
         const firstDateNode = passoverMonthNode.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
         const firstDateColumnNode = firstDateNode.closest(".Column");
         //firstDateColumnNode.classList.add("afterContent")
