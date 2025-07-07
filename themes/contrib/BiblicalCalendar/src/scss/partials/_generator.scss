@@ -10,10 +10,80 @@ $atonement: #e647fb;
 $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
+.bg-passover {
+		background-color: $passover;
+	}
+	.bg-unleavenedbread, .bg-unleavenedbreadend {
+		background-color: $unleavenedBread;
+	}
+	.bg-pentecost {
+		background-color: $pentecost;
+	}
+	.bg-trumpets {
+		background-color: $trumpets;
+	}
+	.bg-atonement {
+		background-color: $atonement;
+	}
+	.bg-tabernacles, .bg-tabernaclesend {
+		background-color: $tabernacles;
+	}
+	.bg-lastgreatday {
+		background-color: $lastGreatDay;
+	}
+
+
 .language-switcher-language-url {
 	a img {display: none;}
 }
 .page-node-type-calendar {
+
+	#NewCalendarContainer {
+		margin-bottom: 2em;
+		display: flex;
+
+		flex-wrap: wrap;
+
+		
+
+		div.month {
+			
+			float: none;
+
+			display: flex;
+
+			flex: 1 33%;
+
+			.Column {
+				float: none;
+
+				width: auto;
+
+				min-width: 1px;
+
+				max-width: 50%;
+
+				flex: 1 auto;
+
+				&:last-child {
+
+					margin-right: 10px;
+
+				}
+			}
+
+
+
+			@include respond-below(md){
+
+				max-width: 100%;
+
+				flex: 1 100%;
+
+			}
+
+		}
+	}
 
 	#yearBar {
 		background: #eee;
@@ -189,7 +259,7 @@ label[for='hebrewToggle'] {
 label[for='solarToggle'] {
 	background: $SC;
 }
-#block-biblicalcalendar-calendardatesblock {
+.block-calendar-generator-dates {
 
 		.table {
 
@@ -1045,27 +1115,9 @@ label[for='solarToggle'] {
 	}
 
 	#NewCalendarContainer {
-		display: flex;
-
-		flex-wrap: wrap;
+		
 
 		div.month {
-
-			float: none;
-
-			display: flex;
-
-			flex: 1 33%;
-
-
-
-			@include respond-below(md){
-
-				max-width: 100%;
-
-				flex: 1 100%;
-
-			}
 
 			
 
@@ -1073,15 +1125,7 @@ label[for='solarToggle'] {
 
 			.Column {
 
-				float: none;
 
-				width: auto;
-
-				min-width: 1px;
-
-				max-width: 50%;
-
-				flex: 1 auto;
 
 
 
@@ -1099,11 +1143,7 @@ label[for='solarToggle'] {
 
 				}
 
-				&:last-child {
-
-					margin-right: 10px;
-
-				}
+				
 
 			}
 

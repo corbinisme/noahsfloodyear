@@ -222,10 +222,64 @@
   margin-top: 0.5em;
 }
 
+.bg-passover {
+  background-color: #f70d48;
+}
+
+.bg-unleavenedbread, .bg-unleavenedbreadend {
+  background-color: #a07833;
+}
+
+.bg-pentecost {
+  background-color: #0de1ec;
+}
+
+.bg-trumpets {
+  background-color: #f2d316;
+}
+
+.bg-atonement {
+  background-color: #e647fb;
+}
+
+.bg-tabernacles, .bg-tabernaclesend {
+  background-color: #fa8a48;
+}
+
+.bg-lastgreatday {
+  background-color: #15be27;
+}
+
 .language-switcher-language-url a img {
   display: none;
 }
 
+.page-node-type-calendar #NewCalendarContainer {
+  margin-bottom: 2em;
+  display: flex;
+  flex-wrap: wrap;
+}
+.page-node-type-calendar #NewCalendarContainer div.month {
+  float: none;
+  display: flex;
+  flex: 1 33%;
+}
+.page-node-type-calendar #NewCalendarContainer div.month .Column {
+  float: none;
+  width: auto;
+  min-width: 1px;
+  max-width: 50%;
+  flex: 1 auto;
+}
+.page-node-type-calendar #NewCalendarContainer div.month .Column:last-child {
+  margin-right: 10px;
+}
+@media (max-width: 991px) {
+  .page-node-type-calendar #NewCalendarContainer div.month {
+    max-width: 100%;
+    flex: 1 100%;
+  }
+}
 .page-node-type-calendar #yearBar {
   background: #eee;
   border: 1px solid #ccc;
@@ -367,34 +421,34 @@ label[for=solarToggle] {
   background: #5a5aa0;
 }
 
-#block-biblicalcalendar-calendardatesblock .table td {
+.block-calendar-generator-dates .table td {
   position: relative;
 }
-#block-biblicalcalendar-calendardatesblock .table td span {
+.block-calendar-generator-dates .table td span {
   display: inline-block;
   min-width: 10px;
   height: 1em;
   margin-left: 5px;
 }
-#block-biblicalcalendar-calendardatesblock .table .passover span {
+.block-calendar-generator-dates .table .passover span {
   background-color: #f70d48;
 }
-#block-biblicalcalendar-calendardatesblock .table .unleavenedbread span {
+.block-calendar-generator-dates .table .unleavenedbread span {
   background-color: #a07833;
 }
-#block-biblicalcalendar-calendardatesblock .table .pentecost span {
+.block-calendar-generator-dates .table .pentecost span {
   background-color: #0de1ec;
 }
-#block-biblicalcalendar-calendardatesblock .table .trumpets span {
+.block-calendar-generator-dates .table .trumpets span {
   background-color: #f2d316;
 }
-#block-biblicalcalendar-calendardatesblock .table .atonement span {
+.block-calendar-generator-dates .table .atonement span {
   background-color: #e647fb;
 }
-#block-biblicalcalendar-calendardatesblock .table .tabernacles span {
+.block-calendar-generator-dates .table .tabernacles span {
   background-color: #fa8a48;
 }
-#block-biblicalcalendar-calendardatesblock .table .lastgreatday span {
+.block-calendar-generator-dates .table .lastgreatday span {
   background-color: #15be27;
 }
 
@@ -1158,8 +1212,6 @@ label[for=solarToggle] {
   display: none;
 }
 .path-calendar #NewCalendarContainer {
-  display: flex;
-  flex-wrap: wrap;
   /*[data-name="prepentecost"]{
   	&::after {
   		background-color: $pentecost;
@@ -1169,33 +1221,12 @@ label[for=solarToggle] {
   }
   */
 }
-.path-calendar #NewCalendarContainer div.month {
-  float: none;
-  display: flex;
-  flex: 1 33%;
-}
-@media (max-width: 991px) {
-  .path-calendar #NewCalendarContainer div.month {
-    max-width: 100%;
-    flex: 1 100%;
-  }
-}
-.path-calendar #NewCalendarContainer div.month .Column {
-  float: none;
-  width: auto;
-  min-width: 1px;
-  max-width: 50%;
-  flex: 1 auto;
-}
 .path-calendar #NewCalendarContainer div.month .Column .weekgrid:hover {
   transform: scale(1.5);
   transition: all 0.5s ease;
   position: relative;
   z-index: 100;
   box-shadow: 0 0 5px #000;
-}
-.path-calendar #NewCalendarContainer div.month .Column:last-child {
-  margin-right: 10px;
 }
 .path-calendar #NewCalendarContainer .Column .Cell.Month.GC.first span {
   transform: rotate(-90deg);

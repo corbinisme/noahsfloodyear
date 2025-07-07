@@ -443,7 +443,7 @@ window.addEventListener('load',
         gregDate = gregDate.substring(2, gregDate.length);
         const era = document.querySelector("input[name='eraType'" ).value.toUpperCase();
         console.log("getting gregdate")
-        const table = document.querySelector("#block-biblicalcalendar-calendardatesblock .table");
+        const table = document.querySelector(".block-calendar-dates-block .table");
         // get a Date() object for each date
         // in the format of "Day Month, Year AD"
         calendar.dates.passover = this.makeDateString(table.querySelector(".passover").closest("tr").querySelector(".start").innerText + ", " + gregDate + "|"  + era);
