@@ -647,7 +647,7 @@
   display: none;
 }
 .path-calendar .loadhtmlwrapper {
-  margin-top: 1em;
+  margin-top: -1em;
 }
 .path-calendar .main-container {
   max-width: 100%;
@@ -1104,6 +1104,9 @@ body.page-node-type-calendar {
   --GC: #e464bc;
   --HCC: #5cb665;
   --SC: #629fea;
+}
+body.page-node-type-calendar .loadhtmlwrapper {
+  margin-top: 1em;
 }
 body.page-node-type-calendar .weekgrid {
   height: 30px;
