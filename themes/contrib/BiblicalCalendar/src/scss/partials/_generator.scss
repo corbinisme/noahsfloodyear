@@ -1,6 +1,12 @@
-$GC: #d43da4;
-$HCC: #5cb665;
-$SC: #5a5aa0;
+$GC: #1F1F1F;
+$HCC: #A50000;
+$SC: #0000AA;
+:root {
+	--GC: #1F1F1F;
+	--HCC: #A50000;
+	--SC: #0000AA;
+	
+}
 
 $passover: #f70d48;
 $unleavenedBread: #a07833;
@@ -11,366 +17,88 @@ $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
 .bg-passover {
-		background-color: $passover;
-	}
-	.bg-unleavenedbread, .bg-unleavenedbreadend {
-		background-color: $unleavenedBread;
-	}
-	.bg-pentecost {
-		background-color: $pentecost;
-	}
-	.bg-trumpets {
-		background-color: $trumpets;
-	}
-	.bg-atonement {
-		background-color: $atonement;
-	}
-	.bg-tabernacles, .bg-tabernaclesend {
-		background-color: $tabernacles;
-	}
-	.bg-lastgreatday {
-		background-color: $lastGreatDay;
-	}
+	background-color: $passover;
+}
+.bg-unleavenedbread, .bg-unleavenedbreadend {
+	background-color: $unleavenedBread;
+}
+.bg-pentecost {
+	background-color: $pentecost;
+}
+.bg-trumpets {
+	background-color: $trumpets;
+}
+.bg-atonement {
+	background-color: $atonement;
+}
+.bg-tabernacles, .bg-tabernaclesend {
+	background-color: $tabernacles;
+}
+.bg-lastgreatday {
+	background-color: $lastGreatDay;
+}
 
 
 .language-switcher-language-url {
 	a img {display: none;}
 }
-.page-node-type-calendar {
-
-	&.amyear-1 {
-		.month.Mar[data-month-count="1"] {
-			justify-content: flex-end;
-		}
-	}
-
-	#NewCalendarContainer {
-		margin-bottom: 2em;
-		display: flex;
-
-		flex-wrap: wrap;
-
-		
-
-		div.month {
-			
-			float: none;
-
-			display: flex;
-
-			flex: 1 33%;
-
-			.Column {
-				float: none;
-
-				width: auto;
-
-				min-width: 1px;
-
-				max-width: 25%;
-
-				flex: 1 auto;
-
-				&:last-child {
-
-					margin-right: 10px;
-
-				}
-			}
 
 
-
-			@include respond-below(md){
-
-				max-width: 100%;
-
-				flex: 1 100%;
-
-			}
-
-		}
-	}
-
-	#yearBar {
-		background: #eee;
-		border: 1px solid #ccc;
-		border-radius: 1em;
-		padding: 0 30px;
-		font-size: 2em;
-		margin-bottom: 35px;
-		
-		.d-flex {
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.yearAction {
-			text-decoration: none;
-			font-weight: bold;
-		}
-	}
-
-	.view-id-faqs {
-		.view-content .views-row {
-			.views-field-title {
-				display: none;
-			}
-		}
-		@include respond-below(md){
-			.view-header {
-				display: none;
-			}
-			.view-content .views-row {
-				.views-field-title {
-					display: block;
-					margin-bottom: .3em
-				}
-			}
-		}
-		.content-pane {
-			display: none;
-			&.active {
-				display: block;
-			}
-		}
-	}
-	.mobileToggle {
-		@include respond-above(md){
-			display: none;
-		}
-		position: fixed;
-		margin: 0;
-		left: 0;
-		top: 50%;
-		z-index: 100;
-		i, svg {
-			transition: all .3s ease;
-		}
-
-		&.open {
-			svg, i {
-				transform: rotate(180deg);
-			}
-		}
-	}
-
-	&.gregorianToggle {
-		.Cell.GC, .weekgrid {
-			display: none;
-		}
-	}
-	&.hover-gregorianToggle {
-		.Cell.SC, .Cell.HCC {
-			background-color: #ccc!important;
-			transition: all .3s ease;
-		}
-		
-	}
-	&.hebrewToggle {
-		.Cell.HCC {
-			display: none!important;
-		}
-	}
-	&.hover-hebrewToggle {
-		.Cell.GC, .weekgrid, .Cell.SC {
-			background-color: #ccc!important;
-			transition: all .3s ease;
-		}
-		
-	}
-	&.solarToggle {
-		.Cell.SC {
-			display: none;
-		}
-	}
-	&.hover-solarToggle {
-		.Cell.GC, .weekgrid, .Cell.HCC {
-			background-color: #ccc!important;
-			transition: all .3s ease;
-		}
-		
-	}
-	main {
-		> .container {
-			> .row .order-1 .region-content article .node__content .layout--twocol-section{
-				@include respond-below(md){
-					flex-wrap: nowrap;
-					flex-direction: row;
-					position: relative;
-					
-				}
-			}
-
-			article .layout__region--first {
-				@include respond-below(md){
-					position: absolute;
-					top: 0;
-					left: 0px;
-					transform: translateX(-100vw);
-					transition: all .3s ease;
-					margin-left: 1em;
-					width: calc(100% - 2em);
-					padding: 1em;
-				
-
-					&.open {
-						transform: translateX(0);
-						box-shadow: 0 0 5px #000;
-						background: #fff;
-						z-index: 100;
-					}
-				}
-				
-			}
-			article .layout__region--second {
-				@include respond-below(md){
-					margin-left: 0;
-					width: 100%;
-					padding: 1em;
-					flex: 1 100%;
-				}
-			}
-		}
-	}
-}
-#block-biblicalcalendar-page-title {
-	text-align: center;
-
-	
-}
-#block-biblicalcalendar-breadcrumbs {
-	.breadcrumb {
-		display: none
-	}
-}
-.legend {
-	margin: 2em 0;
-	label {
-		display:inline-block;
-		padding: .5em;
-	}
-	.form-check {
-		display: flex;
-		gap: 1em;
-		align-items: center;
-		margin-bottom: .5em;
-	}
-}
-label[for='gregorianToggle'] {
-	background: $GC;
-}
-label[for='hebrewToggle'] {
-	background: $HCC;
-}
-label[for='solarToggle'] {
-	background: $SC;
-}
 .block-calendar-generator-dates {
 
-		.table {
+	.table {
 
-			td {
-				position: relative;
+		td {
+			position: relative;
 
-				span {
-					display: inline-block;
-					min-width: 10px;
-					height: 1em;
-					margin-left: 5px;
-				}
-			}
-			.passover span {
-				background-color: $passover;
-			}
-			.unleavenedbread span {
-				background-color: $unleavenedBread;
-			}
-			.pentecost  span {
-				background-color: $pentecost;
-			}
-			.trumpets span  {
-				background-color: $trumpets;
-			}
-			
-			.atonement  span {
-				background-color: $atonement;
-			}
-			.tabernacles span  {
-				background-color: $tabernacles;
-			}
-			.lastgreatday  span {
-				background-color: $lastGreatDay;
+			span {
+				display: inline-block;
+				min-width: 10px;
+				height: 1em;
+				margin-left: 5px;
 			}
 		}
-	}
-
-.path-node {
-	.path-calendar {
-		.calendarWrapper {
-			width: auto;
-			margin-left: 0;
-			left: unset;
-			background-color: transparent;
-			padding: 0;
-			.calendarMarkup .Column {
-				background: transparent;
-
-				.Cell {
-					&.GC {
-					background-color: $GC;
-					color: #fff;
-
-						&:not(.Month) {
-							border-bottom: 20px solid #fff;
-						}
-					}
-					&.SC.Month {
-						height: 25px;
-						span {
-							font-size: 14px;
-						}
-						&.SabbathCountEnd {
-							font-size: inherit;
-						}
-					}
-
-				}
-				
-			}
+		.passover span {
+			background-color: $passover;
+		}
+		.unleavenedbread span {
+			background-color: $unleavenedBread;
+		}
+		.pentecost  span {
+			background-color: $pentecost;
+		}
+		.trumpets span  {
+			background-color: $trumpets;
+		}
+		
+		.atonement  span {
+			background-color: $atonement;
+		}
+		.tabernacles span  {
+			background-color: $tabernacles;
+		}
+		.lastgreatday  span {
+			background-color: $lastGreatDay;
 		}
 	}
 }
+
+
 .path-calendar {
-
-
-
-	
 
 	.instructions {
 		font-size: 1.4em!important;
 	}
 
 	.weekgrid {
-		height: 30px;
-		background: $GC;
+		height: 5px;
+		background: #eee;
 		display: flex;
 		.daygrid {
 			height: 100%;
 			width: 14.28571428571429%;
 
-			&:after {
-
-				content: attr(data-day-number);
-
-				display: block;
-
-				text-align: center;
-
-				font-weight: bold;
-
-				font-size: 8px;
-
-			}
+			
 
 		}
 	}
@@ -729,7 +457,7 @@ label[for='solarToggle'] {
 			}
 
 			&.GC {
-				background:$GC;
+				background:var(--GC);
 				@include respond-above(md){
 					border-radius: 20px 0 0 20px;
 				}
@@ -737,14 +465,14 @@ label[for='solarToggle'] {
 				
 			}
 			&.HCC {
-				background: $HCC;
+				background: var(--HCC)
 			}
 			&.SabbathLegend {
 				background: #fff;
 				color: #111;
 			}
 			&.SC {
-				background: $SC;
+				background: var(--SC);
 				@include respond-above(md){
     			border-radius: 0 20px 20px 0;
 				}
@@ -1011,60 +739,39 @@ label[for='solarToggle'] {
 						background-color: #1f1f1f;
 						color: #fff;
 						&.Month {
-							background: $GC;
+							background: transparent;
 
 							
 						}
 						
 					}
 					&.HCC {
-						background:$HCC;
+						background: #a50000;
 						color: #fff;
-						height: 90px;
-						&.first:not(.Month) {
-							height: 84px;
-						}
 						&.Month {
-							background-color: $HCC;
+							background-color: transparent;
 							color: #7f9aac;
-							position: relative;
-				
-							height: 0px;
-							padding: 0;
 							&.first {
-								
+								background: #a50000;
 								white-space: nowrap;
 								text-shadow: 1px 1px 5px #000000;
 								color: #fff;
 								padding: 3px;
-								text-align: left;
-								
-
-								justify-content: center;
-
-								display: flex;
-								
-								align-items: center;
 								span {
-
-									position: absolute;
-									left: 0;
-									bottom:-50px;
+									position: relative;
 									z-index: 98;
-									font-size: 14px;
-									transform: rotate(-90deg);
 								}
 							}
 							
 						}
 					}
 					&.SC {
-						background: $SC; 
+						background: var(--SC);
 						color: #fff;
 						&.Month {
 							background: transparent;
 							&.first{
-								background: $SC;
+								background: var(--SC);
 								color: #fff;
 							}
 						}
@@ -1156,46 +863,7 @@ label[for='solarToggle'] {
 		}
 
 		.Column {
-			.Cell {
-
-				&.Month.GC.first {
-
-					span {
-
-						transform: rotate(-90deg);
-
-						margin: 0;
-
-						
-
-						padding: 0;
-
-						display: block;
-
-						text-indent: -18px;
-
-						font-size: 15px;
-
-					}
-
-				}
-				span {
-					display: flex;
-					justify-content: end;
-					margin-right: 2px;
-				}
-				&.HCC {
-					&.first.Month {
-						span {
-							position: absolute;
-							justify-content: center;
-						}
-					}
-				}
-				&.SabbathCount {
-					text-align: right;
-				}
-			}
+			
 			&.pentecostcount {
 				position: relative;
 				&::before {
@@ -1307,6 +975,387 @@ label[for='solarToggle'] {
 	}
 
 } 
+
+body.page-node-type-calendar {
+
+	--GC: #e464bc;
+	--HCC: #5cb665;
+	--SC: #629fea;
+
+	.weekgrid { 
+		height: 30px;
+		background: var(--GC);
+
+		.daygrid {
+			&:after {
+				content: attr(data-day-number);
+				display: block;
+				text-align: center;
+				font-weight: bold;
+				font-size: 8px;
+			}
+		}
+	}
+
+	#block-biblicalcalendar-page-title {
+		text-align: center;
+
+		
+	}
+	#block-biblicalcalendar-breadcrumbs {
+		.breadcrumb {
+			display: none
+		}
+	}
+
+
+	.legend {
+		margin: 2em 0;
+		label {
+			display:block;
+			width: 100%;
+			padding: .5em;
+		}
+		.form-check {
+			display: flex;
+			gap: 1em;
+			align-items: center;
+			margin-bottom: .5em;
+		}
+	}
+	label[for='gregorianToggle'] {
+		background: var(--GC);
+	}
+	label[for='hebrewToggle'] {
+		background: var(--HCC);
+	}
+	label[for='solarToggle'] {
+		background: var(--SC);
+	}
+
+	.calendarWrapper {
+		width: auto;
+		margin-left: 0;
+		left: unset;
+		background-color: transparent;
+		padding: 0;
+		.calendarMarkup .Column {
+			background: transparent;
+
+			.Cell {
+				&.GC {
+				background-color: var(--GC);
+				color: #fff;
+
+					&:not(.Month) {
+						border-bottom: 20px solid #fff;
+					}
+				}
+				&.SC.Month {
+					height: 25px;
+					span {
+						font-size: 14px;
+					}
+					&.SabbathCountEnd {
+						font-size: inherit;
+					}
+				}
+
+			}
+			
+		}
+	}
+
+	&.amyear-1 {
+		.month.Mar[data-month-count="1"] {
+			justify-content: flex-end;
+		}
+	}
+
+	#NewCalendarContainer {
+		margin-bottom: 2em;
+		display: flex;
+
+		flex-wrap: wrap;
+
+		
+
+		div.month {
+			
+			float: none;
+
+			display: flex;
+
+			flex: 1 33%;
+
+			.Column {
+
+				.Cell {
+
+					&.GC {
+						background-color: var(--GC);
+						color: #fff;
+					}
+
+				&.Month.GC.first {
+
+					span {
+
+						transform: rotate(-90deg);
+
+						margin: 0;
+
+						
+
+						padding: 0;
+
+						display: block;
+
+						text-indent: -18px;
+
+						font-size: 15px;
+
+					}
+
+				}
+				span {
+					display: flex;
+					justify-content: end;
+					margin-right: 2px;
+				}
+				&.HCC {
+					background-color: var(--HCC);
+					height: 90px;
+					&.first:not(.Month) {
+						height: 84px;
+
+						span {
+							position: relative;
+							top: -6px;
+						}
+					}
+					&.Month {
+							background-color: var(--HCC);
+							color: #7f9aac;
+							position: relative;
+				
+							height: 0px;
+							padding: 0;
+							&.first {
+								
+								white-space: nowrap;
+								text-shadow: 1px 1px 5px #000000;
+								color: #fff;
+								padding: 3px;
+								text-align: left;
+								
+
+								justify-content: center;
+
+								display: flex;
+								
+								align-items: center;
+								span {
+
+									position: relative;
+									z-index: 98
+								}
+							}
+							
+						}
+					&.first.Month {
+						span {
+							position: absolute;
+							justify-content: center;
+							position: absolute;
+							left: 0;
+							bottom:-50px;
+							z-index: 98;
+							font-size: 14px;
+							transform: rotate(-90deg);
+						}
+					}
+				}
+				&.SabbathCount {
+					text-align: right;
+				}
+			}
+				float: none;
+
+				width: auto;
+
+				min-width: 1px;
+
+				max-width: 25%;
+
+				flex: 1 auto;
+
+				&:last-child {
+
+					margin-right: 10px;
+
+				}
+			}
+
+
+
+			@include respond-below(md){
+
+				max-width: 100%;
+
+				flex: 1 100%;
+
+			}
+
+		}
+	}
+
+	#yearBar {
+		background: #eee;
+		border: 1px solid #ccc;
+		border-radius: 1em;
+		padding: 0 30px;
+		font-size: 2em;
+		margin-bottom: 35px;
+		
+		.d-flex {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.yearAction {
+			text-decoration: none;
+			font-weight: bold;
+		}
+	}
+
+	.view-id-faqs {
+		.view-content .views-row {
+			.views-field-title {
+				display: none;
+			}
+		}
+		@include respond-below(md){
+			.view-header {
+				display: none;
+			}
+			.view-content .views-row {
+				.views-field-title {
+					display: block;
+					margin-bottom: .3em
+				}
+			}
+		}
+		.content-pane {
+			display: none;
+			&.active {
+				display: block;
+			}
+		}
+	}
+	.mobileToggle {
+		@include respond-above(md){
+			display: none;
+		}
+		position: fixed;
+		margin: 0;
+		left: 0;
+		top: 50%;
+		z-index: 100;
+		i, svg {
+			transition: all .3s ease;
+		}
+
+		&.open {
+			svg, i {
+				transform: rotate(180deg);
+			}
+		}
+	}
+
+	&.gregorianToggle {
+		.Cell.GC, .weekgrid {
+			display: none;
+		}
+	}
+	&.hover-gregorianToggle {
+		.Cell.SC, .Cell.HCC {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+		}
+		
+	}
+	&.hebrewToggle {
+		.Cell.HCC {
+			display: none!important;
+		}
+	}
+	&.hover-hebrewToggle {
+		.Cell.GC, .weekgrid, .Cell.SC {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+		}
+		
+	}
+	&.solarToggle {
+		.Cell.SC {
+			display: none;
+		}
+	}
+	&.hover-solarToggle {
+		.Cell.GC, .weekgrid, .Cell.HCC {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+		}
+		
+	}
+	main {
+		> .container {
+			> .row .order-1 .region-content article .node__content .layout--twocol-section{
+				@include respond-below(md){
+					flex-wrap: nowrap;
+					flex-direction: row;
+					position: relative;
+					
+				}
+			}
+
+			article .layout__region--first {
+				@include respond-below(md){
+					position: absolute;
+					top: 0;
+					left: 0px;
+					transform: translateX(-100vw);
+					transition: all .3s ease;
+					margin-left: 1em;
+					width: calc(100% - 2em);
+					padding: 1em;
+				
+
+					&.open {
+						transform: translateX(0);
+						box-shadow: 0 0 5px #000;
+						background: #fff;
+						z-index: 100;
+					}
+				}
+				
+			}
+			article .layout__region--second {
+				@include respond-below(md){
+					margin-left: 0;
+					width: 100%;
+					padding: 1em;
+					flex: 1 100%;
+				}
+			}
+		}
+	}
+}
+
+
+
+
 
 .view-faqs {
 	.views-field-title {
