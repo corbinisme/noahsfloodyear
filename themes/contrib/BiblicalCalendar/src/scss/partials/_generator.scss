@@ -97,6 +97,7 @@ $lastGreatDay: #15be27;
 		.daygrid {
 			height: 100%;
 			width: 14.28571428571429%;
+			color: #fff;
 
 			
 
@@ -978,9 +979,10 @@ $lastGreatDay: #15be27;
 
 body.page-node-type-calendar {
 
-	--GC: #e464bc;
+	/*--GC: #e464bc;
 	--HCC: #5cb665;
 	--SC: #629fea;
+	*/
 
 	.loadhtmlwrapper  {
 		margin-top: 1em;
@@ -1019,6 +1021,7 @@ body.page-node-type-calendar {
 			display:block;
 			width: 100%;
 			padding: .5em;
+			color: #fff;
 		}
 		.form-check {
 			display: flex;
@@ -1052,7 +1055,7 @@ body.page-node-type-calendar {
 				color: #fff;
 
 					&:not(.Month) {
-						border-bottom: 20px solid #fff;
+						border-bottom: 0px solid #fff;
 					}
 				}
 				&.SC.Month {
@@ -1105,7 +1108,7 @@ body.page-node-type-calendar {
 
 					span {
 
-						transform: rotate(-90deg);
+						/*transform: rotate(-90deg);*/
 
 						margin: 0;
 
@@ -1176,7 +1179,7 @@ body.page-node-type-calendar {
 							bottom:-50px;
 							z-index: 98;
 							font-size: 14px;
-							transform: rotate(-90deg);
+							/*transform: rotate(-90deg);*/
 						}
 					}
 				}

@@ -409,6 +409,7 @@
 .path-calendar .weekgrid .daygrid {
   height: 100%;
   width: 14.2857142857%;
+  color: #fff;
 }
 .path-calendar .key:not(.keepThis) {
   display: none;
@@ -1101,9 +1102,10 @@
 }
 
 body.page-node-type-calendar {
-  --GC: #e464bc;
+  /*--GC: #e464bc;
   --HCC: #5cb665;
   --SC: #629fea;
+  */
 }
 body.page-node-type-calendar .loadhtmlwrapper {
   margin-top: 1em;
@@ -1132,6 +1134,7 @@ body.page-node-type-calendar .legend label {
   display: block;
   width: 100%;
   padding: 0.5em;
+  color: #fff;
 }
 body.page-node-type-calendar .legend .form-check {
   display: flex;
@@ -1163,7 +1166,7 @@ body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC {
   color: #fff;
 }
 body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column .Cell.GC:not(.Month) {
-  border-bottom: 20px solid #fff;
+  border-bottom: 0px solid #fff;
 }
 body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column .Cell.SC.Month {
   height: 25px;
@@ -1199,7 +1202,7 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.GC {
   color: #fff;
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.Month.GC.first span {
-  transform: rotate(-90deg);
+  /*transform: rotate(-90deg);*/
   margin: 0;
   padding: 0;
   display: block;
@@ -1251,7 +1254,7 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.f
   bottom: -50px;
   z-index: 98;
   font-size: 14px;
-  transform: rotate(-90deg);
+  /*transform: rotate(-90deg);*/
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.SabbathCount {
   text-align: right;
