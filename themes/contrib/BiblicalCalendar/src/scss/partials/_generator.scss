@@ -879,13 +879,13 @@ $lastGreatDay: #15be27;
 					display: block;
 					position: absolute;
 					top: 0px;
-					left: 5px;
+					right: 5px;
 					z-index: 56;
 					font-weight: bold;
 					text-shadow: 1px 1px #000;
 					font-size: 18px;
 					width: 100%;
-					text-align: left;
+					text-align: right;
 					color: $pentecost
 
 				}
@@ -1002,7 +1002,7 @@ body.page-node-type-calendar {
 		.daygrid {
 			font-size: 8px;
 			text-align: center;
-			width: 12px;
+			min-width: 12px;
 			&:before {
 				content: attr(day-of-week);
 				display: block;
@@ -1156,7 +1156,8 @@ body.page-node-type-calendar {
 
 						display: block;
 
-						text-indent: -18px;
+						text-align: left;
+						text-indent: 3px;
 
 						font-size: 15px;
 

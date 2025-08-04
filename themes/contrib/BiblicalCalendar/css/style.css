@@ -1036,13 +1036,13 @@
   display: block;
   position: absolute;
   top: 0px;
-  left: 5px;
+  right: 5px;
   z-index: 56;
   font-weight: bold;
   text-shadow: 1px 1px #000;
   font-size: 18px;
   width: 100%;
-  text-align: left;
+  text-align: right;
   color: #0de1ec;
 }
 .path-calendar #NewCalendarContainer .Column.feastoftabernaclesAndLGDmonth::before {
@@ -1136,7 +1136,7 @@ body.page-node-type-calendar .weekgrid {
 body.page-node-type-calendar .weekgrid .daygrid {
   font-size: 8px;
   text-align: center;
-  width: 12px;
+  min-width: 12px;
 }
 body.page-node-type-calendar .weekgrid .daygrid:before {
   content: attr(day-of-week);
@@ -1244,7 +1244,8 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.Month
   margin: 0;
   padding: 0;
   display: block;
-  text-indent: -18px;
+  text-align: left;
+  text-indent: 3px;
   font-size: 15px;
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell span {
