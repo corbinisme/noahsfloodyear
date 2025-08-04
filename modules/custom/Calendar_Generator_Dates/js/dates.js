@@ -203,7 +203,7 @@ window.addEventListener('load',
             let divvy = document.createElement("div");
             divvy.classList.add("weekgrid");
             divvy.setAttribute("data-date", datestring);
-            for(let i=1; i<=7; i++){
+            for(let i=1; i<=6; i++){
                 let daydiv = document.createElement("div");
                 daydiv.classList.add("daygrid");
                 // add one day to the dateObj
@@ -211,11 +211,23 @@ window.addEventListener('load',
                 // add one day to the dateObj
                 dateObj.setDate(dateObj.getDate() + 1);
 
+                let thisDay = "";
+                switch(i){
+                    case 1: thisDay = "S"; break;
+                    case 2: thisDay = "M"; break;
+                    case 3: thisDay = "T"; break;
+                    case 4: thisDay = "W"; break;
+                    case 5: thisDay = "T"; break;
+                    case 6: thisDay = "F"; break;
+                    default : thisDay = "Sat"; break;
+                }
 
                 let dateDisplay = dateObj.toLocaleString('en-us', {month: 'short'}) + " " + dateObj.getDate();
                 daydiv.setAttribute("data-date", dateObj.toDateString());
                 daydiv.setAttribute("data-day", dateDisplay);
                 daydiv.setAttribute("data-day-number", dateObj.getDate());
+                daydiv.setAttribute("day-of-week", thisDay);
+                daydiv.innerHTML = dateObj.getDate();
                 divvy.appendChild(daydiv);
             }
 
@@ -252,6 +264,13 @@ window.addEventListener('load',
                 }
             });
         }
+
+        // make all the columns equal in width.
+        document.querySelectorAll("#NewCalendarContainer .month").forEach(function(col){
+            let columns = col.querySelectorAll(".Column");
+            col.classList.add("columns-" + columns.length);
+        });
+
         if(document.querySelector(".page-node-type-calendar .legend")){
             document.querySelectorAll(".page-node-type-calendar .legend .form-check-input").forEach(function(input){
                // event listener
@@ -266,6 +285,10 @@ window.addEventListener('load',
                        body.classList.add(id);
                    }
                });
+            });
+
+            document.querySelectorAll(".page-node-type-calendar .legend .form-check-label").forEach(function(input){
+                var tooltip = new bootstrap.Tooltip(input)
             });
             document.querySelectorAll(".page-node-type-calendar .legend .form-check-label").forEach(function(input){
                // event listener on hover
