@@ -410,6 +410,8 @@
   height: 100%;
   width: 16.666%;
   color: #fff;
+  position: relative;
+  height: 12px;
 }
 .path-calendar .key:not(.keepThis) {
   display: none;
@@ -1134,6 +1136,7 @@ body.page-node-type-calendar .weekgrid {
 body.page-node-type-calendar .weekgrid .daygrid {
   font-size: 8px;
   text-align: center;
+  width: 12px;
 }
 body.page-node-type-calendar .weekgrid .daygrid:before {
   content: attr(day-of-week);
@@ -1141,6 +1144,10 @@ body.page-node-type-calendar .weekgrid .daygrid:before {
   text-align: center;
   font-weight: bold;
   font-size: 8px;
+  font-size: 8px;
+  position: absolute;
+  top: -12px;
+  width: 100%;
 }
 body.page-node-type-calendar #block-biblicalcalendar-page-title {
   text-align: center;
@@ -1271,6 +1278,7 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.M
   text-align: left;
   justify-content: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.Month.first span {
