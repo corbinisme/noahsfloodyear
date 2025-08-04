@@ -408,7 +408,7 @@
 }
 .path-calendar .weekgrid .daygrid {
   height: 100%;
-  width: 14.2857142857%;
+  width: 16.666%;
   color: #fff;
 }
 .path-calendar .key:not(.keepThis) {
@@ -1013,9 +1013,15 @@
   }
   */
 }
-.path-calendar #NewCalendarContainer div.month .Column .weekgrid:hover {
+.path-calendar #NewCalendarContainer div.month .Column {
+  position: relative;
+}
+.path-calendar #NewCalendarContainer div.month .Column:hover {
   transform: scale(1.5);
+  z-index: 786;
   transition: all 0.5s ease;
+}
+.path-calendar #NewCalendarContainer div.month .Column .weekgrid:hover {
   position: relative;
   z-index: 100;
   box-shadow: 0 0 5px #000;
@@ -1106,6 +1112,17 @@ body.page-node-type-calendar {
   --HCC: #5cb665;
   --SC: #629fea;
   */
+  /*
+  label[for='gregorianToggle'] {
+  	background: var(--GC);
+  }
+  label[for='hebrewToggle'] {
+  	background: var(--HCC);
+  }
+  label[for='solarToggle'] {
+  	background: var(--SC);
+  }
+  */
 }
 body.page-node-type-calendar .loadhtmlwrapper {
   margin-top: 1em;
@@ -1114,8 +1131,12 @@ body.page-node-type-calendar .weekgrid {
   height: 30px;
   background: var(--GC);
 }
-body.page-node-type-calendar .weekgrid .daygrid:after {
-  content: attr(data-day-number);
+body.page-node-type-calendar .weekgrid .daygrid {
+  font-size: 8px;
+  text-align: center;
+}
+body.page-node-type-calendar .weekgrid .daygrid:before {
+  content: attr(day-of-week);
   display: block;
   text-align: center;
   font-weight: bold;
@@ -1131,10 +1152,9 @@ body.page-node-type-calendar .legend {
   margin: 2em 0;
 }
 body.page-node-type-calendar .legend label {
-  display: block;
+  display: inline;
   width: 100%;
-  padding: 0.5em;
-  color: #fff;
+  padding: 0.25em;
 }
 body.page-node-type-calendar .legend .form-check {
   display: flex;
@@ -1142,18 +1162,9 @@ body.page-node-type-calendar .legend .form-check {
   align-items: center;
   margin-bottom: 0.5em;
 }
-body.page-node-type-calendar label[for=gregorianToggle] {
-  background: var(--GC);
-}
-body.page-node-type-calendar label[for=hebrewToggle] {
-  background: var(--HCC);
-}
-body.page-node-type-calendar label[for=solarToggle] {
-  background: var(--SC);
-}
 body.page-node-type-calendar .calendarWrapper {
   width: auto;
-  margin-left: 0;
+  margin-left: 2em;
   left: unset;
   background-color: transparent;
   padding: 0;
@@ -1185,10 +1196,30 @@ body.page-node-type-calendar #NewCalendarContainer {
   display: flex;
   flex-wrap: wrap;
 }
+body.page-node-type-calendar #NewCalendarContainer .Cell.GC:not(.first.Month) span {
+  align-items: baseline;
+}
+body.page-node-type-calendar #NewCalendarContainer .Cell.GC:not(.first.Month) span:before {
+  content: "SAT";
+  font-size: 8px;
+  margin-right: 3px;
+  display: inline-block;
+}
 body.page-node-type-calendar #NewCalendarContainer div.month {
   float: none;
   display: flex;
   flex: 1 33%;
+  /*&.columns-4 {
+  	flex: 1 25%;
+  	max-width: 25%;
+  	min-width: 25%;;
+  }
+  &.column-5 {
+  	flex: 1 20%;
+  	max-width: 20%;
+  	min-width: 20%;
+  }
+  	*/
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column {
   float: none;
@@ -1259,9 +1290,6 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.f
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.SabbathCount {
   text-align: right;
 }
-body.page-node-type-calendar #NewCalendarContainer div.month .Column:last-child {
-  margin-right: 10px;
-}
 @media (max-width: 991px) {
   body.page-node-type-calendar #NewCalendarContainer div.month {
     max-width: 100%;
@@ -1321,23 +1349,14 @@ body.page-node-type-calendar .mobileToggle.open svg, body.page-node-type-calenda
   transform: rotate(180deg);
 }
 body.page-node-type-calendar.gregorianToggle .Cell.GC, body.page-node-type-calendar.gregorianToggle .weekgrid {
-  display: none;
-}
-body.page-node-type-calendar.hover-gregorianToggle .Cell.SC, body.page-node-type-calendar.hover-gregorianToggle .Cell.HCC {
   background-color: #ccc !important;
   transition: all 0.3s ease;
 }
 body.page-node-type-calendar.hebrewToggle .Cell.HCC {
-  display: none !important;
-}
-body.page-node-type-calendar.hover-hebrewToggle .Cell.GC, body.page-node-type-calendar.hover-hebrewToggle .weekgrid, body.page-node-type-calendar.hover-hebrewToggle .Cell.SC {
   background-color: #ccc !important;
   transition: all 0.3s ease;
 }
 body.page-node-type-calendar.solarToggle .Cell.SC {
-  display: none;
-}
-body.page-node-type-calendar.hover-solarToggle .Cell.GC, body.page-node-type-calendar.hover-solarToggle .weekgrid, body.page-node-type-calendar.hover-solarToggle .Cell.HCC {
   background-color: #ccc !important;
   transition: all 0.3s ease;
 }

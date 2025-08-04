@@ -96,7 +96,7 @@ $lastGreatDay: #15be27;
 		display: flex;
 		.daygrid {
 			height: 100%;
-			width: 14.28571428571429%;
+			width: 16.666%;
 			color: #fff;
 
 			
@@ -838,6 +838,13 @@ $lastGreatDay: #15be27;
 			
 
 			.Column {
+				position: relative;
+
+				&:hover {
+					transform: scale(1.5);
+					z-index: 786;
+					transition: all .5s ease;
+				}
 
 
 
@@ -845,9 +852,7 @@ $lastGreatDay: #15be27;
 
 				.weekgrid:hover {
 
-					transform: scale(1.5);
-
-					transition: all .5s ease;
+					
 
 					position: relative;
 
@@ -993,8 +998,10 @@ body.page-node-type-calendar {
 		background: var(--GC);
 
 		.daygrid {
-			&:after {
-				content: attr(data-day-number);
+			font-size: 8px;
+			text-align: center;
+			&:before {
+				content: attr(day-of-week);
 				display: block;
 				text-align: center;
 				font-weight: bold;
@@ -1018,10 +1025,10 @@ body.page-node-type-calendar {
 	.legend {
 		margin: 2em 0;
 		label {
-			display:block;
+			display:inline;
 			width: 100%;
-			padding: .5em;
-			color: #fff;
+			padding: .25em;
+			//color: #fff;
 		}
 		.form-check {
 			display: flex;
@@ -1030,6 +1037,7 @@ body.page-node-type-calendar {
 			margin-bottom: .5em;
 		}
 	}
+	/*
 	label[for='gregorianToggle'] {
 		background: var(--GC);
 	}
@@ -1039,10 +1047,11 @@ body.page-node-type-calendar {
 	label[for='solarToggle'] {
 		background: var(--SC);
 	}
+	*/
 
 	.calendarWrapper {
 		width: auto;
-		margin-left: 0;
+		margin-left: 2em;
 		left: unset;
 		background-color: transparent;
 		padding: 0;
@@ -1085,6 +1094,17 @@ body.page-node-type-calendar {
 
 		flex-wrap: wrap;
 
+		.Cell.GC:not(.first.Month) {
+			span {
+				align-items: baseline;
+				&:before {
+					content: "SAT";
+					font-size: 8px;
+					margin-right: 3px;
+					display: inline-block;
+				}
+			}
+		}
 		
 
 		div.month {
@@ -1094,6 +1114,17 @@ body.page-node-type-calendar {
 			display: flex;
 
 			flex: 1 33%;
+			/*&.columns-4 {
+				flex: 1 25%;
+				max-width: 25%;
+				min-width: 25%;;
+			}
+			&.column-5 {
+				flex: 1 20%;
+				max-width: 20%;
+				min-width: 20%;
+			}
+				*/
 
 			.Column {
 
@@ -1197,11 +1228,7 @@ body.page-node-type-calendar {
 
 				flex: 1 auto;
 
-				&:last-child {
-
-					margin-right: 10px;
-
-				}
+				
 			}
 
 
@@ -1282,40 +1309,25 @@ body.page-node-type-calendar {
 
 	&.gregorianToggle {
 		.Cell.GC, .weekgrid {
-			display: none;
-		}
-	}
-	&.hover-gregorianToggle {
-		.Cell.SC, .Cell.HCC {
 			background-color: #ccc!important;
 			transition: all .3s ease;
 		}
-		
 	}
+	
 	&.hebrewToggle {
 		.Cell.HCC {
-			display: none!important;
-		}
-	}
-	&.hover-hebrewToggle {
-		.Cell.GC, .weekgrid, .Cell.SC {
 			background-color: #ccc!important;
 			transition: all .3s ease;
 		}
-		
 	}
+	
 	&.solarToggle {
 		.Cell.SC {
-			display: none;
-		}
-	}
-	&.hover-solarToggle {
-		.Cell.GC, .weekgrid, .Cell.HCC {
 			background-color: #ccc!important;
 			transition: all .3s ease;
 		}
-		
 	}
+	
 	main {
 		> .container {
 			> .row .order-1 .region-content article .node__content .layout--twocol-section{
