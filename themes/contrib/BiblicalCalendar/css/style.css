@@ -1169,6 +1169,16 @@ body.page-node-type-calendar .legend .form-check {
   align-items: center;
   margin-bottom: 0.5em;
 }
+body.page-node-type-calendar .hcc-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+body.page-node-type-calendar .hcc-wrapper .HCC {
+  order: 2;
+}
+body.page-node-type-calendar .hcc-wrapper .HCC.Month {
+  order: 1;
+}
 body.page-node-type-calendar .calendarWrapper {
   width: auto;
   margin-left: 2em;
@@ -1255,46 +1265,26 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell span 
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC {
   background-color: var(--HCC);
-  height: 90px;
-}
-body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.first:not(.Month) {
-  height: 84px;
-}
-body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.first:not(.Month) span {
-  position: relative;
-  top: -6px;
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.Month {
   background-color: var(--HCC);
   color: #7f9aac;
   position: relative;
-  height: 0px;
   padding: 0;
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.Month.first {
   white-space: nowrap;
-  text-shadow: 1px 1px 5px #000000;
   color: #fff;
   padding: 3px;
   text-align: left;
-  justify-content: center;
+  font-size: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.Month.first span {
+  justify-content: start;
   position: relative;
   z-index: 98;
-}
-body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.first.Month span {
-  position: absolute;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  bottom: -50px;
-  z-index: 98;
-  font-size: 14px;
-  /*transform: rotate(-90deg);*/
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.SabbathCount {
   text-align: right;

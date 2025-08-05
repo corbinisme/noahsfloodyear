@@ -154,7 +154,7 @@ window.addEventListener('load',
         calendar.getDates();
         
        
-        calendar.binding();
+        
         
         calendar.expandContent();
         //calendar.additionalLegend();
@@ -164,6 +164,7 @@ window.addEventListener('load',
         calendar.updateThreeBoxes();
         calendar.labelDates();
         calendar.placeHolyDays();
+        calendar.binding();
         
     },
     labelDates: function(){
@@ -269,7 +270,36 @@ window.addEventListener('load',
         document.querySelectorAll("#NewCalendarContainer .month").forEach(function(col){
             let columns = col.querySelectorAll(".Column");
             col.classList.add("columns-" + columns.length);
+
+    
+            
         });
+        document.querySelectorAll("#NewCalendarContainer .Column").forEach(function(col){
+            const hccDivs = col.querySelectorAll('.HCC');
+
+            // Ensure there are at least two "HCC" divs to wrap
+            if (hccDivs.length >= 2) {
+                // Create the new wrapper div
+                const wrapperDiv = document.createElement('div');
+                wrapperDiv.classList.add('hcc-wrapper'); // Add a class to your wrapper for styling if needed
+
+                // Get the first two "HCC" divs
+                const div1 = hccDivs[0];
+                const div2 = hccDivs[1];
+
+                // Insert the wrapper before the first HCC div
+                div1.parentNode.insertBefore(wrapperDiv, div1);
+
+                // Append the two HCC divs to the wrapper
+                wrapperDiv.appendChild(div1);
+                wrapperDiv.appendChild(div2);
+
+                console.log('HCC divs successfully wrapped!');
+            } else {
+                console.log('Not enough divs with class "HCC" found to wrap.');
+            }
+        });
+        
 
         if(document.querySelector(".page-node-type-calendar .legend")){
             document.querySelectorAll(".page-node-type-calendar .legend .form-check-input").forEach(function(input){
@@ -888,13 +918,20 @@ window.addEventListener('load',
             unleavenedbreadStart.classList.add("bg-unleavenedbread");
         }
         // loop through the dates of unleavened bread
-        for(let i=1;i<7;i++){
+        for(let i=1;i<6;i++){
             //console.log("setting unleavened bread date", i)
             unleavenedbreadDateObj.setDate(unleavenedbreadDateObj.getDate() + 1);
             let month = unleavenedbreadDateObj.toLocaleString('en-us', {month: 'short'});
             let day = unleavenedbreadDateObj.getDate();
             //console.log("unleavened bread date", month, day);
-            document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-unleavenedbread");
+            if(document.querySelector(".daygrid[data-day='" + month + " " + day + "']")){
+                document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-unleavenedbread");
+            } else {
+                //  // maybe it is a sabbath?
+                console.log("maybe the sabbath date", month, day, "is not in the calendar");
+            }
+            
+           
         }
         
         // check if the last great day is in a new month or not
