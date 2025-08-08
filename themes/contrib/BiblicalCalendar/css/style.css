@@ -228,31 +228,56 @@
   --SC: #0000AA;
 }
 
+.border-radius-10, .bg-lastgreatday span, .bg-lastgreatday, .bg-tabernacles span, .bg-tabernaclesend span, .bg-tabernacles, .bg-tabernaclesend, .bg-atonement span, .bg-atonement, .bg-trumpets span, .bg-trumpets, .bg-pentecost span, .bg-pentecost, .bg-unleavenedbread span, .bg-unleavenedbreadend span, .bg-unleavenedbread, .bg-unleavenedbreadend, .bg-passover span, .bg-passover {
+  border-radius: 10px;
+}
+
 .bg-passover {
+  background-color: #f70d48;
+}
+.bg-passover span {
   background-color: #f70d48;
 }
 
 .bg-unleavenedbread, .bg-unleavenedbreadend {
   background-color: #a07833;
 }
+.bg-unleavenedbread span, .bg-unleavenedbreadend span {
+  background-color: #a07833;
+}
 
 .bg-pentecost {
+  background-color: #0de1ec;
+}
+.bg-pentecost span {
   background-color: #0de1ec;
 }
 
 .bg-trumpets {
   background-color: #f2d316;
 }
+.bg-trumpets span {
+  background-color: #f2d316;
+}
 
 .bg-atonement {
+  background-color: #e647fb;
+}
+.bg-atonement span {
   background-color: #e647fb;
 }
 
 .bg-tabernacles, .bg-tabernaclesend {
   background-color: #fa8a48;
 }
+.bg-tabernacles span, .bg-tabernaclesend span {
+  background-color: #fa8a48;
+}
 
 .bg-lastgreatday {
+  background-color: #15be27;
+}
+.bg-lastgreatday span {
   background-color: #15be27;
 }
 
@@ -1018,11 +1043,6 @@
 .path-calendar #NewCalendarContainer div.month .Column {
   position: relative;
 }
-.path-calendar #NewCalendarContainer div.month .Column:hover {
-  transform: scale(1.5);
-  z-index: 786;
-  transition: all 0.5s ease;
-}
 .path-calendar #NewCalendarContainer div.month .Column .weekgrid:hover {
   position: relative;
   z-index: 100;
@@ -1126,8 +1146,35 @@ body.page-node-type-calendar {
   }
   */
 }
+body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column .Cell {
+  text-align: right;
+}
 body.page-node-type-calendar .loadhtmlwrapper {
   margin-top: 1em;
+}
+body.page-node-type-calendar .Column .hcc-wrapper {
+  position: relative;
+}
+body.page-node-type-calendar .Column .hcc-wrapper:hover {
+  transform: scale(1.5);
+  z-index: 786;
+  transition: all 0.5s ease;
+}
+body.page-node-type-calendar .Column .sc-wrapper {
+  position: relative;
+}
+body.page-node-type-calendar .Column .sc-wrapper:hover {
+  transform: scale(1.5);
+  z-index: 786;
+  transition: all 0.5s ease;
+}
+body.page-node-type-calendar .Column .gc-wrapper {
+  position: relative;
+}
+body.page-node-type-calendar .Column .gc-wrapper:hover {
+  transform: scale(1.5);
+  z-index: 786;
+  transition: all 0.5s ease;
 }
 body.page-node-type-calendar .weekgrid {
   height: 30px;
@@ -1215,6 +1262,7 @@ body.page-node-type-calendar #NewCalendarContainer {
 }
 body.page-node-type-calendar #NewCalendarContainer .Cell.GC:not(.first.Month) span {
   align-items: baseline;
+  display: inline;
 }
 body.page-node-type-calendar #NewCalendarContainer .Cell.GC:not(.first.Month) span:before {
   content: "SAT";

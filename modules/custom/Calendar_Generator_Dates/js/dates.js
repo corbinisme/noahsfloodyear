@@ -203,6 +203,7 @@ window.addEventListener('load',
 
             let divvy = document.createElement("div");
             divvy.classList.add("weekgrid");
+            divvy.classList.add("GC")
             divvy.setAttribute("data-date", datestring);
             for(let i=1; i<=6; i++){
                 let daydiv = document.createElement("div");
@@ -250,6 +251,40 @@ window.addEventListener('load',
 
     },
     binding: function(){
+
+        if(document.querySelector("body").classList.contains("page-node-type-calendar")){
+            // make hover events on calendar types
+            document.querySelectorAll(".page-node-type-calendar .Column .GC").forEach(function(el){
+                el.addEventListener("mouseover", function(e){
+                    const col = e.target.closest(".Column");
+                    col.classList.add("hoverGC")
+                });
+                el.addEventListener("mouseout", function(e){
+                    const col = e.target.closest(".Column");
+                    col.classList.remove("hoverGC")
+                });
+            });
+            document.querySelectorAll(".page-node-type-calendar .Column .HCC").forEach(function(el){
+                el.addEventListener("mouseover", function(e){
+                    const col = e.target.closest(".Column");
+                    col.classList.add("hoverHCC")
+                });
+                el.addEventListener("mouseout", function(e){
+                    const col = e.target.closest(".Column");
+                    col.classList.remove("hoverHCC")
+                });
+            });
+            document.querySelectorAll(".page-node-type-calendar .Column .SC").forEach(function(el){
+                el.addEventListener("mouseover", function(e){
+                    const col = e.target.closest(".Column");
+                    col.classList.add("hoverSC")
+                });
+                el.addEventListener("mouseout", function(e){
+                    const col = e.target.closest(".Column");
+                    col.classList.remove("hoverSC")
+                });
+            });
+        }
         if(document.querySelector(".mobileToggle")){
             document.querySelector(".mobileToggle").addEventListener("click", function(e){
                 e.preventDefault();
@@ -275,28 +310,43 @@ window.addEventListener('load',
             
         });
         document.querySelectorAll("#NewCalendarContainer .Column").forEach(function(col){
+            // Wrap first two HCC divs
             const hccDivs = col.querySelectorAll('.HCC');
-
-            // Ensure there are at least two "HCC" divs to wrap
             if (hccDivs.length >= 2) {
-                // Create the new wrapper div
                 const wrapperDiv = document.createElement('div');
-                wrapperDiv.classList.add('hcc-wrapper'); // Add a class to your wrapper for styling if needed
-
-                // Get the first two "HCC" divs
+                wrapperDiv.classList.add('hcc-wrapper');
                 const div1 = hccDivs[0];
                 const div2 = hccDivs[1];
-
-                // Insert the wrapper before the first HCC div
                 div1.parentNode.insertBefore(wrapperDiv, div1);
-
-                // Append the two HCC divs to the wrapper
                 wrapperDiv.appendChild(div1);
                 wrapperDiv.appendChild(div2);
+                
+            } 
 
-                console.log('HCC divs successfully wrapped!');
-            } else {
-                console.log('Not enough divs with class "HCC" found to wrap.');
+            // Wrap first two SC divs
+            const scDivs = col.querySelectorAll('.SC');
+            if (scDivs.length >= 2) {
+                const scWrapperDiv = document.createElement('div');
+                scWrapperDiv.classList.add('sc-wrapper');
+                const scDiv1 = scDivs[0];
+                const scDiv2 = scDivs[1];
+                scDiv1.parentNode.insertBefore(scWrapperDiv, scDiv1);
+                scWrapperDiv.appendChild(scDiv1);
+                scWrapperDiv.appendChild(scDiv2);
+            }
+
+            // Wrap first three GC divs
+            const gcDivs = col.querySelectorAll('.GC');
+            if (gcDivs.length >= 3) {
+                const gcWrapperDiv = document.createElement('div');
+                gcWrapperDiv.classList.add('gc-wrapper');
+                const gcDiv1 = gcDivs[0];
+                const gcDiv2 = gcDivs[1];
+                const gcDiv3 = gcDivs[2];
+                gcDiv1.parentNode.insertBefore(gcWrapperDiv, gcDiv1);
+                gcWrapperDiv.appendChild(gcDiv1);
+                gcWrapperDiv.appendChild(gcDiv2);
+                gcWrapperDiv.appendChild(gcDiv3);
             }
         });
         
@@ -829,17 +879,18 @@ window.addEventListener('load',
             
             let weekgrid = secondDateColumnNode.querySelector(".weekgrid");
             if(weekgrid){
-            weekgrid.querySelectorAll(".daygrid").forEach(function(dg){
-                let dgDate = dg.getAttribute("data-date");
-                //console.log(dgDate, date)
-                let dgDateParts = dgDate.split(" ");
-                let dgDay = parseInt(dgDateParts[2]);
-                if(dgDay == day){
-                    dg.classList.add("holyday");
-                    dg.classList.add("bg-"+key);
-                }
-            });
+                weekgrid.querySelectorAll(".daygrid").forEach(function(dg){
+                    let dgDate = dg.getAttribute("data-date");
+                    //console.log(dgDate, date)
+                    let dgDateParts = dgDate.split(" ");
+                    let dgDay = parseInt(dgDateParts[2]);
+                    if(dgDay == day){
+                        dg.classList.add("holyday");
+                        dg.classList.add("bg-"+key);
+                    }
+                });
             }
+            //console.log("maybe this single holy day falls on a sabbath", day)
 
             /*
             if(secondDateColumnNode.querySelector(".holydayoverlay")){
@@ -908,7 +959,18 @@ window.addEventListener('load',
             let month = tabernaclesStartDateObj.toLocaleString('en-us', {month: 'short'});
             let day = tabernaclesStartDateObj.getDate();
             //console.log("tabernacles date", month, day);
-            document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-tabernacles");
+            if(document.querySelector(".daygrid[data-day='" + month + " " + day + "']")) {
+                document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-tabernacles");
+
+            } else {
+                // maybe its a sabbath
+                let sabbathDate = document.querySelector(".Cell[month='" + month + "'][data-day='" + day + "']");
+                if(sabbathDate){
+                    sabbathDate.querySelector("span").classList.add("bg-tabernacles");
+                }
+            }
+
+
         }
 
         let unleavenedbreadDate = calendar.dates.unleavenedbread;
@@ -918,7 +980,7 @@ window.addEventListener('load',
             unleavenedbreadStart.classList.add("bg-unleavenedbread");
         }
         // loop through the dates of unleavened bread
-        for(let i=1;i<6;i++){
+        for(let i=1;i<7;i++){
             //console.log("setting unleavened bread date", i)
             unleavenedbreadDateObj.setDate(unleavenedbreadDateObj.getDate() + 1);
             let month = unleavenedbreadDateObj.toLocaleString('en-us', {month: 'short'});
@@ -929,6 +991,10 @@ window.addEventListener('load',
             } else {
                 //  // maybe it is a sabbath?
                 console.log("maybe the sabbath date", month, day, "is not in the calendar");
+                let sabbathDate = document.querySelector(".Cell[month='" + month + "'][data-day='" + day + "']");
+                if(sabbathDate){
+                    sabbathDate.querySelector("span").classList.add("bg-unleavenedbread");
+                }
             }
             
            

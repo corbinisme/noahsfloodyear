@@ -16,26 +16,65 @@ $atonement: #e647fb;
 $tabernacles: #fa8a48;
 $lastGreatDay: #15be27;
 
+.border-radius-10 {
+	border-radius: 10px;
+}
+
 .bg-passover {
 	background-color: $passover;
+	@extend .border-radius-10;
+	span {
+		background-color: $passover;
+		@extend .border-radius-10;
+	}
 }
 .bg-unleavenedbread, .bg-unleavenedbreadend {
 	background-color: $unleavenedBread;
+	@extend .border-radius-10;
+	span {
+		background-color: $unleavenedBread;
+		@extend .border-radius-10;
+	}
 }
 .bg-pentecost {
 	background-color: $pentecost;
+	@extend .border-radius-10;
+	span {
+		background-color: $pentecost;
+		@extend .border-radius-10;
+	}
 }
 .bg-trumpets {
 	background-color: $trumpets;
+	@extend .border-radius-10;
+	span {
+		background-color: $trumpets;
+		@extend .border-radius-10;
+	}
 }
 .bg-atonement {
 	background-color: $atonement;
+	@extend .border-radius-10;
+	span {
+		background-color: $atonement;
+		@extend .border-radius-10;
+	}
 }
 .bg-tabernacles, .bg-tabernaclesend {
 	background-color: $tabernacles;
+	@extend .border-radius-10;
+	span {
+		background-color: $tabernacles;
+		@extend .border-radius-10;
+	}
 }
 .bg-lastgreatday {
 	background-color: $lastGreatDay;
+	@extend .border-radius-10;
+	span {
+		background-color: $lastGreatDay;
+		@extend .border-radius-10;
+	}
 }
 
 
@@ -842,15 +881,7 @@ $lastGreatDay: #15be27;
 			.Column {
 				position: relative;
 
-				&:hover {
-					transform: scale(1.5);
-					z-index: 786;
-					transition: all .5s ease;
-				}
-
-
-
-
+				
 
 				.weekgrid:hover {
 
@@ -991,8 +1022,41 @@ body.page-node-type-calendar {
 	--SC: #629fea;
 	*/
 
+	.calendarWrapper .calendarMarkup .Column .Cell {
+		text-align: right;
+	}
+
 	.loadhtmlwrapper  {
 		margin-top: 1em;
+	}
+
+	.Column {
+		.hcc-wrapper {
+			position: relative;
+			&:hover {
+				transform: scale(1.5);
+				z-index: 786;
+				transition: all .5s ease;
+			}
+		}
+		.sc-wrapper {
+			position: relative;
+			&:hover {
+				transform: scale(1.5);
+				z-index: 786;
+				transition: all .5s ease;
+				
+			}
+		}
+		.gc-wrapper {
+			position: relative;
+			&:hover {
+				transform: scale(1.5);
+				z-index: 786;
+				transition: all .5s ease;
+
+			}
+		}
 	}
 
 	.weekgrid { 
@@ -1116,6 +1180,7 @@ body.page-node-type-calendar {
 		.Cell.GC:not(.first.Month) {
 			span {
 				align-items: baseline;
+				display: inline;
 				&:before {
 					content: "SAT";
 					font-size: 8px;
