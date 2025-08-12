@@ -1234,6 +1234,11 @@ body.page-node-type-calendar {
   }
   */
 }
+@media (max-width: 991px) {
+  body.page-node-type-calendar main > .container {
+    padding: 0;
+  }
+}
 body.page-node-type-calendar .bg-tabernacles, body.page-node-type-calendar .bg-tabernaclesend, body.page-node-type-calendar .bg-passover, body.page-node-type-calendar .bg-unleavenedbread, body.page-node-type-calendar .bg-pentecost, body.page-node-type-calendar .bg-trumpets, body.page-node-type-calendar .bg-atonement, body.page-node-type-calendar .bg-lastgreatday {
   border-radius: 10px;
 }
@@ -1319,10 +1324,15 @@ body.page-node-type-calendar .hcc-wrapper .HCC.Month {
 }
 body.page-node-type-calendar .calendarWrapper {
   width: auto;
-  margin-left: 2em;
+  margin-left: 0;
   left: unset;
   background-color: transparent;
   padding: 0;
+}
+@media (min-width: 992px) {
+  body.page-node-type-calendar .calendarWrapper {
+    margin-left: 2em;
+  }
 }
 body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column {
   background: transparent;

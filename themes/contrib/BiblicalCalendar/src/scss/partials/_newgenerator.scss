@@ -4,6 +4,12 @@ body.page-node-type-calendar {
 	--HCC: #5cb665;
 	--SC: #629fea;
 	*/
+    main>.container {
+        @include respond-below(md){
+            padding: 0;
+        }
+    }
+
 
     .bg-tabernacles, .bg-tabernaclesend, .bg-passover, .bg-unleavenedbread, .bg-pentecost, .bg-trumpets, .bg-atonement, .bg-lastgreatday {
         border-radius: 10px;
@@ -121,7 +127,10 @@ body.page-node-type-calendar {
 
 	.calendarWrapper {
 		width: auto;
-		margin-left: 2em;
+        margin-left: 0;
+        @include respond-above(md){
+		    margin-left: 2em;
+        }
 		left: unset;
 		background-color: transparent;
 		padding: 0;
