@@ -11,11 +11,13 @@ $bodyBG: #fff;
 @import "partials/mediafunctions";  
 @import 'partials/front'; 
 @import 'partials/generator';  
+@import 'partials/newgenerator'; 
 @import 'partials/charts';
 @import 'partials/timeline'; 
 @import 'partials/articles';
 @import 'partials/hero'; 
 @import 'partials/audiovideo';  
+
  
 body {
     overflow-x: hidden;   

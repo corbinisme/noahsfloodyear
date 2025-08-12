@@ -229,7 +229,9 @@ window.addEventListener('load',
                 daydiv.setAttribute("data-day", dateDisplay);
                 daydiv.setAttribute("data-day-number", dateObj.getDate());
                 daydiv.setAttribute("day-of-week", thisDay);
-                daydiv.innerHTML = dateObj.getDate();
+                if(document.querySelector("body").classList.contains("page-node-type-calendar")){
+                daydiv.innerHTML =  dateObj.getDate();
+                }
                 divvy.appendChild(daydiv);
             }
 

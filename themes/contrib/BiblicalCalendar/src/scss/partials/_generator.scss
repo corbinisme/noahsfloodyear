@@ -22,58 +22,58 @@ $lastGreatDay: #15be27;
 
 .bg-passover {
 	background-color: $passover;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $passover;
-		@extend .border-radius-10;
+		
 	}
 }
 .bg-unleavenedbread, .bg-unleavenedbreadend {
 	background-color: $unleavenedBread;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $unleavenedBread;
-		@extend .border-radius-10;
+		
 	}
 }
 .bg-pentecost {
 	background-color: $pentecost;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $pentecost;
-		@extend .border-radius-10;
+		
 	}
 }
 .bg-trumpets {
 	background-color: $trumpets;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $trumpets;
-		@extend .border-radius-10;
+		
 	}
 }
 .bg-atonement {
 	background-color: $atonement;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $atonement;
-		@extend .border-radius-10;
+		
 	}
 }
 .bg-tabernacles, .bg-tabernaclesend {
 	background-color: $tabernacles;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $tabernacles;
-		@extend .border-radius-10;
+		
 	}
 }
 .bg-lastgreatday {
 	background-color: $lastGreatDay;
-	@extend .border-radius-10;
+	
 	span {
 		background-color: $lastGreatDay;
-		@extend .border-radius-10;
+		
 	}
 }
 
@@ -1015,427 +1015,7 @@ $lastGreatDay: #15be27;
 
 } 
 
-body.page-node-type-calendar {
 
-	/*--GC: #e464bc;
-	--HCC: #5cb665;
-	--SC: #629fea;
-	*/
-
-	.calendarWrapper .calendarMarkup .Column .Cell {
-		text-align: right;
-	}
-
-	.loadhtmlwrapper  {
-		margin-top: 1em;
-	}
-
-	.Column {
-		.hcc-wrapper {
-			position: relative;
-			&:hover {
-				transform: scale(1.5);
-				z-index: 786;
-				transition: all .5s ease;
-			}
-		}
-		.sc-wrapper {
-			position: relative;
-			&:hover {
-				transform: scale(1.5);
-				z-index: 786;
-				transition: all .5s ease;
-				
-			}
-		}
-		.gc-wrapper {
-			position: relative;
-			&:hover {
-				transform: scale(1.5);
-				z-index: 786;
-				transition: all .5s ease;
-
-			}
-		}
-	}
-
-	.weekgrid { 
-		height: 30px;
-		background: var(--GC);
-
-		.daygrid {
-			font-size: 8px;
-			text-align: center;
-			min-width: 12px;
-			&:before {
-				content: attr(day-of-week);
-				display: block;
-				text-align: center;
-				font-weight: bold;
-				font-size: 8px;
-				font-size: 8px;
-				position: absolute;
-				top: -12px;
-				width: 100%;
-			}
-		}
-	}
-
-	#block-biblicalcalendar-page-title {
-		text-align: center;
-
-		
-	}
-	#block-biblicalcalendar-breadcrumbs {
-		.breadcrumb {
-			display: none
-		}
-	}
-
-
-	.legend {
-		margin: 2em 0;
-		label {
-			display:inline;
-			width: 100%;
-			padding: .25em;
-			//color: #fff;
-		}
-		.form-check {
-			display: flex;
-			gap: 1em;
-			align-items: center;
-			margin-bottom: .5em;
-		}
-	}
-	/*
-	label[for='gregorianToggle'] {
-		background: var(--GC);
-	}
-	label[for='hebrewToggle'] {
-		background: var(--HCC);
-	}
-	label[for='solarToggle'] {
-		background: var(--SC);
-	}
-	*/
-
-	.hcc-wrapper {
-		display: flex;
-		flex-direction: column;
-
-		.HCC {
-			order: 2;
-			&.Month {
-				order:1;
-			}
-		}
-	}
-
-	.calendarWrapper {
-		width: auto;
-		margin-left: 2em;
-		left: unset;
-		background-color: transparent;
-		padding: 0;
-		.calendarMarkup .Column {
-			background: transparent;
-
-			.Cell {
-				&.GC {
-				background-color: var(--GC);
-				color: #fff;
-
-					&:not(.Month) {
-						border-bottom: 0px solid #fff;
-					}
-				}
-				&.SC.Month {
-					height: 25px;
-					span {
-						font-size: 14px;
-					}
-					&.SabbathCountEnd {
-						font-size: inherit;
-					}
-				}
-
-			}
-			
-		}
-	}
-
-	&.amyear-1 {
-		.month.Mar[data-month-count="1"] {
-			justify-content: flex-end;
-		}
-	}
-
-	#NewCalendarContainer {
-		margin-bottom: 2em;
-		display: flex;
-
-		flex-wrap: wrap;
-
-		.Cell.GC:not(.first.Month) {
-			span {
-				align-items: baseline;
-				display: inline;
-				&:before {
-					content: "SAT";
-					font-size: 8px;
-					margin-right: 3px;
-					display: inline-block;
-				}
-			}
-		}
-		
-
-		div.month {
-			
-			float: none;
-
-			display: flex;
-
-			flex: 1 33%;
-			/*&.columns-4 {
-				flex: 1 25%;
-				max-width: 25%;
-				min-width: 25%;;
-			}
-			&.column-5 {
-				flex: 1 20%;
-				max-width: 20%;
-				min-width: 20%;
-			}
-				*/
-
-			.Column {
-
-				.Cell {
-
-					&.GC {
-						background-color: var(--GC);
-						color: #fff;
-					}
-
-				&.Month.GC.first {
-
-					span {
-
-						/*transform: rotate(-90deg);*/
-
-						margin: 0;
-
-						
-
-						padding: 0;
-
-						display: block;
-
-						text-align: left;
-						text-indent: 3px;
-
-						font-size: 15px;
-
-					}
-
-				}
-				span {
-					display: flex;
-					justify-content: end;
-					margin-right: 2px;
-				}
-				&.HCC {
-					background-color: var(--HCC);
-					
-					
-					&.Month {
-							background-color: var(--HCC);
-							color: #7f9aac;
-							position: relative;
-				
-							
-							padding: 0;
-							&.first {
-								
-								white-space: nowrap;
-								
-								color: #fff;
-								padding: 3px;
-								text-align: left;
-								font-size: 15px;
-
-								display: flex;
-								flex-direction: column;
-
-								span {
-									justify-content: start;
-									position: relative;
-									z-index: 98
-								}
-							}
-							
-						}
-					
-				}
-				&.SabbathCount {
-					text-align: right;
-				}
-			}
-				float: none;
-
-				width: auto;
-
-				min-width: 1px;
-
-				max-width: 25%;
-
-				flex: 1 auto;
-
-				
-			}
-
-
-
-			@include respond-below(md){
-
-				max-width: 100%;
-
-				flex: 1 100%;
-
-			}
-
-		}
-	}
-
-	#yearBar {
-		background: #eee;
-		border: 1px solid #ccc;
-		border-radius: 1em;
-		padding: 0 30px;
-		font-size: 2em;
-		margin-bottom: 35px;
-		
-		.d-flex {
-			display: flex;
-			justify-content: space-between;
-		}
-
-		.yearAction {
-			text-decoration: none;
-			font-weight: bold;
-		}
-	}
-
-	.view-id-faqs {
-		.view-content .views-row {
-			.views-field-title {
-				display: none;
-			}
-		}
-		@include respond-below(md){
-			.view-header {
-				display: none;
-			}
-			.view-content .views-row {
-				.views-field-title {
-					display: block;
-					margin-bottom: .3em
-				}
-			}
-		}
-		.content-pane {
-			display: none;
-			&.active {
-				display: block;
-			}
-		}
-	}
-	.mobileToggle {
-		@include respond-above(md){
-			display: none;
-		}
-		position: fixed;
-		margin: 0;
-		left: 0;
-		top: 50%;
-		z-index: 100;
-		i, svg {
-			transition: all .3s ease;
-		}
-
-		&.open {
-			svg, i {
-				transform: rotate(180deg);
-			}
-		}
-	}
-
-	&.gregorianToggle {
-		.Cell.GC, .weekgrid {
-			background-color: #ccc!important;
-			transition: all .3s ease;
-		}
-	}
-	
-	&.hebrewToggle {
-		.Cell.HCC {
-			background-color: #ccc!important;
-			transition: all .3s ease;
-		}
-	}
-	
-	&.solarToggle {
-		.Cell.SC {
-			background-color: #ccc!important;
-			transition: all .3s ease;
-		}
-	}
-	
-	main {
-		> .container {
-			> .row .order-1 .region-content article .node__content .layout--twocol-section{
-				@include respond-below(md){
-					flex-wrap: nowrap;
-					flex-direction: row;
-					position: relative;
-					
-				}
-			}
-
-			article .layout__region--first {
-				@include respond-below(md){
-					position: absolute;
-					top: 0;
-					left: 0px;
-					transform: translateX(-100vw);
-					transition: all .3s ease;
-					margin-left: 1em;
-					width: calc(100% - 2em);
-					padding: 1em;
-				
-
-					&.open {
-						transform: translateX(0);
-						box-shadow: 0 0 5px #000;
-						background: #fff;
-						z-index: 100;
-					}
-				}
-				
-			}
-			article .layout__region--second {
-				@include respond-below(md){
-					margin-left: 0;
-					width: 100%;
-					padding: 1em;
-					flex: 1 100%;
-				}
-			}
-		}
-	}
-}
 
 
 

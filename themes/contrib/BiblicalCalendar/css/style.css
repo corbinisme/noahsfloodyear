@@ -228,7 +228,7 @@
   --SC: #0000AA;
 }
 
-.border-radius-10, .bg-lastgreatday span, .bg-lastgreatday, .bg-tabernacles span, .bg-tabernaclesend span, .bg-tabernacles, .bg-tabernaclesend, .bg-atonement span, .bg-atonement, .bg-trumpets span, .bg-trumpets, .bg-pentecost span, .bg-pentecost, .bg-unleavenedbread span, .bg-unleavenedbreadend span, .bg-unleavenedbread, .bg-unleavenedbreadend, .bg-passover span, .bg-passover {
+.border-radius-10 {
   border-radius: 10px;
 }
 
@@ -1129,6 +1129,94 @@
   height: 120px;
 }
 
+.view-faqs .views-field-title a {
+  display: block;
+  padding: 1em;
+  background: #eee;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+}
+.view-faqs .views-field-title a.active, .view-faqs .views-field-title a:active {
+  background-color: #2196F3;
+  color: #fff;
+}
+.view-faqs .views-field-title a.active::after, .view-faqs .views-field-title a:active::after {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 0;
+  position: relative;
+  bottom: -27px;
+  z-index: 5;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #2196F3;
+}
+
+.view-id-this_year_stats .views-row {
+  display: flex;
+  flex-direction: column;
+}
+.view-id-this_year_stats .views-row .views-field {
+  display: flex;
+}
+.view-id-this_year_stats .views-row .views-label {
+  flex: 1;
+}
+.view-id-this_year_stats .views-row .field-content {
+  flex: 1;
+  font-weight: bold;
+}
+
+.view-holy-days .table td, .view-holy-days .table th {
+  padding-left: 0;
+  padding-right: 0;
+}
+.view-holy-days .table td:not(:first-child) {
+  display: none;
+}
+.view-holy-days .table th:not(:first-child) {
+  display: none;
+}
+
+.omnibox {
+  border-radius: 1em;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin-bottom: 2em;
+}
+.omnibox input[type=text], .omnibox select {
+  border: none;
+}
+.omnibox button {
+  background: #eee;
+  border: none;
+}
+
+.view-featured-significant-dates .views-field-nothing .field-content > a,
+.view-featured-significant-dates .views-field-title .field-content > a,
+.view-significant-dates-base .views-field-nothing .field-content > a,
+.view-significant-dates-base .views-field-title .field-content > a {
+  background: #111;
+  color: #fff;
+  padding: 1em;
+  display: inline-block;
+  border-radius: 1em;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
+  text-decoration: none;
+}
+.view-featured-significant-dates .views-field-nothing .field-content > a:hover,
+.view-featured-significant-dates .views-field-title .field-content > a:hover,
+.view-significant-dates-base .views-field-nothing .field-content > a:hover,
+.view-significant-dates-base .views-field-title .field-content > a:hover {
+  background: #2196F3;
+  color: #fff;
+}
+
 body.page-node-type-calendar {
   /*--GC: #e464bc;
   --HCC: #5cb665;
@@ -1145,6 +1233,9 @@ body.page-node-type-calendar {
   	background: var(--SC);
   }
   */
+}
+body.page-node-type-calendar .bg-tabernacles, body.page-node-type-calendar .bg-tabernaclesend, body.page-node-type-calendar .bg-passover, body.page-node-type-calendar .bg-unleavenedbread, body.page-node-type-calendar .bg-pentecost, body.page-node-type-calendar .bg-trumpets, body.page-node-type-calendar .bg-atonement, body.page-node-type-calendar .bg-lastgreatday {
+  border-radius: 10px;
 }
 body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column .Cell {
   text-align: right;
@@ -1439,94 +1530,6 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
     padding: 1em;
     flex: 1 100%;
   }
-}
-
-.view-faqs .views-field-title a {
-  display: block;
-  padding: 1em;
-  background: #eee;
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  position: relative;
-}
-.view-faqs .views-field-title a.active, .view-faqs .views-field-title a:active {
-  background-color: #2196F3;
-  color: #fff;
-}
-.view-faqs .views-field-title a.active::after, .view-faqs .views-field-title a:active::after {
-  content: "";
-  display: block;
-  margin: 0 auto;
-  width: 0;
-  position: relative;
-  bottom: -27px;
-  z-index: 5;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #2196F3;
-}
-
-.view-id-this_year_stats .views-row {
-  display: flex;
-  flex-direction: column;
-}
-.view-id-this_year_stats .views-row .views-field {
-  display: flex;
-}
-.view-id-this_year_stats .views-row .views-label {
-  flex: 1;
-}
-.view-id-this_year_stats .views-row .field-content {
-  flex: 1;
-  font-weight: bold;
-}
-
-.view-holy-days .table td, .view-holy-days .table th {
-  padding-left: 0;
-  padding-right: 0;
-}
-.view-holy-days .table td:not(:first-child) {
-  display: none;
-}
-.view-holy-days .table th:not(:first-child) {
-  display: none;
-}
-
-.omnibox {
-  border-radius: 1em;
-  border: 1px solid #ccc;
-  padding: 1em;
-  margin-bottom: 2em;
-}
-.omnibox input[type=text], .omnibox select {
-  border: none;
-}
-.omnibox button {
-  background: #eee;
-  border: none;
-}
-
-.view-featured-significant-dates .views-field-nothing .field-content > a,
-.view-featured-significant-dates .views-field-title .field-content > a,
-.view-significant-dates-base .views-field-nothing .field-content > a,
-.view-significant-dates-base .views-field-title .field-content > a {
-  background: #111;
-  color: #fff;
-  padding: 1em;
-  display: inline-block;
-  border-radius: 1em;
-  font-size: 0.9em;
-  margin-bottom: 0.5em;
-  text-decoration: none;
-}
-.view-featured-significant-dates .views-field-nothing .field-content > a:hover,
-.view-featured-significant-dates .views-field-title .field-content > a:hover,
-.view-significant-dates-base .views-field-nothing .field-content > a:hover,
-.view-significant-dates-base .views-field-title .field-content > a:hover {
-  background: #2196F3;
-  color: #fff;
 }
 
 .block-views-blockbiblical-charts-block-1 {
