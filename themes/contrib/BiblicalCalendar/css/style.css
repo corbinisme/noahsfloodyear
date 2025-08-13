@@ -1240,7 +1240,7 @@ body.page-node-type-calendar {
   }
 }
 body.page-node-type-calendar .bg-tabernacles, body.page-node-type-calendar .bg-tabernaclesend, body.page-node-type-calendar .bg-passover, body.page-node-type-calendar .bg-unleavenedbread, body.page-node-type-calendar .bg-pentecost, body.page-node-type-calendar .bg-trumpets, body.page-node-type-calendar .bg-atonement, body.page-node-type-calendar .bg-lastgreatday {
-  border-radius: 10px;
+  border-radius: 5px;
 }
 body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column .Cell {
   text-align: right;
@@ -1540,6 +1540,64 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
     padding: 1em;
     flex: 1 100%;
   }
+}
+
+#total-calendar-wrapper .mainUl {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#total-calendar-wrapper .week {
+  width: 16%;
+  min-width: 130px;
+}
+#total-calendar-wrapper .week ul {
+  width: 100%;
+  margin: 0;
+}
+#total-calendar-wrapper .week ul li {
+  flex: 1 auto;
+}
+#total-calendar-wrapper .daylistUl, #total-calendar-wrapper .hebrew .daylist, #total-calendar-wrapper .gregorian .daylist {
+  position: relative;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+#total-calendar-wrapper .daylistUl li, #total-calendar-wrapper .hebrew .daylist li, #total-calendar-wrapper .gregorian .daylist li {
+  flex: 1 auto;
+}
+#total-calendar-wrapper .gregorian {
+  background-color: #1F1F1F;
+  color: #fff;
+}
+#total-calendar-wrapper .gregorian .daylist {
+  padding-bottom: 30px;
+}
+#total-calendar-wrapper .gregorian .daylist .day {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+#total-calendar-wrapper .gregorian .daylist .day.sabbath {
+  position: absolute;
+  bottom: 0em;
+  right: 0;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+}
+#total-calendar-wrapper .gregorian .daylist .day span {
+  text-align: center;
+}
+#total-calendar-wrapper .hebrew {
+  background-color: #A50000;
+  color: #fff;
+}
+#total-calendar-wrapper .solar {
+  background-color: #0000AA;
+  color: #fff;
 }
 
 .block-views-blockbiblical-charts-block-1 {

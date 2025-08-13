@@ -1,0 +1,4 @@
+services:
+  hebrew_calendar_generator.generator:
+    class: Drupal\hebrew_calendar_generator\CalendarYearGenerator
+    arguments: ['@database']

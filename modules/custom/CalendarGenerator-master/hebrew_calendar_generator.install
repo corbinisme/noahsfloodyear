@@ -1,0 +1,12 @@
+<?php
+
+declare(strict_types = 1);
+
+use Drupal\hebrew_calendar_generator\CalendarYearGenerator;
+
+/**
+ * Implements hook_schema().
+ */
+function hebrew_calendar_generator_schema() : array {
+  return CalendarYearGenerator::getTablesSchema();
+}
