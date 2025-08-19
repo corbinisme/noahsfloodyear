@@ -671,7 +671,17 @@ window.addEventListener('load',
     },
     placePassover: function(){
         //get passover date on GC and find
+        return;
+        // determine if it is the new or old layout
+        const body = document.querySelector("body");
+        let newLayout = false
+        if(body.classList.contains("page-node-type-calendar")){
+            newLayout = true;
+        } 
+        
         const passoverDate = calendar.dates.passover;
+
+        
         const passovverDateParts = passoverDate.split(" ");
         const passoverMonth = passovverDateParts[0];
         const passoverDay = parseInt(passovverDateParts[1]);
