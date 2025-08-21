@@ -4,6 +4,31 @@ body.page-node-type-calendar {
 	--HCC: #5cb665;
 	--SC: #629fea;
 	*/
+
+.daygrids {
+	font-size: 8px;
+	text-align: center;
+	min-width: 12px;
+	width: 16.6%;
+}
+.weekgrid-hcc, .weekgrid-sc {
+	width: 100%;
+	.dayGrid {
+		flex: 1 auto;
+	}
+}
+.bg-HCC {
+	background-color: var(--HCC);
+	color:#fff;
+	@extend .daygrids;
+}
+.bg-SC {
+	background-color: var(--SC);
+	color: #fff;
+	@extend .daygrids;
+}
+
+
     main>.container {
         @include respond-below(md){
             padding: 0;
@@ -26,19 +51,43 @@ body.page-node-type-calendar {
 	.Column {
 		.hcc-wrapper {
 			position: relative;
+			display: flex;
+			flex-direction: column;
 			&:hover {
 				transform: scale(1.5);
 				z-index: 786;
 				transition: all .5s ease;
 			}
+
+			.Month {
+				order: 1;
+			}
+			.weekgrid-hcc {
+				order: 2;
+			}
+			.Cell:not(.Month) {
+				order: 3;
+			}
 		}
 		.sc-wrapper {
 			position: relative;
+			display: flex;
+			flex-direction: column;
 			&:hover {
 				transform: scale(1.5);
 				z-index: 786;
 				transition: all .5s ease;
 				
+			}
+
+			.Month {
+				order: 1;
+			}
+			.weekgrid-sc {
+				order: 2;
+			}
+			.Cell:not(.Month) {
+				order: 3;
 			}
 		}
 		.gc-wrapper {
@@ -57,9 +106,7 @@ body.page-node-type-calendar {
 		background: var(--GC);
 
 		.daygrid {
-			font-size: 8px;
-			text-align: center;
-			min-width: 12px;
+			@extend .daygrids;
 			&:before {
 				content: attr(day-of-week);
 				display: block;

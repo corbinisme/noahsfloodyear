@@ -1234,6 +1234,26 @@ body.page-node-type-calendar {
   }
   */
 }
+body.page-node-type-calendar .daygrids, body.page-node-type-calendar .weekgrid .daygrid, body.page-node-type-calendar .bg-SC, body.page-node-type-calendar .bg-HCC {
+  font-size: 8px;
+  text-align: center;
+  min-width: 12px;
+  width: 16.6%;
+}
+body.page-node-type-calendar .weekgrid-hcc, body.page-node-type-calendar .weekgrid-sc {
+  width: 100%;
+}
+body.page-node-type-calendar .weekgrid-hcc .dayGrid, body.page-node-type-calendar .weekgrid-sc .dayGrid {
+  flex: 1 auto;
+}
+body.page-node-type-calendar .bg-HCC {
+  background-color: var(--HCC);
+  color: #fff;
+}
+body.page-node-type-calendar .bg-SC {
+  background-color: var(--SC);
+  color: #fff;
+}
 @media (max-width: 991px) {
   body.page-node-type-calendar main > .container {
     padding: 0;
@@ -1250,19 +1270,41 @@ body.page-node-type-calendar .loadhtmlwrapper {
 }
 body.page-node-type-calendar .Column .hcc-wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 body.page-node-type-calendar .Column .hcc-wrapper:hover {
   transform: scale(1.5);
   z-index: 786;
   transition: all 0.5s ease;
 }
+body.page-node-type-calendar .Column .hcc-wrapper .Month {
+  order: 1;
+}
+body.page-node-type-calendar .Column .hcc-wrapper .weekgrid-hcc {
+  order: 2;
+}
+body.page-node-type-calendar .Column .hcc-wrapper .Cell:not(.Month) {
+  order: 3;
+}
 body.page-node-type-calendar .Column .sc-wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 body.page-node-type-calendar .Column .sc-wrapper:hover {
   transform: scale(1.5);
   z-index: 786;
   transition: all 0.5s ease;
+}
+body.page-node-type-calendar .Column .sc-wrapper .Month {
+  order: 1;
+}
+body.page-node-type-calendar .Column .sc-wrapper .weekgrid-sc {
+  order: 2;
+}
+body.page-node-type-calendar .Column .sc-wrapper .Cell:not(.Month) {
+  order: 3;
 }
 body.page-node-type-calendar .Column .gc-wrapper {
   position: relative;
@@ -1275,11 +1317,6 @@ body.page-node-type-calendar .Column .gc-wrapper:hover {
 body.page-node-type-calendar .weekgrid {
   height: 30px;
   background: var(--GC);
-}
-body.page-node-type-calendar .weekgrid .daygrid {
-  font-size: 8px;
-  text-align: center;
-  min-width: 12px;
 }
 body.page-node-type-calendar .weekgrid .daygrid:before {
   content: attr(day-of-week);

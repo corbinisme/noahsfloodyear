@@ -153,9 +153,6 @@ window.addEventListener('load',
         calendar.countMonthDuplicates();
         calendar.getDates();
         
-       
-        
-        
         calendar.expandContent();
         //calendar.additionalLegend();
         calendar.placePassover();
@@ -165,7 +162,167 @@ window.addEventListener('load',
         calendar.labelDates();
         calendar.placeHolyDays();
         calendar.binding();
+        calendar.addDaysToHebrew();
+        calendar.addDaystoSolar();
         
+    },
+
+    addDaysToHebrew: function(){
+        //console.log("hebrew add days")
+
+        //label the hebrew date
+        document.querySelectorAll(".page-node-type-calendar .hcc-wrapper").forEach(function(wrapper){
+            const valueCell = wrapper.querySelector(".HCC.Cell:not(.Month");
+            if(valueCell){
+                let hccDate = parseInt(valueCell.textContent);
+                let col = wrapper.closest(".Column");
+                col.setAttribute("data-hcc-date", hccDate)
+            }
+        });
+        document.querySelectorAll(".page-node-type-calendar .hcc-wrapper").forEach(function(wrapper){
+            let hebrewWeek = document.createElement("div");
+            hebrewWeek.classList.add("weekgrid-hcc");
+            hebrewWeek.classList.add("bg-HCC");
+            hebrewWeek.classList.add("d-flex")
+            const valueCell = wrapper.querySelector(".HCC.Cell:not(.Month");
+            let thisSabbathDay = 0;
+            if(valueCell){
+                thisSabbathDay = parseInt(valueCell.innerText);
+                
+                if(thisSabbathDay>=7){
+                    let startVal = thisSabbathDay-6;
+                    for (var i=startVal; i<thisSabbathDay; i++){
+                        
+                        const dayGrid = document.createElement("div");
+                        dayGrid.classList.add("dayGrid");
+                        dayGrid.innerText = i;
+                        hebrewWeek.append(dayGrid);
+                        
+                    }
+                } else {
+                    // calculate the difference
+                    
+                    // now pick up the remainder
+                    let remaining = 7-thisSabbathDay;
+                    //console.log("remaining", remaining);
+                    //get the previous week's value
+                    let col = wrapper.closest(".Column");
+                    let previousColDate = "";
+                    if(col.previousSibling){
+                        let date = col.previousSibling.getAttribute("data-hcc-date")
+                        previousColDate = parseInt(date);
+                        //console.log("date", previousColDate)
+                    } else {
+                        //console.log("no previous column")
+                        // get previous month
+                        let lastMonth = col.closest(".month").previousSibling;
+                        // find the last column
+                        let lastCol = lastMonth.querySelector(".Column:last-child");
+                        let date = parseInt(lastCol.getAttribute("data-hcc-date"));
+                        //console.log("but", date)
+                        previousColDate = date;
+
+                    }
+
+                    for(var j=1; j<=remaining; j++){
+                        let newVal = j+previousColDate;
+                        //console.log("running", newVal)
+                        let dayGridprev= document.createElement("div");
+                        dayGridprev.classList.add("dayGrid");
+                        dayGridprev.innerText = newVal;
+                        hebrewWeek.append(dayGridprev);
+                    }
+
+                    for(var i=1; i<thisSabbathDay; i++){
+                        let dayGrid = document.createElement("div");
+                        dayGrid.classList.add("dayGrid");
+                        dayGrid.innerText = i;
+                        hebrewWeek.append(dayGrid);
+                        
+                    }
+                }
+       
+            }
+            
+            wrapper.append(hebrewWeek);
+        })
+    },
+    addDaystoSolar: function(){
+        document.querySelectorAll(".page-node-type-calendar .sc-wrapper").forEach(function(wrapper){
+            const valueCell = wrapper.querySelector(".SC.Cell:not(.Month");
+            if(valueCell){
+                let scDate = parseInt(valueCell.textContent);
+                let col = wrapper.closest(".Column");
+                col.setAttribute("data-sc-date", scDate)
+            }
+        });
+
+        document.querySelectorAll(".page-node-type-calendar .sc-wrapper").forEach(function(wrapper){
+            let col = wrapper.closest(".Column");
+            let scVal = parseInt(col.getAttribute("data-sc-date"));
+            //console.log("scVal", scVal)
+            let weekGrid = document.createElement("div");
+            weekGrid.classList.add("weekgrid-sc");
+            weekGrid.classList.add("d-flex");
+            weekGrid.classList.add("bg-SC")
+
+            if(scVal>7){
+                let startVal = scVal-6;
+                    for (var i=startVal; i<scVal; i++){
+                        
+                        const dayGrid = document.createElement("div");
+                        dayGrid.classList.add("dayGrid");
+                        dayGrid.innerText = i;
+                        weekGrid.append(dayGrid);
+                        
+                    }
+            } else {
+                
+                let remaining = 7-scVal;
+                    //console.log("remaining", remaining);
+                    //get the previous week's value
+                let col = wrapper.closest(".Column");
+                let previousColDate = "";
+                if(col.previousSibling){
+                    let date = col.previousSibling.getAttribute("data-sc-date")
+                    previousColDate = parseInt(date);
+                } else {
+                    
+                    let lastMonth = col.closest(".month").previousSibling;
+                        // find the last column
+                    if(lastMonth){
+                        let lastCol = lastMonth.querySelector(".Column:last-child");
+                        let date = parseInt(lastCol.getAttribute("data-sc-date"));
+                        //console.log("but", date)
+                        previousColDate = date;
+                    }
+                }
+
+                if(previousColDate!=""){
+                    for(var j=1; j<=remaining; j++){
+                        let newVal = j+previousColDate;
+                        //console.log("running", newVal)
+                        let dayGridprev= document.createElement("div");
+                        dayGridprev.classList.add("dayGrid");
+                        dayGridprev.innerText = newVal;
+                        weekGrid.append(dayGridprev);
+                    }
+                }   
+
+                for(var i=1; i<scVal; i++){
+                    let dayGrid = document.createElement("div");
+                    dayGrid.classList.add("dayGrid");
+                    dayGrid.innerText = i;
+                    weekGrid.append(dayGrid);
+                    
+                }
+
+
+            }
+            wrapper.append(weekGrid);
+        });
+            
+
     },
     labelDates: function(){
 
@@ -241,6 +398,8 @@ window.addEventListener('load',
 
             
         });
+
+        
         
     },
     additionalLegend: function(){
@@ -360,7 +519,7 @@ window.addEventListener('load',
                    const body = document.querySelector("body");
                    let id = e.target.id;
 
-                   console.log("toggling", id, e.target.checked);
+                   //console.log("toggling", id, e.target.checked);
                    if(e.target.checked){
                        body.classList.remove(id);
                    } else {
@@ -438,7 +597,7 @@ window.addEventListener('load',
                     } else {
                         fetchURL = `/jsonapi/node/calendar?filter[field_gregorianyear]=${inputYear}&filter[field_gc_era]=${inputEra}`;
                     }
-                    console.log("fetching", fetchURL);
+                    //console.log("fetching", fetchURL);
                     fetch(fetchURL)
                         .then(response => response.json())
                         .then(data => {
@@ -551,7 +710,7 @@ window.addEventListener('load',
         let gregDate = document.querySelector("input[name='gregDate'" ).value;
         gregDate = gregDate.substring(2, gregDate.length);
         const era = document.querySelector("input[name='eraType'" ).value.toUpperCase();
-        console.log("getting gregdate")
+        //console.log("getting gregdate")
         const table = document.querySelector(".block-calendar-dates-block .table");
         // get a Date() object for each date
         // in the format of "Day Month, Year AD"
@@ -685,7 +844,7 @@ window.addEventListener('load',
         const passovverDateParts = passoverDate.split(" ");
         const passoverMonth = passovverDateParts[0];
         const passoverDay = parseInt(passovverDateParts[1]);
-        console.log("passoverMonth", passoverMonth, "passoverDay", passoverDay);
+        //console.log("passoverMonth", passoverMonth, "passoverDay", passoverDay);
         const nisanMonth = document.querySelector(".nisancolumn").closest(".month");
         let nisanMonthCount = null;
         if(nisanMonth) 
@@ -1002,7 +1161,7 @@ window.addEventListener('load',
                 document.querySelector(".daygrid[data-day='" + month + " " + day + "']").classList.add("bg-unleavenedbread");
             } else {
                 //  // maybe it is a sabbath?
-                console.log("maybe the sabbath date", month, day, "is not in the calendar");
+                //console.log("maybe the sabbath date", month, day, "is not in the calendar");
                 let sabbathDate = document.querySelector(".Cell[month='" + month + "'][data-day='" + day + "']");
                 if(sabbathDate){
                     sabbathDate.querySelector("span").classList.add("bg-unleavenedbread");

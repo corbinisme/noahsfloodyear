@@ -172,7 +172,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     $year = $generator->createYear((int)$yearVal);
     $markup = "";
     
-    $markup .= "<pre class='hidden'>" . print_r($year, TRUE) . "</pre><h2>New calculations from chart3</h2>";
+    $markup .= "<pre class='hidden'>" . print_r($year, TRUE) . "</pre>";
     $startingSolarFromCreation = $year->solarYearDaysToFirstGregorianSabbath;
     $markup .="<div id='total-calendar-wrapper' class='hidden'><ul class='d-flex flex-wrap mainUl'>";
 
@@ -255,7 +255,9 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     }
     $markup .= "</ul></div>";
 
+    $markup .= "<div class='statsWrapper hidden'>";
     $markup .= $this->listStatsForYear($year);
+    $markup .= "</div>";
     return $markup;
   }
 
