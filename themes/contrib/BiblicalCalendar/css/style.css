@@ -1484,14 +1484,13 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.Sabba
 body.page-node-type-calendar #yearBar {
   background: #eee;
   border: 1px solid #ccc;
-  border-radius: 1em;
   padding: 0 30px;
   font-size: 2em;
   margin-bottom: 35px;
 }
 body.page-node-type-calendar #yearBar .d-flex {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 body.page-node-type-calendar #yearBar .yearAction {
   text-decoration: none;
