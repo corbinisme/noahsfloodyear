@@ -362,6 +362,11 @@ body.page-node-type-calendar {
 		.d-flex {
 			display: flex;
 			justify-content: center;
+			gap: 1em;
+			align-items: center;
+		}
+		h2 {
+			margin: 0;
 		}
 
 		.yearAction {

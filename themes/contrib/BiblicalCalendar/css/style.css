@@ -1491,6 +1491,11 @@ body.page-node-type-calendar #yearBar {
 body.page-node-type-calendar #yearBar .d-flex {
   display: flex;
   justify-content: center;
+  gap: 1em;
+  align-items: center;
+}
+body.page-node-type-calendar #yearBar h2 {
+  margin: 0;
 }
 body.page-node-type-calendar #yearBar .yearAction {
   text-decoration: none;
