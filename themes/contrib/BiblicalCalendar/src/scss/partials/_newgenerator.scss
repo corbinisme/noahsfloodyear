@@ -148,6 +148,27 @@ body.page-node-type-calendar {
 			margin-bottom: .5em;
 		}
 	}
+
+	#gregorianToggle {
+		background-color: var(--GC);
+	}
+	#hebrewToggle {
+		background-color: var(--HCC);
+	}
+	#solarToggle {
+		background-color: var(--SC);
+	}
+	&.hebrewToggle {
+		.bg-HCC {
+			background-color: #ccc!important;
+		}
+	}
+	&.solarToggle {
+		.bg-SC {
+			background-color: #ccc!important;
+		}
+	}
+
 	/*
 	label[for='gregorianToggle'] {
 		background: var(--GC);
@@ -453,7 +474,7 @@ body.page-node-type-calendar {
 
 			article .layout__region--first {
 				@include respond-below(md){
-					position: absolute;
+					position: fixed;
 					top: 0;
 					left: 0px;
 					transform: translateX(-100vw);
@@ -468,6 +489,8 @@ body.page-node-type-calendar {
 						box-shadow: 0 0 5px #000;
 						background: #fff;
 						z-index: 100;
+						height: 100vh;
+						overflow: auto;
 					}
 				}
 				

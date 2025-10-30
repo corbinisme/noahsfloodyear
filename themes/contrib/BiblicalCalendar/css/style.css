@@ -1349,6 +1349,21 @@ body.page-node-type-calendar .legend .form-check {
   align-items: center;
   margin-bottom: 0.5em;
 }
+body.page-node-type-calendar #gregorianToggle {
+  background-color: var(--GC);
+}
+body.page-node-type-calendar #hebrewToggle {
+  background-color: var(--HCC);
+}
+body.page-node-type-calendar #solarToggle {
+  background-color: var(--SC);
+}
+body.page-node-type-calendar.hebrewToggle .bg-HCC {
+  background-color: #ccc !important;
+}
+body.page-node-type-calendar.solarToggle .bg-SC {
+  background-color: #ccc !important;
+}
 body.page-node-type-calendar .hcc-wrapper {
   display: flex;
   flex-direction: column;
@@ -1558,7 +1573,7 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
 }
 @media (max-width: 991px) {
   body.page-node-type-calendar main > .container article .layout__region--first {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0px;
     transform: translateX(-100vw);
@@ -1572,6 +1587,8 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
     box-shadow: 0 0 5px #000;
     background: #fff;
     z-index: 100;
+    height: 100vh;
+    overflow: auto;
   }
 }
 @media (max-width: 991px) {
@@ -1581,6 +1598,10 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
     padding: 1em;
     flex: 1 100%;
   }
+}
+
+.hebrewToggle #total-calendar-wrapper .hebrew {
+  background-color: #ccc !important;
 }
 
 #total-calendar-wrapper .mainUl {
