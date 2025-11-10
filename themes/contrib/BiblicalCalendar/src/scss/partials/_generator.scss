@@ -1076,12 +1076,13 @@ $lastGreatDay: #15be27;
 .view-holy-days {
 	.table {
 		td, th {padding-left: 0; padding-right: 0;}
-		td:not(:first-child) {
+		/*td:not(:first-child) {
 			display: none;
 		}
 		th:not(:first-child) {
 			display: none;
 		}
+			*/
 	}
 }
 

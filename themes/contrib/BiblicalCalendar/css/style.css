@@ -1171,15 +1171,18 @@
   font-weight: bold;
 }
 
+.view-holy-days .table {
+  /*td:not(:first-child) {
+  	display: none;
+  }
+  th:not(:first-child) {
+  	display: none;
+  }
+  	*/
+}
 .view-holy-days .table td, .view-holy-days .table th {
   padding-left: 0;
   padding-right: 0;
-}
-.view-holy-days .table td:not(:first-child) {
-  display: none;
-}
-.view-holy-days .table th:not(:first-child) {
-  display: none;
 }
 
 .omnibox {
