@@ -12,7 +12,7 @@ class CalendarDay {
   public readonly Weekday $dayOfWeek;
 
   /**
-   * Year on Gregorian calendar, with negative years representing B.C. dates.
+   * Year on Gregorian calendar, with negative years representing B.C. dates (e.g., -1 is 1 B.C.).
    */
   public readonly int $gregorianYear;
   public readonly GregorianMonth $gregorianMonth;

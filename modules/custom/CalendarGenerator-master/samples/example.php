@@ -36,3 +36,34 @@ foreach ($year->enumerateWeeks() as $week) {
     echo 'Feast day type: ' . $day->getFeastDayType()->toString() . "\n";
   }
 }
+
+// A few notes regarding what to use for the values in the "questions" and "answers" table on the
+// calendar pages -- to get these values, you can access various properties/methods on any "year"
+// object:
+
+// What 247 year period from creation? A:
+echo $year->cycleId247Year; // --or--
+echo $yearJson['247-year-cycle-number'];
+// Which 19 year time cycle of the 13 in the 247 year period? A:
+echo $year->cycleId19Year; // --or--
+echo $yearJson['19-year-cycle-number'];
+// Which year in the 19 year cycle? A:
+echo $year->yearIn19YearCycle; // --or--
+echo $yearJson['year-in-19-year-cycle'];
+// Number of Hebrew Calendar days? A:
+echo $year->hebrewYearDays; // --or--
+echo $yearJson['days-in-hebrew-year'];
+// Number of solar calendar days? A:
+echo $year->solarYearDays; // --or--
+echo $yearJson['days-in-solar-year'];
+// Last year's difference? A: (NULL if there was no previous year , which is different than the old calendar behavior)
+echo $year->diffBetweenSolarAndHebrewDayPreviousYear; // --or--
+echo $yearJson['diff-between-solar-and-hebrew-day-previous-year'];
+// Difference between solar and Hebrew calendars? A:
+echo $year->diffBetweenSolarAndHebrewDay; // --or--
+echo $yearJson['diff-between-solar-and-hebrew-day'];
+// Difference between last year and present year? A: (0 if there was no previous year, which is different than the old calendar behavior)
+echo $year->getDifferenceOfSolarHebrewOffsets(); // --or--
+echo $yearJson['diff-of-solar-hebrew-offsets'];
+// (Note that the answers to the last two questions appeared to get incorrectly swapped on the
+// old calendar pages.)

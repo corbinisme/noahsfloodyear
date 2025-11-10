@@ -26,7 +26,7 @@ class CalendarYear {
   public readonly int $hebrewYear;
 
   /**
-   * Primary Gregorian year, with negative numbers representing B.C. years.
+   * Primary Gregorian year, with negative numbers representing B.C. years (-1 is 1 B.C.).
    */
   public readonly int $gregorianYear;
 
@@ -59,6 +59,11 @@ class CalendarYear {
    * Difference between the solar and Hebrew calendars.
    */
   public readonly int $diffBetweenSolarAndHebrewDay;
+
+  /**
+   * If applicable, the difference between the solar and Hebrew calendars in the *previous* year.
+   */
+  public readonly ?int $diffBetweenSolarAndHebrewDayPreviousYear;
 
   /**
    * Number of days in primary Gregorian year.
@@ -151,6 +156,7 @@ class CalendarYear {
     int $solarYearDays,
     ?int $solarYearDaysToFirstGregorianSabbath,
     int $diffBetweenSolarAndHebrewDay,
+    ?int $diffBetweenSolarAndHebrewDayPreviousYear,
     ?int $numDaysInPreviousHebrewYear,
     ?int $numDaysInPreviousSolarYear,
     int $yearIn19YearCycle,
@@ -214,6 +220,7 @@ class CalendarYear {
     $this->solarYearDays = $solarYearDays;
     $this->solarYearDaysToFirstGregorianSabbath = $solarYearDaysToFirstGregorianSabbath;
     $this->diffBetweenSolarAndHebrewDay = $diffBetweenSolarAndHebrewDay;
+    $this->diffBetweenSolarAndHebrewDayPreviousYear = $diffBetweenSolarAndHebrewDayPreviousYear;
     $this->numDaysInPreviousHebrewYear = $numDaysInPreviousHebrewYear;
     $this->numDaysInPreviousSolarYear = $numDaysInPreviousSolarYear;
     $this->yearIn19YearCycle = $yearIn19YearCycle;
@@ -345,6 +352,19 @@ class CalendarYear {
   }
 
   /**
+   * Gets the difference *of current and last year differences* between solar and Hebrew days.
+   *
+   * If there was no previous difference (i.e., this is year 1), this returns zero. Otherwise, it
+   * returns the difference between the solar and Hebrew day for this year *minus* the same quantity
+   * for the previous year. This should be used for the "Last Year's Difference" value in the
+   * user-facing calendar output.
+   */
+  public function getDifferenceOfSolarHebrewOffsets() : int {
+    return $this->diffBetweenSolarAndHebrewDayPreviousYear === NULL
+      ? 0 : ($this->diffBetweenSolarAndHebrewDay - $this->diffBetweenSolarAndHebrewDayPreviousYear);
+  }
+
+  /**
    * Converts this calendar year into JSON form.
    *
    * @param bool $includeAllDays
@@ -378,6 +398,8 @@ class CalendarYear {
       'days-in-solar-year' => $this->solarYearDays,
       'solar-year-days-to-first-gregorian-sabbath' => $this->solarYearDaysToFirstGregorianSabbath,
       'diff-between-solar-and-hebrew-day' => $this->diffBetweenSolarAndHebrewDay,
+      'diff-between-solar-and-hebrew-day-previous-year' => $this->diffBetweenSolarAndHebrewDayPreviousYear,
+      'diff-of-solar-hebrew-offsets' => $this->getDifferenceOfSolarHebrewOffsets(),
       'days-in-gregorian-year' => $this->gregorianYearDays,
       'year-in-19-year-cycle' => $this->yearIn19YearCycle,
       'weeks' => $weeks,

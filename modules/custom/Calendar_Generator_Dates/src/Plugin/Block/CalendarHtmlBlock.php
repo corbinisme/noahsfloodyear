@@ -174,7 +174,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     
     $markup .= "<pre class='hidden'>" . print_r($year, TRUE) . "</pre>";
     $startingSolarFromCreation = $year->solarYearDaysToFirstGregorianSabbath;
-    $markup .="<div id='total-calendar-wrapper' class='hidden'><ul class='d-flex flex-wrap mainUl'>";
+    $markup .="<div id='total-calendar-wrapper' class='hiddens'><ul class='d-flex flex-wrap mainUl'>";
 
     $currentMonth = "";
     foreach ($year->enumerateWeeks() as $week) {

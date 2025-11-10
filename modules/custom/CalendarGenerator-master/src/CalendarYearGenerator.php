@@ -79,6 +79,7 @@ class CalendarYearGenerator {
 
     $numDaysInPreviousHebrewYear = NULL;
     $numDaysInPreviousSolarYear = NULL;
+    $diffBetweenSolarAndHebrewDayPrevious = NULL;
 
     // Grab information about the desired year and the previous year, if needed and applicable. We
     // only need a bit of info from the previous year, but it's likely better to make one query than
@@ -95,6 +96,7 @@ class CalendarYearGenerator {
         assert($previousYearObj instanceof CalendarYear);
         $numDaysInPreviousHebrewYear = $previousYearObj->hebrewYearDays;
         $numDaysInPreviousSolarYear = $previousYearObj->solarYearDays;
+        $diffBetweenSolarAndHebrewDayPrevious = $previousYearObj->diffBetweenSolarAndHebrewDay;
       }
     }
     else {
@@ -106,6 +108,7 @@ class CalendarYearGenerator {
       $previousFields = $records[$previousYear];
       $numDaysInPreviousHebrewYear = self::getAndValidatePositiveIntFieldPreparedData($previousFields, 'days_in_hebrew_year', $previousYear);
       $numDaysInPreviousSolarYear = self::getAndValidatePositiveIntFieldPreparedData($previousFields, 'days_in_solar_year', $previousYear);
+      $diffBetweenSolarAndHebrewDayPrevious = self::getAndValidateIntFieldPreparedData($previousFields, 'diff_between_solar_and_hebrew_day', $previousYear);
 
       $fields = $records[$hebrewYear];
     }
@@ -155,6 +158,7 @@ class CalendarYearGenerator {
       $numDaysInSolarYear,
       $solarYearDaysToFirstGregorianSabbath,
       $diffBetweenSolarAndHebrewDay,
+      $diffBetweenSolarAndHebrewDayPrevious,
       $numDaysInPreviousHebrewYear,
       $numDaysInPreviousSolarYear,
       $yearIn19YearCycle,
