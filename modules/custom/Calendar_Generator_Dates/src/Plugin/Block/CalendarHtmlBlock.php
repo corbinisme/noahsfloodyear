@@ -187,8 +187,9 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
       $showMonth = false;
       foreach ($week->enumerateDays() as $day) {
         $monthName = $day->gregorianMonth->toString();
+        $monthShortName = $day->gregorianMonth->toShortString();
         if ($monthName !== $currentMonth) {
-          $markup .= " <span class='month-show'>" . $monthName . "\n</span>";
+          $markup .= " <span class='month-show'>" . $monthShortName . "\n</span>";
           $showMonth = true;
           $currentMonth = $monthName;
         } 
@@ -210,23 +211,32 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
         }
         $dayofWeekShort = $this->getDayOfWeekShort($day->dayOfWeek->toString());
         $sabClass="";
+        $isSabbath = false;
+        $sabDate = "";
         if($day->dayOfWeek->toString() === "Saturday") {
           $sabClass = " sabbath";
+          $isSabbath = true;
+          $sabDate = $day->gregorianDay;
         } 
         $markup .= "<li class='day feast ". $sabClass ."' 
           data-day='". $day->gregorianDay ."' 
           data-month='". $day->gregorianMonth->toString() ."'>";
-          $markup .= "<span class='weekday d-block'>" . $dayofWeekShort . "</span>";
+          if(!$isSabbath){
+            $markup .= "<span class='weekday d-block'>" . $dayofWeekShort . "</span>";
 
-          $markup .= "<span class='weekdate d-block ". $feastClass ."'>" . $day->gregorianDay . "</span>";
-        // You can access the public properties and method of $day, e.g.:
+            $markup .= "<span class='weekdate d-block ". $feastClass ."'>" . $day->gregorianDay . "</span>";
+          }
+          else {
+            $markup .= "<span class='weekdate d-block sabbath-day ". $feastClass ."'>&nbsp;</span>";
+          }
         
         
         $markup .= "</li>";
         
         
       }
-      $markup .= "</ul></div>";
+      $markup .= "</ul>";
+      $markup .= "<div class='calloutDay'><span>Sab</span><span>" . $sabDate . "</span></div></div>";
 
       $markup .= "<div class='hebrew'>";
       $currentHebrewMonth = "";
@@ -242,14 +252,30 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
         }
       }
       $markup .= "</div><ul class='daylist'>";
+      $lastHebrewDay = "";
       foreach ($week->enumerateDays() as $day) {
         $markup .= "<li class='hebrew-day'>" . $day->hebrewDay . "</li>";
+        $lastHebrewDay = $day->hebrewDay;
       }
-      $markup .= "</ul></div>";
+      $markup .= "</ul><div class='hebrew-day-last calloutDay'>" . $lastHebrewDay . "</div></div>";
       $markup .= "<div class='solar-container'>";
-      $markup .= 'Sab: ' . $week->sabbathIdFromCreation . "<div class='solar'>";
-      $markup .= 'days: ' . $startingSolarFromCreation;
-      $markup .= "</div></div>";
+      $markup .="<div class='solar'><ul class='daylist'>";
+      $lastDay = "";
+      static $prevSolarYear = null;
+      $currentSolarYear = 0;
+      foreach ($week->enumerateDays() as $day) {
+        $markup .= "<li class='solar-day'>" . $day->solarDay . "</li>";
+        $lastDay = $day->solarDay;
+        $currentSolarYear = $day->solarYear;
+      }
+      
+      $markup .= '</ul><div class="solar-week calloutDay"> ' . $lastDay . "</div>";
+      $markup .= "</div></div><div class='week-container'>";
+      if ($currentSolarYear !== null && $currentSolarYear !== $prevSolarYear) {
+        $markup .= '<div class="solar-year">' . $currentSolarYear . '</div>';
+        $prevSolarYear = $currentSolarYear;
+      }
+      $markup .= '<div class="solar-day calloutDay"><strong>' . $week->sabbathIdFromCreation . "</strong></div></div>";
       $markup .= "</li>";
       $startingSolarFromCreation++;
     }

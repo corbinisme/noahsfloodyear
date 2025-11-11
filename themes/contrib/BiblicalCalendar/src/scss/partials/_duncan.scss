@@ -4,11 +4,36 @@
     }
 }
 
+.gregorianToggle {
+    #total-calendar-wrapper .gregorian {
+        background-color: #ccc!important;
+    }
+}
+.solarToggle {
+    #total-calendar-wrapper .solar {
+        background-color: #ccc!important;
+    }
+}
 #total-calendar-wrapper {
     .mainUl {
         list-style-type:none;
         margin: 0;
         padding: 0;
+    }
+    .calloutDay {
+        font-weight: bold;
+        font-size: 1.2em;
+        text-align: right;
+    }
+    .solar-year {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .week-container {
+       
+            position: relative;
+        
     }
     .week {
         width: 16%;
@@ -74,6 +99,10 @@
     .solar {
         background-color: $SC;
         color: #fff;
+
+         .daylist {
+            @extend .daylistUl;
+        }
     }
 
 }

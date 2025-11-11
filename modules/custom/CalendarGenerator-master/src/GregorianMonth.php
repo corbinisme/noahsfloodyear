@@ -33,4 +33,8 @@ enum GregorianMonth : int {
     return $this->name;
   }
 
+  public function toShortString() : string {
+    return substr($this->name, 0, 3);
+  } 
+
 }

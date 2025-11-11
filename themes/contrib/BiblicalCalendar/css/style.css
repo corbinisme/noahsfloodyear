@@ -1607,10 +1607,31 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
   background-color: #ccc !important;
 }
 
+.gregorianToggle #total-calendar-wrapper .gregorian {
+  background-color: #ccc !important;
+}
+
+.solarToggle #total-calendar-wrapper .solar {
+  background-color: #ccc !important;
+}
+
 #total-calendar-wrapper .mainUl {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+#total-calendar-wrapper .calloutDay {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: right;
+}
+#total-calendar-wrapper .solar-year {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#total-calendar-wrapper .week-container {
+  position: relative;
 }
 #total-calendar-wrapper .week {
   width: 16%;
@@ -1623,13 +1644,13 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
 #total-calendar-wrapper .week ul li {
   flex: 1 auto;
 }
-#total-calendar-wrapper .daylistUl, #total-calendar-wrapper .hebrew .daylist, #total-calendar-wrapper .gregorian .daylist {
+#total-calendar-wrapper .daylistUl, #total-calendar-wrapper .solar .daylist, #total-calendar-wrapper .hebrew .daylist, #total-calendar-wrapper .gregorian .daylist {
   position: relative;
   display: flex;
   list-style-type: none;
   padding: 0;
 }
-#total-calendar-wrapper .daylistUl li, #total-calendar-wrapper .hebrew .daylist li, #total-calendar-wrapper .gregorian .daylist li {
+#total-calendar-wrapper .daylistUl li, #total-calendar-wrapper .solar .daylist li, #total-calendar-wrapper .hebrew .daylist li, #total-calendar-wrapper .gregorian .daylist li {
   flex: 1 auto;
 }
 #total-calendar-wrapper .gregorian {
@@ -1664,7 +1685,6 @@ body.page-node-type-calendar.solarToggle .Cell.SC {
   background-color: #0000AA;
   color: #fff;
 }
-
 .block-views-blockbiblical-charts-block-1 {
   margin-top: 2em;
 }
