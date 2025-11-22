@@ -20,15 +20,27 @@ RUN apt-get update && apt-get install -y \
   && a2enmod rewrite \
   && rm -rf /var/lib/apt/lists/*
 
+# Install Composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php
+
+# Set working directory to Drupal root and install PHP dependencies
+WORKDIR /var/www/html
+
+# Copy Composer definition files and install dependencies
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
+# Copy the rest of the application code into the container
+COPY . /var/www/html
+
 # Ensure the directories exist inside the image
 RUN mkdir -p /var/www/html/Content \
     && mkdir -p /var/www/html/sites/default/files
 
 # Declare the two mount points as volumes
 VOLUME ["/var/www/html/Content", "/var/www/html/sites/default/files"]
-
-# Optional: set working directory to Drupal root
-WORKDIR /var/www/html
 
 # Minimal entrypoint (no settings.php manipulation)
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
