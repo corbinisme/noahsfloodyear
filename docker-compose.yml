@@ -1,0 +1,37 @@
+version: "1.0"
+
+services:
+  drupal:
+    image: noahsfloodyear-drupal:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: noahsfloodyear-drupal
+    restart: unless-stopped
+
+    environment:
+      DRUPAL_DB: ${DRUPAL_DB}
+      CALENDAR_DB: ${CALENDAR_DB}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DRIVER: ${DB_DRIVER}
+
+    volumes:
+      - noahsfloodyear_prod_content_dir:/var/www/html/Content
+      - noahsfloodyear_prod_sites_files:/var/www/html/sites/default/files
+
+    networks:
+      - proxy_net
+      - noahsfloodyear_int
+
+volumes:
+  noahsfloodyear_prod_content_dir:
+  noahsfloodyear_prod_sites_files:
+
+networks:
+  proxy_net:
+    external: true
+  noahsfloodyear_int:
+    external: true
