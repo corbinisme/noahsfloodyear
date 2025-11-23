@@ -25,7 +25,7 @@ robots.txt
 /libraries/generator/
 
 # Ignore configuration files that may contain sensitive information.
-sites/*/settings*.php
+#sites/*/settings*.php new settings file only has env var placeholders
 sites/*/services*.yml
 
 # Ignore paths that contain user-generated content.
