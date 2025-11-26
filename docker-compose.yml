@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: noahsfloodyear-drupal
+    container_name: noahsfloodyear-drupal-dev
     restart: unless-stopped
 
     environment:
