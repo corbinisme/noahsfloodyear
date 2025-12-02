@@ -14,21 +14,47 @@
         background-color: #ccc!important;
     }
 }
+
 #total-calendar-wrapper {
+
+    .bg-trumpets {
+        color: #333;
+    }
     .mainUl {
         list-style-type:none;
         margin: 0;
         padding: 0;
     }
+    .month-show {
+        text-shadow: 1px 1px 5px #000000;
+        font-style: italic;
+    }
     .calloutDay {
         font-weight: bold;
         font-size: 1.2em;
         text-align: right;
+
+        &.feast {
+            float: right;
+            width: auto;
+            display: inline-block;
+        }
+
+        span:first-child {
+            font-size: 10px;
+            display: inline-block;
+            margin-right: 3px;
+        }
     }
     .solar-year {
         position: absolute;
         left: 0;
         top: 0;
+        background-color: $SC;
+        color: #fff;
+        font-size: 20px;
+        line-height: 1em;
+        padding: 4px;
     }
     .week-container {
        
@@ -53,15 +79,40 @@
         padding: 0;
         li {
             flex: 1 auto;
+            font-size: 8px;
+            &.feast {
+                .weekdate {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .calendarSectionType {
+        transition: all 0.5s ease;
+        &:hover {
+            transform: scale(1.5);
+            z-index: 786;
         }
     }
     .gregorian {
+        @extend .calendarSectionType;
         background-color: $GC;
         color: #fff;
 
+        .month {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 4px;
+            .pentecost-week-count {
+                color: #0de1ec;
+            }
+
+        }
+        
+
         .daylist {
             @extend .daylistUl;
-            padding-bottom: 30px;
+            padding-bottom: 10px;
 
         
             .day {
@@ -89,14 +140,25 @@
         
     }
     .hebrew {
+        @extend .calendarSectionType;
         background-color: $HCC;
         color: #fff;
+        .month {
+            display: flex;
+          
+            justify-content: space-between;
+            padding: 0 4px;
+        }
 
         .daylist {
             @extend .daylistUl;
         }
     }
+    .solar-container {
+        @extend .calendarSectionType;
+    }
     .solar {
+        
         background-color: $SC;
         color: #fff;
 
