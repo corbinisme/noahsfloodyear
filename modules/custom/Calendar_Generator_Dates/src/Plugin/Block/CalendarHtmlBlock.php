@@ -101,7 +101,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
         $returnVal = "F";
         break;
       case "Saturday":
-        $returnVal = "Sab";
+        $returnVal = "Sat";
         break;
     }
     return $returnVal;
@@ -144,12 +144,12 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     return $returnClass;
   }
   private function listStatsForYear($year){
-    $markup = "<div class='stats'>";
+    $markup = "<div class='stats'><h3>How the Calendar was calculated</h3>";
     $markup .= "<table class='table table-bordered'>";
     // get cycleId19Year, cycleId247Year, hebrewYearDays, solarYearDays, diffBetweenSolarAndHebrewDay, gregorianYearDays , yearIn19YearCycle from $year in a table
-    $markup .= "<tr><th>Property</th><th>Value</th></tr>";
-    $markup .= "<tr><td>Cycle ID 19 Year</td><td>" . $year->cycleId19Year . "</td></tr>";
-    $markup .= "<tr><td>Cycle ID 247 Year</td><td>" . $year->cycleId247Year . "</td></tr>";
+    $markup .= "<tr><th></th><th></th></tr>";
+    $markup .= "<tr><td>Which 19 Year Cycle in 247 year Cycle</td><td>" . $year->cycleId19Year . "</td></tr>";
+    $markup .= "<tr><td>Which 247 Year Cycle</td><td>" . $year->cycleId247Year . "</td></tr>";
     $markup .= "<tr><td>Hebrew Year Days</td><td>" . $year->hebrewYearDays . "</td></tr>";
     $markup .= "<tr><td>Solar Year Days</td><td>" . $year->solarYearDays . "</td></tr>";
     $markup .= "<tr><td>Difference Between Solar and Hebrew Day</td><td>" . $year->diffBetweenSolarAndHebrewDay . "</td></tr>";
@@ -174,7 +174,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     
     $markup .= "<pre class='hidden'>" . print_r($year, TRUE) . "</pre>";
     $startingSolarFromCreation = $year->solarYearDaysToFirstGregorianSabbath;
-    $markup .="<div id='total-calendar-wrapper' class='hiddens'><ul class='d-flex flex-wrap mainUl'>";
+    $markup .="<div class='new-calendar-wrapper'><div id='total-calendar-wrapper' class='hiddens'><ul class='d-flex flex-wrap justify-content-center mainUl'>";
 
     $currentMonth = "";
     foreach ($year->enumerateWeeks() as $week) {
@@ -203,8 +203,10 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
       foreach ($week->enumerateDays() as $day) {
         
         $feastClass = "";
+        $isFeast = false;
         $feastType = $day->getFeastDayType()->toString();
         if($feastType != "None"){
+          $isFeast = true;
           
           $feastClass = $this->getBGClassForFeastType($feastType);
           
@@ -227,7 +229,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
             $markup .= "<span class='weekdate d-block ". $feastClass ."'>" . $day->gregorianDay . "</span>";
           }
           else {
-            $markup .= "<span class='weekdate d-block sabbath-day ". $feastClass ."'>&nbsp;</span>";
+            //$markup .= "<span class='weekdate d-block sabbath-day ". $feastClass ."'>&nbsp;</span>";
           }
         
         
@@ -236,14 +238,17 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
         
       }
       $markup .= "</ul>";
-      $markup .= "<div class='calloutDay'><span>Sab</span><span>" . $sabDate . "</span></div></div>";
+      $isFeastClass= $isFeast ? " feast" : "";
+      $markup .= "<div class='calloutDay {$feastClass} {$isFeastClass}'><span>Sat</span><span>" . $sabDate . "</span></div></div>";
 
       $markup .= "<div class='hebrew'>";
-      $currentHebrewMonth = "";
+      
       $markup .= "<div class='month'>";
 
+      $currentHebrewMonth = "";
       foreach ($week->enumerateDays() as $day) {
         $hebrewMonthName = $day->hebrewMonth->toString();
+        $monthShortName = '';
         if ($hebrewMonthName !== $currentHebrewMonth) {
           $markup .= " <span class='month-show'>" . $hebrewMonthName . "\n</span>";
           $currentHebrewMonth = $hebrewMonthName;
@@ -281,9 +286,9 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     }
     $markup .= "</ul></div>";
 
-    $markup .= "<div class='statsWrapper hidden'>";
+    $markup .= "<div class='statsWrapper hidd'>";
     $markup .= $this->listStatsForYear($year);
-    $markup .= "</div>";
+    $markup .= "</div></div>";
     return $markup;
   }
 
@@ -322,11 +327,11 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
 		$markup .= "<input type='hidden' name='gregDate' value='" . $adbc . $yearVal . "' />";
 		$markup .= "<input type='hidden' name='eraType' value='" .$adbc . "' />";
     $markup .= "<a href='#' class='mobileToggle btn btn-secondary'><i class='fa fa-chevron-right'></i></a>";
-		$markup .="<div class='loadhtmlwrapper calendarWrapper'><div class='calendarMarkup'>" . $shorten . "</div></div></div><hr />";
+		$markup .="<div class='loadhtmlwrapper hidden calendarWrapper'><div class='calendarMarkup'>" . $shorten . "</div>";
 		
     
     
-    $markup .= $this->getCalendarYear($amYear);
+    $markup .= $this->getCalendarYear($amYear) . "</div></div>";
 
     return $markup;
 	} else {

@@ -140,10 +140,60 @@ var dates = {
     }
 }
 
+var newcalendar = {
+    init: function(){
+        // check if it is the new calendar
+        if(document.getElementById("total-calendar-wrapper")){
+            newcalendar.setup();
+        }
+    },
+    setup: function(){
+        console.log("new calendar setup");
+        // find pentecost date
+        const dayNode = document.querySelector(".daylist .bg-pentecost").closest(".day");
+        if(dayNode){
+            const day = dayNode.getAttribute("data-day");
+            const month = dayNode.getAttribute("data-month");
+            console.log("pentecost", month, day);
+            // create a date object with this month and day
+            const pentecostDate = new Date(month + " " + day + ", " + new Date().getFullYear());
+            console.log("pentecostDate", pentecostDate);  
+            // find all the pentecost week counts
+            // subtract 7 days from pentecost date 7 times 
+            for(let i=1; i<=7; i++){
+                let weekDate = new Date(pentecostDate);
+                weekDate.setDate(weekDate.getDate() - (7 * i));
+                // find the element with this date
+                const weekDateString = weekDate.toDateString();
+                // get the date value
+                // get the month value
+                const dateValue = weekDate.getDate();
+                const monthValue = weekDate.toLocaleString('en-us', {month: 'long'});
+                console.log("weekDateString", weekDateString, dateValue, monthValue);
+                const weekNode = document.querySelector(`.daylist .day[data-day='${dateValue}'][data-month='${monthValue}']`);
+                if(weekNode){
+                    //get parent
+                    const targetNodeTop = weekNode.closest(".gregorian");
+                    const targetNode = targetNodeTop.querySelector(".month");
+                    if(targetNode){
+
+                        // add the week count
+                        const weekCountDiv = document.createElement("div");
+                        weekCountDiv.classList.add("pentecost-week-count");
+                        weekCountDiv.innerText = i;
+                        targetNode.appendChild(weekCountDiv);
+                    }
+                }
+            } 
+        }
+    }
+}
+
 
 window.addEventListener('load',
   function() {
     dates.init();
+    newcalendar.init();
   }, false);
 
 
