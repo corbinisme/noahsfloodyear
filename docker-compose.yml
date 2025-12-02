@@ -19,16 +19,22 @@ services:
       DB_DRIVER: ${DB_DRIVER}
 
     volumes:
-      - noahsfloodyear_prod_content_dir:/var/www/html/Content
-      - noahsfloodyear_prod_sites_files:/var/www/html/sites/default/files
+      # Use these volume *names* in the service
+      - noahsfloodyear_dev_content_dir:/var/www/html/Content
+      - noahsfloodyear_dev_sites_files:/var/www/html/sites/default/files
 
     networks:
       - proxy_net
       - noahsfloodyear_int
 
 volumes:
-  noahsfloodyear_prod_content_dir:
-  noahsfloodyear_prod_sites_files:
+  noahsfloodyear_dev_content_dir:
+    external: true
+    name: noahsfloodyear_dev_content_dir
+
+  noahsfloodyear_dev_sites_files:
+    external: true
+    name: noahsfloodyear_dev_sites_files
 
 networks:
   proxy_net:
