@@ -28,7 +28,12 @@ services:
 
 volumes:
   noahsfloodyear_prod_content_dir:
+    external: true
+    name: noahsfloodyear_prod_content_dir
+
   noahsfloodyear_prod_sites_files:
+    external: true
+    name: noahsfloodyear_prod_sites_files
 
 networks:
   proxy_net:
