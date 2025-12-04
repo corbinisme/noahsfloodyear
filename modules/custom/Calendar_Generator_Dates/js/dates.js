@@ -145,19 +145,58 @@ var newcalendar = {
         // check if it is the new calendar
         if(document.getElementById("total-calendar-wrapper")){
             newcalendar.setup();
+            newcalendar.stickySidebar();
+        }
+    },
+    resizeStickySidebar: function(){
+        const sidebar = document.querySelector(".block-system-main-block .layout__region--first");
+        if(sidebar){
+            const wrapper = sidebar.querySelector(".sticky-sidebar-wrapper");
+            if(wrapper){
+                const sidebarWidth = sidebar.offsetWidth;
+                wrapper.style.width = sidebarWidth + "px";
+            }
+        }
+    },
+    stickySidebar: function(){
+        const sidebar = document.querySelector(".block-system-main-block .layout__region--first");
+        if(sidebar){
+            console.log("making sticky sidebar");
+            // set width on resize
+            window.addEventListener("resize", function(){
+                newcalendar.resizeStickySidebar();
+            });
+            // wrap the contents of the sidebar in a div
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("sticky-sidebar-wrapper");
+            while (sidebar.firstChild) {
+                wrapper.appendChild(sidebar.firstChild);
+            }
+            sidebar.appendChild(wrapper);
+            newcalendar.resizeStickySidebar();
+            // make this sidebar sticky once the user scrolls past its original position
+            const originalOffsetTop = sidebar.offsetTop;
+            window.addEventListener("scroll", function(){
+                if(window.pageYOffset > originalOffsetTop){
+                    sidebar.classList.add("sticky-sidebar");
+                } else {
+                    sidebar.classList.remove("sticky-sidebar");
+                }
+            });
+
         }
     },
     setup: function(){
-        console.log("new calendar setup");
+        
         // find pentecost date
         const dayNode = document.querySelector(".daylist .bg-pentecost").closest(".day");
         if(dayNode){
             const day = dayNode.getAttribute("data-day");
             const month = dayNode.getAttribute("data-month");
-            console.log("pentecost", month, day);
+            //console.log("pentecost", month, day);
             // create a date object with this month and day
             const pentecostDate = new Date(month + " " + day + ", " + new Date().getFullYear());
-            console.log("pentecostDate", pentecostDate);  
+            //console.log("pentecostDate", pentecostDate);  
             // find all the pentecost week counts
             // subtract 7 days from pentecost date 7 times 
             for(let i=1; i<=7; i++){
@@ -169,7 +208,7 @@ var newcalendar = {
                 // get the month value
                 const dateValue = weekDate.getDate();
                 const monthValue = weekDate.toLocaleString('en-us', {month: 'long'});
-                console.log("weekDateString", weekDateString, dateValue, monthValue);
+                //console.log("weekDateString", weekDateString, dateValue, monthValue);
                 const weekNode = document.querySelector(`.daylist .day[data-day='${dateValue}'][data-month='${monthValue}']`);
                 if(weekNode){
                     //get parent

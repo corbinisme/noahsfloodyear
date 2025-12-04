@@ -27,6 +27,11 @@ body.page-node-type-calendar {
 	color: #fff;
 	@extend .daygrids;
 }
+.bg-WC {
+	background-color: var(--WC);
+	color: #000;
+	@extend .daygrids;
+}
 
 
     main>.container {
@@ -140,6 +145,27 @@ body.page-node-type-calendar {
 			width: 100%;
 			padding: .25em;
 			//color: #fff;
+			&:before {
+				content: "";
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				margin-right: .5em;
+				vertical-align: middle;
+				border: 1px solid #000;
+			}
+			&[for='gregorianToggle']:before {
+				background-color: var(--GC);
+			}
+			&[for='hebrewToggle']:before {
+				background-color: var(--HCC);
+			}
+			&[for='solarToggle']:before {
+				background-color: var(--SC);
+			}
+			&[for='weeksToggle']:before {
+				background-color: var(--WC);
+			}
 		}
 		.form-check {
 			display: flex;
@@ -149,7 +175,7 @@ body.page-node-type-calendar {
 		}
 	}
 
-	#gregorianToggle {
+	/*#gregorianToggle {
 		background-color: var(--GC);
 	}
 	#hebrewToggle {
@@ -158,6 +184,7 @@ body.page-node-type-calendar {
 	#solarToggle {
 		background-color: var(--SC);
 	}
+	*/
 	&.hebrewToggle {
 		.bg-HCC {
 			background-color: #ccc!important;
@@ -165,6 +192,11 @@ body.page-node-type-calendar {
 	}
 	&.solarToggle {
 		.bg-SC {
+			background-color: #ccc!important;
+		}
+	}
+	&.weeksToggle {
+		.bg-WC {
 			background-color: #ccc!important;
 		}
 	}
@@ -441,10 +473,11 @@ body.page-node-type-calendar {
 	}
 
 	&.gregorianToggle {
-		.Cell.GC, .weekgrid {
+		.Cell.GC, .weekgrid, .feast, .feast > * {
 			background-color: #ccc!important;
 			transition: all .3s ease;
 		}
+		
 	}
 	
 	&.hebrewToggle {
@@ -458,6 +491,13 @@ body.page-node-type-calendar {
 		.Cell.SC {
 			background-color: #ccc!important;
 			transition: all .3s ease;
+		}
+	}
+	&.weeksToggle {
+		.week-container > * {
+			background-color: #ccc!important;
+			transition: all .3s ease;
+			color: #fff;
 		}
 	}
 	

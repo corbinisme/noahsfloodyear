@@ -147,7 +147,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     $markup = "<div class='stats'><h3>How the Calendar was calculated</h3>";
     $markup .= "<table class='table table-bordered'>";
     // get cycleId19Year, cycleId247Year, hebrewYearDays, solarYearDays, diffBetweenSolarAndHebrewDay, gregorianYearDays , yearIn19YearCycle from $year in a table
-    $markup .= "<tr><th></th><th></th></tr>";
+    //$markup .= "<tr><th></th><th></th></tr>";
     $markup .= "<tr><td>Which 19 Year Cycle in 247 year Cycle</td><td>" . $year->cycleId19Year . "</td></tr>";
     $markup .= "<tr><td>Which 247 Year Cycle</td><td>" . $year->cycleId247Year . "</td></tr>";
     $markup .= "<tr><td>Hebrew Year Days</td><td>" . $year->hebrewYearDays . "</td></tr>";

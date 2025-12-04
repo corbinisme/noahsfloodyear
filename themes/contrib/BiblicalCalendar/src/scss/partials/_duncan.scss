@@ -15,6 +15,23 @@
     }
 }
 
+@media all and (min-width: 992px) {
+    .sticky-sidebar .sticky-sidebar-wrapper {
+        position: fixed;
+        top: 0;
+        height: 100%;
+        overflow: auto;
+        background: #fff;
+        z-index: 886;
+    }
+}
+@media all and (max-width: 991px) {
+    .sticky-sidebar-wrapper {
+       width: auto!important;
+    }
+}
+
+
 #total-calendar-wrapper {
 
     .bg-trumpets {
@@ -38,6 +55,7 @@
             float: right;
             width: auto;
             display: inline-block;
+            padding: 0 2px;
         }
 
         span:first-child {
@@ -165,6 +183,10 @@
          .daylist {
             @extend .daylistUl;
         }
+    }
+    .week-container {
+        @extend .calendarSectionType;
+        background-color: var(--WC);
     }
 
 }
