@@ -1563,6 +1563,7 @@ body.page-node-type-calendar .view-id-faqs .view-content .views-row .views-field
 }
 body.page-node-type-calendar .view-id-faqs .content-pane {
   display: none;
+  padding: 1em;
 }
 body.page-node-type-calendar .view-id-faqs .content-pane.active {
   display: block;

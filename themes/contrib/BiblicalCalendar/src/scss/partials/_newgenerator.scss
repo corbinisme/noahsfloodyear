@@ -447,6 +447,7 @@ body.page-node-type-calendar {
 		}
 		.content-pane {
 			display: none;
+			padding: 1em;
 			&.active {
 				display: block;
 			}
