@@ -175,12 +175,32 @@ var newcalendar = {
             sidebar.appendChild(wrapper);
             newcalendar.resizeStickySidebar();
             // make this sidebar sticky once the user scrolls past its original position
+            
+            
+            
             const originalOffsetTop = sidebar.offsetTop;
+            // prevent the sticky sidebar from overlapping the footer
+            const footer = document.querySelector("footer");
+            const footerOffsetTop = footer.offsetTop;
+
+
             window.addEventListener("scroll", function(){
-                if(window.pageYOffset > originalOffsetTop){
+                const scrollY = window.pageYOffset;
+                const sidebarWrapper = sidebar.querySelector(".sticky-sidebar-wrapper");
+                const sidebarHeight = sidebarWrapper ? sidebarWrapper.offsetHeight : sidebar.offsetHeight;
+                const maxSticky = footerOffsetTop - sidebarHeight;
+                if (scrollY > originalOffsetTop && scrollY < maxSticky) {
                     sidebar.classList.add("sticky-sidebar");
+                    sidebarWrapper.style.position = "fixed";
+                    sidebarWrapper.style.top = "0";
+                } else if (scrollY >= maxSticky) {
+                    sidebar.classList.remove("sticky-sidebar");
+                    sidebarWrapper.style.position = "absolute";
+                    sidebarWrapper.style.top = (footerOffsetTop - sidebarHeight) + "px";
                 } else {
                     sidebar.classList.remove("sticky-sidebar");
+                    sidebarWrapper.style.position = "";
+                    sidebarWrapper.style.top = "";
                 }
             });
 

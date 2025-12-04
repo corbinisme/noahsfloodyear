@@ -1657,7 +1657,6 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
     height: 100%;
     overflow: auto;
     background: #fff;
-    z-index: 886;
   }
 }
 @media all and (max-width: 991px) {

@@ -144,7 +144,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
     return $returnClass;
   }
   private function listStatsForYear($year){
-    $markup = "<div class='stats'><h3>How the Calendar was calculated</h3>";
+    $markup = "<div class='stats ms-3'><h3>How the Calendar was calculated</h3>";
     $markup .= "<table class='table table-bordered'>";
     // get cycleId19Year, cycleId247Year, hebrewYearDays, solarYearDays, diffBetweenSolarAndHebrewDay, gregorianYearDays , yearIn19YearCycle from $year in a table
     //$markup .= "<tr><th></th><th></th></tr>";
