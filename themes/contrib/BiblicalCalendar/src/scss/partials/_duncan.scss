@@ -30,7 +30,11 @@
        width: auto!important;
     }
 }
-
+#block-biblicalcalendar-content .layout--twocol-section--25-75 {
+    .layout__region--second {
+        padding-left: 1em;
+    }
+}
 
 #total-calendar-wrapper {
 

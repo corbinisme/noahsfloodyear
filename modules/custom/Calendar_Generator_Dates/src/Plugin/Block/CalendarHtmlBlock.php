@@ -312,7 +312,7 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
 
 		$markup = "";
 
-		$fileName = $adbc . $yearVal . ".html";
+		/*$fileName = $adbc . $yearVal . ".html";
 		// load the html?
 		$path = $_SERVER["DOCUMENT_ROOT"] . "/Content/download/generator/output/" . $fileName;
 		$out = file_get_contents($path);
@@ -320,18 +320,21 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
 		$out = str_replace("&amp;nbsp;", "&nbsp;", $out);
 
 		$shorten  = substr($out, strpos($out, "id=\"AMYear")-7);
+    */
 		
 		
 		
 		$markup = "<div class='path-calendar'>";
 		$markup .= "<input type='hidden' name='gregDate' value='" . $adbc . $yearVal . "' />";
 		$markup .= "<input type='hidden' name='eraType' value='" .$adbc . "' />";
+    // add AMyear 
+    $markup .= "<input type='hidden' id='AMYear' name='AMYear' value='" . $amYear . "' />";
     $markup .= "<a href='#' class='mobileToggle btn btn-secondary'><i class='fa fa-chevron-right'></i></a>";
-		$markup .="<div class='loadhtmlwrapper hidden calendarWrapper'><div class='calendarMarkup'>" . $shorten . "</div>";
+		//$markup .="<div class='loadhtmlwrapper hidden calendarWrapper'><div class='calendarMarkup'>" . $shorten . "</div>";
 		
     
     
-    $markup .= $this->getCalendarYear($amYear) . "</div></div>";
+    $markup .= $this->getCalendarYear($amYear) . "</div>";
 
     return $markup;
 	} else {

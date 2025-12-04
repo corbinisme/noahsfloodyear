@@ -5,10 +5,13 @@ var dates = {
  
         dates.thisAMYear = document.getElementById("AMYear").value;
         document.querySelector("body").classList.add("amyear-" + dates.thisAMYear);
-        
-        dates.findDifferenceWithLastYear();
-        dates.setupSignificantDates();
-        calendar.init();
+        if(document.querySelector(".loadhtmlwrapper")){
+                dates.findDifferenceWithLastYear();
+                dates.setupSignificantDates();
+                calendar.init();
+        }
+
+
         
     },
     scrapeDataFromHTML: function(){
@@ -146,6 +149,7 @@ var newcalendar = {
         if(document.getElementById("total-calendar-wrapper")){
             newcalendar.setup();
             newcalendar.stickySidebar();
+            calendar.newbinding();
         }
     },
     resizeStickySidebar: function(){
@@ -620,7 +624,10 @@ window.addEventListener('load',
             }
         });
         
-
+        calendar.newbinding();
+        
+    },
+    newbinding: function(){
         if(document.querySelector(".page-node-type-calendar .legend")){
             document.querySelectorAll(".page-node-type-calendar .legend .form-check-input").forEach(function(input){
                // event listener
