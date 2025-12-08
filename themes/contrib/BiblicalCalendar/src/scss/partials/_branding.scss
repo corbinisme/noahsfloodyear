@@ -1,0 +1,51 @@
+body {
+    header {
+        background-color: var(--cream);
+        .navbar {
+            background-image: none;
+            .navbar-nav {
+                li {
+                    a{
+                        color: var(--mediumgreen);
+                        &.is-active {
+                            color: var(--mediumgreen);
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .new-header-banner {
+        background-image: url(/themes/contrib/BiblicalCalendar/images/header.png);
+        background-size: cover;
+        background-position: center;
+        min-height: 200px;
+        background-color: var(--red);
+        padding-top: 5em;
+        padding-bottom: 5em;
+
+        h1 {
+            color: var(--cream);
+            width: 13em;
+        }
+        h3 {
+            color:var(--cream);
+            span {
+                border-radius: 6px;
+            }
+        }
+        .btn-primary {
+            background-color: var(--red);
+            border-color: var(--red);
+            &:hover {
+                background-color: darken(var(--red), 10%);
+                border-color: darken(var(--red), 10%);
+            }
+        }
+        .btn-outline-primary {
+            border-color: var(--red);
+        }
+    }
+}

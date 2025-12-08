@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Mea+Culpa&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap");
 .path-frontpage .featuredlinks {
   background: #eee;
@@ -2132,12 +2134,90 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
   }
 }
 
+body header {
+  background-color: var(--cream);
+}
+body header .navbar {
+  background-image: none;
+}
+body header .navbar .navbar-nav li a {
+  color: var(--mediumgreen);
+}
+body header .navbar .navbar-nav li a.is-active {
+  color: var(--mediumgreen);
+  font-weight: bold;
+}
+body .new-header-banner {
+  background-image: url(/themes/contrib/BiblicalCalendar/images/header.png);
+  background-size: cover;
+  background-position: center;
+  min-height: 200px;
+  background-color: var(--red);
+  padding-top: 5em;
+  padding-bottom: 5em;
+}
+body .new-header-banner h1 {
+  color: var(--cream);
+  width: 13em;
+}
+body .new-header-banner h3 {
+  color: var(--cream);
+}
+body .new-header-banner h3 span {
+  border-radius: 6px;
+}
+
+:root {
+  --red: #822802;
+  --squash:#c39c6b;
+  --offwhite: #fbf4e9;
+  --cream: #f0e1c4;
+  --lightgreen: #b3c7ad;
+  --mediumgreen: #698367;
+  --darkgreen: #5a6649;
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.bg-squash {
+  background-color: var(--squash);
+}
+
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.mea-culpa-regular {
+  font-family: "Mea Culpa", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.archivo-black-regular {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat-400, body h2, body h3 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   overflow-x: hidden;
 }
 body.h-100 {
   min-height: 100%;
   height: auto !important;
+}
+body h2 span, body h2 span, body h3 span {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
 }
 
 .field--name-field-media-document .file-download {
