@@ -2134,6 +2134,39 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
   }
 }
 
+body .btn {
+  border-radius: 0;
+  text-transform: uppercase;
+  padding: 0.5em 2em;
+}
+body .btn-primary {
+  background-color: var(--red);
+  border-color: var(--cream);
+}
+body .btn-primary:hover {
+  background-color: rgb(79.7727272727, 24.5454545455, 1.2272727273);
+  border-color: rgb(229.6621621622, 204.3243243243, 155.3378378378);
+}
+body .btn-outline-primary {
+  border-color: var(--red);
+  color: var(--red);
+}
+body .btn-tertiary {
+  background-color: transparent;
+  border-color: var(--mediumgreen);
+  color: #698367;
+}
+body .btn-tertiary:hover {
+  border-color: rgb(82.1153846154, 102.4487179487, 80.5512820513);
+}
+body .callout-box {
+  border: 2px solid var(--mediumgreen);
+}
+body .callout-box h3 {
+  color: var(--mediumgreen);
+  border-bottom: 2px solid var(--mediumgreen);
+  padding: 1em;
+}
 body header {
   background-color: var(--cream);
 }
@@ -2141,10 +2174,10 @@ body header .navbar {
   background-image: none;
 }
 body header .navbar .navbar-nav li a {
-  color: var(--mediumgreen);
+  color: #698367;
 }
 body header .navbar .navbar-nav li a.is-active {
-  color: var(--mediumgreen);
+  color: #698367;
   font-weight: bold;
 }
 body .new-header-banner {
@@ -2165,6 +2198,17 @@ body .new-header-banner h3 {
 }
 body .new-header-banner h3 span {
   border-radius: 6px;
+}
+body .new-header-banner .btn-outline-primary {
+  border-color: var(--cream);
+  color: var(--cream);
+}
+body .bible-real {
+  background-image: url("/themes/contrib/BiblicalCalendar/images/background_beige.png");
+  background-size: cover;
+}
+body .bible-real img {
+  height: auto;
 }
 
 :root {
