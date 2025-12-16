@@ -5,6 +5,7 @@ body {
         text-transform: uppercase;
         padding: .5em 2em;
         border: 1px solid;
+        font-size: 1.3em;
     }
     .btn-primary {
         background-color: var(--red);
@@ -45,6 +46,9 @@ body {
             color: var(--mediumgreen);
             border-bottom: 2px solid var(--mediumgreen);
             padding: 1em;
+        }
+        .callout-body {
+            min-height:12em;
         }
     }
     header {

@@ -2139,6 +2139,7 @@ body .btn {
   text-transform: uppercase;
   padding: 0.5em 2em;
   border: 1px solid;
+  font-size: 1.3em;
 }
 body .btn-primary {
   background-color: var(--red);
@@ -2174,6 +2175,9 @@ body .callout-box h3 {
   color: var(--mediumgreen);
   border-bottom: 2px solid var(--mediumgreen);
   padding: 1em;
+}
+body .callout-box .callout-body {
+  min-height: 12em;
 }
 body header {
   background-color: var(--cream);
