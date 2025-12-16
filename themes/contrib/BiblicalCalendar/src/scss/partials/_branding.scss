@@ -4,6 +4,7 @@ body {
         border-radius: 0;
         text-transform: uppercase;
         padding: .5em 2em;
+        border: 1px solid;
     }
     .btn-primary {
         background-color: var(--red);
@@ -16,6 +17,17 @@ body {
     .btn-outline-primary {
         border-color: var(--red);
         color: var(--red);
+        &:hover {
+            color: darken($red, 10%);
+            background-color: transparent;
+        }
+    }
+    .btn-outline-secondary {
+        
+        &:hover {
+            
+            background-color: transparent;
+        }
     }
     .btn-tertiary {
         background-color: transparent;
@@ -23,6 +35,7 @@ body {
         color: $mediumgreen;
         &:hover {
             border-color: darken($mediumgreen, 10%);
+            
         }
     }
     .callout-box {
@@ -71,12 +84,7 @@ body {
                 border-radius: 6px;
             }
         }
-        .btn-outline-primary {
-        border-color: var(--cream);
-        color: var(--cream);
-         }
-
-       
+        
     }
     .bible-real {
         background-image: url('/themes/contrib/BiblicalCalendar/images/background_beige.png');
@@ -86,5 +94,12 @@ body {
             height: auto;
         }
         
+    }
+    .how-sure {
+        background-image: url('/themes/contrib/BiblicalCalendar/images/background_red.png');
+        background-size: cover;
+        img {
+            height: auto;
+        }
     }
 }

@@ -2138,6 +2138,7 @@ body .btn {
   border-radius: 0;
   text-transform: uppercase;
   padding: 0.5em 2em;
+  border: 1px solid;
 }
 body .btn-primary {
   background-color: var(--red);
@@ -2150,6 +2151,13 @@ body .btn-primary:hover {
 body .btn-outline-primary {
   border-color: var(--red);
   color: var(--red);
+}
+body .btn-outline-primary:hover {
+  color: rgb(79.7727272727, 24.5454545455, 1.2272727273);
+  background-color: transparent;
+}
+body .btn-outline-secondary:hover {
+  background-color: transparent;
 }
 body .btn-tertiary {
   background-color: transparent;
@@ -2199,15 +2207,18 @@ body .new-header-banner h3 {
 body .new-header-banner h3 span {
   border-radius: 6px;
 }
-body .new-header-banner .btn-outline-primary {
-  border-color: var(--cream);
-  color: var(--cream);
-}
 body .bible-real {
   background-image: url("/themes/contrib/BiblicalCalendar/images/background_beige.png");
   background-size: cover;
 }
 body .bible-real img {
+  height: auto;
+}
+body .how-sure {
+  background-image: url("/themes/contrib/BiblicalCalendar/images/background_red.png");
+  background-size: cover;
+}
+body .how-sure img {
   height: auto;
 }
 
@@ -2221,16 +2232,93 @@ body .bible-real img {
   --darkgreen: #5a6649;
 }
 
-.bg-red {
-  background-color: var(--red);
+.text-red {
+  color: var(--red) !important;
+}
+
+.bg-red, .btn-primary {
+  background-color: var(--red) !important;
+}
+
+.border-red {
+  border-color: var(--red) !important;
+}
+
+.text-squash {
+  color: var(--squash) !important;
 }
 
 .bg-squash {
-  background-color: var(--squash);
+  background-color: var(--squash) !important;
+}
+
+.border-squash {
+  border-color: var(--squash) !important;
+}
+
+.text-offwhite {
+  color: var(--offwhite) !important;
+}
+
+.bg-offwhite {
+  background-color: var(--offwhite) !important;
+}
+
+.border-offwhite {
+  border-color: var(--offwhite) !important;
+}
+
+.text-cream, .btn-primary {
+  color: var(--cream) !important;
 }
 
 .bg-cream {
-  background-color: var(--cream);
+  background-color: var(--cream) !important;
+}
+
+.border-cream, .btn-primary {
+  border-color: var(--cream) !important;
+}
+
+.text-lightgreen {
+  color: var(--lightgreen) !important;
+}
+
+.bg-lightgreen {
+  background-color: var(--lightgreen) !important;
+}
+
+.border-lightgreen {
+  border-color: var(--lightgreen) !important;
+}
+
+.text-mediumgreen {
+  color: var(--mediumgreen) !important;
+}
+
+.bg-mediumgreen {
+  background-color: var(--mediumgreen) !important;
+}
+
+.border-mediumgreen {
+  border-color: var(--mediumgreen) !important;
+}
+
+.text-darkgreen {
+  color: var(--darkgreen) !important;
+}
+
+.bg-darkgreen {
+  background-color: var(--darkgreen) !important;
+}
+
+.border-darkgreen {
+  border-color: var(--darkgreen) !important;
+}
+
+.btn-primary:hover {
+  background-color: rgb(79.7727272727, 24.5454545455, 1.2272727273);
+  border-color: rgb(229.6621621622, 204.3243243243, 155.3378378378);
 }
 
 .mea-culpa-regular {

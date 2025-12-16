@@ -14,6 +14,8 @@ $darkgreen: #5a6649;
 
 
 
+
+
 @import url('https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Mea+Culpa&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bilbo+Swash+Caps&display=swap');
@@ -41,15 +43,47 @@ $darkgreen: #5a6649;
     --darkgreen: #5a6649;
 }
 
-.bg-red {
-    background-color: var(--red);
+$colors: (
+  red: var(--red),
+  squash: var(--squash),
+  offwhite: var(--offwhite),
+  cream: var(--cream),
+  lightgreen: var(--lightgreen),
+  mediumgreen: var(--mediumgreen),
+  darkgreen: var(--darkgreen)
+);
+
+@mixin color-utilities($name, $value) {
+  // Text Color Class
+  .text-#{$name} {
+    color: $value!important;
+  }
+
+  // Background Color Class
+  .bg-#{$name} {
+    background-color: $value!important;
+  }
+
+  // Border Color Class
+  .border-#{$name} {
+    border-color: $value!important;
+  }
 }
-.bg-squash {
-    background-color: var(--squash);
+
+@each $name, $value in $colors {
+  @include color-utilities($name, $value);
 }
-.bg-cream {
-    background-color: var(--cream);
-}   
+
+.btn-primary {
+   @extend .bg-red;
+   @extend .border-cream; 
+   @extend .text-cream;  
+    &:hover {
+         background-color: darken($red, 10%);
+         border-color: darken($cream, 10%);
+    }
+}
+
 .mea-culpa-regular {
   font-family: "Mea Culpa", cursive;
   font-weight: 400;
