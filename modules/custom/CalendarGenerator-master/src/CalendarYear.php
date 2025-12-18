@@ -17,7 +17,7 @@ use Drupal\hebrew_calendar_generator\Helper\DateHelpers;
  */
 class CalendarYear {
 
-  public const CREATION_START_GREGORIAN_DAY = 20;
+  public const CREATION_START_GREGORIAN_DAY = 13;
   public const CREATION_START_GREGORIAN_YEAR = -4046;
 
   /**
