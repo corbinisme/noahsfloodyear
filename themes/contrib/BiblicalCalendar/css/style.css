@@ -250,10 +250,10 @@
 }
 
 .bg-pentecost {
-  background-color: #0de1ec;
+  background-color: #4aaaaf;
 }
 .bg-pentecost span {
-  background-color: #0de1ec;
+  background-color: #4aaaaf;
 }
 
 .bg-trumpets {
@@ -304,7 +304,7 @@
   background-color: #a07833;
 }
 .block-calendar-generator-dates .table .pentecost span {
-  background-color: #0de1ec;
+  background-color: #4aaaaf;
 }
 .block-calendar-generator-dates .table .trumpets span {
   background-color: #f2d316;
@@ -1066,7 +1066,7 @@
   font-size: 18px;
   width: 100%;
   text-align: right;
-  color: #0de1ec;
+  color: #4aaaaf;
 }
 .path-calendar #NewCalendarContainer .Column.feastoftabernaclesAndLGDmonth::before {
   background-color: #fa8a48;
@@ -1206,7 +1206,7 @@
 .view-featured-significant-dates .views-field-title .field-content > a,
 .view-significant-dates-base .views-field-nothing .field-content > a,
 .view-significant-dates-base .views-field-title .field-content > a {
-  background: #111;
+  background: var(--squash);
   color: #fff;
   padding: 1em;
   display: inline-block;
@@ -1219,7 +1219,7 @@
 .view-featured-significant-dates .views-field-title .field-content > a:hover,
 .view-significant-dates-base .views-field-nothing .field-content > a:hover,
 .view-significant-dates-base .views-field-title .field-content > a:hover {
-  background: #2196F3;
+  background: rgb(178.5961538462, 131.5336538462, 72.4038461538);
   color: #fff;
 }
 
@@ -1532,11 +1532,12 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.Sabba
   }
 }
 body.page-node-type-calendar #yearBar {
-  background: var(--squash);
-  border: 1px solid #ccc;
+  background: transparent;
+  border: 0px solid #ccc;
   padding: 0 30px;
   font-size: 2em;
   margin-bottom: 35px;
+  color: var(--mediumgreen);
 }
 body.page-node-type-calendar #yearBar .d-flex {
   display: flex;
@@ -1550,6 +1551,7 @@ body.page-node-type-calendar #yearBar h2 {
 body.page-node-type-calendar #yearBar .yearAction {
   text-decoration: none;
   font-weight: bold;
+  color: var(--mediumgreen);
 }
 body.page-node-type-calendar .view-id-faqs .view-content .views-row .views-field-title {
   display: none;
@@ -1753,7 +1755,8 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
   padding: 0 4px;
 }
 #total-calendar-wrapper .gregorian .month .pentecost-week-count {
-  color: #0de1ec;
+  color: #4aaaaf;
+  text-shadow: 1px 1px #000;
 }
 #total-calendar-wrapper .gregorian .daylist {
   padding-bottom: 10px;
@@ -2140,6 +2143,40 @@ body {
 body .region-topbar .btn {
   font-size: 14px;
 }
+body a {
+  color: var(--darkgreen);
+}
+body a:hover {
+  color: rgb(82.1153846154, 102.4487179487, 80.5512820513);
+}
+body .btn-success {
+  background-color: var(--mediumgreen);
+  border-color: var(--mediumgreen);
+}
+body .btn-success:hover {
+  background-color: rgb(82.1153846154, 102.4487179487, 80.5512820513);
+  border-color: rgb(82.1153846154, 102.4487179487, 80.5512820513);
+}
+body h1 {
+  color: var(--red);
+}
+body h2 {
+  color: var(--mediumgreen);
+}
+body .modal h5 a {
+  color: var(--red);
+  text-decoration: none;
+}
+body .form-check-input:checked {
+  background-color: var(--squash);
+  border-color: rgb(178.5961538462, 131.5336538462, 72.4038461538);
+}
+body .modal-header {
+  justify-content: space-between;
+}
+body .view-timeline .views-field-field-am-year a {
+  color: #fff;
+}
 body .btn {
   border-radius: 0;
   text-transform: uppercase;
@@ -2421,7 +2458,7 @@ body #block-biblicalcalendar-calendardatesblock .start, body #block-biblicalcale
   font-style: normal;
 }
 
-.archivo-black-regular, body h1, body h2, body .bible-real h2 {
+.archivo-black-regular, body h1, body h2, body .modal h5, body .bible-real h2 {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
   font-style: normal;

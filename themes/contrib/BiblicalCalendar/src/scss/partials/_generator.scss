@@ -12,7 +12,7 @@ $WC: #f0e1c4;
 
 $passover: #f70d48;
 $unleavenedBread: #a07833;
-$pentecost: #0de1ec;
+$pentecost: #4aaaaf;
 $trumpets: #f2d316;
 $atonement: #e647fb;
 $tabernacles: #fa8a48;
@@ -1107,7 +1107,7 @@ $lastGreatDay: #15be27;
 	.views-field-nothing .field-content > a,
 	.views-field-title .field-content > a {
 		
-			background: #111;
+			background: var(--squash);
 			color: #fff;
 			padding: 1em;
 			display: inline-block;
@@ -1116,7 +1116,7 @@ $lastGreatDay: #15be27;
 			margin-bottom: .5em;
 			text-decoration: none;
 			&:hover {
-				background: #2196F3;
+				background: darken($squash, 10%);
 				color: #fff;
 			}
 		

@@ -6,9 +6,49 @@ body {
             font-size: 14px;
         }
     }
+    a {
+        color: var(--darkgreen);
+        &:hover {
+            color: darken($mediumgreen, 10%);
+        }
+    }
+
+    .btn-success {
+        background-color: var(--mediumgreen);
+        border-color: var(--mediumgreen);
+        &:hover {
+            background-color: darken($mediumgreen, 10%);
+            border-color: darken($mediumgreen, 10%);
+        }
+    }
 
     h1, h2 {
         @extend .archivo-black-regular;
+    }
+    h1 {
+        color: var(--red);
+
+    }
+    h2 {
+        color: var(--mediumgreen);
+    }
+    .modal h5 {
+        @extend .archivo-black-regular;
+        a {color: var(--red);text-decoration: none;}
+    }
+    .form-check-input:checked {
+        background-color: var(--squash);
+        border-color: darken($squash, 10%);
+    }
+    .modal-header {
+        justify-content: space-between;
+    }
+    .view-timeline {
+        .views-field-field-am-year {
+            a {
+                color: #fff;
+            }
+        }
     }
 
     .btn {

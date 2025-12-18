@@ -179,7 +179,7 @@ var timeline = {
 
 		let diff = winHeight-(height);
 		
-		console.log(height, winHeight, diff);
+
 
 		//modal.style.top = (diff/2)  +  "px";
 		
@@ -190,7 +190,7 @@ var timeline = {
 		const title = id['title'][0].value;
 		const body = (id['body'][0]?id['body'][0].processed:"");
 		const amyear = id['field_am_year'][0].value;
-		console.log("title",title, body);
+
 		if(document.getElementById("timelineModal")==null){
 			timeline.buildModal();
 		}
