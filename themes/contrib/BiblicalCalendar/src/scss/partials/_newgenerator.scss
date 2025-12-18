@@ -406,7 +406,7 @@ body.page-node-type-calendar {
 	}
 
 	#yearBar {
-		background: #eee;
+		background: var(--squash);
 		border: 1px solid #ccc;
 		padding: 0 30px;
 		font-size: 2em;

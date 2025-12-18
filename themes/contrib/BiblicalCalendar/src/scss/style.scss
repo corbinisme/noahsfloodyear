@@ -100,6 +100,12 @@ $colors: (
   font-weight: 400;
   font-style: normal;
 }
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
  
 body {
     overflow-x: hidden;   
@@ -245,10 +251,13 @@ header {
 
     .region-topbar {
         display: flex;
-        justify-content: space-between;
+        justify-content: end!important;
+        .form-search.form-control {
+            border-radius: 0;
+        }
 
         .block-search {
-            width: 200px;
+            width: auto;
             float: left;
             height: 35px;
 
@@ -265,6 +274,8 @@ header {
                     height: 34px;
                     position: relative;
                     top: 4px;
+                    border-radius: 0;
+                    
                 }
                 .form-actions {
                     position: relative;

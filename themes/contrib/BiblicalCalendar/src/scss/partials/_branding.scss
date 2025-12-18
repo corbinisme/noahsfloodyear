@@ -1,11 +1,22 @@
 body {
+    @extend .montserrat;
+    --bs-body-font-family: 'Montserrat', sans-serif;
+    .region-topbar {
+        .btn {
+            font-size: 14px;
+        }
+    }
+
+    h1, h2 {
+        @extend .archivo-black-regular;
+    }
 
     .btn {
         border-radius: 0;
         text-transform: uppercase;
         padding: .5em 2em;
         border: 1px solid;
-        font-size: 1.3em;
+        font-size: 1.1em;
     }
     .btn-primary {
         background-color: var(--red);
@@ -42,14 +53,25 @@ body {
     .callout-box {
         border: 2px solid var(--mediumgreen);
 
-        h3 {
+        h3{
             color: var(--mediumgreen);
-            border-bottom: 2px solid var(--mediumgreen);
-            padding: 1em;
+            border-bottom: 3px solid var(--mediumgreen);
+            padding: 10px;
+            font-size: 23px;
+            a{
+                color: var(--mediumgreen);
+                text-decoration: none;
+                font-size: .9em;
+            }
+           
         }
-        .callout-body {
-            min-height:12em;
-        }
+        
+    }
+    .callout-body {
+        min-height:13em;
+        max-height: 13em;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     header {
         background-color: var(--cream);
@@ -62,6 +84,9 @@ body {
                         &.is-active {
                             color: $mediumgreen;
                             font-weight: bold;
+                        }
+                        &:hover {
+                            color: darken($mediumgreen, 10%);
                         }
                     }
                 }
@@ -81,6 +106,10 @@ body {
          h1 {
             color: var(--cream);
             width: 13em;
+            letter-spacing: -3px;
+            span {
+                display: block;
+            }
         }
         h3 {
             color:var(--cream);
@@ -88,14 +117,28 @@ body {
                 border-radius: 6px;
             }
         }
+        .buttons {
+            margin-top: 5em;
+        }
         
     }
     .bible-real {
         background-image: url('/themes/contrib/BiblicalCalendar/images/background_beige.png');
         background-size: cover;
+        @extend .montserrat-400;
 
         img {
             height: auto;
+        }
+        h2 {
+            letter-spacing: -3px;
+            @extend .archivo-black-regular;
+            font-size: 2.3em;
+        }
+        .callout-box {
+            .btn {
+                font-size: .8em;
+            }
         }
         
     }
@@ -104,6 +147,79 @@ body {
         background-size: cover;
         img {
             height: auto;
+        }
+    }
+    .block-views-blockfeatured-articles-display {
+        .callout-box{
+            h3 {
+                display: block;
+                height: 5em;
+            }
+        }
+        .btn {
+            a {
+                color: var(--mediumgreen);
+                text-decoration: none;
+            }
+        }
+    }
+
+    #block-bcp-challengeformblock {
+        background-color: var(--lightgreen);
+        color: var(--darkgreen);
+        padding: 3em 0;
+        
+        .home-challenge {
+            display: flex;
+            margin-top: 3em!important;
+            margin-bottom: 3em!important;
+            gap: 2em;
+
+             > * {
+                flex: 1 50%;
+             }
+             .field--name-field-webform {
+                background-color: #fff;
+                padding: 1em;
+                border-radius: 1em;
+             }
+        }
+    }
+    #block-views-block-featured-articles-display {
+        background-color: var(--cream);
+        margin: 0!important;
+        padding: 5em 0!important;
+
+        h2 {
+            text-align: left;
+            color: var(--mediumgreen);
+        }
+
+        .view-content {
+            max-width: 999em;
+        }
+        .callout-body {
+            margin-bottom: 2em;
+        }
+    }
+    .footer {
+        background-color: var(--darkgreen);
+        color: var(--cream);
+        a {
+            color: var(--cream);
+            &:hover {
+                color: lighten($cream, 10%);
+            }
+        }
+    }
+    &.path-calendar {
+        .block-calendar-generator-nav .calendar_nav {
+           font-size: .32em;
+        }
+    } 
+    #block-biblicalcalendar-calendardatesblock {
+        .start, .end, th:nth-child(2), th:nth-child(3) {
+            display: none;
         }
     }
 }

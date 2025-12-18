@@ -1532,7 +1532,7 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.Sabba
   }
 }
 body.page-node-type-calendar #yearBar {
-  background: #eee;
+  background: var(--squash);
   border: 1px solid #ccc;
   padding: 0 30px;
   font-size: 2em;
@@ -2134,12 +2134,18 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
   }
 }
 
+body {
+  --bs-body-font-family: "Montserrat", sans-serif;
+}
+body .region-topbar .btn {
+  font-size: 14px;
+}
 body .btn {
   border-radius: 0;
   text-transform: uppercase;
   padding: 0.5em 2em;
   border: 1px solid;
-  font-size: 1.3em;
+  font-size: 1.1em;
 }
 body .btn-primary {
   background-color: var(--red);
@@ -2173,11 +2179,20 @@ body .callout-box {
 }
 body .callout-box h3 {
   color: var(--mediumgreen);
-  border-bottom: 2px solid var(--mediumgreen);
-  padding: 1em;
+  border-bottom: 3px solid var(--mediumgreen);
+  padding: 10px;
+  font-size: 23px;
 }
-body .callout-box .callout-body {
-  min-height: 12em;
+body .callout-box h3 a {
+  color: var(--mediumgreen);
+  text-decoration: none;
+  font-size: 0.9em;
+}
+body .callout-body {
+  min-height: 13em;
+  max-height: 13em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 body header {
   background-color: var(--cream);
@@ -2192,6 +2207,9 @@ body header .navbar .navbar-nav li a.is-active {
   color: #698367;
   font-weight: bold;
 }
+body header .navbar .navbar-nav li a:hover {
+  color: rgb(82.1153846154, 102.4487179487, 80.5512820513);
+}
 body .new-header-banner {
   background-image: url(/themes/contrib/BiblicalCalendar/images/header.png);
   background-size: cover;
@@ -2204,12 +2222,19 @@ body .new-header-banner {
 body .new-header-banner h1 {
   color: var(--cream);
   width: 13em;
+  letter-spacing: -3px;
+}
+body .new-header-banner h1 span {
+  display: block;
 }
 body .new-header-banner h3 {
   color: var(--cream);
 }
 body .new-header-banner h3 span {
   border-radius: 6px;
+}
+body .new-header-banner .buttons {
+  margin-top: 5em;
 }
 body .bible-real {
   background-image: url("/themes/contrib/BiblicalCalendar/images/background_beige.png");
@@ -2218,12 +2243,77 @@ body .bible-real {
 body .bible-real img {
   height: auto;
 }
+body .bible-real h2 {
+  letter-spacing: -3px;
+  font-size: 2.3em;
+}
+body .bible-real .callout-box .btn {
+  font-size: 0.8em;
+}
 body .how-sure {
   background-image: url("/themes/contrib/BiblicalCalendar/images/background_red.png");
   background-size: cover;
 }
 body .how-sure img {
   height: auto;
+}
+body .block-views-blockfeatured-articles-display .callout-box h3 {
+  display: block;
+  height: 5em;
+}
+body .block-views-blockfeatured-articles-display .btn a {
+  color: var(--mediumgreen);
+  text-decoration: none;
+}
+body #block-bcp-challengeformblock {
+  background-color: var(--lightgreen);
+  color: var(--darkgreen);
+  padding: 3em 0;
+}
+body #block-bcp-challengeformblock .home-challenge {
+  display: flex;
+  margin-top: 3em !important;
+  margin-bottom: 3em !important;
+  gap: 2em;
+}
+body #block-bcp-challengeformblock .home-challenge > * {
+  flex: 1 50%;
+}
+body #block-bcp-challengeformblock .home-challenge .field--name-field-webform {
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 1em;
+}
+body #block-views-block-featured-articles-display {
+  background-color: var(--cream);
+  margin: 0 !important;
+  padding: 5em 0 !important;
+}
+body #block-views-block-featured-articles-display h2 {
+  text-align: left;
+  color: var(--mediumgreen);
+}
+body #block-views-block-featured-articles-display .view-content {
+  max-width: 999em;
+}
+body #block-views-block-featured-articles-display .callout-body {
+  margin-bottom: 2em;
+}
+body .footer {
+  background-color: var(--darkgreen);
+  color: var(--cream);
+}
+body .footer a {
+  color: var(--cream);
+}
+body .footer a:hover {
+  color: rgb(250.3378378378, 245.6756756757, 236.6621621622);
+}
+body.path-calendar .block-calendar-generator-nav .calendar_nav {
+  font-size: 0.32em;
+}
+body #block-biblicalcalendar-calendardatesblock .start, body #block-biblicalcalendar-calendardatesblock .end, body #block-biblicalcalendar-calendardatesblock th:nth-child(2), body #block-biblicalcalendar-calendardatesblock th:nth-child(3) {
+  display: none;
 }
 
 :root {
@@ -2331,16 +2421,23 @@ body .how-sure img {
   font-style: normal;
 }
 
-.archivo-black-regular {
+.archivo-black-regular, body h1, body h2, body .bible-real h2 {
   font-family: "Archivo Black", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.montserrat-400, body h2, body h3 {
+.montserrat-400, body h2, body h3, body .bible-real {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
+  font-style: normal;
+}
+
+.montserrat, body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
   font-style: normal;
 }
 
@@ -2444,10 +2541,13 @@ header .menu--secondary-menu ul.navbar-nav li a.is-active {
 }
 .topBar .region-topbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: end !important;
+}
+.topBar .region-topbar .form-search.form-control {
+  border-radius: 0;
 }
 .topBar .region-topbar .block-search {
-  width: 200px;
+  width: auto;
   float: left;
   height: 35px;
 }
@@ -2463,6 +2563,7 @@ header .menu--secondary-menu ul.navbar-nav li a.is-active {
   height: 34px;
   position: relative;
   top: 4px;
+  border-radius: 0;
 }
 .topBar .region-topbar .block-search .search-block-form .form-actions {
   position: relative;
