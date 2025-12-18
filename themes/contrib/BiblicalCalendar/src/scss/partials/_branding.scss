@@ -262,4 +262,14 @@ body {
             display: none;
         }
     }
+
+    .block-views-blockvideo-timelines-block-1 {
+        .field--name-field-media-oembed-video.field--type-string {
+            iframe {
+                width: 100%!important;
+                height: auto!important;
+                min-height: 455px;
+            }
+        }
+    }
 }

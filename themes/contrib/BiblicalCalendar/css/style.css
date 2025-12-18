@@ -1135,7 +1135,7 @@
 .view-faqs .views-field-title a {
   display: block;
   padding: 1em;
-  background: #eee;
+  background: var(--cream);
   color: #000;
   font-weight: bold;
   text-decoration: none;
@@ -2351,6 +2351,11 @@ body.path-calendar .block-calendar-generator-nav .calendar_nav {
 }
 body #block-biblicalcalendar-calendardatesblock .start, body #block-biblicalcalendar-calendardatesblock .end, body #block-biblicalcalendar-calendardatesblock th:nth-child(2), body #block-biblicalcalendar-calendardatesblock th:nth-child(3) {
   display: none;
+}
+body .block-views-blockvideo-timelines-block-1 .field--name-field-media-oembed-video.field--type-string iframe {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 455px;
 }
 
 :root {
