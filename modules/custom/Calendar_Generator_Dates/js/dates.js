@@ -165,7 +165,7 @@ var newcalendar = {
     stickySidebar: function(){
         const sidebar = document.querySelector(".block-system-main-block .layout__region--first");
         if(sidebar){
-            console.log("making sticky sidebar");
+            
             // set width on resize
             window.addEventListener("resize", function(){
                 newcalendar.resizeStickySidebar();
@@ -207,6 +207,17 @@ var newcalendar = {
                     sidebarWrapper.style.top = "";
                 }
             });
+
+            if(sidebar.querySelector(".modal")){
+                sidebar.querySelectorAll(".modal").forEach(function(modal){ 
+                    
+                    // move to the end of the <body> tag
+                    document.body.appendChild(modal);
+                    // remove from original place
+                    //modal.remove();
+                });
+
+            }
 
         }
     },
@@ -562,6 +573,7 @@ window.addEventListener('load',
         if(document.querySelector(".mobileToggle")){
             document.querySelector(".mobileToggle").addEventListener("click", function(e){
                 e.preventDefault();
+                console.log("toggling mobile sidebar");
                 document.querySelector("body").classList.toggle("mobileOpen");
 
                 let sidebar = document.querySelector(".page-node-type-calendar article .layout__region--first");
@@ -628,6 +640,23 @@ window.addEventListener('load',
         
     },
     newbinding: function(){
+
+        if(document.querySelector(".mobileToggle")){
+            document.querySelector(".mobileToggle").addEventListener("click", function(e){
+                e.preventDefault();
+                console.log("toggling mobile sidebar");
+                document.querySelector("body").classList.toggle("mobileOpen");
+
+                let sidebar = document.querySelector(".page-node-type-calendar article .layout__region--first");
+                sidebar.classList.toggle("open");
+                if(document.querySelector("body").classList.contains("mobileOpen")){
+
+                    document.querySelector(".mobileToggle").classList.add("open");
+                } else {
+                    document.querySelector(".mobileToggle").classList.remove("open");
+                }
+            });
+        }
         if(document.querySelector(".page-node-type-calendar .legend")){
             document.querySelectorAll(".page-node-type-calendar .legend .form-check-input").forEach(function(input){
                // event listener
