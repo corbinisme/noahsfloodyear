@@ -1035,9 +1035,9 @@ $lastGreatDay: #15be27;
 			position: relative;
 
 			&.active, &:active {
-				background-color: #2196F3;
+				background-color: var(--mediumgreen);
 
-				color: #fff;
+				color: var(--cream);
 				&::after {
 
 						content: "";

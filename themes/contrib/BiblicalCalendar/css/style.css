@@ -1142,8 +1142,8 @@
   position: relative;
 }
 .view-faqs .views-field-title a.active, .view-faqs .views-field-title a:active {
-  background-color: #2196F3;
-  color: #fff;
+  background-color: var(--mediumgreen);
+  color: var(--cream);
 }
 .view-faqs .views-field-title a.active::after, .view-faqs .views-field-title a:active::after {
   content: "";

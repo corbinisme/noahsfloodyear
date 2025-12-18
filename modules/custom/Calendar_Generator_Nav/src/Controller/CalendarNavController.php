@@ -39,7 +39,7 @@ class CalendarNavController extends ControllerBase {
         $url = Url::fromUserInput("/calendar/date/am/" . $thisAM);
 
         // Simply RETURN the response. Do NOT use ->send();
-        //return new RedirectResponse($url->toString());
+        return new RedirectResponse($url->toString());
 
     	
         return [
