@@ -1733,7 +1733,7 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
 }
 #total-calendar-wrapper .daylistUl li, #total-calendar-wrapper .solar .daylist li, #total-calendar-wrapper .hebrew .daylist li, #total-calendar-wrapper .gregorian .daylist li {
   flex: 1 auto;
-  font-size: 8px;
+  font-size: 10px;
 }
 #total-calendar-wrapper .daylistUl li.feast .weekdate, #total-calendar-wrapper .solar .daylist li.feast .weekdate, #total-calendar-wrapper .hebrew .daylist li.feast .weekdate, #total-calendar-wrapper .gregorian .daylist li.feast .weekdate {
   width: 100%;
