@@ -107,10 +107,10 @@ class CalendarDay {
         default => ($this->hebrewDay > 15 && $this->hebrewDay < 21)
           ? FeastDayType::RegularDayOfUnleavenedBread : FeastDayType::None,
       },
-      // Pentecost is less tricky than it seems: it always falls on the 5th, 7th, 8th or 10th of
+      // Pentecost is less tricky than it seems: it always falls between the 5th and the 10th of
       // Sivan (which spans a six day period, so there are no weekday duplications), and always
       // falls on a Sunday.
-      HebrewMonth::Sivan => ($this->dayOfWeek === Weekday::Sunday && match($this->hebrewDay) { 5, 7, 8, 10 => TRUE, default => FALSE})
+      HebrewMonth::Sivan => ($this->dayOfWeek === Weekday::Sunday && $this->hebrewDay >= 5 && $this->hebrewDay <= 10)
         ? FeastDayType::Pentecost : FeastDayType::None,
       HebrewMonth::Tishrei => match($this->hebrewDay) {
         1 => FeastDayType::Trumpets,

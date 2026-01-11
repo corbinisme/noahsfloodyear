@@ -64,8 +64,7 @@ class CalendarYearGenerator {
    */
   public function createYear(int $hebrewYear) : CalendarYear {
     if ($hebrewYear < 1) {
-     $hebrewYear =1;
-      //throw new \InvalidArgumentException('$hebrewYear must be greater than zero.');
+      throw new \InvalidArgumentException('$hebrewYear must be greater than zero.');
     }
 
     $yearCache =& drupal_static(self::YEAR_OBJECT_CACHE_KEY, []);
@@ -226,6 +225,8 @@ class CalendarYearGenerator {
 
       $lastHebrewYear = NULL;
       $hebrewYear = NULL;
+      $solarYear = NULL;
+      $lastSolarYear = NULL;
       $numDaysInHebrewYear = NULL;
       $numDaysInSolarYear = NULL;
       $numDaysInPreviousHebrewYear = NULL;
@@ -238,7 +239,10 @@ class CalendarYearGenerator {
 
       do {
         $lastHebrewYear = $hebrewYear;
+        $lastSolarYear = $solarYear;
         $hebrewYear = self::getAndValidateIntFieldSourceData($fields, 'amyr', NULL);
+        if ($solarYear === NULL) $solarYear = 1;
+        else $solarYear++;
 
         if ($lastHebrewYear === NULL && $hebrewYear !== 1) {
             throw new CorruptDatabaseTableException('Source table Hebrew year does not start at year 1.');
@@ -277,9 +281,9 @@ class CalendarYearGenerator {
         else {
           assert($firstDayOfYear instanceof CalendarDay);
 
-          // We have to calculate three things for the next iteration: the first day of the next
-          // year, the week ID since creation for the first Sabbath of the next year, and the year
-          // in the 19-year cycle for the next year.
+          // We have to calculate three things: the first day of the next year, the week ID since
+          // creation for the first Sabbath of the next year, and the year in the 19-year cycle for
+          // the next year.
 
           // Easiest first!
           $yearIn19YearCycle++;
@@ -305,15 +309,20 @@ class CalendarYearGenerator {
           if ($firstDayOfYear->hebrewYear === $lastHebrewYear) {
             $numDaysInHebrewYearOfPrevStartDate = $numDaysInPreviousHebrewYear;
             $numDaysInNextHebrewYearAfterPrevStartDate = $numDaysInHebrewYear;
-            $numDaysInSolarYearOfPrevStartDate = $numDaysInPreviousSolarYear;
-            $numDaysInNextSolarYearAfterPrevStartDate = $numDaysInSolarYear;
           }
           else {
             assert($firstDayOfYear->hebrewYear === ($lastHebrewYear - 1));
             assert(isset($numDaysTwoHebrewYearsBack));
-            assert(isset($numDaysTwoSolarYearsBack));
             $numDaysInHebrewYearOfPrevStartDate = $numDaysTwoHebrewYearsBack;
             $numDaysInNextHebrewYearAfterPrevStartDate = $numDaysInPreviousHebrewYear;
+          }
+          if ($firstDayOfYear->solarYear === $lastSolarYear) {
+            $numDaysInSolarYearOfPrevStartDate = $numDaysInPreviousSolarYear;
+            $numDaysInNextSolarYearAfterPrevStartDate = $numDaysInSolarYear;
+          }
+          else {
+            assert($firstDayOfYear->solarYear === ($lastSolarYear - 1));
+            assert(isset($numDaysTwoSolarYearsBack));
             $numDaysInSolarYearOfPrevStartDate = $numDaysTwoSolarYearsBack;
             $numDaysInNextSolarYearAfterPrevStartDate = $numDaysInPreviousSolarYear;
           }
@@ -329,7 +338,7 @@ class CalendarYearGenerator {
             $numDaysInNextHebrewYearAfterPrevStartDate);
           $newSolarDay = $firstDayOfYear->solarDay + $interval->days;
           if ($newSolarDay > $numDaysInSolarYearOfPrevStartDate) { 
-            $newSolarDay -= $numDaysInPreviousSolarYear;
+            $newSolarDay -= $numDaysInSolarYearOfPrevStartDate;
             if ($newSolarDay > $numDaysInNextSolarYearAfterPrevStartDate) {
               throw new \RuntimeException('Solar year offset error.');
             }
