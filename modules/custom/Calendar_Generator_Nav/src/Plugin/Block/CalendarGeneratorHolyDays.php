@@ -6,6 +6,7 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\hebrew_calendar_generator\CalendarYearGenerator;
+use Drupal\hebrew_calendar_generator\GregorianMonth;
 
 /**
  * Provides a 'Calendar holy days' Block.
@@ -101,32 +102,40 @@ class CalendarGeneratorHolyDays extends BlockBase {
           default:
             $feastClass = "";
         }
+        if($type!="Last Day of Unleavened Bread"){
         $markup .='<tr>';
         $markup .='<td class="' . $feastClass . '"><span></span>' . $label . '</td><td>';
-        $markup .= $day->gregorianMonth->name . ' ' ;
+        $startMonthDisplay = GregorianMonth::from($day->gregorianMonth->value)->toShortString();
+        $markup .= $startMonthDisplay  . ' ' ;
         $markup .= $day->gregorianDay;
         // if it is a multi-day feast, show the end date
         $endDate = "";
         $endMonth = "";
+        $endMonthInt = 0;
         if($type == "First Day of Unleavened Bread"){
           // show the last day of unleavened bread 
-          $item = $holyDays["Regular Day of Unleavened Bread"];
+          $item = $holyDays["Last Day of Unleavened Bread"];
           $endDate = $item->gregorianDay;
           $endMonth = $item->gregorianMonth->name;
+          $endMonthInt = $item->gregorianMonth->value;
         } elseif ($type == "First Day of Tabernacles") {
           $item = $holyDays["Regular Day of Tabernacles"];
           $endDate = $item->gregorianDay;
           $endMonth = $item->gregorianMonth->name;
+            
+          $endMonthInt = $item->gregorianMonth->value;
         }
         if ($endDate != "") {
           // IF the end month is different, show it
           if ($endMonth != $day->gregorianMonth->name) {
-            $markup .=' - ' . $endMonth . ' ';
+            $endMonthDisplay = GregorianMonth::from($endMonthInt)->toShortString();
+            $markup .=' - ' . $endMonthDisplay . ' ';
           }
           $markup .='- ' . $endDate;
         } 
         $markup .='</td>';
         $markup .='</tr>';
+        }
         
       }
     }

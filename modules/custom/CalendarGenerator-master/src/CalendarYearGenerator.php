@@ -64,7 +64,8 @@ class CalendarYearGenerator {
    */
   public function createYear(int $hebrewYear) : CalendarYear {
     if ($hebrewYear < 1) {
-      throw new \InvalidArgumentException('$hebrewYear must be greater than zero.');
+     $hebrewYear =1;
+      //throw new \InvalidArgumentException('$hebrewYear must be greater than zero.');
     }
 
     $yearCache =& drupal_static(self::YEAR_OBJECT_CACHE_KEY, []);
