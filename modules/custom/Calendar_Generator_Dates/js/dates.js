@@ -234,30 +234,29 @@ var newcalendar = {
             //console.log("pentecostDate", pentecostDate);  
             // find all the pentecost week counts
             // subtract 7 days from pentecost date 7 times 
-            for(let i=1; i<=7; i++){
-                let weekDate = new Date(pentecostDate);
-                weekDate.setDate(weekDate.getDate() - (7 * i));
-                // find the element with this date
-                const weekDateString = weekDate.toDateString();
-                // get the date value
-                // get the month value
-                const dateValue = weekDate.getDate();
-                const monthValue = weekDate.toLocaleString('en-us', {month: 'long'});
-                //console.log("weekDateString", weekDateString, dateValue, monthValue);
-                const weekNode = document.querySelector(`.daylist .day[data-day='${dateValue}'][data-month='${monthValue}']`);
-                if(weekNode){
-                    //get parent
-                    const targetNodeTop = weekNode.closest(".gregorian");
-                    const targetNode = targetNodeTop.querySelector(".month");
-                    if(targetNode){
+            for(let i=7; i>=1; i--){
+            let weekDate = new Date(pentecostDate);
+            weekDate.setDate(weekDate.getDate() - (7 * i));
+            // find the element with this date
+            // get the date value
+            // get the month value
+            const dateValue = weekDate.getDate();
+            const monthValue = weekDate.toLocaleString('en-us', {month: 'long'});
+            //console.log("weekDateString", dateValue, monthValue);
+            const weekNode = document.querySelector(`.daylist .day[data-day='${dateValue}'][data-month='${monthValue}']`);
+            if(weekNode){
+                //get parent
+                const targetNodeTop = weekNode.closest(".gregorian");
+                const targetNode = targetNodeTop.querySelector(".month");
+                if(targetNode){
 
-                        // add the week count
-                        const weekCountDiv = document.createElement("div");
-                        weekCountDiv.classList.add("pentecost-week-count");
-                        weekCountDiv.innerText = i;
-                        targetNode.appendChild(weekCountDiv);
-                    }
+                // add the week count
+                const weekCountDiv = document.createElement("div");
+                weekCountDiv.classList.add("pentecost-week-count");
+                weekCountDiv.innerText = 8 - i;
+                targetNode.appendChild(weekCountDiv);
                 }
+            }
             } 
         }
     }
@@ -733,8 +732,12 @@ window.addEventListener('load',
        if(document.getElementById("omnibox-submit")){
             document.getElementById("omnibox-submit").addEventListener("click", function(e){
                 e.preventDefault();
+                //console.log("omnibox submit clicked");
                 let inputYear = document.getElementById("omnibox-input").value;
-                let inputEra = document.getElementById("omnibox-select").value;
+                const selectedEra = document.querySelector('input[name="options"]:checked').value;
+                //console.log(selectedEra);
+                let inputEra = selectedEra;
+                // document.getElementById("omnibox-select").value;
                 if(inputYear && inputEra){
                     let fetchURL ="";
                     if(inputEra.toLowerCase() == "am"){
