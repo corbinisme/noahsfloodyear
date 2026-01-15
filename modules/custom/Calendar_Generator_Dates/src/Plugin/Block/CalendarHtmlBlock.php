@@ -247,10 +247,11 @@ class CalendarHtmlBlock extends BlockBase implements ContainerFactoryPluginInter
 
       $currentHebrewMonth = "";
       foreach ($week->enumerateDays() as $day) {
+        $monthInt = $day->hebrewMonth->toInt();
         $hebrewMonthName = $day->hebrewMonth->toString();
         $monthShortName = '';
         if ($hebrewMonthName !== $currentHebrewMonth) {
-          $markup .= " <span class='month-show'>" . $hebrewMonthName . "\n</span>";
+          $markup .= " <span class='month-show'>" . $hebrewMonthName . "(" . $monthInt . ")" . "\n</span>";
           $currentHebrewMonth = $hebrewMonthName;
         } else {
           $markup .= " <span class='month-hide'>&nbsp;</span>";
