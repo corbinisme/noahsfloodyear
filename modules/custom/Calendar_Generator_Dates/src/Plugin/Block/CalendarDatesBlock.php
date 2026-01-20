@@ -297,7 +297,8 @@ class CalendarDatesBlock extends BlockBase {
 
 	$fileName = $result[0]->GC_Era . $result[0]->GC_Year . ".html";
 	// load the html?
-	$path = $_SERVER["DOCUMENT_ROOT"] . "/Content/download/generator/output/" . $fileName;
+	$subDir = "/legacy";
+	$path = $_SERVER["DOCUMENT_ROOT"] . $subDir . "/Content/download/generator/output/" . $fileName;
 	$out = file_get_contents($path);
 	$out = html_entity_decode($out);
     $out = str_replace("&amp;nbsp;", "&nbsp;", $out);
