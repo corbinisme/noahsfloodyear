@@ -66,7 +66,7 @@ var calendarnav = {
             }
         }
 
-        let newurl = "/calendar/" + era + "/" + year;
+        let newurl = "/legacy/calendar/" + era + "/" + year;
         
         window.location.href = newurl;
         
