@@ -78,7 +78,7 @@ var calendarnav = {
         let year = calendarnav.getCurrentYear();
             let era = calendarnav.getCurrentEra();
             //console.log("generate", year, era);
-            let newurl = "/calendar/" + era + "/" + year;
+            let newurl = "/legacy/calendar/" + era + "/" + year;
             window.location.href = newurl;
     },
     setDefault: function(){
