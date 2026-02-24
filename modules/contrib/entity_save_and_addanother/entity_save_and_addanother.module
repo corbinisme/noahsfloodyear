@@ -91,6 +91,21 @@ function entity_save_and_addanother_form_block_content_form_alter(array &$form, 
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function entity_save_and_addanother_form_commerce_product_form_alter(array &$form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  if (strpos($current_path, '/product/add/') !== FALSE) {
+    $form_state->setValue('entity_save_and_addanother_commerce_product', $current_path);
+    $form['#submit'][] = 'entity_save_and_addanother_commerce_product_submit_handler';
+    $form['actions']['entity_save_and_addanother_commerce_product'] = $form['actions']['submit'];
+    $form['actions']['entity_save_and_addanother_commerce_product']['#value'] = t('Save and Add Another');
+    \Drupal::request()->query->remove('destination');
+    $form['actions']['entity_save_and_addanother_commerce_product']['#submit'][] = 'entity_save_and_addanother_commerce_product_submit_handler';
+  }
+}
+
+/**
  * Submit callback to set the redirect for node.
  */
 function entity_save_and_addanother_node_submit_handler(array &$form, FormStateInterface $form_state) {
@@ -140,6 +155,17 @@ function entity_save_and_addanother_menu_submit_handler(array &$form, FormStateI
 function entity_save_and_addanother_block_submit_handler(array &$form, FormStateInterface $form_state) {
   $trigger = $form_state->getTriggeringElement();
   if (isset($trigger['#id']) && $trigger['#id'] == 'edit-entity-save-and-addanother-block') {
+    $current_path = \Drupal::service('path.current')->getPath();
+    $form_state->setRedirectUrl(Url::fromUserInput($current_path));
+  }
+}
+
+/**
+ * Submit callback to set the redirect for commerce product.
+ */
+function entity_save_and_addanother_commerce_product_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#id']) && $trigger['#id'] == 'edit-actions-entity-save-and-addanother-commerce-product') {
     $current_path = \Drupal::service('path.current')->getPath();
     $form_state->setRedirectUrl(Url::fromUserInput($current_path));
   }

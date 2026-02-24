@@ -1,93 +1,98 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
-use Drupal\migrate\MigrateSkipProcessException;
 use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate_plus\Plugin\migrate\process\SkipOnValue;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the skip on value process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\SkipOnValue
  */
+#[CoversClass(SkipOnValue::class)]
+#[Group('migrate_plus')]
 final class SkipOnValueTest extends MigrateProcessTestCase {
 
   /**
-   * @covers ::process
+   * Tests skip on value.
    */
   public function testProcessSkipsOnValue(): void {
     $configuration = [];
     $configuration['method'] = 'process';
     $configuration['value'] = 86;
-    $this->expectException(MigrateSkipProcessException::class);
-    (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('86', $this->migrateExecutable, $this->row, 'destinationproperty');
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $plugin->transform('86', $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertTrue($plugin->isPipelineStopped());
   }
 
   /**
-   * @covers ::process
+   * Tests skip on value with multiple values.
    */
   public function testProcessSkipsOnMultipleValue(): void {
     $configuration = [];
     $configuration['method'] = 'process';
     $configuration['value'] = [1, 1, 2, 3, 5, 8];
-    $this->expectException(MigrateSkipProcessException::class);
-    (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('5', $this->migrateExecutable, $this->row, 'destinationproperty');
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $plugin->transform('5', $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertTrue($plugin->isPipelineStopped());
   }
 
   /**
-   * @covers ::process
+   * Tests skip on non-value.
    */
   public function testProcessBypassesOnNonValue(): void {
     $configuration = [];
     $configuration['method'] = 'process';
-    $configuration['value'] = 'sourcevalue';
+    $configuration['value'] = 'sourceValue';
     $configuration['not_equals'] = TRUE;
-    $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('sourcevalue', $this->migrateExecutable, $this->row, 'destinationproperty');
-    $this->assertEquals($value, 'sourcevalue');
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $value = $plugin->transform('sourceValue', $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertEquals('sourceValue', $value);
+    $this->assertFalse($plugin->isPipelineStopped());
     $configuration['value'] = 86;
-    $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('86', $this->migrateExecutable, $this->row, 'destinationproperty');
-    $this->assertEquals($value, '86');
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $value = $plugin->transform('86', $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertEquals('86', $value);
+    $this->assertFalse($plugin->isPipelineStopped());
   }
 
   /**
-   * @covers ::process
+   * Tests skip on multiple non-value.
    */
   public function testProcessSkipsOnMultipleNonValue(): void {
     $configuration = [];
     $configuration['method'] = 'process';
     $configuration['value'] = [1, 1, 2, 3, 5, 8];
-    $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform(4, $this->migrateExecutable, $this->row, 'destinationproperty');
-    $this->assertEquals($value, '4');
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $value = $plugin->transform(4, $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertEquals('4', $value);
+    $this->assertFalse($plugin->isPipelineStopped());
   }
 
   /**
-   * @covers ::process
+   * Tests bypass on multiple non-value.
    */
   public function testProcessBypassesOnMultipleNonValue(): void {
     $configuration = [];
     $configuration['method'] = 'process';
     $configuration['value'] = [1, 1, 2, 3, 5, 8];
     $configuration['not_equals'] = TRUE;
-    $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform(5, $this->migrateExecutable, $this->row, 'destinationproperty');
-    $this->assertEquals($value, '5');
-    $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform(1, $this->migrateExecutable, $this->row, 'destinationproperty');
-    $this->assertEquals($value, '1');
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $value = $plugin->transform(5, $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertEquals('5', $value);
+    $this->assertFalse($plugin->isPipelineStopped());
+    $plugin = new SkipOnValue($configuration, 'skip_on_value', []);
+    $value = $plugin->transform(1, $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertEquals('1', $value);
+    $this->assertFalse($plugin->isPipelineStopped());
   }
 
   /**
-   * @covers ::row
+   * Tests row bypass on multiple non-value.
    */
   public function testRowBypassesOnMultipleNonValue(): void {
     $configuration = [];
@@ -95,15 +100,15 @@ final class SkipOnValueTest extends MigrateProcessTestCase {
     $configuration['value'] = [1, 1, 2, 3, 5, 8];
     $configuration['not_equals'] = TRUE;
     $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform(5, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform(5, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertEquals($value, '5');
     $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform(1, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform(1, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertEquals($value, '1');
   }
 
   /**
-   * @covers ::row
+   * Tests skip row on value.
    */
   public function testRowSkipsOnValue(): void {
     $configuration = [];
@@ -111,13 +116,11 @@ final class SkipOnValueTest extends MigrateProcessTestCase {
     $configuration['value'] = 86;
     $this->expectException(MigrateSkipRowException::class);
     (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('86', $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform('86', $this->migrateExecutable, $this->row, 'destinationProperty');
   }
 
   /**
    * Tests that a skip row exception with a message is raised.
-   *
-   * @covers ::row
    */
   public function testRowSkipWithMessage(): void {
     $configuration = [
@@ -132,24 +135,24 @@ final class SkipOnValueTest extends MigrateProcessTestCase {
   }
 
   /**
-   * @covers ::row
+   * Tests row bypass on non-value.
    */
   public function testRowBypassesOnNonValue(): void {
     $configuration = [];
     $configuration['method'] = 'row';
-    $configuration['value'] = 'sourcevalue';
+    $configuration['value'] = 'sourceValue';
     $configuration['not_equals'] = TRUE;
     $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('sourcevalue', $this->migrateExecutable, $this->row, 'destinationproperty');
-    $this->assertEquals($value, 'sourcevalue');
+      ->transform('sourceValue', $this->migrateExecutable, $this->row, 'destinationProperty');
+    $this->assertEquals($value, 'sourceValue');
     $configuration['value'] = 86;
     $value = (new SkipOnValue($configuration, 'skip_on_value', []))
-      ->transform('86', $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform('86', $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertEquals($value, 86);
   }
 
   /**
-   * @covers ::__construct
+   * Tests required configuration.
    */
   public function testRequiredConfiguration(): void {
     $configuration = [];

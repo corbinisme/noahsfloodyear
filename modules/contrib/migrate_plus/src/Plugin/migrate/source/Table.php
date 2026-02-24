@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate\source;
 
 use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\Core\State\StateInterface;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Exception\RequirementsException;
 use Drupal\migrate\Plugin\migrate\source\SqlBase;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -41,7 +42,7 @@ use Drupal\migrate\Plugin\MigrationInterface;
  * @code
  *   source:
  *     plugin: table
- *     table_name: autoban
+ *     table_name: auto_ban
  *     id_fields:
  *       type:
  *         type: string
@@ -64,7 +65,7 @@ use Drupal\migrate\Plugin\MigrationInterface;
  *       referer: referer
  * @endcode
  *
- * In this example shows how to retrieve data from autoban source table.
+ * In this example shows how to retrieve data from auto_ban source table.
  *
  * For additional configuration keys, refer to the parent classes.
  *
@@ -74,6 +75,7 @@ use Drupal\migrate\Plugin\MigrationInterface;
  *   id = "table"
  * )
  */
+#[MigrateSource(id: "table")]
 class Table extends SqlBase {
 
   /**

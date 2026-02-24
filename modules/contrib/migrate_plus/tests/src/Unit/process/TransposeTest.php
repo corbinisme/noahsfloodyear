@@ -1,18 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
 use Drupal\migrate_plus\Plugin\migrate\process\Transpose;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the transpose process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\Transpose
  */
+#[CoversClass(Transpose::class)]
+#[Group('migrate_plus')]
 final class TransposeTest extends MigrateProcessTestCase {
 
   /**
@@ -33,8 +35,9 @@ final class TransposeTest extends MigrateProcessTestCase {
    *
    * @dataProvider transposeDataProvider
    */
+  #[DataProvider('transposeDataProvider')]
   public function testTranspose(array $input, array $expected_output): void {
-    $output = $this->plugin->transform($input, $this->migrateExecutable, $this->row, 'destinationproperty');
+    $output = $this->plugin->transform($input, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertSame($output, $expected_output);
   }
 

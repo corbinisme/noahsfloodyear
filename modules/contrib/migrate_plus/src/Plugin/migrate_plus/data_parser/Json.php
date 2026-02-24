@@ -1,23 +1,24 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate_plus\data_parser;
 
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Url;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 use Drupal\migrate\MigrateException;
+use Drupal\migrate_plus\Attribute\DataParser;
 use Drupal\migrate_plus\DataParserPluginBase;
 
 /**
  * Obtain JSON data for migration.
- *
- * @DataParser(
- *   id = "json",
- *   title = @Translation("JSON")
- * )
  */
+#[DataParser(
+  id: 'json',
+  title: new TranslatableMarkup('JSON')
+)]
 class Json extends DataParserPluginBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -59,9 +60,10 @@ class Json extends DataParserPluginBase implements ContainerFactoryPluginInterfa
       $this->sourceData = json_decode($response, TRUE);
 
       // If json_decode() has returned NULL, it might be that the data isn't
-      // valid utf8 - see http://php.net/manual/en/function.json-decode.php#86997.
+      // valid utf8 - see:
+      // http://php.net/manual/en/function.json-decode.php#86997.
       if (!$this->sourceData) {
-      $utf8response = mb_convert_encoding($response, 'UTF-8');
+        $utf8response = mb_convert_encoding($response, 'UTF-8');
         $this->sourceData = json_decode($utf8response, TRUE);
       }
       $this->currentUrl = $url;
@@ -185,13 +187,14 @@ class Json extends DataParserPluginBase implements ContainerFactoryPluginInterfa
             $next_urls[] = $selector_data;
           }
         }
-        break;
+
+        return $next_urls;
 
       case 'cursor':
         if (NULL !== $selector_data && is_scalar($selector_data)) {
           // Just use 'cursor' as a default parameter key if not provided.
           $key = !empty($this->configuration['pager']['key']) ? $this->configuration['pager']['key'] : 'cursor';
-          // Parse the url and replace the cursor param value and rebuild the url.
+          // Parse the url, replace the cursor param value, and rebuild the url.
           $path = UrlHelper::parse($url);
           $path['query'][$key] = $selector_data;
           $next_urls[] = Url::fromUri($path['path'], [
@@ -199,7 +202,8 @@ class Json extends DataParserPluginBase implements ContainerFactoryPluginInterfa
             'fragment' => $path['fragment'],
           ])->toString();
         }
-        break;
+
+        return $next_urls;
 
       case 'page':
         if (NULL !== $selector_data && is_scalar($selector_data)) {
@@ -221,7 +225,8 @@ class Json extends DataParserPluginBase implements ContainerFactoryPluginInterfa
             ])->toString();
           }
         }
-        break;
+
+        return $next_urls;
 
       case 'paginator':
         // The first pass uses the endpoint's default size.
@@ -289,7 +294,7 @@ class Json extends DataParserPluginBase implements ContainerFactoryPluginInterfa
             }
           }
           else {
-            // If we have an array of rows
+            // If we have an array of rows.
             if (count($selector_data) > 0) {
               $next_urls[] = Url::fromUri($path['path'], [
                 'query' => $path['query'],
@@ -313,16 +318,16 @@ class Json extends DataParserPluginBase implements ContainerFactoryPluginInterfa
                 unset($next_urls[$key]);
               }
             }
-            catch (\Exception $e) {
+            catch (\Exception) {
               unset($next_urls[$key]);
             }
           }
         }
-        break;
+
+        return $next_urls;
     }
 
     return array_merge(parent::getNextUrls($url), $next_urls);
   }
-
 
 }

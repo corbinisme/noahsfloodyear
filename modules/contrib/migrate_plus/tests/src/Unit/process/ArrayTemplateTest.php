@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
-use Drupal\migrate\MigrateException;
 use Drupal\migrate\Row;
 use Drupal\migrate_plus\Plugin\migrate\process\ArrayTemplate;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the array_template process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\ArrayTemplate
  */
+#[CoversClass(ArrayTemplate::class)]
+#[Group('migrate_plus')]
 final class ArrayTemplateTest extends MigrateProcessTestCase {
 
   /**
@@ -29,9 +30,10 @@ final class ArrayTemplateTest extends MigrateProcessTestCase {
    *
    * @dataProvider providerTestArrayTemplate
    */
+  #[DataProvider('providerTestArrayTemplate')]
   public function testArrayTemplate($input, $expected, array $configuration): void {
     $plugin = new ArrayTemplate($configuration, 'array_template', []);
-    $output = $plugin->transform($input, $this->migrateExecutable, $this->row, 'destinationproperty');
+    $output = $plugin->transform($input, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertSame($expected, $output);
   }
 
@@ -84,8 +86,8 @@ final class ArrayTemplateTest extends MigrateProcessTestCase {
     // Use a real Row object, not a mock.
     $row = new Row();
     $pipeline = [
-      'zero',
-      'one',
+      'zero' => 'zero',
+      'one' => 'one',
       'two' => ['nested value'],
     ];
     $row->setSourceProperty('some_field', [
@@ -127,8 +129,8 @@ final class ArrayTemplateTest extends MigrateProcessTestCase {
       ],
       'full values' => [
         'pipeline' => [
-          'zero',
-          'one',
+          'zero' => 'zero',
+          'one' => 'one',
           'two' => ['nested value'],
         ],
         'source' => [
@@ -141,8 +143,8 @@ final class ArrayTemplateTest extends MigrateProcessTestCase {
         ],
       ],
       'scalar values' => [
-        'zero' => 'zero',
-        'one' => 'one',
+        'zero' => NULL,
+        'one' => NULL,
         'nested' => 'nested value',
         'source' => 'source value',
         'nested_source' => 'nested source value',
@@ -151,7 +153,7 @@ final class ArrayTemplateTest extends MigrateProcessTestCase {
       ],
     ];
     $plugin = new ArrayTemplate($configuration, 'array_template', []);
-    $output = $plugin->transform($pipeline, $this->migrateExecutable, $row, 'destinationproperty');
+    $output = $plugin->transform($pipeline, $this->migrateExecutable, $row, 'destinationProperty');
     $this->assertSame($expected, $output);
   }
 
@@ -165,11 +167,12 @@ final class ArrayTemplateTest extends MigrateProcessTestCase {
    *
    * @dataProvider providerArrayTemplateConstructorExceptions
    */
+  #[DataProvider('providerArrayTemplateConstructorExceptions')]
   public function testArrayTemplateConstructorExceptions(array $configuration, string $message): void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage($message);
     $plugin = new ArrayTemplate($configuration, 'array_template', []);
-    $plugin->transform(123, $this->migrateExecutable, $this->row, 'destinationproperty');
+    $plugin->transform(123, $this->migrateExecutable, $this->row, 'destinationProperty');
   }
 
   /**

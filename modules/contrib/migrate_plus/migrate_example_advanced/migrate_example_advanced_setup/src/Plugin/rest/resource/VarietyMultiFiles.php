@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\migrate_example_advanced_setup\Plugin\rest\resource;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\rest\Attribute\RestResource;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 
 /**
  * Provides varieties as two endpoints, one for reds and one for whites.
- *
- * @RestResource(
- *   id = "migrate_example_advanced_variety_multiple",
- *   label = @Translation("Advanced migration example - Variety data"),
- *   uri_paths = {
- *     "canonical" = "/migrate_example_advanced_variety_multiple/{type}"
- *   }
- * )
  */
+#[RestResource(
+  id: 'migrate_example_advanced_variety_multiple',
+  label: new TranslatableMarkup('Advanced migration example - Variety data'),
+  uri_paths: ['canonical' => '/migrate_example_advanced_variety_multiple/{type}'],
+)]
 class VarietyMultiFiles extends ResourceBase {
 
   /**
@@ -28,10 +29,10 @@ class VarietyMultiFiles extends ResourceBase {
    */
   public function get(?string $type = NULL): ResourceResponse {
     $data = [];
-    if (strtolower($type) != 'white') {
+    if (strtolower((string) $type) != 'white') {
       $data['variety'][] = [
         'name' => 'Amarone',
-        // The categoryid for 'red'.
+        // The categoryId for 'red'.
         'parent' => 3,
         'details' => 'Italian Venoto region',
         'attributes' => [
@@ -41,7 +42,7 @@ class VarietyMultiFiles extends ResourceBase {
       ];
       $data['variety'][] = [
         'name' => 'Barbaresco',
-        // The categoryid for 'red'.
+        // The categoryId for 'red'.
         'parent' => 3,
         'details' => 'Italian Piedmont region',
         'attributes' => [
@@ -50,17 +51,17 @@ class VarietyMultiFiles extends ResourceBase {
         ],
       ];
     }
-    if (strtolower($type) != 'red') {
+    if (strtolower((string) $type) != 'red') {
       $data['variety'][] = [
         'name' => 'Kir',
-        // The categoryid for 'white'.
+        // The categoryId for 'white'.
         'parent' => 1,
         'details' => 'French Burgundy region',
         'attributes' => [],
       ];
       $data['variety'][] = [
         'name' => 'Pinot Grigio',
-        // The categoryid for 'white'.
+        // The categoryId for 'white'.
         'parent' => 1,
         'details' => 'From the northeast of Italy',
         'attributes' => [

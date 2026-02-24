@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Kernel\Plugin\migrate\process;
 
@@ -9,14 +9,18 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrateDestinationInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
+use Drupal\migrate_plus\Plugin\migrate\process\DefaultEntityValue;
 use Drupal\Tests\user\Traits\UserCreationTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the default_entity_value plugin.
- *
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\DefaultEntityValue
- * @group migrate_plus
  */
+#[CoversClass(DefaultEntityValue::class)]
+#[Group('migrate_plus')]
+#[RunTestsInSeparateProcesses]
 final class DefaultEntityValueTest extends KernelTestBase {
 
   use UserCreationTrait;
@@ -41,8 +45,6 @@ final class DefaultEntityValueTest extends KernelTestBase {
 
   /**
    * Tests the lookup when the value is empty.
-   *
-   * @covers ::transform
    */
   public function testDefaultEntityValue(): void {
     // Create a user.

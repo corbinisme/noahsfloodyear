@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
- * Bootstrap  v5.3.7 (https://getbootstrap.com/)
+ * Bootstrap  v5.3.8 (https://getbootstrap.com/)
  * Copyright 2011-2025 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
@@ -539,6 +539,10 @@ legend + * {
 [type=search] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
+}
+[type=search]::-webkit-search-cancel-button {
+  cursor: pointer;
+  filter: grayscale(1);
 }
 
 /* rtl:raw:
@@ -2095,7 +2099,7 @@ progress {
 }
 
 .form-text {
-  margin-top: 0;
+  margin-top: 0.25rem;
   font-size: 0.875em;
   color: var(--bs-secondary-color);
 }
@@ -2709,7 +2713,7 @@ textarea.form-control-lg {
 .valid-feedback {
   display: none;
   width: 100%;
-  margin-top: 0;
+  margin-top: 0.25rem;
   font-size: 0.875em;
   color: var(--bs-form-valid-color);
 }
@@ -2799,7 +2803,7 @@ textarea.form-control-lg {
 .invalid-feedback {
   display: none;
   width: 100%;
-  margin-top: 0;
+  margin-top: 0.25rem;
   font-size: 0.875em;
   color: var(--bs-form-invalid-color);
 }
@@ -6232,6 +6236,7 @@ textarea.form-control-lg {
 .spinner-grow,
 .spinner-border {
   display: inline-block;
+  flex-shrink: 0;
   width: var(--bs-spinner-width);
   height: var(--bs-spinner-height);
   vertical-align: var(--bs-spinner-vertical-align);
@@ -12196,6 +12201,32 @@ a[class=button] {
   --bs-btn-disabled-border-color: #f8f9fa;
 }
 
+.accordion details {
+  overflow: unset;
+}
+.accordion details[open] .accordion-button {
+  color: var(--bs-accordion-active-color);
+  background-color: var(--bs-accordion-active-bg);
+}
+.accordion details[open] .accordion-button::after {
+  background-image: var(--bs-accordion-btn-active-icon);
+  transform: var(--bs-accordion-btn-icon-transform);
+}
+.accordion details:not([open]) {
+  border-bottom: 0;
+}
+.accordion details:not([open]) .accordion-button {
+  color: var(--bs-accordion-btn-color);
+  background-color: var(--bs-accordion-btn-bg);
+  border: unset;
+  border-bottom-right-radius: var(--bs-accordion-border-radius);
+  border-bottom-left-radius: var(--bs-accordion-border-radius);
+}
+.accordion details:not([open]) .accordion-button::after {
+  background-image: var(--bs-accordion-btn-active-icon);
+  transform: unset;
+}
+
 .form-control.image-button {
   width: unset;
 }
@@ -12209,6 +12240,9 @@ a[class=button] {
   min-width: 5rem;
 }
 
+input.form-text {
+  margin-top: 0;
+}
 input[type=search] {
   box-sizing: border-box;
 }
@@ -12406,6 +12440,11 @@ footer .region-footer {
   flex-shrink: 0;
 }
 
+@media (min-width: 992px) {
+  .region-nav-additional {
+    display: flex;
+  }
+}
 .tabs-primary {
   margin: 1rem 0;
 }
@@ -12472,6 +12511,14 @@ a.tabledrag-handle .handle {
 
 table {
   caption-side: unset;
+}
+
+.admin-dblog .table .icon {
+  background-color: var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg, var(--bs-table-bg))));
+}
+.admin-dblog .table > :not(caption) > * > * {
+  box-shadow: unset;
+  background-color: var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg, var(--bs-table-bg))));
 }
 
 .progress {

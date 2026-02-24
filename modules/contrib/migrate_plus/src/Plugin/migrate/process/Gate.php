@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\MigrateSkipProcessException;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
@@ -26,10 +26,6 @@ use Drupal\migrate\Row;
  * essentially restricted to 'process'.
  *
  * The source is not modified if it passes through the gate.
- *
- * @MigrateProcessPlugin(
- *   id = "gate"
- * )
  *
  * Available configuration keys:
  * - use_as_key: source or destination field to be used as the key to the gate.
@@ -80,6 +76,7 @@ use Drupal\migrate\Row;
  *
  * @codingStandardsIgnoreEnd
  */
+#[MigrateProcess(id: 'gate')]
 class Gate extends ProcessPluginBase {
 
   /**
@@ -111,18 +108,11 @@ class Gate extends ProcessPluginBase {
     $key_is_valid = in_array($key, $valid_keys, TRUE);
     $key_direction = $this->configuration['key_direction'];
     $value_can_pass = ($key_is_valid && $key_direction == 'unlock') || (!$key_is_valid && $key_direction == 'lock');
-    if ($value_can_pass) {
-      return $value;
+    if (!$value_can_pass) {
+      $this->stopPipeline();
+      return NULL;
     }
-    else {
-      if ($key_direction == 'lock') {
-        $message = sprintf('Processing of destination property %s was skipped: Gate was locked by property %s with value %s.', $destination_property, $this->configuration['use_as_key'], $key);
-      }
-      else {
-        $message = sprintf('Processing of destination property %s was skipped: Gate was not unlocked by property %s with value %s. ', $destination_property, $this->configuration['use_as_key'], $key);
-      }
-      throw new MigrateSkipProcessException($message);
-    }
+    return $value;
   }
 
 }

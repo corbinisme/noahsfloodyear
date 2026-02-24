@@ -75,7 +75,14 @@ class ImporterForm extends FormBase {
    * @param \Drupal\csv_importer\Plugin\ImporterManager $importer
    *   The importer plugin manager service.
    */
-  final public function __construct(EntityTypeManagerInterface $entity_type_manager, EntityFieldManagerInterface $entity_field_manager, EntityTypeBundleInfoInterface $entity_bundle_info, ParserInterface $parser, RendererInterface $renderer, ImporterManager $importer) {
+  final public function __construct(
+    EntityTypeManagerInterface $entity_type_manager,
+    EntityFieldManagerInterface $entity_field_manager,
+    EntityTypeBundleInfoInterface $entity_bundle_info,
+    ParserInterface $parser,
+    RendererInterface $renderer,
+    ImporterManager $importer,
+  ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->entityFieldManager = $entity_field_manager;
     $this->entityBundleInfo = $entity_bundle_info;
@@ -108,7 +115,7 @@ class ImporterForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['importer'] = [
       '#type' => 'container',
       '#attributes' => [
@@ -187,7 +194,7 @@ class ImporterForm extends FormBase {
    * @return array
    *   Entity type options.
    */
-  protected function getEntityTypeOptions() {
+  protected function getEntityTypeOptions(): array {
     $options = [];
     $plugin_definitions = $this->importer->getDefinitions();
 
@@ -211,7 +218,7 @@ class ImporterForm extends FormBase {
    * @return array
    *   Entity type bundle options.
    */
-  protected function getEntityTypeBundleOptions(string $entity_type) {
+  protected function getEntityTypeBundleOptions(string $entity_type): array {
     $options = [];
     $entity = $this->entityTypeManager->getDefinition($entity_type);
 
@@ -239,8 +246,11 @@ class ImporterForm extends FormBase {
    * @return array
    *   Entity type fields.
    */
-  protected function getEntityTypeFields(string $entity_type, ?string $entity_type_bundle = NULL) {
-    $fields = [];
+  protected function getEntityTypeFields(string $entity_type, ?string $entity_type_bundle = NULL): array {
+    $fields = [
+      'fields' => [],
+      'required' => [],
+    ];
 
     if (!$entity_type_bundle) {
       $entity_type_bundle = key($this->entityBundleInfo->getBundleInfo($entity_type));
@@ -271,7 +281,7 @@ class ImporterForm extends FormBase {
    * @return array
    *   Missing fields.
    */
-  protected function getEntityTypeMissingFields(string $entity_type, array $required, array $csv) {
+  protected function getEntityTypeMissingFields(string $entity_type, array $required, array $csv): array {
     $entity_definition = $this->entityTypeManager->getDefinition($entity_type);
 
     if ($entity_definition->hasKey('bundle')) {

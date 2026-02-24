@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate\process;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigratePluginManagerInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -25,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   when mode is attribute. The keys can be:
  *   - name: Name of the attribute to match and modify.
  * - search: Regular expression to use. It should contain at least one
- *   parenthesized subpattern which will be used as the ID passed to
+ *   parenthesized sub pattern which will be used as the ID passed to
  *   migration_lookup process plugin.
  * - replace: Default value to use for replacements on migrations, if not
  *   specified on the migration. It should contain the '[mapped-id]' string
@@ -62,15 +63,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *       plugin: dom
  *       method: export
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "dom_migration_lookup"
- * )
  */
+#[MigrateProcess(id: 'dom_migration_lookup')]
 class DomMigrationLookup extends DomStrReplace implements ContainerFactoryPluginInterface {
-
-  protected MigrationInterface $migration;
-  protected MigratePluginManagerInterface $processPluginManager;
 
   /**
    * Parameters passed to transform method, except the first, value.
@@ -79,10 +74,13 @@ class DomMigrationLookup extends DomStrReplace implements ContainerFactoryPlugin
    */
   protected array $transformParameters = [];
 
-  /**
-   * {@inheritdoc}
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, MigratePluginManagerInterface $process_plugin_manager) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected MigrationInterface $migration,
+    protected MigratePluginManagerInterface $processPluginManager,
+  ) {
     $configuration += ['no_stub' => TRUE];
     $default_replace_missing = empty($configuration['replace']);
     if ($default_replace_missing) {
@@ -92,8 +90,6 @@ class DomMigrationLookup extends DomStrReplace implements ContainerFactoryPlugin
     if ($default_replace_missing) {
       unset($this->configuration['replace']);
     }
-    $this->migration = $migration;
-    $this->processPluginManager = $process_plugin_manager;
     if (empty($this->configuration['migrations'])) {
       throw new InvalidPluginDefinitionException(
         $this->getPluginId(),
@@ -125,7 +121,7 @@ class DomMigrationLookup extends DomStrReplace implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL): self {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, ?MigrationInterface $migration = NULL): self {
     return new static(
       $configuration,
       $plugin_id,

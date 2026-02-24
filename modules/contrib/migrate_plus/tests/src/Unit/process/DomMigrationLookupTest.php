@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
@@ -12,13 +12,15 @@ use Drupal\migrate\Plugin\MigrateProcessInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_plus\Plugin\migrate\process\DomMigrationLookup;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the dom_migration_lookup process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\DomMigrationLookup
  */
+#[CoversClass(DomMigrationLookup::class)]
+#[Group('migrate_plus')]
 final class DomMigrationLookupTest extends MigrateProcessTestCase {
 
   /**
@@ -70,18 +72,18 @@ final class DomMigrationLookupTest extends MigrateProcessTestCase {
     // Mock two migration lookup plugins.
     $prophecy = $this->prophesize(MigrateProcessInterface::class);
     $prophecy
-      ->transform('123', $this->migrateExecutable, $this->row, 'destinationproperty')
+      ->transform('123', $this->migrateExecutable, $this->row, 'destinationProperty')
       ->willReturn('321');
     $prophecy
-      ->transform('456', $this->migrateExecutable, $this->row, 'destinationproperty')
+      ->transform('456', $this->migrateExecutable, $this->row, 'destinationProperty')
       ->willReturn(NULL);
     $users_lookup_plugin = $prophecy->reveal();
     $prophecy = $this->prophesize(MigrateProcessInterface::class);
     $prophecy
-      ->transform('123', $this->migrateExecutable, $this->row, 'destinationproperty')
+      ->transform('123', $this->migrateExecutable, $this->row, 'destinationProperty')
       ->willReturn('ignored');
     $prophecy
-      ->transform('456', $this->migrateExecutable, $this->row, 'destinationproperty')
+      ->transform('456', $this->migrateExecutable, $this->row, 'destinationProperty')
       ->willReturn('654');
     $people_lookup_plugin = $prophecy->reveal();
 
@@ -105,21 +107,22 @@ final class DomMigrationLookupTest extends MigrateProcessTestCase {
   }
 
   /**
-   * @covers ::__construct
+   * Tests config validation.
    *
    * @dataProvider providerTestConfigValidation
    */
+  #[DataProvider('providerTestConfigValidation')]
   public function testConfigValidation(array $config_overrides, string $message): void {
     $configuration = $config_overrides + $this->exampleConfiguration;
     $value = '<p>A simple paragraph.</p>';
     $this->expectException(InvalidPluginDefinitionException::class);
     $this->expectExceptionMessage($message);
     (new DomMigrationLookup($configuration, 'dom_migration_lookup', [], $this->migration, $this->processPluginManager))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
   }
 
   /**
-   * Dataprovider for testConfigValidation().
+   * Data provider for testConfigValidation().
    */
   public static function providerTestConfigValidation(): array {
     $cases = [
@@ -141,35 +144,36 @@ final class DomMigrationLookupTest extends MigrateProcessTestCase {
   }
 
   /**
-   * @covers ::transform
+   * Tests invalid input.
    */
   public function testTransformInvalidInput(): void {
     $value = 'string';
     $this->expectException(MigrateSkipRowException::class);
-    $this->expectExceptionMessage('The dom_migration_lookup plugin in the destinationproperty process pipeline requires a \DOMDocument object. You can use the dom plugin to convert a string to \DOMDocument.');
+    $this->expectExceptionMessage('The dom_migration_lookup plugin in the destinationProperty process pipeline requires a \DOMDocument object. You can use the dom plugin to convert a string to \DOMDocument.');
     (new DomMigrationLookup($this->exampleConfiguration, 'dom_migration_lookup', [], $this->migration, $this->processPluginManager))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
   }
 
   /**
-   * @covers ::transform
+   * Tests valid input.
    *
    * @dataProvider providerTestTransform
    */
+  #[DataProvider('providerTestTransform')]
   public function testTransform($config_overrides, $input_string, $output_string): void {
     $configuration = $config_overrides + $this->exampleConfiguration;
     $value = Html::load($input_string);
     $document = (new DomMigrationLookup($configuration, 'dom_migration_lookup', [], $this->migration, $this->processPluginManager))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertTrue($document instanceof \DOMDocument);
     $this->assertEquals($output_string, Html::serialize($document));
   }
 
   /**
-   * Dataprovider for testTransform().
+   * Data provider for testTransform().
    */
   public static function providerTestTransform(): array {
-    $cases = [
+    return [
       'users-migration' => [
         [],
         '<a href="/user/123">text</a>',
@@ -186,8 +190,6 @@ final class DomMigrationLookupTest extends MigrateProcessTestCase {
         '<a href="https://www.example.com/user/456">text</a>',
       ],
     ];
-
-    return $cases;
   }
 
 }

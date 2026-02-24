@@ -1,22 +1,24 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate_plus\data_parser;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\migrate\Exception\RequirementsException;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\migrate\MigrateException;
+use Drupal\migrate_plus\Attribute\DataParser;
+use Drupal\migrate_plus\DataFetcherPluginManager;
 use Drupal\migrate_plus\DataParserPluginBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Obtain SOAP data for migration.
- *
- * @DataParser(
- *   id = "soap",
- *   title = @Translation("SOAP")
- * )
  */
+#[DataParser(
+  id: 'soap',
+  title: new TranslatableMarkup('SOAP')
+)]
 class Soap extends DataParserPluginBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -39,20 +41,28 @@ class Soap extends DataParserPluginBase implements ContainerFactoryPluginInterfa
    */
   protected string $responseType;
 
-  /**
-   * {@inheritdoc}
-   *
-   * @throws \Drupal\migrate\Exception\RequirementsException
-   *   If PHP SOAP extension is not installed.
-   */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
-    if (!class_exists('\SoapClient')) {
-      throw new RequirementsException('The PHP SOAP extension is not installed');
-    }
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    protected DataFetcherPluginManager $fetcherPluginManager,
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $fetcherPluginManager);
     $this->function = $configuration['function'];
     $this->parameters = $configuration['parameters'];
     $this->responseType = $configuration['response_type'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('plugin.manager.migrate_plus.data_fetcher'),
+    );
   }
 
   /**
@@ -76,7 +86,7 @@ class Soap extends DataParserPluginBase implements ContainerFactoryPluginInterfa
         $function_found = TRUE;
         foreach ($client->__getTypes() as $type_info) {
           // E.g., "struct GetWeatherResponse {\n string GetWeatherResult;\n}".
-          if (preg_match('|struct (.*?) {\s*[a-z]+ (.*?);|is', $type_info, $matches)) {
+          if (preg_match('|struct (.*?) {\s*[a-z]+ (.*?);|is', (string) $type_info, $matches)) {
             if ($matches[1] == $response_type) {
               $response_property = $matches[2];
             }
@@ -95,7 +105,7 @@ class Soap extends DataParserPluginBase implements ContainerFactoryPluginInterfa
     $response_value = $response->$response_property;
     switch ($this->responseType) {
       case 'xml':
-        $xml = simplexml_load_string($response_value);
+        $xml = simplexml_load_string((string) $response_value);
         $this->iterator = new \ArrayIterator($xml->xpath($this->itemSelector));
         break;
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
@@ -11,13 +11,15 @@ use Drupal\Core\Config\ImmutableConfig;
 use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate_plus\Plugin\migrate\process\DomApplyStyles;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the dom_apply_styles process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\DomApplyStyles
  */
+#[CoversClass(DomApplyStyles::class)]
+#[Group('migrate_plus')]
 final class DomApplyStylesTest extends MigrateProcessTestCase {
 
   /**
@@ -69,21 +71,22 @@ final class DomApplyStylesTest extends MigrateProcessTestCase {
   }
 
   /**
-   * @covers ::__construct
+   * Tests validation rules.
    *
    * @dataProvider providerTestConfig
    */
+  #[DataProvider('providerTestConfig')]
   public function testValidateRules(array $config_overrides, string $message): void {
     $configuration = $config_overrides + $this->exampleConfiguration;
     $value = '<p>A simple paragraph.</p>';
     $this->expectException(InvalidPluginDefinitionException::class);
     $this->expectExceptionMessage($message);
     (new DomApplyStyles($configuration, 'dom_apply_styles', [], $this->configFactory))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
   }
 
   /**
-   * Dataprovider for testValidateRules().
+   * Data provider for testValidateRules().
    */
   public static function providerTestConfig(): array {
     $cases = [
@@ -117,25 +120,25 @@ final class DomApplyStylesTest extends MigrateProcessTestCase {
   }
 
   /**
-   * @covers ::transform
+   * Tests invalid input.
    */
   public function testTransformInvalidInput(): void {
     $value = 'string';
     $this->expectException(MigrateSkipRowException::class);
-    $this->expectExceptionMessage('The dom_apply_styles plugin in the destinationproperty process pipeline requires a \DOMDocument object. You can use the dom plugin to convert a string to \DOMDocument.');
+    $this->expectExceptionMessage('The dom_apply_styles plugin in the destinationProperty process pipeline requires a \DOMDocument object. You can use the dom plugin to convert a string to \DOMDocument.');
     (new DomApplyStyles($this->exampleConfiguration, 'dom_apply_styles', [], $this->configFactory))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
   }
 
   /**
-   * @covers ::transform
+   * Tests valid input.
    */
   public function testTransform(): void {
     $input_string = '<div><span><b>Bold text</b></span><span><i>Italic text</i></span></div>';
     $output_string = '<div><span><strong class="foo">Bold text</strong></span><em class="foo bar">Italic text</em></div>';
     $value = Html::load($input_string);
     $document = (new DomApplyStyles($this->exampleConfiguration, 'dom_apply_styles', [], $this->configFactory))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertTrue($document instanceof \DOMDocument);
     $this->assertEquals($output_string, Html::serialize($document));
   }

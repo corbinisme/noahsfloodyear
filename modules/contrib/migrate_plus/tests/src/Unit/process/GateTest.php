@@ -1,20 +1,21 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
-use Drupal\migrate\MigrateSkipProcessException;
 use Drupal\migrate\Row;
 use Drupal\migrate_plus\Plugin\migrate\process\Gate;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the gate process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\Gate
  */
+#[CoversClass(Gate::class)]
+#[Group('migrate_plus')]
 final class GateTest extends MigrateProcessTestCase {
 
   /**
@@ -22,6 +23,7 @@ final class GateTest extends MigrateProcessTestCase {
    *
    * @dataProvider gateProvider
    */
+  #[DataProvider('gateProvider')]
   public function testGate($row_data, $destination_data, $configuration, $message): void {
     $row = new Row($row_data);
     if (!empty($destination_data)) {
@@ -29,13 +31,12 @@ final class GateTest extends MigrateProcessTestCase {
         $row->setDestinationProperty($key, $val);
       }
     }
-    if (!empty($message)) {
-      $this->expectException(MigrateSkipProcessException::class);
-      $this->expectExceptionMessage($message);
-    }
     $plugin = new Gate($configuration, 'gate', []);
     $value = $row_data[$configuration['source']];
-    $transformed = $plugin->transform($value, $this->migrateExecutable, $row, 'destinationproperty');
+    $transformed = $plugin->transform($value, $this->migrateExecutable, $row, 'destinationProperty');
+    if (!empty($message)) {
+      $this->assertTrue($plugin->isPipelineStopped());
+    }
     if (empty($message)) {
       $this->assertSame($value, $transformed);
     }
@@ -58,7 +59,7 @@ final class GateTest extends MigrateProcessTestCase {
           'valid_keys' => 'CO',
           'key_direction' => 'unlock',
         ],
-        'Processing of destination property destinationproperty was skipped: Gate was not unlocked by property state_abbr with value MO.',
+        'Processing of destination property destinationProperty was skipped: Gate was not unlocked by property state_abbr with value MO.',
       ],
       'Gate unlocks (with valid_keys array)' => [
         [
@@ -86,7 +87,7 @@ final class GateTest extends MigrateProcessTestCase {
           'valid_keys' => 'CO',
           'key_direction' => 'lock',
         ],
-        'Processing of destination property destinationproperty was skipped: Gate was locked by property state_abbr with value CO.',
+        'Processing of destination property destinationProperty was skipped: Gate was locked by property state_abbr with value CO.',
       ],
       'Gate stays unlocked' => [
         [
@@ -111,7 +112,7 @@ final class GateTest extends MigrateProcessTestCase {
           'valid_keys' => 'CO',
           'key_direction' => 'unlock',
         ],
-        'Processing of destination property destinationproperty was skipped: Gate was not unlocked by property @state_abbr with value MO.',
+        'Processing of destination property destinationProperty was skipped: Gate was not unlocked by property @state_abbr with value MO.',
       ],
       'Destination prop unlocks gate' => [
         ['source_data' => 'Let me through!'],
@@ -133,7 +134,7 @@ final class GateTest extends MigrateProcessTestCase {
           'valid_keys' => 'CO',
           'key_direction' => 'lock',
         ],
-        'Processing of destination property destinationproperty was skipped: Gate was locked by property @state_abbr with value CO.',
+        'Processing of destination property destinationProperty was skipped: Gate was locked by property @state_abbr with value CO.',
       ],
       'Gate stays unlocked with destination prop' => [
         ['source_data' => 'Let me through!'],
@@ -154,6 +155,7 @@ final class GateTest extends MigrateProcessTestCase {
    *
    * @dataProvider badConfigurationProvider
    */
+  #[DataProvider('badConfigurationProvider')]
   public function testGateBadConfiguration($configuration, string $message): void {
     $this->expectException(\InvalidArgumentException::class);
     $this->expectExceptionMessage($message);

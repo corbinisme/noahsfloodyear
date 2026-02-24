@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate\process;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 
@@ -19,6 +20,7 @@ use Drupal\migrate\Row;
  * - mode: What to modify. Possible values:
  *   - attribute: One element attribute.
  *   - element: An element name.
+ *   - text: The element text content.
  * - xpath: XPath query expression that will produce the \DOMNodeList to walk.
  * - attribute_options: A map of options related to the attribute mode. Required
  *   when mode is attribute. The keys can be:
@@ -70,14 +72,17 @@ use Drupal\migrate\Row;
  *       search: '/foo-(\d+)/'
  *       replace: 'bar-$1'
  *     -
+ *       plugin: dom_str_replace
+ *       mode: text
+ *       xpath: '//a'
+ *       search: 'Find more information here'
+ *       replace: 'More information'
+ *     -
  *       plugin: dom
  *       method: export
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "dom_str_replace"
- * )
  */
+#[MigrateProcess(id: 'dom_str_replace')]
 class DomStrReplace extends DomProcessBase {
 
   /**
@@ -96,6 +101,7 @@ class DomStrReplace extends DomProcessBase {
           'attribute_options' => NULL,
         ],
         'element' => [],
+        'text' => [],
       ],
       'search' => NULL,
       'replace' => NULL,
@@ -212,13 +218,13 @@ class DomStrReplace extends DomProcessBase {
    *   The string to use a subject on search.
    */
   protected function getSubject(\DOMElement $node): string {
-    switch ($this->configuration['mode']) {
-      case 'attribute':
-        return $node->getAttribute($this->configuration['attribute_options']['name']);
+    return match ($this->configuration['mode']) {
+      'attribute' => $node->getAttribute($this->configuration['attribute_options']['name']),
+      'element' => $node->nodeName,
+      'text' => $node->textContent,
+      default => '',
+    };
 
-      case 'element':
-        return $node->nodeName;
-    }
   }
 
   /**
@@ -228,11 +234,11 @@ class DomStrReplace extends DomProcessBase {
    *   The value to be searched.
    */
   protected function getSearch(): string {
-    switch ($this->configuration['mode']) {
-      case 'attribute':
-      case 'element':
-        return $this->configuration['search'];
-    }
+    return match ($this->configuration['mode']) {
+      'attribute', 'element', 'text' => $this->configuration['search'],
+      default => '',
+    };
+
   }
 
   /**
@@ -242,11 +248,11 @@ class DomStrReplace extends DomProcessBase {
    *   The value to use for replacement.
    */
   protected function getReplace(): string {
-    switch ($this->configuration['mode']) {
-      case 'attribute':
-      case 'element':
-        return $this->configuration['replace'];
-    }
+    return match ($this->configuration['mode']) {
+      'attribute', 'element', 'text' => $this->configuration['replace'],
+      default => '',
+    };
+
   }
 
   /**
@@ -298,6 +304,10 @@ class DomStrReplace extends DomProcessBase {
           $new_node->setAttribute($attribute->name, $attribute->value);
         }
         $html_node->parentNode->replaceChild($new_node, $html_node);
+        break;
+
+      case 'text':
+        $html_node->textContent = $new_subject;
         break;
     }
   }

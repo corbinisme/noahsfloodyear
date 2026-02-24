@@ -52,7 +52,7 @@ class SettingsManager {
     $description = '';
     if (\Drupal::moduleHandler()
       ->moduleExists('twbstools')) {
-      $styleguidePath = base_path().'styleguide';
+      $styleguidePath = base_path() . 'styleguide';
       $description = $this->t("Style guide demonstrates abilities of bootstrap framework. Open <a target='_blank' href='@sglink'>style guide</a> in a new window.", [
         '@sglink' => $styleguidePath,
       ]);
@@ -98,6 +98,24 @@ class SettingsManager {
         $options_top_container += [trim($values[0]) => trim($values[1])];
       }
     }
+
+    $form['theme_mode_details'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Theme mode'),
+      '#description' => $this->t('Select the color theme mode for your website.'),
+      '#open' => TRUE,
+    ];
+
+    $form['theme_mode_details']['b5_theme_mode'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Theme mode'),
+      '#default_value' => theme_get_setting('b5_theme_mode'),
+      '#description' => $this->t('Select the color theme mode: light or dark.'),
+      '#options' => [
+        'light' => $this->t('Light'),
+        'dark' => $this->t('Dark'),
+      ],
+    ];
 
     $form['body_details'] = [
       '#type' => 'details',

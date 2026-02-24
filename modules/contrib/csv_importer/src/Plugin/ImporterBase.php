@@ -4,6 +4,7 @@ namespace Drupal\csv_importer\Plugin;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\File\FileExists;
@@ -11,6 +12,8 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\file\FileRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -69,6 +72,27 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
   protected $languageManager;
 
   /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
+   * The messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * Constructs ImporterBase object.
    *
    * @param array $configuration
@@ -89,8 +113,14 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
    *   The logger factory service.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager service.
+   * @param \Drupal\Core\Database\Connection $database
+   *   The database connection.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
+   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
+   *   The messenger service.
    */
-  final public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config, FileRepositoryInterface $file_repository, ModuleHandlerInterface $module_handler, LoggerChannelFactoryInterface $logger_factory, LanguageManagerInterface $language_manager) {
+  final public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config, FileRepositoryInterface $file_repository, ModuleHandlerInterface $module_handler, LoggerChannelFactoryInterface $logger_factory, LanguageManagerInterface $language_manager, Connection $database, TimeInterface $time, MessengerInterface $messenger) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->config = $config;
@@ -98,6 +128,9 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
     $this->moduleHandler = $module_handler;
     $this->loggerFactory = $logger_factory;
     $this->languageManager = $language_manager;
+    $this->database = $database;
+    $this->time = $time;
+    $this->messenger = $messenger;
   }
 
   /**
@@ -113,7 +146,10 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
       $container->get('file.repository'),
       $container->get('module_handler'),
       $container->get('logger.factory'),
-      $container->get('language_manager')
+      $container->get('language_manager'),
+      $container->get('database'),
+      $container->get('datetime.time'),
+      $container->get('messenger')
     );
   }
 
@@ -209,10 +245,7 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
     }
 
     foreach ($content as $key => $item) {
-      if (is_string($item) && file_exists($item)) {
-        $created = $this->fileRepository->writeData(file_get_contents($item), $this->config->get('system.file')->get('default_scheme') . '://' . basename($item), FileExists::Replace);
-        $content[$key] = $created->id();
-      }
+      $content[$key] = $this->attach($item);
     }
 
     /** @var \Drupal\Core\Entity\Sql\SqlContentEntityStorage $entity_storage  */
@@ -227,7 +260,7 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
 
       $languages = $this->languageManager->getLanguages();
       $langcode_default = $this->languageManager->getDefaultLanguage()->getId();
-      $langcode = $this->languageManager->isMultilingual() && isset($languages[$content['langcode']]) ? $content['langcode'] : $langcode_default;
+      $langcode = $this->languageManager->isMultilingual() && !empty($content['langcode']) && isset($languages[$content['langcode']]) ? $content['langcode'] : $langcode_default;
 
       if ($entity) {
         if ($entity->hasTranslation($langcode)) {
@@ -265,7 +298,7 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
       }
     }
     catch (\Throwable $exception) {
-      $this->messenger()->addError($this->t('The import process encountered errors.'));
+      $this->messenger->addError($this->t('The import process encountered errors.'));
       $this->loggerFactory->get('csv_importer')->error($exception->getMessage());
     }
 
@@ -273,6 +306,37 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
       $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
     }
     return $context;
+  }
+
+  /**
+   * Attach file(s) from file path(s).
+   *
+   * @param mixed $item
+   *   A file path string or an array of file paths.
+   *
+   * @return mixed
+   *   File ID for single file, array of file references for multiple files,
+   *   or the original item if not a file path.
+   */
+  protected function attach($item) {
+    $default_scheme = $this->config->get('system.file')->get('default_scheme');
+    if (is_string($item) && file_exists($item)) {
+      $created = $this->fileRepository->writeData(file_get_contents($item), $default_scheme . '://' . basename($item), FileExists::Replace);
+      return $created->id();
+    }
+
+    if (is_array($item)) {
+      $ids = [];
+      foreach ($item as $path) {
+        if (is_string($path) && file_exists($path)) {
+          $created = $this->fileRepository->writeData(file_get_contents($path), $default_scheme . '://' . basename($path), FileExists::Replace);
+          $ids[] = ['target_id' => $created->id()];
+        }
+      }
+      return !empty($ids) ? $ids : $item;
+    }
+
+    return $item;
   }
 
   /**
@@ -284,7 +348,9 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
       $updated_count = isset($results['updated']) ? count($results['updated']) : 0;
       $translation_count = isset($results['translations']) ? count($results['translations']) : 0;
 
-      $this->messenger()->addMessage(
+      $this->history($results);
+
+      $this->messenger->addMessage(
         $this->t('@added_count new content added, @updated_count updated and translations created for @translations_count content.', [
           '@added_count' => $added_count,
           '@updated_count' => $updated_count,
@@ -293,8 +359,46 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
       );
     }
     else {
-      $this->messenger()->addError($this->t('The import process encountered errors.'));
+      $this->messenger->addError($this->t('The import process encountered errors.'));
     }
+  }
+
+  /**
+   * Save the import history.
+   *
+   * @param array $results
+   *   The import results.
+   */
+  protected function history(array $results): void {
+    $added_ids = $results['added'] ?? [];
+    $updated_ids = $results['updated'] ?? [];
+    $ids = array_merge($added_ids, $updated_ids);
+
+    if (empty($ids)) {
+      return;
+    }
+
+    $csv_entity = $this->configuration['csv_entity'] ?? NULL;
+    $name = '';
+    $path = '';
+
+    if ($csv_entity) {
+      $name = $csv_entity->getFilename();
+      $path = $csv_entity->getFileUri();
+    }
+
+    $this->database->insert('csv_importer_history')
+      ->fields([
+        'name' => $name,
+        'path' => $path,
+        'entity_type' => $this->configuration['entity_type'],
+        'entity_bundle' => $this->configuration['entity_type_bundle'] ?? '',
+        'imported_count' => count($ids),
+        'entity_ids' => serialize($ids),
+        'import_date' => $this->time->getRequestTime(),
+        'status' => 0,
+      ])
+      ->execute();
   }
 
   /**
@@ -311,7 +415,7 @@ abstract class ImporterBase extends PluginBase implements ImporterInterface {
       batch_set($process);
     }
     else {
-      $this->messenger()->addError($this->t('The import process encountered errors. No data is available for processing. Please check the CSV file and ensure it is saved in UTF-8 format.'));
+      $this->messenger->addError($this->t('The import process encountered errors. No data is available for processing. Please check the CSV file and ensure it is saved in UTF-8 format.'));
     }
   }
 

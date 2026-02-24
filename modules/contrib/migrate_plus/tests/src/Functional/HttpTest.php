@@ -1,18 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
 use Drupal\migrate_plus\DataParserPluginManager;
+use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests the http data_fetcher from the url plugin.
- *
- * @group migrate_plus
  */
+#[Group('migrate_plus')]
+#[RunTestsInSeparateProcesses]
 final class HttpTest extends BrowserTestBase {
 
   /**
@@ -53,6 +55,9 @@ final class HttpTest extends BrowserTestBase {
     $this->drupalLogin($this->user);
   }
 
+  /**
+   * Test missing selector.
+   */
   public function testUrlPagerMissingSelector(): void {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_first', [], ['absolute' => TRUE]);
@@ -60,21 +65,24 @@ final class HttpTest extends BrowserTestBase {
     $conf = $this->getBaseConfiguration();
     $conf['urls'][] = $url->toString();
     $conf['pager'] = [
-      'type' => 'urls'
+      'type' => 'urls',
     ];
 
     $result = $this->getPluginResults($conf);
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
     ];
 
     $this->assertEquals($expected, $result);
   }
 
-  public function testUrlsPagerMissingSelectorAttribute(){
+  /**
+   * Test missing selector attribute.
+   */
+  public function testUrlsPagerMissingSelectorAttribute() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_first', [], ['absolute' => TRUE]);
 
@@ -82,21 +90,24 @@ final class HttpTest extends BrowserTestBase {
     $conf['urls'][] = $url->toString();
     $conf['pager'] = [
       'type' => 'urls',
-      'selector' => 'thisIsMissing'
+      'selector' => 'thisIsMissing',
     ];
 
     $result = $this->getPluginResults($conf);
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
     ];
 
     $this->assertEquals($expected, $result);
 
   }
 
+  /**
+   * Testing paging.
+   */
   public function testUrlsPager(): void {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_first', [], ['absolute' => TRUE]);
@@ -105,25 +116,27 @@ final class HttpTest extends BrowserTestBase {
     $conf['urls'][] = $url->toString();
     $conf['pager'] = [
       'type' => 'urls',
-      'selector' => 'nextUrl'
+      'selector' => 'nextUrl',
     ];
 
     $result = $this->getPluginResults($conf);
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
     ];
 
     $this->assertEquals($expected, $result);
   }
 
-  public function testCursorPager(){
-
+  /**
+   * Test cursor paging.
+   */
+  public function testCursorPager() {
     $url = Url::fromRoute('migrate_plus_http_test.json_third', [], ['absolute' => TRUE]);
 
     $conf = $this->getBaseConfiguration();
@@ -131,59 +144,65 @@ final class HttpTest extends BrowserTestBase {
     $conf['pager'] = [
       'type' => 'cursor',
       'selector' => 'nextPage',
-      'key' => 'page'
+      'key' => 'page',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
-      [ "Id" => 7 ],
-      [ "Id" => 8 ],
-      [ "Id" => 9 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
+      ["Id" => 7],
+      ["Id" => 8],
+      ["Id" => 9],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
   }
 
-  public function testCursorPagerMissingKey(){
+  /**
+   * Test cursor paging with missing key.
+   */
+  public function testCursorPagerMissingKey() {
     $url = Url::fromRoute('migrate_plus_http_test.json_fourth', [], ['absolute' => TRUE]);
 
     $conf = $this->getBaseConfiguration();
     $conf['urls'][] = $url->toString();
     $conf['pager'] = [
       'type' => 'cursor',
-      'selector' => 'nextPage'
+      'selector' => 'nextPage',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
-      [ "Id" => 7 ],
-      [ "Id" => 8 ],
-      [ "Id" => 9 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
+      ["Id" => 7],
+      ["Id" => 8],
+      ["Id" => 9],
     ];
 
     $conf = $this->getBaseConfiguration();
     $conf['urls'][] = $url->toString();
     $conf['pager'] = [
       'type' => 'cursor',
-      'selector' => 'nextPage'
+      'selector' => 'nextPage',
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
   }
 
-  public function testCursorPagerMissingSelector(){
+  /**
+   * Test cursor pager with missing selector.
+   */
+  public function testCursorPagerMissingSelector() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_third', [], ['absolute' => TRUE]);
 
@@ -194,16 +213,19 @@ final class HttpTest extends BrowserTestBase {
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
   }
 
-  public function testCursorPagerMissingSelectorAttribute(){
+  /**
+   * Test cursor pager with missing selector attribute.
+   */
+  public function testCursorPagerMissingSelectorAttribute() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_third', [], ['absolute' => TRUE]);
 
@@ -211,20 +233,23 @@ final class HttpTest extends BrowserTestBase {
     $conf['urls'][] = $url->toString();
     $conf['pager'] = [
       'type' => 'cursor',
-      'selector' => 'missingAttribute'
+      'selector' => 'missingAttribute',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
   }
 
-  public function testPagePager(){
+  /**
+   * Test route callback.
+   */
+  public function testPagePager() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_third', [], ['absolute' => TRUE]);
 
@@ -233,21 +258,24 @@ final class HttpTest extends BrowserTestBase {
     $conf['pager'] = [
       'type' => 'page',
       'selector' => 'currentPage',
-      'key' => 'page'
+      'key' => 'page',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
 
   }
 
-  public function testPagePagerSelectorMax(){
+  /**
+   * Test route callback.
+   */
+  public function testPagePagerSelectorMax() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_third', [], ['absolute' => TRUE]);
 
@@ -257,24 +285,27 @@ final class HttpTest extends BrowserTestBase {
       'type' => 'page',
       'selector' => 'currentPage',
       'selector_max' => 'numPages',
-      'key' => 'page'
+      'key' => 'page',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
 
   }
 
-  public function testPaginationPagerNumItemsSelector(){
+  /**
+   * Test route callback.
+   */
+  public function testPaginationPagerNumItemsSelector() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_fifth', [], ['absolute' => TRUE]);
 
@@ -284,24 +315,27 @@ final class HttpTest extends BrowserTestBase {
       'type' => 'paginator',
       'selector' => 'numItems',
       'default_num_items' => 3,
-      'page_key' => 'page'
+      'page_key' => 'page',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
 
   }
 
-  public function testPaginationPagerRowArraySelector(){
+  /**
+   * Test route callback.
+   */
+  public function testPaginationPagerRowArraySelector() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_fifth', [], ['absolute' => TRUE]);
 
@@ -311,24 +345,27 @@ final class HttpTest extends BrowserTestBase {
       'type' => 'paginator',
       'selector' => 'data',
       'default_num_items' => 3,
-      'page_key' => 'page'
+      'page_key' => 'page',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
 
   }
 
-  public function testPaginationPagerNoSelector(){
+  /**
+   * Test route callback.
+   */
+  public function testPaginationPagerNoSelector() {
 
     $url = Url::fromRoute('migrate_plus_http_test.json_fifth', [], ['absolute' => TRUE]);
 
@@ -337,23 +374,26 @@ final class HttpTest extends BrowserTestBase {
     $conf['pager'] = [
       'type' => 'paginator',
       'default_num_items' => 3,
-      'page_key' => 'page'
+      'page_key' => 'page',
     ];
 
     $expected = [
-      [ "Id" => 1 ],
-      [ "Id" => 2 ],
-      [ "Id" => 3 ],
-      [ "Id" => 4 ],
-      [ "Id" => 5 ],
-      [ "Id" => 6 ],
+      ["Id" => 1],
+      ["Id" => 2],
+      ["Id" => 3],
+      ["Id" => 4],
+      ["Id" => 5],
+      ["Id" => 6],
     ];
 
     $result = $this->getPluginResults($conf);
-    $this->assertEquals( $expected, $result);
+    $this->assertEquals($expected, $result);
   }
 
-  protected function getBaseConfiguration( ): array{
+  /**
+   * Basic configuration for use in multiple tests.
+   */
+  protected function getBaseConfiguration(): array {
     return [
       'plugin' => 'url',
       'data_fetcher_plugin' => 'http',
@@ -362,21 +402,24 @@ final class HttpTest extends BrowserTestBase {
       'urls' => [],
       'ids' => [
         'Id' => [
-          'type' => 'integer'
-        ]
+          'type' => 'integer',
+        ],
       ],
       'fields' => [
         [
           'name' => 'Id',
           'label' => 'ID',
-          'selector' => '/id'
+          'selector' => '/id',
         ],
       ],
       'item_selector' => 'data',
     ];
   }
 
-  protected function getPluginResults( array $configuration ): array{
+  /**
+   * Helper function.
+   */
+  protected function getPluginResults(array $configuration): array {
     $json_parser = $this->pluginManager->createInstance('json', $configuration);
     $data = [];
     foreach ($json_parser as $item) {

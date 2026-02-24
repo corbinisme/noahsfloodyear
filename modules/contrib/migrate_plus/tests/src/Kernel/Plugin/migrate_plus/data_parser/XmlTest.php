@@ -1,23 +1,31 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Kernel\Plugin\migrate_plus\data_parser;
 
-use Drupal\migrate_plus\DataParserPluginInterface;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Test of the data_parser Xml migrate_plus plugin.
- *
- * @group migrate_plus
  */
+#[Group('migrate_plus')]
+#[RunTestsInSeparateProcesses]
 final class XmlTest extends BaseXml {
 
   /**
    * {@inheritdoc}
    */
-  protected function getParser(): DataParserPluginInterface {
-    return $this->pluginManager->createInstance('xml', $this->configuration);
+  public function testParentTraversalMatch(): void {
+    $this->markTestSkipped('This is currently unsupported.');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getDataParserPluginId(): string {
+    return 'xml';
   }
 
 }

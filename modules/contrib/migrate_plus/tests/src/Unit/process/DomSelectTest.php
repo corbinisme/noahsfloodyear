@@ -1,35 +1,38 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\Tests\migrate_plus\Unit\process;
 
 use Drupal\Component\Utility\Html;
 use Drupal\migrate_plus\Plugin\migrate\process\DomSelect;
 use Drupal\Tests\migrate\Unit\process\MigrateProcessTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the dom_select process plugin.
- *
- * @group migrate
- * @coversDefaultClass \Drupal\migrate_plus\Plugin\migrate\process\DomSelect
  */
+#[CoversClass(DomSelect::class)]
+#[Group('migrate_plus')]
 final class DomSelectTest extends MigrateProcessTestCase {
 
   /**
-   * @covers ::transform
+   * Tests valid input.
    *
    * @dataProvider providerTestTransform
    */
+  #[DataProvider('providerTestTransform')]
   public function testTransform(string $input_string, array $configuration, array $output_array): void {
     $value = Html::load($input_string);
     $elements = (new DomSelect($configuration, 'dom_select', []))
-      ->transform($value, $this->migrateExecutable, $this->row, 'destinationproperty');
+      ->transform($value, $this->migrateExecutable, $this->row, 'destinationProperty');
     $this->assertEquals($output_array, $elements);
   }
 
   /**
-   * Dataprovider for testTransform().
+   * Data provider for testTransform().
    */
   public static function providerTestTransform(): array {
     $lists = '<ul><li>Item 1</li><li>Item 2</li><li><ul><li>Item 3.1</li><li>Item 3.2</li></ul></li><li>Item 4</li><li>Item 5</li></ul>';

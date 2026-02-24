@@ -1,21 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\MigrateSkipProcessException;
 use Drupal\migrate\MigrateSkipRowException;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * If the source evaluates to a configured value, skip processing or whole row.
- *
- * @MigrateProcessPlugin(
- *   id = "skip_on_value"
- * )
  *
  * Available configuration keys:
  * - value: An single value or array of values against which the source value
@@ -75,6 +71,7 @@ use Drupal\migrate\Row;
  *
  * @codingStandardsIgnoreEnd
  */
+#[MigrateProcess(id: 'skip_on_value')]
 class SkipOnValue extends ProcessPluginBase {
 
   /**
@@ -146,10 +143,6 @@ class SkipOnValue extends ProcessPluginBase {
    *
    * @return mixed
    *   The input value, $value, if it doesn't evaluate to a configured value.
-   *
-   * @throws \Drupal\migrate\MigrateSkipProcessException
-   *   Thrown if the source property evaluates to a configured value and rest
-   *   of the process should be skipped.
    */
   public function process($value, MigrateExecutableInterface $migrate_executable, Row $row, string $destination_property) {
     if (is_array($this->configuration['value'])) {
@@ -161,11 +154,13 @@ class SkipOnValue extends ProcessPluginBase {
       }
 
       if (($not_equals && !$value_in_array) || (!$not_equals && $value_in_array)) {
-        throw new MigrateSkipProcessException();
+        $this->stopPipeline();
+        return NULL;
       }
     }
     elseif ($this->compareValue($value, $this->configuration['value'], !isset($this->configuration['not_equals']))) {
-      throw new MigrateSkipProcessException();
+      $this->stopPipeline();
+      return NULL;
     }
 
     return $value;

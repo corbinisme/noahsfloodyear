@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_example\Plugin\migrate\source;
 
 use Drupal\Core\Database\Query\SelectInterface;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Plugin\migrate\source\SqlBase;
 
 /**
@@ -23,6 +24,7 @@ use Drupal\migrate\Plugin\migrate\source\SqlBase;
  *   id = "beer_term"
  * )
  */
+#[MigrateSource(id: 'beer_term')]
 final class BeerTerm extends SqlBase {
 
   /**

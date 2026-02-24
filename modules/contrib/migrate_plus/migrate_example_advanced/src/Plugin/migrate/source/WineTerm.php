@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_example_advanced\Plugin\migrate\source;
 
 use Drupal\Core\Database\Query\SelectInterface;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Plugin\migrate\source\SqlBase;
 
 /**
@@ -14,6 +15,7 @@ use Drupal\migrate\Plugin\migrate\source\SqlBase;
  *   id = "wine_term"
  * )
  */
+#[MigrateSource(id: 'wine_term')]
 final class WineTerm extends SqlBase {
 
   /**
@@ -21,7 +23,7 @@ final class WineTerm extends SqlBase {
    */
   public function query(): SelectInterface {
     $fields = [
-      'categoryid',
+      'categoryId',
       'type',
       'name',
       'details',
@@ -39,7 +41,7 @@ final class WineTerm extends SqlBase {
    */
   public function fields(): array {
     return [
-      'categoryid' => $this->t('Unique ID of the category'),
+      'categoryId' => $this->t('Unique ID of the category'),
       'type' => $this->t('Category type corresponding to Drupal vocabularies'),
       'name' => $this->t('Category name'),
       'details' => $this->t('Description of the category'),
@@ -52,7 +54,7 @@ final class WineTerm extends SqlBase {
    * {@inheritdoc}
    */
   public function getIds(): array {
-    return ['categoryid' => ['type' => 'integer']];
+    return ['categoryId' => ['type' => 'integer']];
   }
 
 }

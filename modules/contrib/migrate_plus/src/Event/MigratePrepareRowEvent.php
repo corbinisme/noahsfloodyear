@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\migrate_plus\Event;
 
@@ -14,10 +14,6 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class MigratePrepareRowEvent extends Event {
 
-  protected Row $row;
-  protected MigrateSourceInterface $source;
-  protected MigrationInterface $migration;
-
   /**
    * Constructs a prepare-row event object.
    *
@@ -28,10 +24,11 @@ class MigratePrepareRowEvent extends Event {
    * @param \Drupal\migrate\Plugin\MigrationInterface $migration
    *   Migration entity.
    */
-  public function __construct(Row $row, MigrateSourceInterface $source, MigrationInterface $migration) {
-    $this->row = $row;
-    $this->source = $source;
-    $this->migration = $migration;
+  public function __construct(
+    protected Row $row,
+    protected MigrateSourceInterface $source,
+    protected MigrationInterface $migration,
+  ) {
   }
 
   /**
