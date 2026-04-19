@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4a1f618679a5880e977138f1b79e129",
+    "content-hash": "916de30764e4fdc14b3a3017a4dff3c2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3670,6 +3670,77 @@
                 "source": "https://git.drupalcode.org/project/search_api",
                 "issues": "https://www.drupal.org/project/issues/search_api",
                 "irc": "irc://irc.freenode.org/drupal-search-api"
+            }
+        },
+        {
+            "name": "drupal/sitemap",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/sitemap.git",
+                "reference": "8.x-2.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/sitemap-8.x-2.5.zip",
+                "reference": "8.x-2.5",
+                "shasum": "0f99a562ce49cbcabf67dbd9249670385495a3f4"
+            },
+            "require": {
+                "drupal/core": "^10.2 || ^11",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "drupal/book": "^1 || ^2",
+                "drupal/metatag": "^2",
+                "drush/drush": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.5",
+                    "datestamp": "1763258886",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "akalata",
+                    "homepage": "https://www.drupal.org/user/498926"
+                },
+                {
+                    "name": "colan",
+                    "homepage": "https://www.drupal.org/user/58704"
+                },
+                {
+                    "name": "killes@www.drop.org",
+                    "homepage": "https://www.drupal.org/user/227"
+                },
+                {
+                    "name": "mparker17",
+                    "homepage": "https://www.drupal.org/user/536298"
+                },
+                {
+                    "name": "Nafes",
+                    "homepage": "https://www.drupal.org/user/2489926"
+                },
+                {
+                    "name": "ridefree",
+                    "homepage": "https://www.drupal.org/user/49148"
+                }
+            ],
+            "description": "A way for visitors to navigate your website using an overview of notable pages on the site, by displaying one or more human-readable lists of links on a page. Useful for sites with lots of lightly-organized content.",
+            "homepage": "https://www.drupal.org/project/sitemap",
+            "support": {
+                "source": "https://git.drupalcode.org/project/sitemap",
+                "issues": "http://drupal.org/project/issues/sitemap"
             }
         },
         {
