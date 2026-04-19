@@ -48,6 +48,7 @@
         "drupal/structure_sync": "^2.0",
         "drupal/views_field_view": "^1.0@beta",
         "drupal/webform": "^6.2",
+        "drupal/xmlsitemap": "^2.0",
         "drush/drush": "^12.5"
     },
     "conflict": {
