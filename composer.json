@@ -32,7 +32,7 @@
         "drupal/field_group": "^3.6",
         "drupal/file_download_link": "^2.0",
         "drupal/fontawesome": "^3.0",
-        "drupal/gin": "^4.0",
+        "drupal/gin": "^4.1",
         "drupal/glyphicons": "^1.7",
         "drupal/google_analytics": "^4.0",
         "drupal/hotjar": "^3.1",
