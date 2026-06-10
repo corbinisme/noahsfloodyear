@@ -44,6 +44,7 @@
         "drupal/redirect": "^1.11",
         "drupal/restui": "^1.22",
         "drupal/search_api": "^1.38",
+        "drupal/single_content_sync": "^1.4",
         "drupal/smtp": "^1.4",
         "drupal/structure_sync": "^2.0",
         "drupal/views_field_view": "^1.0@beta",
