@@ -86,13 +86,15 @@
 }
 .path-frontpage .region-home-box > section {
   flex: 1 100%;
-  padding: 0.5em;
-  height: auto;
 }
 @media (min-width: 992px) {
   .path-frontpage .region-home-box > section {
     flex: 1 50%;
   }
+}
+.path-frontpage .region-home-box > section {
+  padding: 0.5em;
+  height: auto;
 }
 .path-frontpage #block-biblicalcalendar-subhero {
   position: relative;
@@ -144,12 +146,14 @@
 }
 .block-views-blockhomepage-cat-blocks-block-3 .view-content .group-wrapper {
   flex: 1 100%;
-  padding: 0.5em;
 }
 @media (min-width: 992px) {
   .block-views-blockhomepage-cat-blocks-block-3 .view-content .group-wrapper {
     flex: 1 50%;
   }
+}
+.block-views-blockhomepage-cat-blocks-block-3 .view-content .group-wrapper {
+  padding: 0.5em;
 }
 .block-views-blockhomepage-cat-blocks-block-3 .view-content .group-wrapper .views-row {
   background: rgba(255, 255, 255, 0.02);
@@ -319,6 +323,21 @@
   background-color: #15be27;
 }
 
+.path-calendar .instructions {
+  font-size: 1.4em !important;
+}
+.path-calendar .weekgrid {
+  height: 5px;
+  background: #eee;
+  display: flex;
+}
+.path-calendar .weekgrid .daygrid {
+  height: 100%;
+  width: 16.666%;
+  color: #fff;
+  position: relative;
+  height: 12px;
+}
 .path-calendar {
   /*
   .pentecostcount_7 {
@@ -349,6 +368,11 @@
 
   }
   	*/
+}
+.path-calendar .key:not(.keepThis) {
+  display: none;
+}
+.path-calendar {
   /*
   .data_passover_column {
   	position: relative;
@@ -425,24 +449,6 @@
   	}
   }
   */
-}
-.path-calendar .instructions {
-  font-size: 1.4em !important;
-}
-.path-calendar .weekgrid {
-  height: 5px;
-  background: #eee;
-  display: flex;
-}
-.path-calendar .weekgrid .daygrid {
-  height: 100%;
-  width: 16.666%;
-  color: #fff;
-  position: relative;
-  height: 12px;
-}
-.path-calendar .key:not(.keepThis) {
-  display: none;
 }
 .path-calendar .holydaymonthcolumn {
   position: relative;
@@ -895,12 +901,14 @@
   left: 50%;
   margin-left: -50vw;
   padding: 2em;
-  background: #e9e9e9;
 }
 @media (max-width: 991px) {
   .path-calendar .calendarWrapper {
     padding: 2em 1.5em;
   }
+}
+.path-calendar .calendarWrapper {
+  background: #e9e9e9;
 }
 .path-calendar .calendarWrapper .clear {
   clear: both;
@@ -1027,21 +1035,11 @@
 .path-calendar #block-views-block-expanded-calendar-information-block-1 .expanded-calendar-wrapper .view-content .views-row {
   flex: 1 auto;
 }
-.path-calendar #block-calendarpagebottomtext {
-  margin-top: 2em;
-}
 .path-calendar #block-calendarpagebottomtext h2 {
   display: none;
 }
-.path-calendar #NewCalendarContainer {
-  /*[data-name="prepentecost"]{
-  	&::after {
-  		background-color: $pentecost;
-  		width: 10px;
-  		height:120px;
-  	}
-  }
-  */
+.path-calendar #block-calendarpagebottomtext {
+  margin-top: 2em;
 }
 .path-calendar #NewCalendarContainer div.month .Column {
   position: relative;
@@ -1092,6 +1090,16 @@
 .path-calendar #NewCalendarContainer .afterContent .Cell span {
   position: relative;
   z-index: 6;
+}
+.path-calendar #NewCalendarContainer {
+  /*[data-name="prepentecost"]{
+  	&::after {
+  		background-color: $pentecost;
+  		width: 10px;
+  		height:120px;
+  	}
+  }
+  */
 }
 .path-calendar #NewCalendarContainer [data-name=passover]::after {
   background-color: #f70d48;
@@ -1174,6 +1182,10 @@
   font-weight: bold;
 }
 
+.view-holy-days .table td, .view-holy-days .table th {
+  padding-left: 0;
+  padding-right: 0;
+}
 .view-holy-days .table {
   /*td:not(:first-child) {
   	display: none;
@@ -1182,10 +1194,6 @@
   	display: none;
   }
   	*/
-}
-.view-holy-days .table td, .view-holy-days .table th {
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .omnibox {
@@ -1227,27 +1235,6 @@ body.page-node-type-calendar {
   /*--GC: #e464bc;
   --HCC: #5cb665;
   --SC: #629fea;
-  */
-  /*#gregorianToggle {
-  	background-color: var(--GC);
-  }
-  #hebrewToggle {
-  	background-color: var(--HCC);
-  }
-  #solarToggle {
-  	background-color: var(--SC);
-  }
-  */
-  /*
-  label[for='gregorianToggle'] {
-  	background: var(--GC);
-  }
-  label[for='hebrewToggle'] {
-  	background: var(--HCC);
-  }
-  label[for='solarToggle'] {
-  	background: var(--SC);
-  }
   */
 }
 body.page-node-type-calendar .daygrids, body.page-node-type-calendar .weekgrid .daygrid, body.page-node-type-calendar .bg-WC, body.page-node-type-calendar .bg-SC, body.page-node-type-calendar .bg-HCC {
@@ -1390,6 +1377,18 @@ body.page-node-type-calendar .legend .form-check {
   align-items: center;
   margin-bottom: 0.5em;
 }
+body.page-node-type-calendar {
+  /*#gregorianToggle {
+  	background-color: var(--GC);
+  }
+  #hebrewToggle {
+  	background-color: var(--HCC);
+  }
+  #solarToggle {
+  	background-color: var(--SC);
+  }
+  */
+}
 body.page-node-type-calendar.hebrewToggle .bg-HCC {
   background-color: #ccc !important;
 }
@@ -1398,6 +1397,19 @@ body.page-node-type-calendar.solarToggle .bg-SC {
 }
 body.page-node-type-calendar.weeksToggle .bg-WC {
   background-color: #ccc !important;
+}
+body.page-node-type-calendar {
+  /*
+  label[for='gregorianToggle'] {
+  	background: var(--GC);
+  }
+  label[for='hebrewToggle'] {
+  	background: var(--HCC);
+  }
+  label[for='solarToggle'] {
+  	background: var(--SC);
+  }
+  */
 }
 body.page-node-type-calendar .hcc-wrapper {
   display: flex;
@@ -1412,14 +1424,16 @@ body.page-node-type-calendar .hcc-wrapper .HCC.Month {
 body.page-node-type-calendar .calendarWrapper {
   width: auto;
   margin-left: 0;
-  left: unset;
-  background-color: transparent;
-  padding: 0;
 }
 @media (min-width: 992px) {
   body.page-node-type-calendar .calendarWrapper {
     margin-left: 2em;
   }
+}
+body.page-node-type-calendar .calendarWrapper {
+  left: unset;
+  background-color: transparent;
+  padding: 0;
 }
 body.page-node-type-calendar .calendarWrapper .calendarMarkup .Column {
   background: transparent;
@@ -1474,13 +1488,6 @@ body.page-node-type-calendar #NewCalendarContainer div.month {
   }
   	*/
 }
-body.page-node-type-calendar #NewCalendarContainer div.month .Column {
-  float: none;
-  width: auto;
-  min-width: 1px;
-  max-width: 25%;
-  flex: 1 auto;
-}
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.GC {
   background-color: var(--GC);
   color: #fff;
@@ -1524,6 +1531,13 @@ body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.HCC.M
 }
 body.page-node-type-calendar #NewCalendarContainer div.month .Column .Cell.SabbathCount {
   text-align: right;
+}
+body.page-node-type-calendar #NewCalendarContainer div.month .Column {
+  float: none;
+  width: auto;
+  min-width: 1px;
+  max-width: 25%;
+  flex: 1 auto;
 }
 @media (max-width: 991px) {
   body.page-node-type-calendar #NewCalendarContainer div.month {
@@ -1572,17 +1586,17 @@ body.page-node-type-calendar .view-id-faqs .content-pane {
 body.page-node-type-calendar .view-id-faqs .content-pane.active {
   display: block;
 }
+@media (min-width: 992px) {
+  body.page-node-type-calendar .mobileToggle {
+    display: none;
+  }
+}
 body.page-node-type-calendar .mobileToggle {
   position: fixed;
   margin: 0;
   left: 0;
   top: 50%;
   z-index: 100;
-}
-@media (min-width: 992px) {
-  body.page-node-type-calendar .mobileToggle {
-    display: none;
-  }
 }
 body.page-node-type-calendar .mobileToggle i, body.page-node-type-calendar .mobileToggle svg {
   transition: all 0.3s ease;
@@ -2138,7 +2152,7 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
 }
 
 body {
-  --bs-body-font-family: "Montserrat", sans-serif;
+  --bs-body-font-family: 'Montserrat', sans-serif;
 }
 body .region-topbar .btn {
   font-size: 14px;
@@ -2293,6 +2307,77 @@ body .how-sure {
 }
 body .how-sure img {
   height: auto;
+}
+body .custom-section {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+body .custom-section .inner {
+  max-width: 40%;
+}
+body .custom-section.what-day-is-the-sabbath {
+  padding-top: 2em;
+  background-image: url("/themes/contrib/BiblicalCalendar/images/hourglass.png");
+}
+body .custom-section.what-day-is-the-sabbath .inner {
+  background-color: rgba(18, 116, 140, 0.8);
+  padding: 2em;
+  margin-left: 10%;
+  color: var(--cream);
+}
+body .custom-section.consistent-cycle {
+  padding-top: 1em;
+  display: flex;
+  justify-content: flex-end;
+  background-image: url("/themes/contrib/BiblicalCalendar/images/moon.png");
+}
+body .custom-section.consistent-cycle .inner {
+  background-color: rgba(148, 35, 114, 0.8);
+  padding: 2em;
+  margin-right: 10%;
+  color: var(--cream);
+}
+body .custom-section.noahs-flood-and-calendar {
+  padding-top: 1em;
+  background-position: right center;
+  background-image: url("/themes/contrib/BiblicalCalendar/images/ark.png");
+}
+body .custom-section.noahs-flood-and-calendar .inner {
+  background-color: rgba(181, 193, 157, 0.8);
+  padding: 2em;
+  margin-left: 10%;
+  color: var(--cream);
+}
+body .custom-section.exodus-pattern {
+  padding-top: 1em;
+  display: flex;
+  justify-content: flex-end;
+  background-position: left center;
+  background-image: url("/themes/contrib/BiblicalCalendar/images/wave.png");
+}
+body .custom-section.exodus-pattern .inner {
+  background-color: rgba(64, 87, 171, 0.8);
+  padding: 2em;
+  margin-right: 10%;
+  color: var(--cream);
+}
+body.path-sabbath .block-field-blocknodepagebody {
+  margin-top: 4em !important;
+}
+body.path-sabbath .block-field-blocknodepagebody h2 {
+  margin-bottom: 1em;
+}
+body.path-sabbath .block-field-blocknodepagebody h2 span {
+  color: var(--mediumgreen);
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+body.path-sabbath .block-field-blocknodepagebody {
+  max-width: 40em;
+  margin: 0 auto;
 }
 body .block-views-blockfeatured-articles-display .callout-box h3 {
   display: block;
@@ -2519,11 +2604,13 @@ header {
 header .navbar {
   color: #fff;
   position: relative;
-  background-image: url("../images/headerBG.png");
-  background-size: cover;
 }
 header .navbar .site-title {
   display: none;
+}
+header .navbar {
+  background-image: url("../images/headerBG.png");
+  background-size: cover;
 }
 header .navbar .navbar-nav {
   --bs-nav-link-color: $linkColor;
@@ -2679,14 +2766,16 @@ header .menu--secondary-menu ul.navbar-nav li a.is-active {
 }
 .topBar .region-topbar .language-switcher-language-url > ul li a img {
   display: none;
-  height: 12px;
-  width: 24px;
-  margin-right: 5px;
 }
 @media (min-width: 768px) {
   .topBar .region-topbar .language-switcher-language-url > ul li a img {
     display: inline-block;
   }
+}
+.topBar .region-topbar .language-switcher-language-url > ul li a img {
+  height: 12px;
+  width: 24px;
+  margin-right: 5px;
 }
 
 main .region-breadcrumb .block-page-title-block h1 {

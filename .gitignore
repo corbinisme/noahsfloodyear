@@ -20,6 +20,8 @@
 robots.txt
 /core
 
+*.sql
+
 /Content/
 /backups/
 /libraries/generator/
