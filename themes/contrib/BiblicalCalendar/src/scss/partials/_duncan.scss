@@ -15,12 +15,35 @@
     }
 }
 
+.new-calendar-wrapper {
+    margin-top: -3em;
+}
+
+.node--type-calendar .layout__region--first {
+    width: 0;
+    flex: 0!important;
+}
+.node--type-calendar .layout__region--second {
+    width: 100%;
+    flex: 1 100%!important;
+}
+
+.mobileOpen .node--type-calendar .layout__region--first {
+    width: auto;
+    flex: 0 1 25%!important;
+}
+.mobileOpen .node--type-calendar .layout__region--second {
+    width: auto;
+    flex: 0 1 75%!important;
+}
 
 .sticky-sidebar-wrapper {
     position: sticky;
     top: 6em;
     overflow: auto;
 }
+
+#yearBar h2 {white-space: nowrap;}
 
 @media all and (min-width: 992px) {
     .sticky-sidebar .sticky-sidebar-wrappers {

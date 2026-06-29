@@ -170,6 +170,19 @@ var newcalendar = {
                 wrapper.appendChild(sidebar.firstChild);
             }
             sidebar.appendChild(wrapper);
+
+            const sidebarParent = sidebar.closest(".layout__region--first");
+            const mobileToggle = document.querySelector(".mobileToggle")
+
+            const windowWidth = window.innerWidth;
+            if(windowWidth > 768){
+                sidebarParent.classList.add("open");
+                document.querySelector("body").classList.add("mobileOpen");
+                mobileToggle.classList.add("open")
+                console.log("starting open")
+                
+
+            }
         }
             
     },
