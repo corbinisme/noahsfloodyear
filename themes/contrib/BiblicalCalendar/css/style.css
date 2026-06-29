@@ -1196,11 +1196,23 @@
   	*/
 }
 
+.page-node-type-calendar section.highlight {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.region-highlighted #block-bcp-omnibox {
+  background: var(--red);
+  padding: 0.5em;
+}
+
 .omnibox {
   border-radius: 1em;
   border: 1px solid #ccc;
   padding: 1em;
-  margin-bottom: 2em;
+  margin-bottom: 0em;
+  gap: 1em;
 }
 .omnibox input[type=text], .omnibox select {
   border: none;
@@ -1343,7 +1355,8 @@ body.page-node-type-calendar #block-biblicalcalendar-breadcrumbs .breadcrumb {
   display: none;
 }
 body.page-node-type-calendar .legend {
-  margin: 2em 0;
+  margin: 0;
+  margin-bottom: 2em;
 }
 body.page-node-type-calendar .legend label {
   display: inline;
@@ -1592,11 +1605,16 @@ body.page-node-type-calendar .view-id-faqs .content-pane.active {
   }
 }
 body.page-node-type-calendar .mobileToggle {
-  position: fixed;
+  position: sticky;
   margin: 0;
   left: 0;
   top: 50%;
   z-index: 100;
+  width: 1em;
+  padding: 0.75em;
+  display: flex;
+  justify-content: center;
+  margin-left: -1em;
 }
 body.page-node-type-calendar .mobileToggle i, body.page-node-type-calendar .mobileToggle svg {
   transition: all 0.3s ease;
@@ -1669,8 +1687,14 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
   background-color: #ccc !important;
 }
 
+.sticky-sidebar-wrapper {
+  position: sticky;
+  top: 6em;
+  overflow: auto;
+}
+
 @media all and (min-width: 992px) {
-  .sticky-sidebar .sticky-sidebar-wrapper {
+  .sticky-sidebar .sticky-sidebar-wrappers {
     position: fixed;
     top: 0;
     height: 100%;
@@ -1679,7 +1703,7 @@ body.page-node-type-calendar.weeksToggle .week-container > * {
   }
 }
 @media all and (max-width: 991px) {
-  .sticky-sidebar-wrapper {
+  .sticky-sidebar-wrappers {
     width: auto !important;
   }
 }
@@ -2441,6 +2465,166 @@ body .block-views-blockvideo-timelines-block-1 .field--name-field-media-oembed-v
   width: 100% !important;
   height: auto !important;
   min-height: 455px;
+}
+
+#block-bcp-homeofthe20kchallenge {
+  text-align: center;
+  padding: 2em;
+  background: #efe9c4;
+}
+
+.sticky-sidebar-wrapper h3 {
+  font-weight: bold;
+  margin-bottom: 1em;
+  color: var(--darkgreen);
+}
+
+.btn {
+  transition: all ease 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.6;
+  transform: scale(1.1);
+}
+
+.block-calendar-generator-dates .table th,
+.block-calendar-generator-dates .table td {
+  padding-left: 0;
+}
+
+.omnibox .btn {
+  padding: 0 4px;
+  line-height: 40px;
+}
+
+.btn-check:checked + .btn {
+  background-color: var(--red); /* your selected color */
+  border-color: var(--red);
+  color: #fff;
+}
+
+body .block-calendar-generator-dates .table td span {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+#omnibox-submit {
+  line-height: 45px;
+  border: 1px solid #444;
+}
+
+.path-frontpage #block-bcp-pagetitle {
+  display: none;
+}
+
+body .omnibox input[type=text] {
+  height: 100%;
+  border: 1px solid;
+}
+
+body #omnibox-submit {
+  border-radius: 0;
+  background: var(--red);
+  border-color: var(--cream);
+  color: var(--cream);
+}
+
+body .omnibox {
+  padding: 0;
+  border: 0;
+}
+body .omnibox .yearToggle {
+  line-height: 2.6em;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.omnibox .btn-group .btn {
+  padding: 0.2em;
+}
+
+html {
+  --bs-navbar-active-color: #698367;
+}
+
+.nav-item .is-active {
+  background: transparent !important;
+}
+
+.nav-link.active {
+  color: #698367 !important;
+  font-weight: bold;
+}
+
+@media (max-width: 991px) {
+  body header .navbar-collapse {
+    background-color: #eadcbf;
+    border-top: 1px solid #9c9c9c;
+  }
+}
+.footer-logo img {
+  width: 100%;
+}
+
+body .views-view-responsive-grid {
+  --views-responsive-grid--column-count: 1;
+}
+
+.path-biblical-research .charts-view-more {
+  display: none;
+}
+
+.path-20k-challenge main {
+  background-color: var(--cream);
+}
+
+.path-20k-challenge .view-biblical-charts {
+  background-image: url("/themes/contrib/BiblicalCalendar/images/ark.png");
+  background-size: cover;
+}
+
+.path-20k-challenge .node--unpublished {
+  background: transparent;
+}
+
+#block-bcp-20kchallengeform {
+  background-color: #fff;
+  padding: 1em;
+}
+
+#block-bcp-20kchallengeform .field__label {
+  display: none;
+}
+
+.path-20k-challenge #block-biblicalcalendar-content {
+  margin-top: 7em;
+  margin-bottom: 7em;
+}
+
+#block-bcp-challengepretext {
+  margin-top: 4em;
+  margin-bottom: 4em;
+}
+
+#total-calendar-wrapper .solar-day.calloutDay {
+  font-weight: normal;
+  font-size: 1.2em;
+  text-align: right;
+}
+
+.weekdate.bg-pentecost {
+  color: #fff;
+}
+
+body #total-calendar-wrapper .gregorian .month .pentecost-week-count {
+  color: #fff;
+  text-shadow: none;
+  background: #4aaaaf;
+  border-radius: 5px;
+  padding: 0 4px;
+  position: absolute;
+  right: 0;
 }
 
 :root {

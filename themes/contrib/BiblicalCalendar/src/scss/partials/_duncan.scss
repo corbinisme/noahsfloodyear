@@ -15,8 +15,15 @@
     }
 }
 
+
+.sticky-sidebar-wrapper {
+    position: sticky;
+    top: 6em;
+    overflow: auto;
+}
+
 @media all and (min-width: 992px) {
-    .sticky-sidebar .sticky-sidebar-wrapper {
+    .sticky-sidebar .sticky-sidebar-wrappers {
         position: fixed;
         top: 0;
         height: 100%;
@@ -26,7 +33,7 @@
     }
 }
 @media all and (max-width: 991px) {
-    .sticky-sidebar-wrapper {
+    .sticky-sidebar-wrappers {
        width: auto!important;
     }
 }

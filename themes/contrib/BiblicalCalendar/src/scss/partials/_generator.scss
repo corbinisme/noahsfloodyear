@@ -1087,11 +1087,22 @@ $lastGreatDay: #15be27;
 	}
 }
 
+.page-node-type-calendar section.highlight {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+.region-highlighted #block-bcp-omnibox {
+	background: var(--red);
+	padding: .5em;
+}
+
 .omnibox {
 	border-radius: 1em;
 	border: 1px solid #ccc;
 	padding: 1em;
-	margin-bottom: 2em;
+	margin-bottom: 0em;
+	gap: 1em;
 	
 	input[type="text"], select {
 		border: none;

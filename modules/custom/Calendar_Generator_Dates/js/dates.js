@@ -10,8 +10,6 @@ var dates = {
                 dates.setupSignificantDates();
                 calendar.init();
         }
-
-
         
     },
     scrapeDataFromHTML: function(){
@@ -148,7 +146,8 @@ var newcalendar = {
         // check if it is the new calendar
         if(document.getElementById("total-calendar-wrapper")){
             newcalendar.setup();
-            newcalendar.stickySidebar();
+            //newcalendar.stickySidebar();
+            newcalendar.stickySimple();
             calendar.newbinding();
         }
     },
@@ -161,6 +160,18 @@ var newcalendar = {
                 wrapper.style.width = sidebarWidth + "px";
             }
         }
+    },
+    stickySimple: function(){
+        const sidebar = document.querySelector(".block-system-main-block .layout__region--first");
+        if(sidebar){
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("sticky-sidebar-wrapper");
+            while (sidebar.firstChild) {
+                wrapper.appendChild(sidebar.firstChild);
+            }
+            sidebar.appendChild(wrapper);
+        }
+            
     },
     stickySidebar: function(){
         const sidebar = document.querySelector(".block-system-main-block .layout__region--first");
@@ -190,7 +201,7 @@ var newcalendar = {
 
             window.addEventListener("scroll", function(){
                 const scrollY = window.pageYOffset;
-                const sidebarWrapper = sidebar.querySelector(".sticky-sidebar-wrapper");
+                const sidebarWrapper = sidebar.querySelector(".sticky-sidebar-wrappers");
                 const sidebarHeight = sidebarWrapper ? sidebarWrapper.offsetHeight : sidebar.offsetHeight;
                 const maxSticky = footerOffsetTop - sidebarHeight;
                 if (scrollY > originalOffsetTop && scrollY < maxSticky) {
@@ -729,6 +740,24 @@ window.addEventListener('load',
                 })
             })
         }
+        if(document.querySelectorAll(".omnibox .yearToggle")){
+            document.querySelectorAll(".omnibox .yearToggle").forEach(function(toggle){
+                toggle.addEventListener("click", function(e){
+                    e.preventDefault();
+                    
+                    let yearDir = 1;
+                    if(e.target.classList.contains("prev")){
+                        yearDir = -1;
+                    }
+                    let currentYear = parseInt(document.getElementById("AMYear").value);
+                    let newYear = currentYear + yearDir;
+                    if(newYear < 1){    
+                        newYear = 1;
+                    }
+                    window.location.href = "/calendar/date/am/" + newYear;
+                });
+            }); 
+        }
        if(document.getElementById("omnibox-submit")){
             document.getElementById("omnibox-submit").addEventListener("click", function(e){
                 e.preventDefault();
@@ -1209,43 +1238,7 @@ window.addEventListener('load',
                     }
                 });
             }
-            //console.log("maybe this single holy day falls on a sabbath", day)
-
-            /*
-            if(secondDateColumnNode.querySelector(".holydayoverlay")){
-
-            } else {
-                const holydaydiv = document.createElement("div");
-                holydaydiv.classList.add("holydayoverlay");
-                // get date of this column
-                secondDateColumnNode.appendChild(holydaydiv);
-            }
-            const holydaywrapper = secondDateColumnNode.querySelector(".holydayoverlay");
             
-            const thisHolyDay = document.createElement("div");
-            thisHolyDay.classList.add("holyday");
-            thisHolyDay.classList.add("bg-"+key);
-            thisHolyDay.setAttribute("data-day", day);
-            thisHolyDay.setAttribute("data-holy-day", key);
-            holydaywrapper.appendChild(thisHolyDay);
-
-            */
-            /*
-            const firstDateNode = monthNodeFinal.querySelector(".Cell.GC:not(.Month)[data-day='" + firstDate + "']");
-            const firstDateColumnNode = firstDateNode.closest(".Column");
-            firstDateColumnNode.classList.add("afterContent")
-            firstDateColumnNode.setAttribute("data-name", key);
-            let secondDateNode = null;
-            if(firstDateColumnNode.nextSibling){
-                secondDateNode = firstDateColumnNode.nextSibling;
-            } else {
-                secondDateNode = firstDateColumnNode.closest(".month").nextSibling.querySelector(".Column:nth-child(1)")
-            }
-            secondDateNode.classList.add("beforeContent");
-            secondDateNode.classList.add("afterContent");
-            secondDateNode.setAttribute("data-name", key);
-            // fill in all dates from firstDateColumnNode to secondDateColumnNode
-            */
         });
         calendar.fillInTabernacles();
         //calendar.fillInUnleavenedBread();
@@ -1319,48 +1312,6 @@ window.addEventListener('load',
            
         }
         
-        // check if the last great day is in a new month or not
-        /*
-        const lastgreatdayfirstDateMonth = document.querySelector(".lastgreatdaymonth").getAttribute("data-month");
-        const tabernaclesfirstDateColumnNode = document.querySelector(".Column[data-name='feastoftabernacles']");
-        const tabernaclesFirstDateMonth = tabernaclesfirstDateColumnNode.closest(".month").getAttribute("data-month");
-        const tabernaclesfirstDateColumnNodeWidth = window.getComputedStyle(tabernaclesfirstDateColumnNode).width;
-        const newWidth = parseInt(tabernaclesfirstDateColumnNodeWidth.substring(0, tabernaclesfirstDateColumnNodeWidth.length-2));
-        const style = document.createElement("style");
-        style.id="tabernaclesStyle";
-
-        if(lastgreatdayfirstDateMonth != tabernaclesFirstDateMonth){
-            // put the overlay on the end month and count backwards
-            // in the case of the months dropping to two lines
-            const lastgreatdayMonthNode = document.querySelector(".Column[data-name='lastgreatday']");
-            lastgreatdayMonthNode.classList.add("feastoftabernaclesAndLGDmonth");
-
-            style.innerHTML = ".path-calendar #NewCalendarContainer .feastoftabernaclesAndLGDmonth::before{z-index:2;width: " + (newWidth-15) + "px!important;}";
-            style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=lastgreatday]::after{z-index:3;}";  
-            style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after{right:.5px;}";
-            
-        } else {
-
-            // still, check if the start and end are on different lines even in the same month
-            // get computed position of feastoftabernaclesfirstDateColumnNode
-            const position = tabernaclesfirstDateColumnNode.getBoundingClientRect();
-            //console.log("position", position)
-
-            // get computed width of tabernaclesfirstDateColumnNode
-            const newright = newWidth -5;
-            // for this hack, just get the width of the cell until the 8th day
-           
-            style.innerHTML = ".path-calendar #NewCalendarContainer [data-name=feastoftabernacles]::after{z-index:2;width: " + newWidth + "px;right: -" + newright + "px;}";
-            style.innerHTML += ".path-calendar #NewCalendarContainer [data-name=lastgreatday]::after{z-index:3;}";  
-            
-        }
-        document.head.appendChild(style);
-        */
-
-
-        
-
-
     },
     fillInColumn: function(col){
         let currentCol = col;
