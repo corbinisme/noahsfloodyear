@@ -1087,12 +1087,12 @@ $lastGreatDay: #15be27;
 	}
 }
 
-.page-node-type-calendar section.highlight {
+.page-node-type-calendar section.sticky {
 	position: sticky;
 	top: 0;
 	z-index: 100;
 }
-.region-highlighted #block-bcp-omnibox {
+.region-sticky #block-bcp-omnibox {
 	background: var(--red);
 	padding: .5em;
 }

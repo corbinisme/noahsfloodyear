@@ -85,13 +85,13 @@ class CalendarYearBarBlock extends BlockBase implements ContainerFactoryPluginIn
 		$adbc = strtoupper($adbc);	
 		
 
-		$markup = '<div id="yearBar">
+		$markup = '<div class="yearBarContainer"><h1 class="yearBarTitle text-center">Calendar Generator</h1><div id="yearBar">
         <div class="d-flex yearBarInner">
             <a class="yearAction" href="#" data-dir="-1">←</a> 
             <h2>AM ' . $amyear . ' - ' . $yearVal . ' ' . $adbc . '</h2> 
             <a class="yearAction" href="#" data-dir="1">→</a>
         </div>
-    </div>';
+    </div></div>';
 
 		
 		

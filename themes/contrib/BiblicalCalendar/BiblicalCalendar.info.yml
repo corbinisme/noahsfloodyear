@@ -20,6 +20,7 @@ regions:
   breadcrumb: Breadcrumbs
   hero: 'Hero'
   highlighted: 'Highlighted'
+  sticky: 'Sticky'
   content: 'Main content'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'

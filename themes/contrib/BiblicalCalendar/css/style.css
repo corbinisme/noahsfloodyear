@@ -1196,13 +1196,13 @@
   	*/
 }
 
-.page-node-type-calendar section.highlight {
+.page-node-type-calendar section.sticky {
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.region-highlighted #block-bcp-omnibox {
+.region-sticky #block-bcp-omnibox {
   background: var(--red);
   padding: 0.5em;
 }
@@ -1563,7 +1563,7 @@ body.page-node-type-calendar #yearBar {
   border: 0px solid #ccc;
   padding: 0 30px;
   font-size: 2em;
-  margin-bottom: 35px;
+  margin-bottom: 1px;
   color: var(--mediumgreen);
 }
 body.page-node-type-calendar #yearBar .d-flex {
