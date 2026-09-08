@@ -1,3 +1,9 @@
 dates:
   js:
       js/dates.js: {}
+      js/modals.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/once

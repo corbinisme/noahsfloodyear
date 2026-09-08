@@ -149,6 +149,8 @@ var newcalendar = {
             //newcalendar.stickySidebar();
             newcalendar.stickySimple();
             calendar.newbinding();
+            newcalendar.dismissAlertNodes();
+            
         }
     },
     resizeStickySidebar: function(){
@@ -231,17 +233,7 @@ var newcalendar = {
                     sidebarWrapper.style.top = "";
                 }
             });
-
-            if(sidebar.querySelector(".modal")){
-                sidebar.querySelectorAll(".modal").forEach(function(modal){ 
-                    
-                    // move to the end of the <body> tag
-                    document.body.appendChild(modal);
-                    // remove from original place
-                    //modal.remove();
-                });
-
-            }
+            
 
         }
     },
@@ -283,6 +275,21 @@ var newcalendar = {
             }
             } 
         }
+    },
+    dismissAlertNodes: function(){
+        document.querySelectorAll(".alert").forEach(function(alertNode){
+            // add close button node
+            const closeButtonNode = document.createElement("button");
+            closeButtonNode.classList.add("close");
+            closeButtonNode.innerText = "×";
+            alertNode.appendChild(closeButtonNode);
+            const closeButton = alertNode.querySelector(".close");
+            if(closeButton){
+                closeButton.addEventListener("click", function(){
+                    alertNode.remove();
+                });
+            }
+        });
     }
 }
 
@@ -572,6 +579,8 @@ window.addEventListener('load',
                     col.classList.remove("hoverGC")
                 });
             });
+
+        
             document.querySelectorAll(".page-node-type-calendar .Column .HCC").forEach(function(el){
                 el.addEventListener("mouseover", function(e){
                     const col = e.target.closest(".Column");
@@ -770,6 +779,15 @@ window.addEventListener('load',
                     window.location.href = "/calendar/date/am/" + newYear;
                 });
             }); 
+        }
+        // bind enter key for omnibox input to trigger submit
+        if(document.getElementById("omnibox-input")){
+            document.getElementById("omnibox-input").addEventListener("keypress", function(e){
+                if(e.key === "Enter"){
+                    e.preventDefault();
+                    document.getElementById("omnibox-submit").click();
+                }
+            });
         }
        if(document.getElementById("omnibox-submit")){
             document.getElementById("omnibox-submit").addEventListener("click", function(e){

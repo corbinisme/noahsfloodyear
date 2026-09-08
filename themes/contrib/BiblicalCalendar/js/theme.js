@@ -1,0 +1,1 @@
+console.log('BiblicalCalendar theme JS loaded.');
