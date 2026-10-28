@@ -5,7 +5,7 @@
   "homepage": "http://drupal.org/project/mailchimp",
   "license": "GPL-2.0-or-later",
   "require": {
-    "thinkshout/mailchimp-api-php": "^3.1.2"
+    "thinkshout/mailchimp-api-php": "^3.1"
   },
   "require-dev": {
     "drupal/eca": "^2 || ^3"

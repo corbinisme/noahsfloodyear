@@ -4,6 +4,7 @@ namespace Drupal\mailchimp\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\mailchimp\ApiService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
  * Mailchimp Webhook controller.
  */
 class MailchimpWebhookController extends ControllerBase {
+
+  /**
+   * The Mailchimp API service.
+   *
+   * @var \Drupal\mailchimp\ApiService
+   */
+  protected $apiService;
 
   /**
    * Module handler.
@@ -28,30 +36,25 @@ class MailchimpWebhookController extends ControllerBase {
   protected $logger;
 
   /**
-   * Constructs a MailchimpWebhookController.
-   *
-   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *   Module handler.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   A logger instance.
-   */
-  public function __construct(ModuleHandlerInterface $moduleHandler, LoggerInterface $logger) {
-    $this->moduleHandler = $moduleHandler;
-    $this->logger = $logger;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('module_handler'),
-      $container->get('logger.factory')->get('mailchimp')
-    );
+    $instance = parent::create($container);
+    $instance->apiService = $container->get('mailchimp.api');
+    $instance->moduleHandler = $container->get('module_handler');
+    $instance->logger = $container->get('logger.channel.mailchimp');
+    return $instance;
   }
 
   /**
-   * {@inheritdoc}
+   * Processes an incoming Mailchimp webhook request.
+   *
+   * @param string $hash
+   *   The webhook hash from the route, validated against the hash stored in
+   *   configuration.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   A plain text response indicating whether the webhook was processed.
    */
   public function endpoint($hash) {
     $return = 0;
@@ -74,12 +77,12 @@ class MailchimpWebhookController extends ControllerBase {
         case 'unsubscribe':
         case 'profile':
         case 'cleaned':
-          mailchimp_get_memberinfo($data['list_id'], $data['email'], TRUE);
+          $this->apiService->getMemberInfo($data['list_id'], $data['email'], TRUE);
           break;
 
         case 'upemail':
           mailchimp_cache_clear_member($data['list_id'], $data['old_email']);
-          mailchimp_get_memberinfo($data['list_id'], $data['new_email'], TRUE);
+          $this->apiService->getMemberInfo($data['list_id'], $data['new_email'], TRUE);
           break;
 
         case 'campaign':

@@ -9,6 +9,9 @@ namespace Drupal\Tests\file_download_link\Kernel;
  */
 class FileDownloadLinkTest extends FileDownloadLinkTestBase {
 
+  /**
+   * Provides test data for file_download_link formatter.
+   */
   public static function providerTestFileDownloadLink() {
     return [
       'file (default)' => [
@@ -16,7 +19,7 @@ class FileDownloadLinkTest extends FileDownloadLinkTestBase {
         'settings' => [],
         'output' => [
           [
-            'title' => 'Download',
+            'title' => ['#markup' => 'Download'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -33,7 +36,7 @@ class FileDownloadLinkTest extends FileDownloadLinkTestBase {
               'contexts' => [],
               'max-age' => -1,
             ],
-          ]
+          ],
         ],
       ],
       'file (custom)' => [
@@ -47,7 +50,7 @@ class FileDownloadLinkTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'file.txt',
+            'title' => ['#markup' => 'file.txt'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -73,7 +76,7 @@ class FileDownloadLinkTest extends FileDownloadLinkTestBase {
         'settings' => [],
         'output' => [
           [
-            'title' => 'Download',
+            'title' => ['#markup' => 'Download'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -90,7 +93,7 @@ class FileDownloadLinkTest extends FileDownloadLinkTestBase {
               'contexts' => [],
               'max-age' => -1,
             ],
-          ]
+          ],
         ],
       ],
       'image (custom)' => [
@@ -104,7 +107,7 @@ class FileDownloadLinkTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'file.png',
+            'title' => ['#markup' => 'file.png'],
             'options' => [
               'attributes' => [
                 'class' => [

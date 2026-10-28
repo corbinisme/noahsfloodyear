@@ -11,6 +11,9 @@ class Authenticate extends Event {
 
     const AUTHENTICATE = 'authenticate';
 
+    /**
+     * Constructs an Authenticate object.
+     */
     public function __construct() {}
 
 }

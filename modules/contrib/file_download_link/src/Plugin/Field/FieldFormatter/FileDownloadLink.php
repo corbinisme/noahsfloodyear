@@ -124,9 +124,12 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
   public static function defaultSettings() {
     $options = parent::defaultSettings();
     $options['link_text'] = 'Download';
+    $options['aria_label'] = NULL;
     $options['link_title'] = NULL;
     $options['new_tab'] = TRUE;
+    $options['rel_attribute'] = '';
     $options['force_download'] = TRUE;
+    $options['force_download_filename'] = '';
     $options['custom_classes'] = '';
     return $options;
   }
@@ -136,6 +139,7 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
+    $field_name = $this->fieldDefinition->getName();
     if ($this->fieldDefinition->getTargetEntityTypeId() == 'media') {
       if (!$this->moduleHandler->moduleExists('file_download_link_media')) {
         $form['media_warning'] = [
@@ -183,12 +187,46 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
       '#title' => $this->t('Open file in new tab'),
       '#default_value' => $this->getSetting('new_tab'),
     ];
+    $form['rel_attribute'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Rel attribute'),
+      '#description' => $this->t('The rel attribute defines the relationship between a linked resource and the current document.'),
+      '#default_value' => $this->getSetting('rel_attribute'),
+    ];
     $form['force_download'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Force Download'),
       '#default_value' => $this->getSetting('force_download'),
       '#description' => $this->t('This adds the <i>download</i> attribute to the link, which works in many modern browsers.'),
     ];
+    $form['force_download_filename'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Force Download - Filename'),
+      '#default_value' => $this->getSetting('force_download_filename'),
+      '#description' => $this->t('This adds a filename to the <i>download</i> attribute of the link, which works in many modern browsers. Leave blank to not force a filename.'),
+      '#states' => [
+        'visible' => [
+          'input[name="fields[' . $field_name . '][settings_edit_form][settings][force_download]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    if ($this->moduleHandler->moduleExists('token')) {
+      $form['tokens_4_container'] = [
+        '#type' => 'container',
+        '#states' => [
+          'visible' => [
+            'input[name="fields[' . $field_name . '][settings_edit_form][settings][force_download]"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+      $form['tokens_4_container']['tokens_4'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => [
+          $this->tokenEntityMapper->getTokenTypeForEntityType('file'),
+          $this->tokenEntityMapper->getTokenTypeForEntityType($this->fieldDefinition->getTargetEntityTypeId()),
+        ],
+      ];
+    }
     $form['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Link Title'),
@@ -201,6 +239,37 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
         '#token_types' => [
           $this->tokenEntityMapper->getTokenTypeForEntityType('file'),
           $this->tokenEntityMapper->getTokenTypeForEntityType($this->fieldDefinition->getTargetEntityTypeId()),
+        ],
+      ];
+    }
+    $form['aria_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('ARIA Label'),
+      '#default_value' => $this->getSetting('aria_label'),
+      '#description' => $this->t('This text is linked to the file. If left empty, the filename will be used.'),
+    ];
+    if ($this->moduleHandler->moduleExists('token')) {
+      $form['tokens_aria_label'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => [
+          $this->tokenEntityMapper->getTokenTypeForEntityType('file'),
+          $this->tokenEntityMapper->getTokenTypeForEntityType($this->fieldDefinition->getTargetEntityTypeId()),
+        ],
+      ];
+      $form['token_example'] = [
+        '#type' => 'details',
+        '#title' => $this->t('Example Token'),
+        '0' => [
+          '#markup' => $this->getTokenExampleMarkup(),
+        ],
+      ];
+    }
+    else {
+      $form['token_warning'] = [
+        '#type' => 'container',
+        '#markup' => $this->getTokenWarningMarkup(),
+        '#attributes' => [
+          'class' => ['messages messages--warning'],
         ],
       ];
     }
@@ -228,14 +297,25 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
   public function settingsSummary() {
     $summary = [];
     $summary[] = $this->t('Link Text: @link_text', ['@link_text' => $this->getSetting('link_text')]);
+
     if ($this->getSetting('new_tab')) {
       $summary[] = $this->t('Open in new tab');
     }
+    if ($this->getSetting('rel_attribute')) {
+      $rel_attribute = $this->getSetting('rel_attribute');
+      $summary[] = $this->t('Rel attribute: @attribute', ['@attribute' => $rel_attribute]);
+    }
     if ($this->getSetting('force_download')) {
       $summary[] = $this->t('Force download');
+      if ($this->getSetting('force_download_filename')) {
+        $summary[] = $this->t('Force download filename: @filename', ['@filename' => $this->getSetting('force_download_filename')]);
+      }
     }
     if ($this->getSetting('link_title')) {
       $summary[] = $this->t('Link Title: @link_title', ['@link_title' => $this->getSetting('link_title')]);
+    }
+    if ($this->getSetting('aria_label')) {
+      $summary[] = $this->t('ARIA Label: @aria_label', ['@aria_label' => $this->getSetting('aria_label')]);
     }
     if ($this->getSetting('custom_classes')) {
       $summary[] = $this->t('Classes: @classes', ['@classes' => $this->getSetting('custom_classes')]);
@@ -267,17 +347,26 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
       if ($this->getSetting('new_tab')) {
         $options['attributes']['target'] = '_blank';
       }
+      if ($this->getSetting('rel_attribute')) {
+        $options['attributes']['rel'] = $this->getSetting('rel_attribute');
+      }
       if ($this->getSetting('force_download')) {
-        $options['attributes']['download'] = TRUE;
+        $filename = $this->getSetting('force_download_filename');
+        $options['attributes']['download'] = !empty($filename) ? $filename : TRUE;
       }
       if ($this->getSetting('link_title')) {
         $options['attributes']['title'] = $this->getSetting('link_title');
+      }
+      if ($this->getSetting('aria_label')) {
+        $options['attributes']['aria-label'] = $this->getSetting('aria_label') ?: $file->getFilename();
       }
 
       // Make the render array.
       $elements[$delta] = [
         '#type' => 'link',
-        '#title' => $this->getSetting('link_text'),
+        '#title' => [
+          '#markup' => $this->getSetting('link_text'),
+        ],
         '#url' => $this->fileUrlGenerator->generate($file->getFileUri()),
         '#options' => $options,
         '#cache' => [
@@ -298,11 +387,27 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
         // Link Text.
         if ($this->getSetting('link_text')) {
           $text = $this->getSetting('link_text');
+
           $text = $this->addDeltaToTokens($text, $delta, $entity_token_type, $field);
           $text = $this->token->replace($text, $data, ['langcode' => $langcode, 'clear' => TRUE], $bubbleable_metadata);
+
           // Token encodes & and ' e.g. as &amp; and &#39;.
           $text = Html::decodeEntities($text);
-          $elements[$delta]['#title'] = $text;
+          $elements[$delta]['#title'] = ['#markup' => $text];
+        }
+
+        // Download Filename (attribute).
+        if ($this->getSetting('force_download_filename')) {
+          $title = $this->getSetting('force_download_filename');
+          $title = $this->addDeltaToTokens($title, $delta, $entity_token_type, $field);
+          $title = $this->token->replace($title, $data, ['langcode' => $langcode, 'clear' => TRUE], $bubbleable_metadata);
+          $title = Html::decodeEntities($title);
+          if ($title) {
+            $elements[$delta]['#options']['attributes']['download'] = $title;
+          }
+          else {
+            unset($elements[$delta]['#options']['attributes']['download']);
+          }
         }
 
         // Link title (attribute).
@@ -316,6 +421,18 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
           }
           else {
             unset($elements[$delta]['#options']['attributes']['title']);
+          }
+        }
+
+        // ARIA Label (attribute).
+        if ($this->getSetting('aria_label')) {
+          $aria_label = $this->getSetting('aria_label');
+          $aria_label = $this->addDeltaToTokens($aria_label, $delta, $entity_token_type, $field);
+          $aria_label = $this->token->replace($aria_label, $data, ['langcode' => $langcode, 'clear' => TRUE], $bubbleable_metadata);
+          $aria_label = Html::decodeEntities($aria_label);
+
+          if ($aria_label) {
+            $elements[$delta]['#options']['attributes']['aria-label'] = $aria_label;
           }
         }
 
@@ -335,8 +452,9 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
 
       // An empty title is replaced by filename.
       // Put this after token stuff to guard against cleared tokens.
-      if (empty($elements[$delta]['#title'])) {
-        $elements[$delta]['#title'] = $file->getFilename();
+      if (empty($elements[$delta]['#title']) ||
+        (isset($elements[$delta]['#title']['#markup']) && empty($elements[$delta]['#title']['#markup']))) {
+        $elements[$delta]['#title'] = ['#markup' => $file->getFilename()];
       }
 
       // Custom classes are added now.
@@ -408,10 +526,16 @@ class FileDownloadLink extends FileFormatterBase implements ContainerFactoryPlug
       $delta_help = $this->t('<p>Note that you do not need to indicate a delta value for the @field token. The appropriate delta is used automatically.</p>', ['@field' => $field]);
     }
     if ($type == 'file') {
-      return $this->t('<p>You can show the file description followed by the file size like this:<code>@example</code></p>@delta_help', ['@example' => $this->getExampleToken(), '@delta_help' => $delta_help]);
+      return $this->t('<p>You can show the file description followed by the file size like this:<code>@example</code></p>@delta_help', [
+        '@example' => $this->getExampleToken(),
+        '@delta_help' => $delta_help,
+      ]);
     }
     else {
-      return $this->t('<p>You can show the alt text followed by the file size like this:<code>@example</code></p>@delta_help', ['@example' => $this->getExampleToken(), '@delta_help' => $delta_help]);
+      return $this->t('<p>You can show the alt text followed by the file size like this:<code>@example</code></p>@delta_help', [
+        '@example' => $this->getExampleToken(),
+        '@delta_help' => $delta_help,
+      ]);
     }
   }
 

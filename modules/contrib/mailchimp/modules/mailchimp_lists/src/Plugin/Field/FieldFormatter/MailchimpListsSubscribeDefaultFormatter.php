@@ -2,9 +2,13 @@
 
 namespace Drupal\mailchimp_lists\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\mailchimp\ApiService;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'mailchimp_lists_subscribe_default' formatter.
@@ -17,7 +21,55 @@ use Drupal\Core\Form\FormStateInterface;
  *   }
  * )
  */
-class MailchimpListsSubscribeDefaultFormatter extends FormatterBase {
+class MailchimpListsSubscribeDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The Mailchimp API service.
+   *
+   * @var \Drupal\mailchimp\ApiService
+   */
+  protected $apiService;
+
+  /**
+   * Constructs a default formatter.
+   *
+   * @param string $plugin_id
+   *   The plugin ID for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field the formatter is associated with.
+   * @param array $settings
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
+   * @param array $third_party_settings
+   *   Any third party settings.
+   * @param \Drupal\mailchimp\ApiService $apiService
+   *   The Mailchimp API service.
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, ApiService $apiService) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->apiService = $apiService;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('mailchimp.api')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -104,7 +156,7 @@ class MailchimpListsSubscribeDefaultFormatter extends FormatterBase {
       ];
 
       if ($field_settings['show_interest_groups'] && $this->getSetting('show_interest_groups')) {
-        $member_info = mailchimp_get_memberinfo($field_settings['mc_list_id'], $email);
+        $member_info = $this->apiService->getMemberInfo($field_settings['mc_list_id'], $email);
 
         if (!empty($mc_list->intgroups)) {
           $elements[$delta]['interest_groups'] = [

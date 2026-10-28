@@ -42,7 +42,7 @@ interface CommandHelperInterface {
    * @return array
    *   Returns an array of entities to export.
    */
-  public function getEntitiesToExport(string $entity_type = 'node', string $bundle = '', bool $all_allowed_content = FALSE, string $entity_ids_to_export = NULL): array;
+  public function getEntitiesToExport(string $entity_type = 'node', string $bundle = '', bool $all_allowed_content = FALSE, ?string $entity_ids_to_export = NULL): array;
 
   /**
    * Get selected entities.
@@ -79,7 +79,7 @@ interface CommandHelperInterface {
    * Gets the real output directory based on a relative output path.
    *
    * @param string $output_path
-   *   The relative ouput path.
+   *   The relative output path.
    *
    * @return string
    *   A string with the real output directory.

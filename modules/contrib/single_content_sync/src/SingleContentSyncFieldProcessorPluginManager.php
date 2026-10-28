@@ -46,7 +46,7 @@ class SingleContentSyncFieldProcessorPluginManager extends DefaultPluginManager 
     \Traversable $namespaces,
     CacheBackendInterface $cacheBackend,
     ModuleHandlerInterface $moduleHandler,
-    EntityFieldManagerInterface $entity_field_manager
+    EntityFieldManagerInterface $entity_field_manager,
   ) {
     parent::__construct(
       'Plugin/SingleContentSyncFieldProcessor',
@@ -85,7 +85,7 @@ class SingleContentSyncFieldProcessorPluginManager extends DefaultPluginManager 
   public function findFieldPluginDefinition(
     string $entityType,
     string $bundle,
-    string $fieldName
+    string $fieldName,
   ): ?array {
     $fieldType = $this->getEntityFieldType($entityType, $bundle, $fieldName);
 
@@ -100,7 +100,7 @@ class SingleContentSyncFieldProcessorPluginManager extends DefaultPluginManager 
   public function getFieldPluginInstance(
     string $entityType,
     string $bundle,
-    string $fieldName
+    string $fieldName,
   ): SingleContentSyncFieldProcessorInterface {
     $pluginDefinition = $this->findFieldPluginDefinition($entityType, $bundle, $fieldName);
 
@@ -125,7 +125,7 @@ class SingleContentSyncFieldProcessorPluginManager extends DefaultPluginManager 
   protected function getEntityFieldType(
     string $entityType,
     string $bundle,
-    string $fieldName
+    string $fieldName,
   ): string {
     $fieldDefinitions = $this->entityFieldManager->getFieldDefinitions($entityType, $bundle);
 

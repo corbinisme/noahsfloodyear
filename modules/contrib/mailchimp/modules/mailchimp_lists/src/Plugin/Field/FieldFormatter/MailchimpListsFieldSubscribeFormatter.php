@@ -8,6 +8,7 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\mailchimp\ApiService;
 use Drupal\mailchimp_lists\Form\MailchimpListsSubscribeForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -33,10 +34,30 @@ class MailchimpListsFieldSubscribeFormatter extends FormatterBase implements Con
 
   /**
    * Create an instance of MailchimpListsFieldSubscribeFormatter.
+   *
+   * @param string $plugin_id
+   *   The plugin ID for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field the formatter is associated with.
+   * @param array $settings
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
+   * @param array $third_party_settings
+   *   Any third party settings.
+   * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
+   *   The Form Builder service.
+   * @param \Drupal\mailchimp\ApiService $api_service
+   *   The Mailchimp API service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, FormBuilderInterface $form_builder) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, FormBuilderInterface $form_builder, ApiService $api_service) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->formBuilder = $form_builder;
+    $this->apiService = $api_service;
   }
 
   /**
@@ -51,7 +72,8 @@ class MailchimpListsFieldSubscribeFormatter extends FormatterBase implements Con
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('form_builder')
+      $container->get('form_builder'),
+      $container->get('mailchimp.api')
     );
   }
 
@@ -113,7 +135,7 @@ class MailchimpListsFieldSubscribeFormatter extends FormatterBase implements Con
 
     /** @var \Drupal\mailchimp_lists\Plugin\Field\FieldType\MailchimpListsSubscription $item */
     foreach ($items as $delta => $item) {
-      $form = new MailchimpListsSubscribeForm();
+      $form = new MailchimpListsSubscribeForm($this->apiService);
 
       $field_name = $item->getFieldDefinition()->getName();
 

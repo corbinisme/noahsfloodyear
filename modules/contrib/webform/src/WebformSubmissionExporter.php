@@ -141,7 +141,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
    * @param \Drupal\Core\Language\LanguageManagerInterface|null $language_manager
    *   The language manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, FileSystemInterface $file_system, EntityTypeManagerInterface $entity_type_manager, StreamWrapperManagerInterface $stream_wrapper_manager, ArchiverManager $archiver_manager, WebformElementManagerInterface $element_manager, WebformExporterManagerInterface $exporter_manager, LanguageManagerInterface $language_manager = NULL) {
+  public function __construct(ConfigFactoryInterface $config_factory, FileSystemInterface $file_system, EntityTypeManagerInterface $entity_type_manager, StreamWrapperManagerInterface $stream_wrapper_manager, ArchiverManager $archiver_manager, WebformElementManagerInterface $element_manager, WebformExporterManagerInterface $exporter_manager, ?LanguageManagerInterface $language_manager = NULL) {
     $this->configFactory = $config_factory;
     $this->fileSystem = $file_system;
     $this->entityTypeManager = $entity_type_manager;
@@ -156,7 +156,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
   /**
    * {@inheritdoc}
    */
-  public function setWebform(WebformInterface $webform = NULL) {
+  public function setWebform(?WebformInterface $webform = NULL) {
     $this->webform = $webform;
     $this->defaultOptions = NULL;
     $this->elementTypes = NULL;
@@ -173,7 +173,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
   /**
    * {@inheritdoc}
    */
-  public function setSourceEntity(EntityInterface $entity = NULL) {
+  public function setSourceEntity(?EntityInterface $entity = NULL) {
     $this->sourceEntity = $entity;
   }
 
@@ -1176,7 +1176,12 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
    * {@inheritdoc}
    */
   public function getFileTempDirectory() {
-    return $this->configFactory->get('webform.settings')->get('export.temp_directory') ?: $this->fileSystem->getTempDirectory();
+    $root_directory = $this->configFactory->get('webform.settings')->get('export.temp_directory') ?: $this->fileSystem->getTempDirectory();
+    $directory = rtrim($root_directory, '/\\') . '/webform';
+    if (!$this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS)) {
+      throw new \RuntimeException('Unable to prepare the Webform export directory.');
+    }
+    return $directory;
   }
 
   /**

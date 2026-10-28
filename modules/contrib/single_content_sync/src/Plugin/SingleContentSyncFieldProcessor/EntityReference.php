@@ -76,7 +76,7 @@ class EntityReference extends SingleContentSyncFieldProcessorPluginBase implemen
     ContentExporterInterface $exporter,
     ContentImporterInterface $importer,
     EntityRepositoryInterface $entity_repository,
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
@@ -122,6 +122,7 @@ class EntityReference extends SingleContentSyncFieldProcessorPluginBase implemen
       $entities = $storage->loadMultiple($ids);
       foreach ($entities as $child_entity) {
         if ($child_entity instanceof FieldableEntityInterface) {
+          $child_entity = $this->entityRepository->getTranslationFromContext($child_entity, $field->getEntity()->language()->getId());
           // Avoid exporting the same entity multiple times.
           if (!$this->exporter->isReferenceCached($child_entity)) {
             // Export content entity relation.

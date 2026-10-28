@@ -23,7 +23,7 @@ class MailchimpCampaignSendTestMailForm extends EntityConfirmFormBase {
   protected $messenger;
 
   /**
-   * Constructs a MailchimpCampaignSendForm object.
+   * Constructs a MailchimpCampaignSendTestMailForm object.
    *
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.

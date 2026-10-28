@@ -46,6 +46,9 @@ class MailchimpSignupFormFormatter extends EntityReferenceFormatterBase {
 
   /**
    * Sets the API service.
+   *
+   * @param \Drupal\mailchimp\ApiService $apiService
+   *   The Mailchimp API service.
    */
   public function setApiService(ApiService $apiService): void {
     $this->apiService = $apiService;
@@ -58,16 +61,17 @@ class MailchimpSignupFormFormatter extends EntityReferenceFormatterBase {
     $elements = [];
 
     foreach ($items as $delta => $item) {
-      if (!empty($item->_loaded)) {
-        $entity = $item->entity;
+      if (empty($item->_loaded)) {
+        continue;
       }
+      $entity = $item->entity;
 
       $signup_id = $entity->id();
 
       /** @var \Drupal\mailchimp_signup\Entity\MailchimpSignup $signup */
       $signup = mailchimp_signup_load($signup_id);
 
-      $form = new MailchimpSignupPageForm($this->apiService, $this->messenger());
+      $form = new MailchimpSignupPageForm($this->apiService);
 
       $form->setFormID($this->getFormId($signup));
       $form->setSignup($signup);

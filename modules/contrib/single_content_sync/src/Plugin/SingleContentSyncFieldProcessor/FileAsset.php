@@ -56,6 +56,8 @@ class FileAsset extends SingleContentSyncFieldProcessorPluginBase implements Con
    *   The content exporter service.
    * @param \Drupal\single_content_sync\ContentImporterInterface $importer
    *   The content importer service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(
     array $configuration,
@@ -63,7 +65,7 @@ class FileAsset extends SingleContentSyncFieldProcessorPluginBase implements Con
     $plugin_definition,
     ContentExporterInterface $exporter,
     ContentImporterInterface $importer,
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 

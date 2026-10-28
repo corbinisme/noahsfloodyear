@@ -25,7 +25,7 @@ abstract class FunctionalMailchimpTestBase extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['mailchimp', 'mailchimp_test', 'block'];
+  protected static $modules = ['mailchimp', 'mailchimp_test', 'block', 'node'];
 
   /**
    * A user that can administrate Mailchimp.

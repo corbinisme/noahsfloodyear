@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\single_content_sync\Annotation\SingleContentSyncFieldProcessor;
 use Drupal\single_content_sync\ContentExporterInterface;
 use Drupal\single_content_sync\ContentImporterInterface;
 use Drupal\single_content_sync\SingleContentSyncFieldProcessorPluginBase;
@@ -78,6 +77,8 @@ class Link extends SingleContentSyncFieldProcessorPluginBase implements Containe
    *   The entity repository service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
    */
   public function __construct(
     array $configuration,
@@ -87,7 +88,7 @@ class Link extends SingleContentSyncFieldProcessorPluginBase implements Containe
     ContentImporterInterface $importer,
     EntityRepositoryInterface $entity_repository,
     EntityTypeManagerInterface $entity_type_manager,
-    ConfigFactoryInterface $config_factory
+    ConfigFactoryInterface $config_factory,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
@@ -143,6 +144,8 @@ class Link extends SingleContentSyncFieldProcessorPluginBase implements Containe
         if (!$entity) {
           continue;
         }
+
+        $entity = $this->entityRepository->getTranslationFromContext($entity, $field->getEntity()->language()->getId());
 
         if ($export_mode === 'stub' || $this->exporter->isReferenceCached($entity)) {
           $values[$delta]['linked_entity'] = [

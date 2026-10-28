@@ -27,8 +27,12 @@ class MailchimpListsController extends ControllerBase {
     $instance->apiService = $container->get('mailchimp.api');
     return $instance;
   }
+
   /**
-   * {@inheritdoc}
+   * Builds a table listing all Mailchimp audiences and their webhook status.
+   *
+   * @return array
+   *   A render array for the overview page.
    */
   public function overview() {
     $content = [];
@@ -63,7 +67,7 @@ class MailchimpListsController extends ControllerBase {
 
       $webhook_status = $enabled_webhook_events . ' of ' . $total_webhook_events . ' enabled (' . $webhook_link->toString() . ')';
 
-      $list_url = Url::fromUri('https://admin.mailchimp.com/lists/dashboard/overview?id=' . $mc_list->id, ['attributes' => ['target' => '_blank']]);
+      $list_url = Url::fromUri('https://admin.mailchimp.com/audience/contacts?id=' . $mc_list->id, ['attributes' => ['target' => '_blank']]);
 
       $content['lists_table'][$mc_list->id]['name'] = [
         // phpcs:disable

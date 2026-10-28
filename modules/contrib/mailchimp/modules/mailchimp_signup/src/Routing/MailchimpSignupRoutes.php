@@ -10,7 +10,10 @@ use Symfony\Component\Routing\Route;
 class MailchimpSignupRoutes {
 
   /**
-   * {@inheritdoc}
+   * Returns route objects for Mailchimp signup forms configured as pages.
+   *
+   * @return \Symfony\Component\Routing\Route[]
+   *   An array of routes, keyed by route name.
    */
   public function routes() {
     $routes = [];

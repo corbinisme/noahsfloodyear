@@ -266,10 +266,14 @@ class AddMailchimpEventWebformHandler extends WebformHandlerBase {
   }
 
   /**
-   * Finds the token for the email to send.
+   * Gets the raw email address or token for the configured email type.
    *
-   * @return string
-   *   The token.
+   * @param array $values
+   *   The submitted configuration form values.
+   *
+   * @return string|false
+   *   The email address or token, or FALSE if the configured email type is
+   *   not recognized.
    */
   protected function getEmailToken($values) {
     $type = $values['email_type'];
@@ -296,7 +300,7 @@ class AddMailchimpEventWebformHandler extends WebformHandlerBase {
   }
 
   /**
-   * Finds the the email to send.
+   * Finds the email to send.
    *
    * @return string
    *   The email value.
@@ -346,20 +350,21 @@ class AddMailchimpEventWebformHandler extends WebformHandlerBase {
   }
 
   /**
-   * Gets the MailchimpActon's Name..
+   * Determines whether a Mailchimp event entity with the given ID exists.
    *
    * @param int $id
    *   The Mailchimp Event ID.
    *
-   * @return string
-   *   The name of the event.
+   * @return \Drupal\mailchimp_events\Entity\MailchimpEventInterface|null
+   *   The loaded Mailchimp Event entity, or NULL if none exists with the given
+   *   ID.
    */
   protected function isValidEventId($id) {
     return MailchimpEvent::load($id);
   }
 
   /**
-   * Gets the MailchimpActon's Name..
+   * Gets the Mailchimp Event's name.
    *
    * @param int $id
    *   The Mailchimp Event ID.

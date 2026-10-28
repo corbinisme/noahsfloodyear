@@ -42,26 +42,13 @@ class MailchimpSignupForm extends EntityForm {
   protected $routerBuilder;
 
   /**
-   * Constructs a MailchimpSignupForm object.
-   *
-   * @param \Drupal\mailchimp\ApiService $mailchimp_api
-   *   The API service.
-   * @param \Drupal\Core\Routing\RouteBuilderInterface $router_builder
-   *   The router builder service.
-   */
-  public function __construct(protected ApiService $mailchimp_api, RouteBuilderInterface $router_builder) {
-    $this->apiService = $mailchimp_api;
-    $this->routerBuilder = $router_builder;
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('mailchimp.api'),
-      $container->get('router.builder')
-    );
+    $instance = parent::create($container);
+    $instance->apiService = $container->get('mailchimp.api');
+    $instance->routerBuilder = $container->get('router.builder');
+    return $instance;
   }
 
   /**
@@ -413,7 +400,7 @@ class MailchimpSignupForm extends EntityForm {
           $groups = array_merge(
             $groups,
             [
-              $list->id => mailchimp_interest_groups_form_elements($list, $default, NULL, 'admin'),
+              $list->id => $this->apiService->interestGroupFormElements($list, $default, NULL, 'admin'),
             ]
           );
         }
@@ -427,6 +414,14 @@ class MailchimpSignupForm extends EntityForm {
 
   /**
    * AJAX callback handler for the interest groups.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return array
+   *   The interest groups container render array.
    */
   public function configureInterestGroups(array &$form, FormStateInterface $form_state) {
     return $form['subscription_settings']['groups_container'];
@@ -434,6 +429,14 @@ class MailchimpSignupForm extends EntityForm {
 
   /**
    * AJAX callback handler for refreshing the audiences.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   An AJAX response that replaces the audiences configuration container.
    */
   public function listsRefreshCallback(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
@@ -447,16 +450,25 @@ class MailchimpSignupForm extends EntityForm {
 
   /**
    * AJAX callback handler for MailchimpSignupForm.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current form state.
+   *
+   * @return \Drupal\Core\Ajax\AjaxResponse
+   *   An AJAX response that replaces the merge fields, and the interest groups
+   *   if they are being configured, with the current selections.
    */
   public function mergefields_callback(&$form, FormStateInterface $form_state) {
-    // We can return either a form element here (default functionality) or
-    // an instance of the AjaxResponse with the appropriate commands
-    // to be executed.
+    // We can return either a form element here (default functionality) or an
+    // instance of the AjaxResponse with the appropriate commands to be
+    // executed.
     $response = new AjaxResponse();
 
-    // This one acts as a replacement for the original return value that
-    // was defined here beforehand. Simply replace the merge fields
-    // for each of the selected audiences.
+    // This one acts as a replacement for the original return value that was
+    // defined here beforehand. Simply replace the merge fields for each of the
+    // selected audiences.
     $response->addCommand(new HtmlCommand(
       '#mergefields-wrapper',
       $form['mc_lists_config']['mergefields']

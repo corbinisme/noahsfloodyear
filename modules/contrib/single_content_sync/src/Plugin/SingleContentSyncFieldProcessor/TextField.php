@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\single_content_sync\ContentExporterInterface;
@@ -79,7 +78,7 @@ class TextField extends SingleContentSyncFieldProcessorPluginBase implements Con
     ContentExporterInterface $exporter,
     ContentImporterInterface $importer,
     EntityRepositoryInterface $entity_repository,
-    ConfigFactoryInterface $config_factory
+    ConfigFactoryInterface $config_factory,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
@@ -127,6 +126,7 @@ class TextField extends SingleContentSyncFieldProcessorPluginBase implements Con
         assert($media === NULL || $media instanceof MediaInterface);
 
         if ($media) {
+          $media = $this->entityRepository->getTranslationFromContext($media, $field->getEntity()->language()->getId());
           $embed_entities[] = $this->exporter->doExportToArray($media);
         }
       }
@@ -146,6 +146,8 @@ class TextField extends SingleContentSyncFieldProcessorPluginBase implements Con
         if (!$linked_entity instanceof FieldableEntityInterface) {
           continue;
         }
+
+        $linked_entity = $this->entityRepository->getTranslationFromContext($linked_entity, $field->getEntity()->language()->getId());
 
         // Only export base fields.
         if ($export_mode === 'stub' || $this->exporter->isReferenceCached($linked_entity)) {
@@ -169,6 +171,7 @@ class TextField extends SingleContentSyncFieldProcessorPluginBase implements Con
 
         // File entity does not need a stub entity, so we do a full export.
         if ($file) {
+          $file = $this->entityRepository->getTranslationFromContext($file, $field->getEntity()->language()->getId());
           $embed_entities[] = $this->exporter->doExportToArray($file);
         }
       }

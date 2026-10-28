@@ -15,11 +15,13 @@ interface ContentImporterInterface {
    *
    * @param array $content
    *   Content to import.
+   * @param string $langcode
+   *   Target language, or 'all' to preserve all translations in the content.
    *
    * @return \Drupal\Core\Entity\EntityInterface
    *   Imported entity.
    */
-  public function doImport(array $content): EntityInterface;
+  public function doImport(array $content, string $langcode = 'all'): EntityInterface;
 
   /**
    * Set field value.
@@ -38,19 +40,23 @@ interface ContentImporterInterface {
    *
    * @param string $file_real_path
    *   The real path to the local file.
+   * @param string $langcode
+   *   Target language, or 'all' to preserve all translations in the content.
    *
    * @return \Drupal\Core\Entity\EntityInterface
    *   Imported entity.
    */
-  public function importFromFile(string $file_real_path): EntityInterface;
+  public function importFromFile(string $file_real_path, string $langcode = 'all'): EntityInterface;
 
   /**
    * Import content from the Zip file.
    *
    * @param string $file_real_path
    *   The real path to the local file.
+   * @param string $langcode
+   *   Target language, or 'all' to preserve all translations in the content.
    */
-  public function importFromZip(string $file_real_path): void;
+  public function importFromZip(string $file_real_path, string $langcode = 'all'): void;
 
   /**
    * Import assets from a Zip file.

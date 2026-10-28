@@ -17,7 +17,7 @@ class FileDownloadLinkMediaTest extends FileDownloadLinkMediaTestBase {
       'default settings' => [
         'settings' => [],
         'output' => [
-          'title' => 'Download',
+          'title' => ['#markup' => 'Download'],
           'options' => [
             'attributes' => [
               'class' => [
@@ -45,7 +45,7 @@ class FileDownloadLinkMediaTest extends FileDownloadLinkMediaTestBase {
           'custom_classes' => 'Howdy! p@rtner',
         ],
         'output' => [
-          'title' => 'file.txt',
+          'title' => ['#markup' => 'file.txt'],
           'options' => [
             'attributes' => [
               'class' => [

@@ -46,6 +46,13 @@ class ContentExporter implements ContentExporterInterface {
   protected bool $extractTranslationsMode = FALSE;
 
   /**
+   * The language of the entity whose fields are being exported.
+   *
+   * @var string|null
+   */
+  protected ?string $exportLangcode = NULL;
+
+  /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
@@ -139,7 +146,7 @@ class ContentExporter implements ContentExporterInterface {
     EntityRepositoryInterface $entity_repository,
     SingleContentSyncFieldProcessorPluginManagerInterface $field_processor_plugin_manager,
     SingleContentSyncBaseFieldsProcessorPluginManagerInterface $entity_base_fields_processor_plugin_manager,
-    EventDispatcherInterface $event_dispatcher
+    EventDispatcherInterface $event_dispatcher,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->moduleHandler = $module_handler;
@@ -167,6 +174,7 @@ class ContentExporter implements ContentExporterInterface {
     return implode('-', [
       $entity->getEntityTypeId(),
       $entity->uuid(),
+      $entity->language()->getId(),
       $hasTranslations,
     ]);
   }
@@ -203,7 +211,7 @@ class ContentExporter implements ContentExporterInterface {
    * Adds a given entity to the entityOutputCache.
    *
    * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
-   *   The entity to be added to the entityOuputCache.
+   *   The entity to be added to the entityOutputCache.
    * @param array $output
    *   The exported content output.
    */
@@ -227,13 +235,23 @@ class ContentExporter implements ContentExporterInterface {
    * {@inheritdoc}
    */
   public function doExportToArray(FieldableEntityInterface $entity): array {
+    $entity = $this->entityRepository->getTranslationFromContext($entity, $this->exportLangcode);
+
     // Add the entity to the entityReferenceCache array.
     $this->addEntityToReferenceCache($entity);
 
-    // If the output was already cached, return the cached output.
-    // Continue the method if not.
+    // The entity has already been exported in full earlier in this document.
+    // Export a reference to it instead of repeating the whole payload: without
+    // custom_fields this is the stub shape the importer resolves by uuid.
     if ($this->isOutputCached($entity)) {
-      return $this->entityOutputCache[$this->generateCacheKey($entity)];
+      $cached = $this->entityOutputCache[$this->generateCacheKey($entity)];
+
+      return array_intersect_key($cached, array_flip([
+        'uuid',
+        'entity_type',
+        'bundle',
+        'base_fields',
+      ]));
     }
 
     $output = [
@@ -311,24 +329,36 @@ class ContentExporter implements ContentExporterInterface {
    * {@inheritdoc}
    */
   public function exportBaseValues(FieldableEntityInterface $entity): array {
-    $entityProcessor = $this->entityBaseFieldsProcessorPluginManager
-      ->getEntityPluginInstance($entity->getEntityTypeId());
+    $previous_langcode = $this->exportLangcode;
+    $this->exportLangcode = $entity->language()->getId();
 
-    $base_fields = $entityProcessor->exportBaseValues($entity);
+    try {
+      $entityProcessor = $this->entityBaseFieldsProcessorPluginManager
+        ->getEntityPluginInstance($entity->getEntityTypeId());
 
-    // Support moderation state for multiple entity types.
-    if ($entity->hasField('moderation_state') && !$entity->get('moderation_state')->isEmpty()) {
-      $base_fields['moderation_state'] = $entity->get('moderation_state')->value;
+      $base_fields = $entityProcessor->exportBaseValues($entity);
+
+      // Support moderation state for multiple entity types.
+      if ($entity->hasField('moderation_state') && !$entity->get('moderation_state')->isEmpty()) {
+        $base_fields['moderation_state'] = $entity->get('moderation_state')->value;
+      }
+
+      if ($entity->hasField('changed') && !array_key_exists('changed', $base_fields)) {
+        $base_fields['changed'] = $entity->get('changed')->value;
+      }
+
+      // Support path field for multiple entity types.
+      // Exclude file entity. It may have a path if the file_entity module or
+      // similar is installed. We want the URL to be the file absolute URL.
+      if ($entity->hasField('path') && !$entity instanceof FileInterface) {
+        $base_fields['url'] = $entity->get('path')->alias;
+      }
+
+      return $base_fields;
     }
-
-    // Support path field for multiple entity types.
-    // Exclude file entity. It may have a path if the file_entity module or
-    // similar is installed. We want the URL to be the file absolute URL.
-    if ($entity->hasField('path') && !$entity instanceof FileInterface) {
-      $base_fields['url'] = $entity->get('path')->alias;
+    finally {
+      $this->exportLangcode = $previous_langcode;
     }
-
-    return $base_fields;
   }
 
   /**
@@ -351,26 +381,42 @@ class ContentExporter implements ContentExporterInterface {
    * {@inheritdoc}
    */
   public function getFieldValue(FieldItemListInterface $field) {
-    $fieldProcessor = $this
-      ->fieldProcessorPluginManager
-      ->getFieldPluginInstance(
-        $field->getEntity()->getEntityTypeId(),
-        $field->getEntity()->bundle(),
-        $field->getName()
-      );
+    $previous_langcode = $this->exportLangcode;
+    $this->exportLangcode = $field->getEntity()->language()->getId();
 
-    // If field type is not supported, it will simply get the value as it is.
-    $value = $fieldProcessor->exportFieldValue($field);
+    try {
+      $fieldProcessor = $this
+        ->fieldProcessorPluginManager
+        ->getFieldPluginInstance(
+          $field->getEntity()->getEntityTypeId(),
+          $field->getEntity()->bundle(),
+          $field->getName()
+        );
 
-    // Trigger event to alter the field export.
-    $event = new ExportFieldEvent($field, $value);
-    $this->eventDispatcher->dispatch($event);
-    $value = $event->getFieldValue();
+      // If field type is not supported, it will simply get the value as it is.
+      $value = $fieldProcessor->exportFieldValue($field);
 
-    // Alter value by using hook_content_export_field_value_alter().
-    $this->moduleHandler->alterDeprecated('Deprecated as of single_content_sync 1.4.0; implement SingleContentSyncFieldProcessor plugin instead to provide support for new field types or subscribe to ExportFieldEvent event in your event subscriber.', 'content_export_field_value', $value, $field);
+      // Trigger event to alter the field export.
+      $event = new ExportFieldEvent($field, $value);
+      $this->eventDispatcher->dispatch($event);
+      $value = $event->getFieldValue();
 
-    return $value;
+      // Alter value by using hook_content_export_field_value_alter().
+      $this->moduleHandler->alterDeprecated('Deprecated as of single_content_sync 1.4.0; implement SingleContentSyncFieldProcessor plugin instead to provide support for new field types or subscribe to ExportFieldEvent event in your event subscriber.', 'content_export_field_value', $value, $field);
+
+      return $value;
+    }
+    finally {
+      $this->exportLangcode = $previous_langcode;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function resetCache(): void {
+    $this->entityOutputCache = [];
+    $this->entityReferenceCache = [];
   }
 
 }

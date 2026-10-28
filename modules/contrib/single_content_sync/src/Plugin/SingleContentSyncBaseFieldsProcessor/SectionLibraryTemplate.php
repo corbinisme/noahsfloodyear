@@ -2,6 +2,7 @@
 
 namespace Drupal\single_content_sync\Plugin\SingleContentSyncBaseFieldsProcessor;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\single_content_sync\ContentExporterInterface;
@@ -35,13 +36,41 @@ class SectionLibraryTemplate extends SingleContentSyncBaseFieldsProcessorPluginB
   protected ContentImporterInterface $importer;
 
   /**
-   * {@inheritdoc}
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContentExporterInterface $exporter, ContentImporterInterface $importer) {
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * Constructs a new SectionLibraryTemplate plugin instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\single_content_sync\ContentExporterInterface $exporter
+   *   The content exporter service.
+   * @param \Drupal\single_content_sync\ContentImporterInterface $importer
+   *   The content importer service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    ContentExporterInterface $exporter,
+    ContentImporterInterface $importer,
+    EntityTypeManagerInterface $entity_type_manager,
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->exporter = $exporter;
     $this->importer = $importer;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -53,7 +82,8 @@ class SectionLibraryTemplate extends SingleContentSyncBaseFieldsProcessorPluginB
       $plugin_id,
       $plugin_definition,
       $container->get('single_content_sync.exporter'),
-      $container->get('single_content_sync.importer')
+      $container->get('single_content_sync.importer'),
+      $container->get('entity_type.manager'),
     );
   }
 
@@ -88,8 +118,12 @@ class SectionLibraryTemplate extends SingleContentSyncBaseFieldsProcessorPluginB
    * {@inheritdoc}
    */
   public function mapBaseFieldsValues(array $values, FieldableEntityInterface $entity): array {
-    if (isset($values['owner']) && ($account = user_load_by_mail($values['owner']))) {
-      $entity->setOwner($account);
+    if (isset($values['owner'])) {
+      $users = $this->entityTypeManager->getStorage('user')
+        ->loadByProperties(['mail' => $values['owner']]);
+      if ($account = reset($users) ?: NULL) {
+        $entity->setOwner($account);
+      }
     }
 
     $this->importer->setFieldValue($entity, 'layout_section', $values['layout_section']);

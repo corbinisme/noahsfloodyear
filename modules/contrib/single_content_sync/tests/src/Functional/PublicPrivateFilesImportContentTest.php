@@ -3,8 +3,11 @@
 namespace Drupal\Tests\single_content_sync\Functional;
 
 use Drupal\Core\Archiver\Zip;
+use Drupal\Core\Serialization\Yaml;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\file\Functional\FileFieldCreationTrait;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\file\FileInterface;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
@@ -164,6 +167,58 @@ final class PublicPrivateFilesImportContentTest extends BrowserTestBase {
     \assert($new_private_file instanceof FileInterface);
     self::assertSame(self::PUBLIC_FILE, $new_public_file->getFileUri());
     self::assertSame(self::PRIVATE_FILE, $new_private_file->getFileUri());
+    self::assertSame(self::PUBLIC_FILE_CONTENTS, file_get_contents($new_public_file->getFileUri()));
+    self::assertSame(self::PRIVATE_FILE_CONTENTS, file_get_contents($new_private_file->getFileUri()));
+  }
+
+  /**
+   * Tests that generated files include entities exported in an earlier call.
+   */
+  public function testGeneratedFilesResetExportCaches(): void {
+    FieldStorageConfig::create([
+      'field_name' => 'field_related_node',
+      'entity_type' => 'node',
+      'type' => 'entity_reference',
+      'settings' => ['target_type' => 'node'],
+    ])->save();
+    FieldConfig::create([
+      'field_name' => 'field_related_node',
+      'entity_type' => 'node',
+      'bundle' => $this->testNode->bundle(),
+    ])->save();
+    $related_node = $this->drupalCreateNode(['type' => $this->testNode->bundle()]);
+    // Reload the node so it has the newly created field.
+    $this->testNode = Node::load($this->testNode->id());
+    $this->testNode->set('field_related_node', $related_node);
+    $this->testNode->save();
+
+    $content_exporter = \Drupal::service('single_content_sync.exporter');
+    $content_file_generator = \Drupal::service('single_content_sync.file_generator');
+    $content_exporter->doExportToArray($this->testNode);
+
+    foreach (['yaml', 'zip', 'bulk_zip'] as $format) {
+      if ($format === 'yaml') {
+        $file = $content_file_generator->generateYamlFile($this->testNode);
+        $content = Yaml::decode(file_get_contents($file->getFileUri()));
+      }
+      else {
+        $file = $format === 'zip'
+          ? $content_file_generator->generateZipFile($this->testNode)
+          : $content_file_generator->generateBulkZipFile([$this->testNode], FALSE, TRUE);
+        $zip = new \ZipArchive();
+        self::assertTrue($zip->open(\Drupal::service('file_system')->realpath($file->getFileUri())));
+        $file_name = \Drupal::service('single_content_sync.helper')->generateContentFileName($this->testNode);
+        $content = Yaml::decode($zip->getFromName("{$file_name}.yml"));
+        self::assertSame(self::PUBLIC_FILE_CONTENTS, $zip->getFromName('assets/public/public.txt'));
+        self::assertSame(self::PRIVATE_FILE_CONTENTS, $zip->getFromName('assets/private/private.txt'));
+        $zip->close();
+      }
+
+      self::assertArrayHasKey('custom_fields', $content);
+      self::assertArrayHasKey('custom_fields', $content['custom_fields']['field_related_node'][0]);
+      self::assertArrayHasKey('custom_fields', $content['custom_fields'][self::PUBLIC_FILE_FIELD_NAME][0]['target_entity']);
+      self::assertArrayHasKey('custom_fields', $content['custom_fields'][self::PRIVATE_FILE_FIELD_NAME][0]['target_entity']);
+    }
   }
 
 }

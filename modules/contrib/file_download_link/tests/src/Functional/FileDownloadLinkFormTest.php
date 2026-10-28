@@ -102,6 +102,7 @@ class FileDownloadLinkFormTest extends BrowserTestBase {
       'link_text' => 'fields[field_image_test][settings_edit_form][settings][link_text]',
       'new_tab' => 'fields[field_image_test][settings_edit_form][settings][new_tab]',
       'force_download' => 'fields[field_image_test][settings_edit_form][settings][force_download]',
+      'rel_attribute' => 'fields[field_image_test][settings_edit_form][settings][rel_attribute]',
       'link_title' => 'fields[field_image_test][settings_edit_form][settings][link_title]',
       'custom_classes' => 'fields[field_image_test][settings_edit_form][settings][custom_classes]',
     ];
@@ -122,6 +123,7 @@ class FileDownloadLinkFormTest extends BrowserTestBase {
     $page->findField($fields['link_text'])->setValue('Download Now!');
     $page->findField($fields['new_tab'])->setValue(FALSE);
     $page->findField($fields['force_download'])->setValue(TRUE);
+    $page->findField($fields['rel_attribute'])->setValue('follow');
     $page->findField($fields['link_title'])->setValue('Tooltip');
     $page->findField($fields['custom_classes'])->setValue('my-class your-class');
     $page->pressButton('Save');
@@ -140,10 +142,13 @@ class FileDownloadLinkFormTest extends BrowserTestBase {
     $assert_session->elementTextContains('css', '[data-drupal-selector="edit-fields-field-image-test"]', 'Link Title: Tooltip');
     $assert_session->elementTextContains('css', '[data-drupal-selector="edit-fields-field-image-test"]', 'Classes: my-class your-class');
     $expected_settings = [
+      'aria_label' => '',
       'link_text' => 'Download Now!',
       'link_title' => 'Tooltip',
+      'rel_attribute' => 'follow',
       'new_tab' => FALSE,
       'force_download' => TRUE,
+      'force_download_filename' => '',
       'custom_classes' => 'my-class your-class',
     ];
     $settings = \Drupal::service('entity_display.repository')->getViewDisplay('node', 'page_with_image')

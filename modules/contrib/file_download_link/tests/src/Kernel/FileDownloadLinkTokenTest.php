@@ -54,7 +54,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         'settings' => [],
         'output' => [
           [
-            'title' => 'Download',
+            'title' => ['#markup' => 'Download'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -83,7 +83,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'The extension is txt',
+            'title' => ['#markup' => 'The extension is txt'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -98,7 +98,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
               'contexts' => [],
               'max-age' => -1,
             ],
-          ]
+          ],
         ],
       ],
       'tokens for image field' => [
@@ -110,7 +110,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'The image width is 40',
+            'title' => ['#markup' => 'The image width is 40'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -137,7 +137,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'The extension is png',
+            'title' => ['#markup' => 'The extension is png'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -152,7 +152,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
               'contexts' => [],
               'max-age' => -1,
             ],
-          ]
+          ],
         ],
       ],
       'tokens in link title' => [
@@ -165,7 +165,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'Testing tokens in title',
+            'title' => ['#markup' => 'Testing tokens in title'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -194,7 +194,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'Testing tokens in classes',
+            'title' => ['#markup' => 'Testing tokens in classes'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -223,7 +223,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'This alt text is for the first image.',
+            'title' => ['#markup' => 'This alt text is for the first image.'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -240,7 +240,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
             ],
           ],
           [
-            'title' => 'When delta is 1 we should see this alt text. Let\'s add special chars & test them!',
+            'title' => ['#markup' => 'When delta is 1 we should see this alt text. Let\'s add special chars & test them!'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -269,7 +269,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'file.txt',
+            'title' => ['#markup' => 'file.txt'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -296,7 +296,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'Download this, 99',
+            'title' => ['#markup' => 'Download this, 99'],
             'options' => [
               'attributes' => [
                 'class' => [
@@ -323,7 +323,7 @@ class FileDownloadLinkTokenTest extends FileDownloadLinkTestBase {
         ],
         'output' => [
           [
-            'title' => 'Download',
+            'title' => ['#markup' => 'Download'],
             'options' => [
               'attributes' => [
                 'class' => [

@@ -121,7 +121,7 @@ function mailchimp_events_list_member_events($list_id, $email, $count = 10, $off
 }
 
 /**
- * Add an event for a Mailchimp audience member with the given email address.
+ * Adds an event for a Mailchimp audience member with the given email address.
  *
  * @param string $list_id
  *   The ID of the Mailchimp audience the member is subscribed to.

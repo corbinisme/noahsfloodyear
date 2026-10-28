@@ -35,6 +35,9 @@ class MailchimpCommands extends DrushCommands {
    * @param int $temp_batchsize
    *   Optional max size of batch. If ommitted, will use configuration.
    *
+   * @return string
+   *   A message describing the result of the cron run.
+   *
    * @command mailchimp:cron
    * @aliases mcc mailchimp-cron
    *

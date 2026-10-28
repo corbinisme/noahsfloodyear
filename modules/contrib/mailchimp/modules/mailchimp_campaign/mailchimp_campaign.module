@@ -64,7 +64,7 @@ function mailchimp_campaign_theme($existing, $type, $theme, $path) {
 }
 
 /**
- * Save a campaign in Mailchimp and as a Drupal entity.
+ * Saves a campaign to Mailchimp, creating or updating it as needed.
  *
  * @param array $template
  *   Associative array of template content indexed by section IDs.
@@ -77,8 +77,8 @@ function mailchimp_campaign_theme($existing, $type, $theme, $path) {
  * @param string $campaign_id
  *   The ID of the campaign to save, if updating.
  *
- * @return string
- *   New or existing campaign ID.
+ * @return string|null
+ *   New or existing campaign ID, or NULL on failure.
  */
 function mailchimp_campaign_save_campaign(array $template, $recipients, $settings, $template_id, $campaign_id = NULL) {
   // Allow alter of template and options used in campaign.
@@ -238,6 +238,8 @@ function mailchimp_campaign_send_campaign(MailchimpCampaign $campaign) {
  *
  * @param \Drupal\mailchimp_campaign\Entity\MailchimpCampaign $campaign
  *   The Mailchimp campaign to send.
+ * @param string $testemail
+ *   Comma-separated list of email addresses to send the test to.
  *
  * @return bool
  *   TRUE if campaign is sent successfully.
@@ -308,7 +310,7 @@ function mailchimp_campaign_delete_campaign(MailchimpCampaign $campaign) {
  * @param int $count
  *   The number of templates to request from the API.
  *
- * @return mixed
+ * @return array
  *   Array listing existing Mailchimp templates by type.
  */
 function mailchimp_campaign_list_templates($reset = FALSE, $count = 30) {
@@ -352,12 +354,13 @@ function mailchimp_campaign_list_templates($reset = FALSE, $count = 30) {
  * Return full details for a Mailchimp Template.
  *
  * @param string $template_id
- *   Optional template ID. Set to return a single Mailchimp template.
+ *   Optional template ID.
  * @param bool $reset
  *   True if templates should not be loaded from cache.
  *
- * @return mixed
- *   An array with all configuration and content for a Mailchimp Template.
+ * @return object|null
+ *   The Mailchimp template object, with an added "info" property containing its
+ *   full configuration and content, or NULL if not found.
  */
 function mailchimp_campaign_get_template($template_id, $reset = FALSE) {
   $all_templates = mailchimp_campaign_list_templates($reset);
@@ -416,8 +419,9 @@ function mailchimp_campaign_render_template(array $template) {
  * @param bool $reset
  *   Set to TRUE if campaigns should not be loaded from cache.
  *
- * @return array
- *   Associative array of Mailchimp campaigns indexed by campaign ID.
+ * @return array|null
+ *   Associative array of Mailchimp campaigns indexed by campaign ID, or NULL if
+ *   the campaigns could not be retrieved from the Mailchimp API.
  */
 function mailchimp_campaign_get_campaigns(array $mc_campaign_ids, $reset = FALSE) {
   $cache = \Drupal::cache('mailchimp');
@@ -483,13 +487,13 @@ function mailchimp_campaign_get_campaigns(array $mc_campaign_ids, $reset = FALSE
 /**
  * Gets an array of segments for a given audience ID.
  *
- * @param int $list_id
+ * @param string $list_id
  *   The audience ID.
  * @param string $type
  *   The segment type to get. "static" or "saved".
  *
- * @return array
- *   Array of Mailchimp audience segments.
+ * @return array|null
+ *   Array of Mailchimp audience segments, or NULL on error.
  */
 function mailchimp_campaign_get_list_segments($list_id, $type) {
   /** @var \Mailchimp\MailchimpLists $mcapi */
@@ -526,8 +530,8 @@ function mailchimp_campaign_get_list_segments($list_id, $type) {
  * @param int $count
  *   How many records to return. Maximum allowed is 1000.
  *
- * @return int
- *   The number of subscribers contained in the segment.
+ * @return int|null
+ *   The number of subscribers contained in the segment, or NULL on error.
  */
 function mailchimp_campaign_test_list_segment($list_id, $list_segment_id, $count = 1) {
   /** @var \Mailchimp\MailchimpLists $mc_lists */
@@ -550,9 +554,18 @@ function mailchimp_campaign_test_list_segment($list_id, $list_segment_id, $count
 
 /**
  * Loads multiple campaigns.
+ *
+ * @param array $campaign_ids
+ *   An array of campaign entity IDs to load.
+ * @param bool $reset
+ *   Set to TRUE to reset the entity cache for the loaded campaigns.
+ *
+ * @return \Drupal\mailchimp_campaign\Entity\MailchimpCampaign[]
+ *   An array of MailchimpCampaign entities, keyed by entity ID.
  */
 function mailchimp_campaign_load_multiple($campaign_ids = [], $reset = FALSE) {
   if (empty($campaign_ids)) {
+    // Load all campaign IDs, sorted by creation date descending.
     $campaign_ids = Drupal::entityQuery('mailchimp_campaign')
       ->sort('created', 'DESC')
       ->accessCheck(TRUE)

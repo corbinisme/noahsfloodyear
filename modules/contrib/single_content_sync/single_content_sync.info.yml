@@ -7,7 +7,7 @@ configure: single_content_sync.config_settings
 dependencies:
   - drupal:file
 
-# Information added by Drupal.org packaging script on 2026-05-06
-version: '1.4.15'
+# Information added by Drupal.org packaging script on 2026-10-03
+version: '1.4.18'
 project: 'single_content_sync'
-datestamp: 1778056560
+datestamp: 1791054748

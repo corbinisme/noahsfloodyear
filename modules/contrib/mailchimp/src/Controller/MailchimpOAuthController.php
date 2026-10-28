@@ -34,7 +34,7 @@ class MailchimpOAuthController extends ControllerBase {
   protected EventDispatcherInterface $eventDispatcher;
 
   /**
-   * {@inheritDoc}
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
@@ -52,6 +52,9 @@ class MailchimpOAuthController extends ControllerBase {
    *   The temporary token that was issued from the initial request.
    * @param string $csrf_token
    *   CSRF token.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect back to the OAuth settings page.
    */
   public function getAccessToken(string $temp_token, string $csrf_token) {
     $post_params = [

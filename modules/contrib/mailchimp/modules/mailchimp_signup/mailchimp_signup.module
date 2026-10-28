@@ -28,6 +28,9 @@ function mailchimp_signup_theme($existing, $type, $theme, $path) {
  * Prepares variables for the mailchimp_signup subscribe form template.
  *
  * Default template: mailchimp-signup-subscribe-form.html.twig.
+ *
+ * @param array $vars
+ *   An associative array containing the form render element keyed by 'element'.
  */
 function template_preprocess_mailchimp_signup_subscribe_form(&$vars) {
   template_preprocess_form($vars);

@@ -5,6 +5,7 @@ namespace Drupal\single_content_sync\Form;
 use Drupal\Component\Utility\Environment;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\StringTranslation\ByteSizeMarkup;
 use Drupal\single_content_sync\ContentBatchImporter;
 use Drupal\single_content_sync\ContentImporterInterface;
@@ -33,16 +34,26 @@ class ContentImportForm extends FormBase {
   protected ContentSyncHelperInterface $contentSyncHelper;
 
   /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected LanguageManagerInterface $languageManager;
+
+  /**
    * ContentImportForm constructor.
    *
    * @param \Drupal\single_content_sync\ContentImporterInterface $content_importer
    *   The content importer service.
    * @param \Drupal\single_content_sync\ContentSyncHelperInterface $content_sync_helper
    *   The content sync helper.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
    */
-  public function __construct(ContentImporterInterface $content_importer, ContentSyncHelperInterface $content_sync_helper) {
+  public function __construct(ContentImporterInterface $content_importer, ContentSyncHelperInterface $content_sync_helper, LanguageManagerInterface $language_manager) {
     $this->contentImporter = $content_importer;
     $this->contentSyncHelper = $content_sync_helper;
+    $this->languageManager = $language_manager;
   }
 
   /**
@@ -51,7 +62,8 @@ class ContentImportForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('single_content_sync.importer'),
-      $container->get('single_content_sync.helper')
+      $container->get('single_content_sync.helper'),
+      $container->get('language_manager')
     );
   }
 
@@ -72,6 +84,7 @@ class ContentImportForm extends FormBase {
     // validator approach.
     if (floatval(\Drupal::VERSION) < 10.2) {
       $validators['file_validate_extensions'] = ['zip yml'];
+      // @phpstan-ignore-next-line
       $max_upload_size = format_size(Environment::getUploadMaxSize());
     }
     else {
@@ -105,8 +118,20 @@ class ContentImportForm extends FormBase {
         ],
       ],
     ];
+    $languages = ['all' => $this->t('All languages (import all translations)')];
+    foreach ($this->languageManager->getLanguages() as $language) {
+      $languages[$language->getId()] = $language->getName();
+    }
+    $form['langcode'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Import language'),
+      '#options' => $languages,
+      '#default_value' => 'all',
+      '#description' => $this->t('Preserve all translations in the file, or import its primary content and references into one selected language.'),
+    ];
+
     $form['actions'] = ['#type' => 'actions'];
-    $form['actions']['import'] = [
+    $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Import'),
       '#button_type' => 'primary',
@@ -131,6 +156,8 @@ class ContentImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $langcode = $form_state->getValue('langcode', 'all');
+
     // Handle uploaded file first.
     if ($upload_file = $form_state->getValue('upload_fid')) {
       $fid = reset($upload_file);
@@ -140,10 +167,10 @@ class ContentImportForm extends FormBase {
 
       try {
         if ($file_info['extension'] === 'zip') {
-          $this->contentImporter->importFromZip($file_real_path);
+          $this->contentImporter->importFromZip($file_real_path, $langcode);
         }
         else {
-          $entity = $this->contentImporter->importFromFile($file_real_path);
+          $entity = $this->contentImporter->importFromFile($file_real_path, $langcode);
         }
       }
       catch (\Exception $e) {
@@ -156,7 +183,7 @@ class ContentImportForm extends FormBase {
     else {
       try {
         $content_array = $this->contentSyncHelper->validateYamlFileContent($form_state->getValue('content'));
-        $entity = $this->contentImporter->doImport($content_array);
+        $entity = $this->contentImporter->doImport($content_array, $langcode);
       }
       catch (\Exception $e) {
         $this->messenger()->addError($e->getMessage());

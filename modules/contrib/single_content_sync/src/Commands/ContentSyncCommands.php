@@ -82,7 +82,7 @@ class ContentSyncCommands extends DrushCommands {
     ContentFileGeneratorInterface $file_generator,
     MessengerInterface $messenger,
     ContentSyncHelperInterface $content_sync_helper,
-    CommandHelperInterface $command_helper
+    CommandHelperInterface $command_helper,
   ) {
     parent::__construct();
     $this->contentExporter = $content_exporter;
@@ -125,14 +125,18 @@ class ContentSyncCommands extends DrushCommands {
    *
    * @usage content:export node /relative/output/path --entities="1,4,17" --translate --assets --all-content --dry-run --bundle="bundle_name"
    */
-  public function exportEntitiesCommand(string $entityType = 'node', string $outputPath = '', array $options = [
-    'translate' => FALSE,
-    'assets' => FALSE,
-    'all-content' => FALSE,
-    'dry-run' => FALSE,
-    'entities' => NULL,
-    'bundle' => '',
-  ]): void {
+  public function exportEntitiesCommand(
+    string $entityType = 'node',
+    string $outputPath = '',
+    array $options = [
+      'translate' => FALSE,
+      'assets' => FALSE,
+      'all-content' => FALSE,
+      'dry-run' => FALSE,
+      'entities' => NULL,
+      'bundle' => '',
+    ],
+  ): void {
     [
       'translate' => $include_translations,
       'assets' => $include_assets,

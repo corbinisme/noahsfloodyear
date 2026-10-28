@@ -175,11 +175,14 @@ class ContentExportForm extends FormBase {
     $parameters = $this->getRouteMatch()->getParameters();
     $entity = $this->contentSyncHelper->getDefaultLanguageEntity($parameters);
     $file_name = $this->contentSyncHelper->generateContentFileName($entity);
-    $exported_entity = $this->contentExporter->doExportToYml($entity, $extract_translations);
+
+    // Let's reset cache of the previous call during form rebuild.
+    $this->contentExporter->resetCache();
 
     // Stream a YML without assets.
     if ($button['#name'] === 'download_file') {
-      $response = new StreamedResponse(static function() use ($exported_entity) {
+      $exported_entity = $this->contentExporter->doExportToYml($entity, $extract_translations);
+      $response = new StreamedResponse(static function () use ($exported_entity) {
         echo $exported_entity;
       }, 200, [
         'Content-disposition' => 'attachment; filename="' . $file_name . '.yml"',
@@ -191,7 +194,7 @@ class ContentExportForm extends FormBase {
 
     // Stream a zip with assets.
     if ($button['#name'] === 'download_zip') {
-      $response = new StreamedResponse(function() use ($entity, $extract_translations) {
+      $response = new StreamedResponse(function () use ($entity, $extract_translations) {
         $file = $this->fileGenerator->generateZipFile($entity, $extract_translations);
         $fp = fopen($file->getFileUri(), 'rb');
 
@@ -225,10 +228,27 @@ class ContentExportForm extends FormBase {
    */
   public function access(): AccessResultInterface {
     $parameters = $this->getRouteMatch()->getParameters();
-    $entity = $parameters->getIterator()->current();
+    $entity = NULL;
 
-    if (is_string($entity)) {
-      $entity = $parameters->get($entity);
+    // Entity routes normally provide an already-upcast entity. Views routes,
+    // however, can provide a raw entity ID (for example, node => '24103').
+    // Resolve scalar parameters whose names match known entity types so the
+    // access check works consistently for both kinds of routes.
+    foreach ($parameters as $name => $value) {
+      if ($value instanceof EntityInterface) {
+        $entity = $value;
+        break;
+      }
+
+      if (is_scalar($value) && $this->entityTypeManager->hasDefinition($name)) {
+        $entity = $this->entityTypeManager
+          ->getStorage($name)
+          ->load($value);
+
+        if ($entity) {
+          break;
+        }
+      }
     }
 
     if (!$entity instanceof EntityInterface) {

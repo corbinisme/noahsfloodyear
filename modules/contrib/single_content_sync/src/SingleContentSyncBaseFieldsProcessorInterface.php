@@ -5,7 +5,7 @@ namespace Drupal\single_content_sync;
 use Drupal\Core\Entity\FieldableEntityInterface;
 
 /**
- * Interface for single_content_sync_base_fieldss_processor plugins.
+ * Interface for single_content_sync_base_fields_processor plugins.
  */
 interface SingleContentSyncBaseFieldsProcessorInterface {
 

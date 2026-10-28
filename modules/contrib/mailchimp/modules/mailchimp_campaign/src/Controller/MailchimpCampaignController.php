@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\Utility\Error;
 use Drupal\mailchimp_campaign\Entity\MailchimpCampaign;
 use Mailchimp\MailchimpAPIException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -85,7 +86,10 @@ class MailchimpCampaignController extends ControllerBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Builds a render array listing all Mailchimp campaigns.
+   *
+   * @return array
+   *   Renderable array of page content.
    */
   public function overview() {
     $content = [];
@@ -134,7 +138,7 @@ class MailchimpCampaignController extends ControllerBase {
 
       $archive_url = Url::fromUri($campaign->mc_data->archive_url);
       $campaign_url = Url::fromRoute('entity.mailchimp_campaign.view', ['mailchimp_campaign' => $campaign_id]);
-      $list_url = Url::fromUri('https://admin.mailchimp.com/lists/dashboard/overview?id=' . $campaign->list->id, ['attributes' => ['target' => '_blank']]);
+      $list_url = Url::fromUri('https://admin.mailchimp.com/audience/contacts?id=' . $campaign->list->id, ['attributes' => ['target' => '_blank']]);
       $send_url = Url::fromRoute('entity.mailchimp_campaign.send', ['mailchimp_campaign' => $campaign_id]);
       $edit_url = Url::fromRoute('entity.mailchimp_campaign.edit_form', ['mailchimp_campaign' => $campaign_id]);
       $send_test_mail = Url::fromRoute('entity.mailchimp_campaign.sendtestmail', ['mailchimp_campaign' => $campaign_id]);
@@ -276,10 +280,7 @@ class MailchimpCampaignController extends ControllerBase {
     }
     catch (\Exception $e) {
       $this->messenger->addError($e->getMessage());
-      $this->logger
-        ->error('An error occurred getting report data from Mailchimp: {message}', [
-          'message' => $e->getMessage(),
-        ]);
+      Error::logException($this->logger, $e, 'An error occurred getting report data from Mailchimp: ' . Error::DEFAULT_ERROR_MESSAGE);
     }
 
     if (!empty($response)) {

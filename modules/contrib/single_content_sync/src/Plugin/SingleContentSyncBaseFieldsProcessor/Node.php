@@ -12,6 +12,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\menu_link_content\MenuLinkContentInterface;
+use Drupal\menu_ui\MenuUiUtility;
 use Drupal\node\NodeInterface;
 use Drupal\single_content_sync\ContentExporterInterface;
 use Drupal\single_content_sync\ContentImporterInterface;
@@ -162,11 +163,23 @@ class Node extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
       return;
     }
 
-    $menu_link = menu_ui_get_menu_link_defaults($node);
+    // MenuUiUtility is only available as a service from Drupal 11.4. Until the
+    // module drops support for older versions, \Drupal::service() is required.
+    // @phpstan-ignore-next-line
+    if (\Drupal::hasService(MenuUiUtility::class)) {
+      // @phpstan-ignore-next-line
+      $menu_link = \Drupal::service(MenuUiUtility::class)->getMenuLinkDefaults($node);
+    }
+    else {
+      // @phpstan-ignore-next-line
+      $menu_link = menu_ui_get_menu_link_defaults($node);
+    }
+
     $storage = $this->entityTypeManager->getStorage('menu_link_content');
 
     // Export content menu link item if available.
     if (!empty($menu_link['entity_id']) && ($menu_link_entity = $storage->load($menu_link['entity_id']))) {
+      $menu_link_entity = $this->entityRepository->getTranslationFromContext($menu_link_entity, $node->language()->getId());
       assert($menu_link_entity instanceof MenuLinkContentInterface);
 
       // Avoid infinitive loop, export menu link only once.
@@ -212,6 +225,7 @@ class Node extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
     }
     else {
       $book = $storage->load($node->book['bid']);
+      $book = $this->entityRepository->getTranslationFromContext($book, $node->language()->getId());
       assert($book instanceof NodeInterface);
       $base_fields['book']['bid'] = [
         'uuid' => $book->uuid(),
@@ -223,6 +237,7 @@ class Node extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
 
     if ($node->book['pid'] !== '0') {
       $parent = $storage->load($node->book['pid']);
+      $parent = $this->entityRepository->getTranslationFromContext($parent, $node->language()->getId());
       assert($parent instanceof NodeInterface);
       $base_fields['book']['pid'] = [
         'uuid' => $parent->uuid(),
@@ -253,6 +268,7 @@ class Node extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
       }
 
       $parent = $storage->load($node->book["p{$i}"]);
+      $parent = $this->entityRepository->getTranslationFromContext($parent, $node->language()->getId());
       assert($parent instanceof NodeInterface);
       $base_fields['book']["p{$i}"] = [
         'uuid' => $parent->uuid(),
@@ -334,7 +350,7 @@ class Node extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
         continue;
       }
 
-      if ($values['book']["p{$i}"] === $parent->uuid()) {
+      if (isset($parent) && $values['book']["p{$i}"] === $parent->uuid()) {
         $values['book']["p{$i}"] = (string) $parent->id();
         continue;
       }
@@ -401,9 +417,11 @@ class Node extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
 
     // Load node author.
     $account_provided = !empty($values['author']);
-    $account = $account_provided
-    ? user_load_by_mail($values['author'])
-    : NULL;
+    $users = $account_provided
+      ? $this->entityTypeManager->getStorage('user')
+        ->loadByProperties(['mail' => $values['author']])
+      : [];
+    $account = reset($users) ?: NULL;
 
     if ($account) {
       $baseFields['uid'] = $account->id();

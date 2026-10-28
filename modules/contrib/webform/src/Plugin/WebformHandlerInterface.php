@@ -111,7 +111,7 @@ interface WebformHandlerInterface extends PluginInspectionInterface, Configurabl
   /**
    * Sets the id for this webform handler.
    *
-   * @param int $handler_id
+   * @param string $handler_id
    *   The handler_id for this webform handler.
    *
    * @return $this
@@ -494,7 +494,7 @@ interface WebformHandlerInterface extends PluginInspectionInterface, Configurabl
   /**
    * Acts on webform submissions after they are purged.
    *
-   * Used after the entities are purged and after they are deleted..
+   * Used after the entities are purged and after they are deleted.
    *
    * @param \Drupal\webform\WebformSubmissionInterface[] $webform_submissions
    *   The webform submissions that were purged.
@@ -522,19 +522,22 @@ interface WebformHandlerInterface extends PluginInspectionInterface, Configurabl
   public function postDelete(WebformSubmissionInterface $webform_submission);
 
   /**
-   * Controls entity operation access to webform submission.
+   * Controls access to operations on a webform submission.
+   *
+   * This method is used to alter access for operations performed on an existing
+   * webform submission, such as viewing, updating, or deleting a submission.
    *
    * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
-   *   A webform submission.
+   *   The webform submission.
    * @param string $operation
-   *   The operation that is to be performed on $entity.
-   * @param \Drupal\Core\Session\AccountInterface $account
-   *   The account trying to access the entity.
+   *   The operation that is to be performed on the webform submission.
+   * @param \Drupal\Core\Session\AccountInterface|null $account
+   *   The account trying to access the webform submission.
    *
-   * @return \Drupal\Core\Core\AccessResultInterface
-   *   The result of the access check. No option returns a neutral result.
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   The result of the access check. A neutral result does not alter access.
    */
-  public function access(WebformSubmissionInterface $webform_submission, $operation, AccountInterface $account = NULL);
+  public function access(WebformSubmissionInterface $webform_submission, $operation, ?AccountInterface $account = NULL);
 
   /* ************************************************************************ */
   // Preprocessing methods.
@@ -583,13 +586,13 @@ interface WebformHandlerInterface extends PluginInspectionInterface, Configurabl
    *   The element's properties.
    * @param string $operation
    *   The operation that is to be performed on $entity.
-   * @param \Drupal\Core\Session\AccountInterface $account
+   * @param \Drupal\Core\Session\AccountInterface|null $account
    *   The account trying to access the entity.
    *
    * @return \Drupal\Core\Access\AccessResultInterface
    *   The result of the access check. Defaults to neutral.
    */
-  public function accessElement(array &$element, $operation, AccountInterface $account = NULL);
+  public function accessElement(array &$element, $operation, ?AccountInterface $account = NULL);
 
   /**
    * Acts on a element after it has been created.

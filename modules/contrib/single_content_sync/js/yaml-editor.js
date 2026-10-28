@@ -12,7 +12,7 @@
 
           // Init ace editor.
           const editor = window.ace.edit($editDiv[0]);
-          editor.getSession().setValue($textarea.val());
+          editor.getSession().setValue($textarea[0].value);
           editor.getSession().setTabSize(2);
           editor.setOptions({
             minLines: 3,
@@ -21,7 +21,7 @@
 
           // Update Drupal textarea value.
           editor.getSession().on('change', () => {
-            $textarea.val(editor.getSession().getValue());
+            $textarea[0].value = editor.getSession().getValue();
           });
         });
       };

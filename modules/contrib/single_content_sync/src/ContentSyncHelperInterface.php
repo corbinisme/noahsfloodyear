@@ -89,13 +89,13 @@ interface ContentSyncHelperInterface {
   public function getFileRealPathById(int $fid): string;
 
   /**
-   * Get an entity object from the default language configuration.
+   * Get an entity object in the current content language context.
    *
    * @param \Symfony\Component\HttpFoundation\ParameterBag $parameters
    *   The parameters from which to get the entity object.
    *
    * @return \Drupal\Core\Entity\EntityInterface
-   *   The entity interface from the default language configuration.
+   *   The entity translation matching the current content language context.
    */
   public function getDefaultLanguageEntity(ParameterBag $parameters): EntityInterface;
 
@@ -122,10 +122,10 @@ interface ContentSyncHelperInterface {
   /**
    * Get site UUID value.
    *
-   * @return string
+   * @return string|null
    *   Site UUID value.
    */
-  public function getSiteUuid(): string;
+  public function getSiteUuid(): ?string;
 
   /**
    * Get export directory file schema.

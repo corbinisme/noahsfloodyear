@@ -3,6 +3,8 @@ export single content:
 
 import single content:
   title: 'Allow user to import all content'
+  description: 'Access the import page that allows to upload a Zip or YAML file to perform content import.'
+  restrict access: true
 
 permission_callbacks:
   - \Drupal\single_content_sync\ContentSyncPermissions::permissions

@@ -33,11 +33,18 @@ class FileDownloadLinkXssTest extends BrowserTestBase {
   protected $defaultTheme = 'stark';
 
   /**
-   * XSS string
+   * XSS string.
    *
    * @var string
    */
   protected $xssString = "<script>alert('xss');</script>";
+
+  /**
+   * Safe string.
+   *
+   * @var string
+   */
+  protected $safeString = "alert('xss');";
 
   /**
    * {@inheritdoc}
@@ -134,11 +141,11 @@ class FileDownloadLinkXssTest extends BrowserTestBase {
     $this->drupalGet('node/1');
     $this->assertSession()->pageTextContains('My Test Node');
     $this->assertSession()->responseNotContains($this->xssString);
-    $this->assertSession()->pageTextContains($this->xssString);
+    $this->assertSession()->pageTextContains($this->safeString);
     $this->drupalGet('fr/node/1');
     $this->assertSession()->pageTextContains('Ma Node de Teste');
     $this->assertSession()->responseNotContains($this->xssString);
-    $this->assertSession()->pageTextContains($this->xssString);
+    $this->assertSession()->pageTextContains($this->safeString);
   }
 
 }

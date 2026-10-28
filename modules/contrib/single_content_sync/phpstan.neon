@@ -4,3 +4,22 @@ parameters:
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
     - "#^Unsafe usage of new static#"
+
+    # Drupal\Core\Serialization\Yaml is a valid Drupal core class, but PHPStan cannot
+    # resolve it through the autoloader used in CI. This is a PHPStan configuration
+    # limitation, not a code issue.
+    - "#^Call to static method (encode|decode)\\(\\) on an unknown class Drupal\\\\Core\\\\Serialization\\\\Yaml\\.#"
+
+    # ArchiverInterface, ArchiverManager and the "plugin.manager.archiver" service are
+    # deprecated in Drupal 11.3.0 and will be removed in Drupal 12.0.0 with no direct
+    # replacement. The affected classes (ContentSyncHelper, ContentFileGenerator,
+    # ContentImporter) need to be refactored to use PHP's native \ZipArchive instead.
+    # TODO: open a dedicated issue to track this refactoring before Drupal 12 support
+    # is required.
+    - "#Drupal\\\\Core\\\\Archiver\\\\(ArchiverInterface|ArchiverManager|Zip)#"
+    - "#\"plugin\\.manager\\.archiver\" service is deprecated#"
+
+    # The book module is an optional dependency. BookManagerInterface may not be
+    # present if the module is not installed, so PHPStan cannot resolve the class.
+    # This is intentional and handled in the code with a nullable type hint.
+    - "#Drupal\\\\book\\\\BookManagerInterface#"

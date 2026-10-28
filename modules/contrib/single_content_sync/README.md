@@ -4,6 +4,11 @@ A simple way to export/import a node content with all entity references.
 
 ## Export content
 
+Exports use the current content language and resolve referenced entities in the
+language of their owning entity, using Drupal's normal language fallback when
+that translation is unavailable. When exporting all translations, references in
+each translation use that translation's language.
+
 ### Which entity references can be exported?
 
 All entity types can be exported (core, contrib, custom).
@@ -43,6 +48,17 @@ Another option is to implement a custom plugin `SingleContentSyncFieldProcessor`
 Check out a few examples of existing plugins at `src/Plugin/SingleContentSyncFieldProcessor`.
 
 ## Import content
+
+At `/admin/content/import`, choose **All languages (import all translations)**
+to preserve the languages in the exported file. Choose a specific language to
+import the primary content and its references into that language. This applies
+to pasted YAML, YAML uploads, and ZIP uploads. Existing entities are updated in
+the selected translation, creating it if necessary. Translations in languages
+that are not configured on the target site are skipped with an error message;
+configured translations continue importing. If the primary language is
+unavailable, an available translation becomes the primary payload. If no language in the file
+is configured, existing content is left unchanged; new content uses the site's
+default language with a warning so references can still be imported.
 
 ### Can I alter importing of an entity?
 

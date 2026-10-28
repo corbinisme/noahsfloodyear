@@ -24,7 +24,7 @@ class MailchimpCampaignTest extends MailchimpCampaignTestBase {
   public function testGetCampaign() {
     $campaign_id = '42694e9e57';
 
-    $campaign = mailchimp_get_campaign_data($campaign_id);
+    $campaign = \Drupal::service('mailchimp.api')->getCampaignData($campaign_id);
 
     $this->assertTrue(is_object($campaign), 'Tested retrieval of campaign data.');
 

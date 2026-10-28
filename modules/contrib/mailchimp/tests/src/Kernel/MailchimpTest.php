@@ -15,36 +15,36 @@ class MailchimpTest extends MailchimpKernelTestBase {
   /**
    * Tests trying getting a member that does exist.
    *
-   * @covers mailchimp_get_memberinfo
+   * @covers ApiService::getMemberInfo
    */
   public function testGetExistingMember() {
-    $member_info = mailchimp_get_memberinfo('foo', 'foo@example.com');
+    $member_info = \Drupal::service('mailchimp.api')->getMemberInfo('foo', 'foo@example.com');
     $this->assertTrue(isset($member_info->status), 'Failed asserting that a member does not exist.');
   }
 
   /**
    * Tests trying getting a member that does not exist yet.
    *
-   * @covers mailchimp_get_memberinfo
+   * @covers ApiServicegetMemberInfo
    */
   public function testGetNonExistingMember() {
     $this->setMemberNotExist();
 
     // Assert that the member does not exist yet.
-    $member_info = mailchimp_get_memberinfo('foo', 'foo@example.com');
+    $member_info = \Drupal::service('mailchimp.api')->getMemberInfo('foo', 'foo@example.com');
     $this->assertFalse(isset($member_info->status), 'Failed asserting that a member does not exist.');
   }
 
   /**
    * Tests subscribing a new mail address using double opt-in.
    *
-   * @covers mailchimp_subscribe_process
+   * @covers ApiService::subscribeProcess
    */
   public function testSubscribeProcessNewDoubleOptin() {
     // Make sure that the member does not exist yet.
     $this->setMemberNotExist();
 
-    $result = mailchimp_subscribe_process('foo', 'foo@example.com', NULL, [], TRUE);
+    $result = \Drupal::service('mailchimp.api')->subscribeProcess('foo', 'foo@example.com', NULL, [], TRUE);
     $expected = (object) [
       'id' => 'b48def645758b95537d4424c84d1a9ff',
       'email_address' => 'foo@example.com',
@@ -57,10 +57,10 @@ class MailchimpTest extends MailchimpKernelTestBase {
   /**
    * Tests subscribing an existing mail address using double opt-in.
    *
-   * @covers mailchimp_subscribe_process
+   * @covers ApiService::subscribeProcess
    */
   public function testSubscribeProcessExistingDoubleOptin() {
-    $result = mailchimp_subscribe_process('foo', 'foo@example.com', NULL, [], TRUE);
+    $result = \Drupal::service('mailchimp.api')->subscribeProcess('foo', 'foo@example.com', NULL, [], TRUE);
     $expected = (object) [
       'id' => 'b48def645758b95537d4424c84d1a9ff',
       'email_address' => 'foo@example.com',

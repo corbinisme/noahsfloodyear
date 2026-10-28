@@ -51,7 +51,10 @@ class MailchimpEventAccessControlHandler extends EntityAccessControlHandler {
   }
 
   /**
-   * {@inheritdoc}
+   * Builds a render array for the Mailchimp event access overview.
+   *
+   * @return array
+   *   A render array.
    */
   public function overview() {
     return [

@@ -27,7 +27,7 @@ class FileDownloadLinkMediaTokenTest extends FileDownloadLinkMediaTestBase {
       'no tokens, default settings' => [
         'settings' => [],
         'output' => [
-          'title' => 'Download',
+          'title' => ['#markup' => 'Download'],
           'options' => [
             'attributes' => [
               'class' => [
@@ -53,7 +53,7 @@ class FileDownloadLinkMediaTokenTest extends FileDownloadLinkMediaTestBase {
           'force_download' => FALSE,
         ],
         'output' => [
-          'title' => 'Test Media (txt)',
+          'title' => ['#markup' => 'Test Media (txt)'],
           'options' => [
             'attributes' => [
               'class' => [
@@ -78,7 +78,7 @@ class FileDownloadLinkMediaTokenTest extends FileDownloadLinkMediaTestBase {
           'custom_classes' => 'static-class media-type-[media:bundle:target_id]',
         ],
         'output' => [
-          'title' => 'Download Media Now!',
+          'title' => ['#markup' => 'Download Media Now!'],
           'options' => [
             'attributes' => [
               'class' => [
@@ -105,7 +105,7 @@ class FileDownloadLinkMediaTokenTest extends FileDownloadLinkMediaTestBase {
           'force_download' => FALSE,
         ],
         'output' => [
-          'title' => 'Download Media Now!',
+          'title' => ['#markup' => 'Download Media Now!'],
           'options' => [
             'attributes' => [
               'class' => [

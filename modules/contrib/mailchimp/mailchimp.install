@@ -27,6 +27,30 @@ function mailchimp_requirements($phase) {
       $requirements['mailchimp']['description'] = t('The Mailchimp MCAPI wrapper library has not been installed correctly.');
       $requirements['mailchimp']['severity'] = REQUIREMENT_ERROR;
     }
+
+    // Report the last known Mailchimp API connectivity check, recorded by
+    // Drupal\mailchimp\Queue\Processor::ping() during cron.
+    $state = \Drupal::state();
+    $ping_time = $state->get('mailchimp.ping_time');
+    $requirements['mailchimp_api'] = [
+      'title' => t('Mailchimp API connectivity'),
+    ];
+    if ($ping_time === NULL) {
+      $requirements['mailchimp_api']['description'] = t('The Mailchimp API has not been pinged yet. This check runs during cron.');
+      $requirements['mailchimp_api']['severity'] = REQUIREMENT_INFO;
+    }
+    elseif ($state->get('mailchimp.ping_ok')) {
+      $requirements['mailchimp_api']['description'] = t('The Mailchimp API responded successfully as of @time.', [
+        '@time' => \Drupal::service('date.formatter')->format($ping_time, 'short'),
+      ]);
+      $requirements['mailchimp_api']['severity'] = REQUIREMENT_OK;
+    }
+    else {
+      $requirements['mailchimp_api']['description'] = t('The Mailchimp API did not respond successfully as of @time. Queued actions are not being processed until connectivity is restored.', [
+        '@time' => \Drupal::service('date.formatter')->format($ping_time, 'short'),
+      ]);
+      $requirements['mailchimp_api']['severity'] = REQUIREMENT_WARNING;
+    }
   }
 
   return $requirements;

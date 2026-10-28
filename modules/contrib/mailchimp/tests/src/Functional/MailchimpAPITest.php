@@ -13,7 +13,7 @@ class MailchimpAPITest extends FunctionalMailchimpTestBase {
    * Tests that the test API has been loaded.
    */
   public function testApi() {
-    $mailchimp_api = mailchimp_get_api_object();
+    $mailchimp_api = \Drupal::service('mailchimp.api')->getApiObject();
 
     $this->assertNotNull($mailchimp_api);
 

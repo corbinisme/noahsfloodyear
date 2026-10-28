@@ -445,6 +445,11 @@ class MailchimpCampaignForm extends ContentEntityForm {
 
   /**
    * Generates a preview of the campaign template content.
+   *
+   * @param array $form
+   *   Form API array structure.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state information.
    */
   public function preview(array $form, FormStateInterface $form_state) {
     $raw_template_content = $form_state->getValue('content');
@@ -527,8 +532,13 @@ class MailchimpCampaignForm extends ContentEntityForm {
     $entity_import_wrapper = $triggering_element['#ajax']['wrapper'];
 
     $html = '<div id="' . $entity_import_wrapper . '" class="content-entity-lookup-wrapper">';
-    $html .= \Drupal::service('renderer')->render($form['content'][$content_wrapper]['entity_import']['entity_id']);
-    $html .= \Drupal::service('renderer')->render($form['content'][$content_wrapper]['entity_import']['entity_view_mode']);
+    $renderer = \Drupal::service('renderer');
+    if (!empty($form['content'][$content_wrapper]['entity_import']['entity_id'])) {
+      $html .= $renderer->render($form['content'][$content_wrapper]['entity_import']['entity_id']);
+    }
+    if (!empty($form['content'][$content_wrapper]['entity_import']['entity_view_mode'])) {
+      $html .= $renderer->render($form['content'][$content_wrapper]['entity_import']['entity_view_mode']);
+    }
     $html .= '</div>';
 
     $response->addCommand(new ReplaceCommand('#' . $entity_import_wrapper, $html));
@@ -537,9 +547,12 @@ class MailchimpCampaignForm extends ContentEntityForm {
   }
 
   /**
-   * Fetches list of templates from Mailchimp.
+   * Refreshes the list of templates and the selected template from Mailchimp.
    *
-   * And replaces cacheDefaults to most recent 30 templates.
+   * @param array $form
+   *   Form API array structure.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state information.
    */
   public function refreshTemplates(array $form, FormStateInterface $form_state) {
     mailchimp_campaign_get_template($form_state->getValue('template_id'), TRUE);
@@ -580,13 +593,14 @@ class MailchimpCampaignForm extends ContentEntityForm {
   }
 
   /**
-   * Returns an option list of entities based on data from entity_get_info().
+   * Returns an option list of entities based on entity type definitions.
    *
    * Filters out entities that do not contain a title field, as they cannot
    * be used to import content into templates.
    *
    * @param array $entity_info
-   *   Array of entities as returned by entity_get_info().
+   *   Array of entity type definitions, as returned by
+   *   \Drupal\mailchimp_campaign\Form\MailchimpCampaignForm::getEntitiesForContentImport().
    *
    * @return array
    *   Associative array of entity IDs to name.
@@ -724,13 +738,13 @@ class MailchimpCampaignForm extends ContentEntityForm {
   }
 
   /**
-   * Returns an array of entities based on data from entity_get_info().
+   * Returns an array of entity type definitions available for content import.
    *
    * Filters out entities that do not contain a title field, as they cannot
    * be used to import content into templates.
    *
    * @return array
-   *   Filtered entities from entity_get_info().
+   *   Filtered entity type definitions, keyed by entity type ID.
    */
   private function getEntitiesForContentImport() {
     $entity_info = $this->entityTypeManager->getDefinitions();
@@ -797,10 +811,12 @@ class MailchimpCampaignForm extends ContentEntityForm {
    * Builds a HTML string used to render merge vars on the campaign form.
    *
    * @param array $merge_vars
-   *   Array of merge vars. @see mailchimp_lists_get_merge_vars.
+   *   Array of Mailchimp merge vars for the current audience.
    *
    * @return string
    *   HTML string containing formatted merge vars.
+   *
+   * @see \Drupal\mailchimp\ApiService::getMergevars
    */
   private function buildMergeVarsHtml(array $merge_vars) {
     if (!empty($merge_vars)) {

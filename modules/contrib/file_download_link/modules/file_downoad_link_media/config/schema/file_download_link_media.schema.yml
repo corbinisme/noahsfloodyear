@@ -8,13 +8,22 @@ field.formatter.settings.file_download_link_media:
       label: 'Link Text'
     link_title:
       type: label
-      label: 'Link Text'
+      label: 'Link Title'
+    aria_label:
+      type: label
+      label: 'ARIA Label'
     new_tab:
       type: boolean
       label: "Open in new tab"
+    rel_attribute:
+      type: string
+      label: "Rel attribute"
     force_download:
       type: boolean
       label: "Force download"
+    force_download_filename:
+      type: string
+      label: "Force download filename"
     custom_classes:
       type: string
       label: "Custom classes"

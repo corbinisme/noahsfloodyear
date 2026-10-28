@@ -2,14 +2,12 @@
 
 namespace Drupal\single_content_sync\Plugin\SingleContentSyncBaseFieldsProcessor;
 
-use Drupal\Core\Entity\EntityPublishedInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\single_content_sync\ContentExporterInterface;
 use Drupal\single_content_sync\ContentImporterInterface;
 use Drupal\single_content_sync\SingleContentSyncBaseFieldsProcessorPluginBase;
-use Drupal\user\EntityOwnerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

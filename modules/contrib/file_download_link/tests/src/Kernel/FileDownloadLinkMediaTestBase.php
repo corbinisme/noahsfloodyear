@@ -73,16 +73,19 @@ abstract class FileDownloadLinkMediaTestBase extends KernelTestBase {
   }
 
   /**
-   * @dataProvider providerTestFileDownloadLinkMedia
+   * Provides data for testFileDownloadLinkMedia().
    *
    * @param array $settings
    *   The settings to use for the file_download_link formatter.
    * @param array $output
    *   Array of expected output values in three parts: title, options, cache.
    *
-   * Note that the structure of $output is different from in FileDownloadLinkTestBase.
-   * We do not need to support testing for multivalued fields here, so we do not
-   * send $output to a foreach loop the way we do in FileDownloadLinkTestBase.
+   *   Note that the structure of $output is different from in
+   *   FileDownloadLinkTestBase. We do not need to support testing for
+   *   multivalued fields here, so we do not send $output to a foreach
+   *   loop the way we do in FileDownloadLinkTestBase.
+   *
+   * @dataProvider providerTestFileDownloadLinkMedia
    */
   public function testFileDownloadLinkMedia(array $settings, array $output): void {
     $render = $this->node->field_media->view([
@@ -100,7 +103,8 @@ abstract class FileDownloadLinkMediaTestBase extends KernelTestBase {
     $this->assertEqualsCanonicalizing($expected_top_level_cache['contexts'], $render[0]['#cache']['contexts']);
     $this->assertEqualsCanonicalizing($expected_top_level_cache['max-age'], $render[0]['#cache']['max-age']);
 
-    // Assert the deeper part of the render array, where file_download_link is leveraged.
+    // Assert the deeper part of the render array,
+    // where file_download_link is leveraged.
     $this->assertInstanceOf('Drupal\Core\Url', $render[0][0]['#url']);
     $this->assertSame(\Drupal::service('file_url_generator')->generate('public://file.txt')->toString(), $render[0][0]['#url']->toString());
     $this->assertSame($output['title'], $render[0][0]['#title']);

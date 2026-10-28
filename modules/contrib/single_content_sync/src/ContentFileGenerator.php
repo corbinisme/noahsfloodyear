@@ -64,6 +64,7 @@ class ContentFileGenerator implements ContentFileGeneratorInterface {
    * {@inheritdoc}
    */
   public function generateYamlFile(FieldableEntityInterface $entity, bool $extract_translations = FALSE): FileInterface {
+    $this->contentExporter->resetCache();
     $output = $this->contentExporter->doExportToYml($entity, $extract_translations);
     $schema = $this->contentSyncHelper->getExportDirectorySchema();
     $directory = "{$schema}://export";
@@ -77,6 +78,7 @@ class ContentFileGenerator implements ContentFileGeneratorInterface {
    * {@inheritdoc}
    */
   public function generateZipFile(FieldableEntityInterface $entity, bool $extract_translations = FALSE): FileInterface {
+    $this->contentExporter->resetCache();
     $file_name = $this->contentSyncHelper->generateContentFileName($entity);
     $zip_file = $this->generateEmptyZipFile($file_name);
     $zip_file_path = $this->fileSystem->realpath($zip_file->getFileUri());
@@ -96,6 +98,9 @@ class ContentFileGenerator implements ContentFileGeneratorInterface {
    * {@inheritdoc}
    */
   public function generateBulkZipFile(array $entities, bool $extract_translations = FALSE, bool $extract_assets = FALSE): FileInterface {
+    // Keep references shared within this archive, but not with earlier exports.
+    $this->contentExporter->resetCache();
+
     // Generate an empty zip file to be used for storing the exported content.
     $zip_name = sprintf('content-bulk-export-%s', date('d_m_Y-H_i'));
     $zip_file = $this->generateEmptyZipFile($zip_name);

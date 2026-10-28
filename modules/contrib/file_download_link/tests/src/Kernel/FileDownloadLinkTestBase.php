@@ -54,7 +54,7 @@ abstract class FileDownloadLinkTestBase extends KernelTestBase {
   }
 
   /**
-   * @dataProvider providerTestFileDownloadLink
+   * Provides data for testFileDownloadLink().
    *
    * @param string $field
    *   The name of the field to render. Either field_file or field_image.
@@ -63,9 +63,11 @@ abstract class FileDownloadLinkTestBase extends KernelTestBase {
    * @param array $output
    *   Array of expected output values in three parts: title, options, cache.
    *
-   * Please note that to support testing fields with delta > 1, the $output array
-   * may have one more level of nesting than you would expect. See the foreach loop
-   * below.
+   *   Please note that to support testing fields with delta > 1, the $output
+   *   array may have one more level of nesting than you would expect. See the
+   *   foreach loop below.
+   *
+   * @dataProvider providerTestFileDownloadLink
    */
   public function testFileDownloadLink(string $field, array $settings, array $output): void {
     $render = $this->entity->{$field}->view([

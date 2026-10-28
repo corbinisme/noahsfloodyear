@@ -77,7 +77,7 @@ class MailchimpCampaignViewBuilder extends EntityViewBuilder {
       }
     }
 
-    $list_url = Url::fromUri('https://admin.mailchimp.com/lists/dashboard/overview?id=' . $entity->list->id, ['attributes' => ['target' => '_blank']]);
+    $list_url = Url::fromUri('https://admin.mailchimp.com/audience/contacts?id=' . $entity->list->id, ['attributes' => ['target' => '_blank']]);
     $archive_url = Url::fromUri($entity->mc_data->archive_url, [
       'attributes' => ['target' => '_blank'],
     ]);

@@ -5,6 +5,7 @@ namespace Drupal\mailchimp_lists\Plugin\Field\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'mailchimp_lists_info' widget.
@@ -23,6 +24,22 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class MailchimpListsInfoWidget extends WidgetBase {
+
+  /**
+   * The Mailchimp API service.
+   *
+   * @var \Drupal\mailchimp\ApiService
+   */
+  protected $apiService;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->apiService = $container->get('mailchimp.api');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -109,7 +126,7 @@ class MailchimpListsInfoWidget extends WidgetBase {
       ];
 
       if ($field_settings['show_interest_groups'] && $this->getSetting('show_interest_groups')) {
-        $member_info = mailchimp_get_memberinfo($field_settings['mc_list_id'], $email);
+        $member_info = $this->apiService->getMemberInfo($field_settings['mc_list_id'], $email);
 
         if (!empty($mc_list->intgroups)) {
           $elements[$delta]['interest_groups'] = [

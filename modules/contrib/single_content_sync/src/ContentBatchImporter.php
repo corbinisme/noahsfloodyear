@@ -23,8 +23,15 @@ class ContentBatchImporter {
    * Import content operation.
    */
   public static function batchImportFile($original_file_path, &$context): void {
+    self::batchImportFileInLanguage($original_file_path, 'all', $context);
+  }
+
+  /**
+   * Import content in the language selected before starting the batch.
+   */
+  public static function batchImportFileInLanguage(string $original_file_path, string $langcode, &$context): void {
     try {
-      $context['results'][] = self::contentImporter()->importFromFile($original_file_path);
+      $context['results'][] = self::contentImporter()->importFromFile($original_file_path, $langcode);
     }
     catch (\Throwable $exception) {
       \Drupal::messenger()->addError($exception->getMessage());
@@ -69,7 +76,7 @@ class ContentBatchImporter {
         $file->delete();
       }
       catch (\Exception $exception) {
-        \Drupal::logger('single_content_sync')->error(sprintf('Could not delete temporary file due to error: %s', $exception->getMessage()));;
+        \Drupal::logger('single_content_sync')->error(sprintf('Could not delete temporary file due to error: %s', $exception->getMessage()));
       }
     }
   }

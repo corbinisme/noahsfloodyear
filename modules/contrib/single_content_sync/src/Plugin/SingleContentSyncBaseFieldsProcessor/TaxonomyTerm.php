@@ -2,6 +2,7 @@
 
 namespace Drupal\single_content_sync\Plugin\SingleContentSyncBaseFieldsProcessor;
 
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\single_content_sync\ContentExporterInterface;
@@ -28,6 +29,13 @@ class TaxonomyTerm extends SingleContentSyncBaseFieldsProcessorPluginBase implem
   protected ContentExporterInterface $exporter;
 
   /**
+   * The entity repository.
+   *
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
+   */
+  protected EntityRepositoryInterface $entityRepository;
+
+  /**
    * Constructs new TaxonomyTerm plugin instance.
    *
    * @param array $configuration
@@ -38,11 +46,14 @@ class TaxonomyTerm extends SingleContentSyncBaseFieldsProcessorPluginBase implem
    *   The plugin implementation definition.
    * @param \Drupal\single_content_sync\ContentExporterInterface $exporter
    *   The content exporter service.
+   * @param \Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContentExporterInterface $exporter) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ContentExporterInterface $exporter, EntityRepositoryInterface $entity_repository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->exporter = $exporter;
+    $this->entityRepository = $entity_repository;
   }
 
   /**
@@ -54,6 +65,7 @@ class TaxonomyTerm extends SingleContentSyncBaseFieldsProcessorPluginBase implem
       $plugin_id,
       $plugin_definition,
       $container->get('single_content_sync.exporter'),
+      $container->get('entity.repository'),
     );
   }
 
@@ -65,7 +77,7 @@ class TaxonomyTerm extends SingleContentSyncBaseFieldsProcessorPluginBase implem
 
     if ($entity->get('parent')->entity instanceof TermInterface) {
       /** @var \Drupal\taxonomy\TermInterface $parent_entity */
-      $parent_entity = $entity->get('parent')->entity;
+      $parent_entity = $this->entityRepository->getTranslationFromContext($entity->get('parent')->entity, $entity->language()->getId());
 
       if ($entity->isSyncing() || $this->exporter->isReferenceCached($parent_entity)) {
         $parent_entity->setSyncing(TRUE);
@@ -81,11 +93,18 @@ class TaxonomyTerm extends SingleContentSyncBaseFieldsProcessorPluginBase implem
       }
     }
 
+    $description = $entity->getDescription();
+
     return [
       'name' => $entity->getName(),
       'weight' => $entity->getWeight(),
       'langcode' => $entity->language()->getId(),
-      'description' => $entity->getDescription(),
+      'description' => empty($description)
+        ? NULL
+        : [
+          'value' => $description,
+          'format' => $entity->getFormat(),
+        ],
       'parent' => $parent,
     ];
   }

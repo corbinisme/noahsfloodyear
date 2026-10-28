@@ -171,8 +171,8 @@ class ContentSyncHelper implements ContentSyncHelperInterface {
     }
 
     // Validate required YAML properties.
-    if (!isset($content['uuid']) || !isset($content['entity_type']) || !isset($content['bundle']) || !isset($content['base_fields']) || !isset($content['custom_fields'])) {
-      throw new \Exception('The content of the YAML file is not valid. Make sure there are uuid, entity_type, base_fields, and custom_fields properties.');
+    if (!isset($content['uuid']) || !isset($content['entity_type']) || !isset($content['bundle']) || !isset($content['base_fields'])) {
+      throw new \Exception('The content of the YAML file is not valid. Make sure there are uuid, entity_type, and base_fields properties.');
     }
 
     // Validate Site UUID value to prevent import on different site.
@@ -223,7 +223,7 @@ class ContentSyncHelper implements ContentSyncHelperInterface {
     /** @var \Drupal\Core\Entity\EntityInterface $entity */
     $entity = $this->entityRepository->loadEntityByUuid($entity_type_id, $entity_uuid);
 
-    return $entity;
+    return $this->entityRepository->getTranslationFromContext($entity);
   }
 
   /**
@@ -249,7 +249,7 @@ class ContentSyncHelper implements ContentSyncHelperInterface {
   /**
    * {@inheritdoc}
    */
-  public function getSiteUuid(): string {
+  public function getSiteUuid(): ?string {
     return $this->configFactory->get('system.site')->get('uuid');
   }
 

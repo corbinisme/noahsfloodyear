@@ -12,11 +12,9 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\OptGroup;
 use Drupal\Core\Link;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\DataDefinitionInterface;
 use Drupal\Core\Url;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'mailchimp_lists_subscription' field type.
@@ -361,14 +359,14 @@ class MailchimpListsSubscription extends FieldItemBase {
 
     try {
       /** @var \Mailchimp\MailchimpLists $mc_lists */
-      $mc_lists = mailchimp_get_api_object('MailchimpLists');
+      $mc_lists = \Drupal::service('mailchimp.api')->getApiObject('MailchimpLists');
       foreach ($list->intgroups as $group) {
         $group_interests = $mc_lists->getInterests($list->id, $group->id, ['count' => 500]);
         $interest_groups[$group->id] = [];
 
         $email = mailchimp_lists_load_email($this, $this->getEntity(), FALSE);
         if ($email) {
-          $memberinfo = mailchimp_get_memberinfo($list->id, $email);
+          $memberinfo = \Drupal::service('mailchimp.api')->getMemberInfo($list->id, $email);
         }
         if (isset($memberinfo->interests)) {
           $member_interests = $memberinfo->interests;
@@ -402,21 +400,21 @@ class MailchimpListsSubscription extends FieldItemBase {
   }
 
   /**
-   * Get an array with all possible Drupal properties for a given entity type.
+   * Gets an array with all possible Drupal properties for a given entity type.
    *
    * @param string $entity_type
-   *   Name of entity whose properties to audience.
+   *   Name of entity whose properties to list.
    * @param string $entity_bundle
    *   Optional bundle to limit available properties.
    * @param bool $required
    *   Set to TRUE if properties are required.
    * @param string $prefix
-   *   Optional prefix for option IDs in the options audience.
+   *   Optional prefix for option IDs in the options array.
    * @param string $tree
    *   Optional name of the parent element if the options are part of a tree.
    *
    * @return array
-   *   List of properties that can be used as an #options audience.
+   *   List of properties that can be used as an #options array.
    */
   private function getFieldmapOptions($entity_type, $entity_bundle = NULL, $required = FALSE, $prefix = NULL, $tree = NULL) {
     $options = [];
@@ -470,7 +468,7 @@ class MailchimpListsSubscription extends FieldItemBase {
   }
 
   /**
-   * Get the available field options for a related entity.
+   * Gets the available field options for a related entity.
    *
    * @param bool $required
    *   Set TRUE if properties are required.
@@ -488,7 +486,7 @@ class MailchimpListsSubscription extends FieldItemBase {
    *   Array of already existing options.
    *
    * @return array|bool
-   *   Array of available options or FALSE if not are.
+   *   Array of available options, or FALSE if none are available.
    */
   private function getOptionsForSubEntity($required, FieldDefinitionInterface $field_definition, EntityTypeInterface $target_definition, $target_type, $keypath, $label, array $options) {
     $handler_settings = $field_definition->getSetting('handler_settings');
@@ -511,13 +509,13 @@ class MailchimpListsSubscription extends FieldItemBase {
   }
 
   /**
-   * Get the mail field for the given entity.
+   * Gets the mail field for the given entity.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   Entity with subscription field attached.
    *
-   * @return \Drupal\Core\Field\FieldItemList
-   *   Mail field field item list.
+   * @return \Drupal\Core\Field\FieldItemList|null
+   *   Mail field field item list, or NULL if it could not be resolved.
    */
   public function getMailField(EntityInterface $entity) {
     // Get entity email property value from email field.

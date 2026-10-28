@@ -99,8 +99,11 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
     $options = parent::defaultSettings();
     $options['link_text'] = 'Download';
     $options['link_title'] = NULL;
+    $options['aria_label'] = NULL;
     $options['new_tab'] = TRUE;
+    $options['rel_attribute'] = '';
     $options['force_download'] = TRUE;
+    $options['force_download_filename'] = '';
     $options['custom_classes'] = '';
     return $options;
   }
@@ -110,6 +113,7 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form = parent::settingsForm($form, $form_state);
+    $field_name = $this->fieldDefinition->getName();
     $form['link_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Link Text'),
@@ -146,12 +150,46 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
       '#title' => $this->t('Open file in new tab'),
       '#default_value' => $this->getSetting('new_tab'),
     ];
+    $form['rel_attribute'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Rel attribute'),
+      '#description' => $this->t('The rel attribute defines the relationship between a linked resource and the current document.'),
+      '#default_value' => $this->getSetting('rel_attribute'),
+    ];
     $form['force_download'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Force Download'),
       '#default_value' => $this->getSetting('force_download'),
       '#description' => $this->t('This adds the <i>download</i> attribute to the link, which works in many modern browsers.'),
     ];
+    $form['force_download_filename'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Force Download - Filename'),
+      '#default_value' => $this->getSetting('force_download_filename'),
+      '#description' => $this->t('This adds a filename to the <i>download</i> attribute of the link, which works in many modern browsers. Leave blank to not force a filename.'),
+      '#states' => [
+        'visible' => [
+          'input[name="fields[' . $field_name . '][settings_edit_form][settings][force_download]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    if ($this->moduleHandler->moduleExists('token')) {
+      $form['tokens_4_container'] = [
+        '#type' => 'container',
+        '#states' => [
+          'visible' => [
+            'input[name="fields[' . $field_name . '][settings_edit_form][settings][force_download]"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+      $form['tokens_4_container']['tokens_4'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => [
+          $this->tokenEntityMapper->getTokenTypeForEntityType('file'),
+          $this->tokenEntityMapper->getTokenTypeForEntityType($this->fieldDefinition->getTargetEntityTypeId()),
+        ],
+      ];
+    }
     $form['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Link Title'),
@@ -160,6 +198,21 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
     ];
     if ($this->moduleHandler->moduleExists('token')) {
       $form['tokens_2'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => [
+          $this->tokenEntityMapper->getTokenTypeForEntityType('file'),
+          $this->tokenEntityMapper->getTokenTypeForEntityType($this->fieldDefinition->getTargetEntityTypeId()),
+        ],
+      ];
+    }
+    $form['aria_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('ARIA Label'),
+      '#default_value' => $this->getSetting('aria_label'),
+      '#description' => $this->t('This text is linked to the file. If left empty, the filename will be used.'),
+    ];
+    if ($this->moduleHandler->moduleExists('token')) {
+      $form['tokens_4'] = [
         '#theme' => 'token_tree_link',
         '#token_types' => [
           $this->tokenEntityMapper->getTokenTypeForEntityType('file'),
@@ -194,11 +247,21 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
     if ($this->getSetting('new_tab')) {
       $summary[] = $this->t('Open in new tab');
     }
+    if ($this->getSetting('rel_attribute')) {
+      $rel_attribute = $this->getSetting('rel_attribute');
+      $summary[] = $this->t('Rel attribute: @attribute', ['@attribute' => $rel_attribute]);
+    }
     if ($this->getSetting('force_download')) {
       $summary[] = $this->t('Force download');
+      if ($this->getSetting('force_download_filename')) {
+        $summary[] = $this->t('Force download filename: @filename', ['@filename' => $this->getSetting('force_download_filename')]);
+      }
     }
     if ($this->getSetting('link_title')) {
       $summary[] = $this->t('Link Title: @link_title', ['@link_title' => $this->getSetting('link_title')]);
+    }
+    if ($this->getSetting('aria_label')) {
+      $summary[] = $this->t('ARIA Label: @aria_label', ['@aria_label' => $this->getSetting('aria_label')]);
     }
     if ($this->getSetting('custom_classes')) {
       $summary[] = $this->t('Classes: @classes', ['@classes' => $this->getSetting('custom_classes')]);
@@ -265,7 +328,7 @@ class FileDownloadLinkMedia extends EntityReferenceFormatterBase implements Cont
     if ($target_type != 'media') {
       return FALSE;
     }
-    $media_bundles = isset($field_definition->getSettings()['handler_settings']['target_bundles']) ? $field_definition->getSettings()['handler_settings']['target_bundles'] : NULL;
+    $media_bundles = $field_definition->getSettings()['handler_settings']['target_bundles'] ?? NULL;
     $media_types = MediaType::loadMultiple($media_bundles);
     foreach ($media_types as $media_type) {
       $source = $media_type->getSource();

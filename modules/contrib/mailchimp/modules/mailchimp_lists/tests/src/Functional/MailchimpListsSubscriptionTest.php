@@ -23,7 +23,7 @@ class MailchimpListsSubscriptionTest extends MailchimpListsTestBase {
     $list_id = '57afe96172';
     $email = 'test@example.org';
 
-    $member_info = mailchimp_get_memberinfo($list_id, $email);
+    $member_info = \Drupal::service('mailchimp.api')->getMemberInfo($list_id, $email);
 
     $this->assertSame($member_info->id, md5(strtolower($email)));
     $this->assertSame($member_info->email_address, $email);

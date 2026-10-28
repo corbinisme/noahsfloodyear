@@ -69,4 +69,9 @@ interface ContentExporterInterface {
    */
   public function exportCustomValues(FieldableEntityInterface $entity, bool $check_translated_fields_only = FALSE): array;
 
+  /**
+   * Resets entity output and reference caches before a new export.
+   */
+  public function resetCache(): void;
+
 }

@@ -98,7 +98,7 @@ class File extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
     ContentSyncHelperInterface $content_sync_helper,
     FileSystemInterface $file_system,
     ConfigFactoryInterface $config_factory,
-    FocalPointManagerInterface $focal_point_manager = NULL
+    ?FocalPointManagerInterface $focal_point_manager = NULL,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
@@ -152,8 +152,8 @@ class File extends SingleContentSyncBaseFieldsProcessorPluginBase implements Con
       $crop = $this->focalPointManager->getCropEntity($entity, $crop_type);
       if (!$crop->isNew() && !$crop->get('x')->isEmpty() && !$crop->get('y')->isEmpty()) {
         $file_item['crop'] = [
-          'width' => $field->width ?? 0,
-          'height' => $field->height ?? 0,
+          'width' => 0,
+          'height' => 0,
         ];
         $file_item['crop'] += [
           'x' => $crop->get('x')->value,

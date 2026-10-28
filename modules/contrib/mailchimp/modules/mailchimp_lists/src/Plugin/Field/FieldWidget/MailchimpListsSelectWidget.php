@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\mailchimp_lists\Plugin\Field\FieldType\MailchimpListsSubscription;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'mailchimp_lists_select' widget.
@@ -23,6 +24,22 @@ use Drupal\mailchimp_lists\Plugin\Field\FieldType\MailchimpListsSubscription;
  * )
  */
 class MailchimpListsSelectWidget extends WidgetBase {
+
+  /**
+   * The Mailchimp API service.
+   *
+   * @var \Drupal\mailchimp\ApiService
+   */
+  protected $apiService;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->apiService = $container->get('mailchimp.api');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -94,6 +111,13 @@ class MailchimpListsSelectWidget extends WidgetBase {
       // checkbox. The user has already attempted to subscribe and
       // must check their email to complete the subscription process.
       // That means they are neither fully subscribed nor unsubscribed.
+      // However, later we need to process the status, and strictly speaking
+      // a user is not yet subscribed.
+      $element['subscribe'] = [
+        '#type' => 'value',
+        '#value' => FALSE,
+      ];
+
       return $element;
     }
 
@@ -195,7 +219,7 @@ class MailchimpListsSelectWidget extends WidgetBase {
 
       if (!empty($mc_instance_list->intgroups)) {
         $mode = $is_default_value_widget ? 'admin' : ($interest_groups_hidden ? 'hidden' : 'default');
-        $element['interest_groups'] += mailchimp_interest_groups_form_elements($mc_instance_list, $groups_default, $email, $mode);
+        $element['interest_groups'] += $this->apiService->interestGroupFormElements($mc_instance_list, $groups_default, $email, $mode);
       }
     }
 
@@ -320,7 +344,7 @@ class MailchimpListsSelectWidget extends WidgetBase {
     $memberStatus = NULL;
     if (!empty($instance->getEntity()) && $email) {
       $instance_list_id = $instance->getFieldDefinition()->getSetting('mc_list_id');
-      $memberinfo = mailchimp_get_memberinfo($instance_list_id, $email, TRUE);
+      $memberinfo = $this->apiService->getMemberInfo($instance_list_id, $email, TRUE);
       if (isset($memberinfo->status)) {
         $memberStatus = $memberinfo->status;
       }
@@ -378,7 +402,7 @@ class MailchimpListsSelectWidget extends WidgetBase {
    *   TRUE if the member is unsubscribed, otherwise FALSE.
    */
   protected function memberIsUnsubscribed($mailchimp_list_id, $email): bool {
-    $member_info = mailchimp_get_memberinfo($mailchimp_list_id, $email);
+    $member_info = $this->apiService->getMemberInfo($mailchimp_list_id, $email);
     return (!isset($member_info->status) || $member_info->status !== "unsubscribed");
   }
 

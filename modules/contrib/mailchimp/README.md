@@ -43,6 +43,7 @@ Submit bug reports and feature suggestions, or track changes in the
 - Recommended modules
 - Installation
 - Configuration
+- Additional Notes
 - Maintainers
 
 
@@ -138,6 +139,19 @@ For more about using Ludwig:
 1. Batch limit - Maximum number of changes to process in a single cron run.
    Mailchimp suggests keeping this below 10000.
 
+## Additional Notes
+
+### Failed operation queue
+
+If the module's settings have been configured to use batch processing for
+operations, operations that fail will be added to the queue 'mailchimp_failed'.
+The Queue UI module (https://www.drupal.org/project/queue_ui) is one way to view
+this and other queues.
+
+It is not recommended to resend the failed operations as they may undo
+operations that occurred after the failed one. For example, if one user
+subscribed (succeeded), unsubscribed (failed), and then subscribed (succeeded),
+resending the failed unsubscribe would undo the later subscribe.
 
 ## Maintainers
 
