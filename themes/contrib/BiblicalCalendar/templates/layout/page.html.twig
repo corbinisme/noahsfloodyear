@@ -68,15 +68,25 @@ set footer_classes = ' ' ~
     <div class="{{ b5_top_container }} d-flex">
       {{ page.nav_branding }}
 
-      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-              aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+      
+
+      
 
       <div class="collapse navbar-collapse justify-content-md-end flex-wrap" id="navbarSupportedContent">
         {{ page.navigation_collapsible }}
         
+      </div>
+
+      <div class="action-right">
+        <a href="#" class="search-icon">
+          <i class="fa fa-search"></i>
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
       </div>
     </div>
   </nav>
